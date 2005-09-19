@@ -23,7 +23,7 @@ import gov.epa.mims.analysisengine.gui.OptionDialog;
  * <p>Description: This table can both sort and filter data based on criteria
  *    entred by the user. </p>
  * @author Daniel Gatti
- * @version $Id: SortFilterTablePanel.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: SortFilterTablePanel.java,v 1.3 2005/09/19 15:41:51 rhavaldar Exp $
  */
 public class SortFilterTablePanel extends JPanel implements TableModelListener, 
    ChildHasChangedListener
@@ -398,7 +398,9 @@ ColumnFormatInfo(table.getColumnModel().getColumn(i)));
       return format.format(overallModel.getValueAt(row, col));
    } // getValueAt()
    
-   
+   public JTable getTable() {
+       return table;
+   }
    
    /**
     * Reset the columns to the unaltered data.
