@@ -9,7 +9,7 @@ import javax.swing.table.*;
  * optional units.
  *
  * @author  Daniel Gatti
- * @version $Id: RowHeaderTableModel.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: RowHeaderTableModel.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  */
 public class RowHeaderTableModel
       extends MultiRowHeaderTableModel
@@ -92,6 +92,7 @@ public class RowHeaderTableModel
 
    public Object getValueAt(int row, int col)
    {
+//System.out.println("RowHeaderTableModel.getValueAt("+row+", "+col+")");      
       // Return the 1-based row for column 1.
       if (col == 0)
       {

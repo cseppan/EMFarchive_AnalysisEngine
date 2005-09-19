@@ -16,7 +16,7 @@ import junit.framework.TestSuite;
  * <p>Description: Test to check the table model</p>
  * <p>Company: UNC - CEP</p>
  * @author Daniel Gatti
- * @version $Id: TableTest.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: TableTest.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  */
 public class TableTest extends TestCase
 {

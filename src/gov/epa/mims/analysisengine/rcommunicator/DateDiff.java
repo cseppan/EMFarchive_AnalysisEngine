@@ -8,7 +8,7 @@ import java.util.GregorianCalendar;
 /**
  * DOCUMENT_ME
  *
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @author $author$
  ********************************************************/
 public class DateDiff

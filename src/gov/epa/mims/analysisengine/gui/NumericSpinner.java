@@ -11,7 +11,7 @@ import javax.swing.event.*;
  * This class uses a JScrollBar and a DecimalField to provide the same
  * functionality.
  * @author Daniel Gatti
- * @version $Id: NumericSpinner.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: NumericSpinner.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  */
 public class NumericSpinner extends javax.swing.JPanel implements ActionListener
 {

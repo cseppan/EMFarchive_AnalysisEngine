@@ -6,7 +6,7 @@ import gov.epa.mims.analysisengine.tree.Axis;
 /**
  * a class to handle the tick mark axis labeling of a Box Plot
  *
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @author Tommy E. Cathey
  ********************************************************/
 public class AxisCmdBoxPlot extends AxisCmdAnnotated

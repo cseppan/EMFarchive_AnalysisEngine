@@ -6,7 +6,7 @@ package gov.epa.mims.analysisengine.gui;
  * <p>Copyright: Copyright (c) 2003</p>
  * <p>Company: UNC-CH Carolina Environmental Program </p>
  * @author Daniel Gatti
- * @version $Id: PlotConstantsIfc.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: PlotConstantsIfc.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  */
 public interface PlotConstantsIfc
 {

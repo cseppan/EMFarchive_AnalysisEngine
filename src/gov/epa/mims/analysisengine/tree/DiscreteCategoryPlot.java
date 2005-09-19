@@ -139,7 +139,7 @@ import java.util.Vector;
  * <B>View Example</B></A>
  *
  * @author Tommy E. Cathey
- * @version $Id: DiscreteCategoryPlot.java,v 1.1 2005/09/19 14:14:13 rhavaldar Exp $
+ * @version $Id: DiscreteCategoryPlot.java,v 1.2 2005/09/19 14:50:10 rhavaldar Exp $
  *
  **/
 public class DiscreteCategoryPlot

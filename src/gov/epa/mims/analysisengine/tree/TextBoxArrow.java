@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 /**
  * @author Tommy E. Cathey
- * @version $Id: TextBoxArrow.java,v 1.1 2005/09/19 14:14:13 rhavaldar Exp $
+ * @version $Id: TextBoxArrow.java,v 1.2 2005/09/19 14:50:10 rhavaldar Exp $
  *
  * class to hold parameters related to displaying text box arrows
  *
@@ -48,7 +48,7 @@ import java.io.Serializable;
  *    :
  *    :
  * </pre>
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @author Tommy E. Cathey
  ********************************************************/
 public class TextBoxArrow

@@ -15,7 +15,7 @@ import javax.swing.*;
  *
  * Created on April 25, 2005, 11:07 AM
  * @author  Parthee R Partheepan
- * @version $Id: SortFilterTableDialog.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: SortFilterTableDialog.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  */
 public class SortFilterTableDialog extends JFrame
 {

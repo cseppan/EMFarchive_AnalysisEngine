@@ -2,7 +2,6 @@ package gov.epa.mims.analysisengine.table;
 
 
 import java.util.ArrayList;
-import java.util.StringTokenizer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -11,7 +10,7 @@ import java.text.SimpleDateFormat;
  * This class is customized to read DAVE output file
  * Created on April 1, 2004, 12:31 PM
  * @author  Parthee Partheepan, CEP, UNC-CHAPEL HILL
- * @version $Id: DAVEFileReader.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: DAVEFileReader.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  */
 
  public class DAVEFileReader extends FileParser

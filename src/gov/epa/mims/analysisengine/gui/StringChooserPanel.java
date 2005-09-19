@@ -9,7 +9,7 @@ import javax.swing.*;
  * place the label on top or on the side
  *
  * @author Prashant Pai, CEP UNC
- * @version $Id: StringChooserPanel.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: StringChooserPanel.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  */
 public class StringChooserPanel extends JPanel {
 

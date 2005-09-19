@@ -8,7 +8,7 @@ import java.util.HashMap;
 /**
  * availableOptionsAndDefaults class
  *
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @author Alison Eyth , Tommy E. Cathey
  */
 public class AvailableOptionsAndDefaults

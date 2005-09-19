@@ -15,7 +15,7 @@ import javax.swing.*;
  * A editor for the Text Box. At present this box will only edit the configuration
  * that are related Box configuration and text wrapping
  * @author  Parthee R Partheepan
- * @version $Id: TextBoxEditor.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: TextBoxEditor.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  */
 public class TextBoxEditor extends TextBorderEditor
 {

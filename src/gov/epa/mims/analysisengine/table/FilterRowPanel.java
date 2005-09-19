@@ -21,7 +21,7 @@ import gov.epa.mims.analysisengine.gui.HasChangedListener;
  *
  * Created on April 22, 2005, 12:56 PM
  * @author  Parthee R Partheepan
- * @version $Id: FilterRowPanel.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: FilterRowPanel.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  */
 public class FilterRowPanel extends JPanel implements ChildHasChangedListener
 {
@@ -32,6 +32,8 @@ public class FilterRowPanel extends JPanel implements ChildHasChangedListener
    
    /** The list of all column names for the filter table*/
    protected String[] allColumnNames = null;
+   
+   protected Class[] allColumnClasses =null;
    
    /** The filter criteria that will be created from this GUI. */
    protected FilterCriteria filterCriteria = null;
@@ -69,15 +71,33 @@ public class FilterRowPanel extends JPanel implements ChildHasChangedListener
    
    /** Creates a new instance of FilterRowPanel */
    public FilterRowPanel(String[] columnNames, Class[] columnClasses,
-   FilterCriteria filterCriteria)
+      FilterCriteria filterCriteria)
    {
       this.allColumnNames = columnNames;
+      this.allColumnClasses = columnClasses;
       this.filterCriteria = filterCriteria;
+      
       //this.allFormats = columnFormats;
       buildHashtable(columnClasses);
       initialize();
       initGUIFromModel();
    }
+   
+   public FilterRowPanel(FilterCriteria filterCriteria)
+   {
+      this.allColumnNames = filterCriteria.getAllColumnNames();
+      this.allColumnClasses = filterCriteria.getAllColumnClasses();
+      this.filterCriteria = filterCriteria;
+      if((allColumnClasses ==null) || (allColumnNames ==null)
+         || (allColumnClasses.length !=allColumnClasses.length ))
+      {  
+         throw new IllegalArgumentException("FilterCriteria variables "+
+            "allColumnNames and allColumnClasses not initialized properly");
+      }
+      buildHashtable(allColumnClasses);
+      initialize();
+      initGUIFromModel();
+   }//FilterRowPanel
    
    /**
     * Build the hastable that converts from column names to column classes,
@@ -143,8 +163,13 @@ public class FilterRowPanel extends JPanel implements ChildHasChangedListener
                FormattedCellRenderer.getDefaultFormat(duplex.columnClass);
             }
             //if still it's null then it's column type os column class is String
-            if(format != null)
+            Integer operation = (Integer)FilterCriteria.symbolToConstantHash.get(rowData[1]);
+            if(format != null && !isStringOperation(operation.intValue()))
             {
+//System.out.println("duplex.ColumnClass="+duplex.columnClass);               
+//System.out.println("filterCriteria.getValue(i)='"+filterCriteria.getValue(i)+ "'");               
+//System.out.println("filterCriteria.getValue(i).getClass="+filterCriteria.getValue(i).getClass());               
+//System.out.println("format="+format.getClass());
                rowData[2] = format.format(filterCriteria.getValue(i));
             }
             else
@@ -179,6 +204,24 @@ public class FilterRowPanel extends JPanel implements ChildHasChangedListener
    {
       return stringOperations[operation];
    } // isStringOperation()
+   
+   private boolean isStringColumnClass(String colName)
+   {
+      int index = -1;
+      for(int i=0; i<allColumnNames.length; i++)
+      {
+         if(colName.equalsIgnoreCase(allColumnNames[i]))
+         {
+            index = i;
+            break;
+         }
+      }
+      if(index == -1)
+      {
+         throw new IllegalArgumentException("The argument is not in the 'allColumnNames' array");
+      }
+      return (allColumnClasses[index]==String.class)?true:false;
+   }
    
    /**
     * Save the data from the GUI to a FilterCriteria.
@@ -222,9 +265,10 @@ public class FilterRowPanel extends JPanel implements ChildHasChangedListener
                //shouldContinueClosing = false;
                return false;
             }
+            cellValue = cellValue.trim();
             // Turn the value into a String if we are doing a String only operation.
             // Set the value to be a formatted String.
-            if (isStringOperation(operation.intValue()))
+            if (isStringOperation(operation.intValue())) // && isStringColumnClass(names[r]))
             {
                values[r] = cellValue;
             }
@@ -286,6 +330,7 @@ public class FilterRowPanel extends JPanel implements ChildHasChangedListener
          filterCriteria.setRowCriteria(names, operations, values,
          /* formats,*/ filterPanel.getUseAnd());
          filterCriteria.setApplyFilters(applyFilters);
+         filterCriteria.setAllColumnClasses(allColumnClasses);
       } // try
       catch (ParseException pe)
       {
@@ -322,6 +367,7 @@ public class FilterRowPanel extends JPanel implements ChildHasChangedListener
    {
       return filterPanel.getTableData();
    }
+   
    
    public java.util.List getFilterColumnNames()
    {

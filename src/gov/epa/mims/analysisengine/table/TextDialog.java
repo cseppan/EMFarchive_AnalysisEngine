@@ -1,27 +1,22 @@
 package gov.epa.mims.analysisengine.table;
 
-import gov.epa.mims.analysisengine.gui.DefaultUserInteractor;
-import gov.epa.mims.analysisengine.gui.UserInteractor;
 import gov.epa.mims.analysisengine.gui.ScreenUtils;
 
-import java.awt.event.*;
-import java.awt.*;
-import java.beans.*;
-import java.io.IOException;
-import java.io.File;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.TextArea;
+import java.awt.Window;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Stack;
-import javax.swing.*;
-import javax.swing.border.*;
-import javax.swing.event.*;
-import javax.swing.table.*;
-import javax.swing.text.html.*;
+
+import javax.swing.JScrollPane;
 
 /**
  * A GUI for showing text or HTML in an editor pane
  *
  * @author Alison Eyth
- * @version $Id: TextDialog.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: TextDialog.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  *
  */
 public class TextDialog extends EditingDialog
@@ -151,6 +146,7 @@ public class TextDialog extends EditingDialog
     */
    protected void discardChanges()
    {
+	   
       if (myCaller != null)
       {
          myCaller.repaint();

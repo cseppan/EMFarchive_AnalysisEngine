@@ -16,7 +16,7 @@ import java.util.TimeZone;
 /**
  * utilities class
  *
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @author $author$
  ********************************************************/
 public class Util

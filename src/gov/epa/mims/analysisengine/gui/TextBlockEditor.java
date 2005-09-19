@@ -17,7 +17,7 @@ import javax.swing.*;
  * TextBlockEditor.java
  * An editor for the TextBlock
  * @author Parthee Partheepan UNC
- * @version $Id: TextBlockEditor.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: TextBlockEditor.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  */
 public class TextBlockEditor extends JPanel
 {

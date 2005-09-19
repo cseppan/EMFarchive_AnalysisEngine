@@ -13,7 +13,7 @@ import java.util.*;
  * Time Series Plot Leaf Node
  *
  * @author Tommy E. Cathey
- * @version $Id: TimeSeries.java,v 1.1 2005/09/19 14:14:13 rhavaldar Exp $
+ * @version $Id: TimeSeries.java,v 1.2 2005/09/19 14:50:10 rhavaldar Exp $
  *
  * <br><A HREF="doc-files/ExampleTimeSeriesAxisGrid15.html"><B>View Example</B></A>
  * <br><A HREF="doc-files/ExampleTimeSeriesAxisGrid16.html"><B>View Example</B></A>

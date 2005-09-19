@@ -14,7 +14,7 @@ import hep.aida.ref.Histogram1D;
  * <p>Copyright: Copyright (c) 2003</p>
  * <p>Company: UNC-CH, Carolina Environmental Program</p>
  * @author Daniel Gatti
- * @version $Id: Histogram.java,v 1.1 2005/09/19 14:16:05 rhavaldar Exp $
+ * @version $Id: Histogram.java,v 1.2 2005/09/19 14:50:15 rhavaldar Exp $
  */
 public class Histogram
 {

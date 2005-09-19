@@ -28,7 +28,7 @@ import gov.epa.mims.analysisengine.gui.HasChangedListener;
  * @see SpecialTableColumn, ColorTableColumn, IntegerTableColumn,
  * DoubleTableColumn, StringTableColumn, ImageTableColumn
  * @author Daniel Gatti, Alyson Eyth, Parthee Partheepan CEP UNC
- * @version $Id: MultipleEditableTablePanel.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: MultipleEditableTablePanel.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  */
 
 

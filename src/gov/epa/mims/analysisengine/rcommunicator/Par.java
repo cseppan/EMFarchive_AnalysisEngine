@@ -11,7 +11,7 @@ import java.io.Serializable;
 /**
  * initialize R with some par commands
  *
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @author $author$
  */
 public class Par implements Serializable, Cloneable,

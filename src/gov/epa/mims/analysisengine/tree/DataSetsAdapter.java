@@ -14,7 +14,7 @@ import java.util.Vector;
  * DataSetsAdapter would get dummy data sets and display them.
  *
  * @author Prashant Pai
- * @version $Id: DataSetsAdapter.java,v 1.1 2005/09/19 14:14:13 rhavaldar Exp $
+ * @version $Id: DataSetsAdapter.java,v 1.2 2005/09/19 14:50:10 rhavaldar Exp $
  *
  **/
 public interface DataSetsAdapter

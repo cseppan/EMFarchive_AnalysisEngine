@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * main class for generating R commands
  *
  * @author Tommy E. Cathey
- * @version $Id: RGenerator.java,v 1.1 2005/09/19 14:14:10 rhavaldar Exp $
+ * @version $Id: RGenerator.java,v 1.2 2005/09/19 14:50:10 rhavaldar Exp $
  *
  **/
 public class RGenerator implements Serializable, Cloneable, AnalysisGeneratorIfc
@@ -110,8 +110,9 @@ public class RGenerator implements Serializable, Cloneable, AnalysisGeneratorIfc
          }
          catch (AnalysisException e)
          {
-            e.getMessage();
-            e.printStackTrace();
+        	throw e;
+            //e.getMessage();
+           // e.printStackTrace();
          }
       }
    }

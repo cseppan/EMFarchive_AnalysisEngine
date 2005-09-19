@@ -40,7 +40,7 @@ import java.text.ParseException;
  * Created on March 31, 2004, 10:11 AM
  *
  * @author  Krithiga Thangavelu, CEP, UNC CHAPEL HILL.
- * @version $Id: FileParser.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: FileParser.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  */
 
 public class FileParser

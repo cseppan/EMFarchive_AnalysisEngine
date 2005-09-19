@@ -21,7 +21,7 @@ import javax.swing.*;
  * a width of 0 to always be used.
  *
  * @author Steve Fine
- * @version $Id: WidthLimitedJOptionPane.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: WidthLimitedJOptionPane.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  * @reviewer Karl Castleton 2001/02/13, v 1.2
  **/
 

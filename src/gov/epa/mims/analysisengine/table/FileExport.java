@@ -12,7 +12,7 @@ import javax.swing.table.TableModel;
  *
  * Created on April 5, 2004, 11:59 AM
  * @author  parthee
- * @version $Id: FileExport.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: FileExport.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  */
 public class FileExport
 {
@@ -216,16 +216,22 @@ public class FileExport
    {
       printer.print("\"");
       printer.print(aWord);
-      printer.print(delimiter);
       printer.print("\"");
+      printer.print(delimiter);
+      
    }
    
    /** helper method to print the data without quotes and followed by delimiter
     */
    private void printAWordPlusDelimiter(String aWord)
    {
-      printer.print(aWord);
-      printer.print(delimiter);
+	   if (aWord.indexOf(delimiter) > -1)
+		   printAWordPlusQuoteAndDelimiter(aWord);
+	   else
+	   {
+		   printer.print(aWord);
+		   printer.print(delimiter);
+	   } 
    }
    
    /** helper method to print the data with quotes and followed by End of Line

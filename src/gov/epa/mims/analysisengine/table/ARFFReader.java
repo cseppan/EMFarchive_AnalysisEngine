@@ -10,7 +10,7 @@ import java.io.*;
  * This class is customized to read Monte Carlo inputfile
  * Created on April 1, 2004, 12:31 PM
  * @author  Parthee Partheepan, CEP, UNC-CHAPEL HILL
- * @version $Id: ARFFReader.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: ARFFReader.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  */
 public class ARFFReader extends FileParser
 {

@@ -12,7 +12,7 @@ import java.util.Vector;
  * <p>Copyright: Copyright (c) 2004</p>
  * <p>Company: CEP, UNC-Chapel Hill </p>
  * @author Parthee Partheepan
- * @version $Id: FileAdapter.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: FileAdapter.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
 */
 public class FileAdapter
 {
@@ -142,7 +142,7 @@ public class FileAdapter
             for(; i<args.length; i++)
             {
                //checking for argument with '-'. Since this indicates end of file Name specification
-               if(args[i].indexOf('-') > -1)
+               if(args[i].startsWith("-"))
                {
                   i--; // to go back one step so that the argument with '-' will 
                   // be caught one of other loops

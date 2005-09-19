@@ -10,7 +10,7 @@ import java.util.List;
  * an abstract extension of Node which can hold children
  *
  * @author Tommy E. Cathey
- * @version $Id: Branch.java,v 1.1 2005/09/19 14:14:13 rhavaldar Exp $
+ * @version $Id: Branch.java,v 1.2 2005/09/19 14:50:10 rhavaldar Exp $
  *
  **/
 public abstract class Branch

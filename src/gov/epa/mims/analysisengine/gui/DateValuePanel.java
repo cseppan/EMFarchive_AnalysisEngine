@@ -17,7 +17,7 @@ import java.util.Vector;
  * An editor that allows only dates in some format to be entered.
  *
  * @author Daniel Gatti
- * @version $Id: DateValuePanel.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: DateValuePanel.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  */
 public class DateValuePanel extends JPanel
 {

@@ -1,7 +1,6 @@
 package gov.epa.mims.analysisengine.tree;
 
 import java.io.Serializable;
-import java.awt.Toolkit;
 
 /**
  * class for controlling the region sizes of a plot <br>
@@ -26,7 +25,7 @@ import java.awt.Toolkit;
  *
  * @author    Tommy E. Cathey
  * @created   August 17, 2004
- * @version   $Id: DisplaySizeType.java,v 1.1 2005/09/19 14:14:13 rhavaldar Exp $
+ * @version   $Id: DisplaySizeType.java,v 1.2 2005/09/19 14:50:10 rhavaldar Exp $
  */
 public class DisplaySizeType
     extends AnalysisOption

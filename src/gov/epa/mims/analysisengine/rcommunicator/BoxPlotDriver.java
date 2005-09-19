@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * insures that Objects are called to generate all plot commands
  *
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @author Tommy E. Cathey
  ********************************************************/
 public class BoxPlotDriver extends AnnotationDriver

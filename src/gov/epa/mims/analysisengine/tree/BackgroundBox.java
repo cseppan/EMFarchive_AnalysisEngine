@@ -10,7 +10,7 @@ import java.io.Serializable;
  *
  * @author    Tommy E. Cathey
  * @created   September 13, 2004
- * @version   $Id: BackgroundBox.java,v 1.1 2005/09/19 14:14:14 rhavaldar Exp $
+ * @version   $Id: BackgroundBox.java,v 1.2 2005/09/19 14:50:10 rhavaldar Exp $
  */
 public class BackgroundBox
     implements LineTypeConstantsIfc,

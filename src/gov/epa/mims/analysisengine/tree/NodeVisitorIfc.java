@@ -4,7 +4,7 @@ package gov.epa.mims.analysisengine.tree;
  * Node visitor interface functions
  *
  * @author Tommy E. Cathey
- * @version $Id: NodeVisitorIfc.java,v 1.1 2005/09/19 14:14:13 rhavaldar Exp $
+ * @version $Id: NodeVisitorIfc.java,v 1.2 2005/09/19 14:50:10 rhavaldar Exp $
  *
  ***************************************************************/
 public interface NodeVisitorIfc

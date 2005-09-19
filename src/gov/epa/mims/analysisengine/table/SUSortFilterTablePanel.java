@@ -28,7 +28,7 @@ import java.awt.event.*;
  * <p>Description: Sensitivity And UnThis table can both sort and filter data based on criteria
  *    entred by the user. </p>
  * @author Daniel Gatti
- * @version $Id: SUSortFilterTablePanel.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: SUSortFilterTablePanel.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  */
 public class SUSortFilterTablePanel extends SortFilterTablePanel
 {
@@ -124,12 +124,14 @@ public class SUSortFilterTablePanel extends SortFilterTablePanel
       JButton plotButton = toolBar.add(action);
 
       plotButton.setToolTipText("Plot");
-
-      action = new StatsticsAction(this);
-      popupMenu.add(action);
-      JButton statsButton = toolBar.add(action);
-
-      statsButton.setToolTipText("Statistics");
+      
+      if(parent instanceof TableApp)
+      {
+         action = new StatsticsAction(this);
+         popupMenu.add(action);
+         JButton statsButton = toolBar.add(action);
+         statsButton.setToolTipText("Statistics");
+      }
 
       popupMenu.addSeparator();
 
@@ -410,9 +412,12 @@ public class SUSortFilterTablePanel extends SortFilterTablePanel
             HashMap hashMap = new HashMap();
             String depAxis = TreeDialog.getDependentAxis(this,aePlotType);
             hashMap.put(depAxis, unit);
-
-            data = TreeDialog.showTreeDialog((JFrame)parent,
+            String title = "Cutomizing "+aePlotType;
+            TreeDialog dialog = new TreeDialog((JFrame)parent,
                   aePlotType, dataSets, null, hashMap);
+            dialog.setTitle(title);
+            dialog.show();
+            data = dialog.getResultTree();
             // }
             // previousConfig.put(plotInfo.getPlotType(), data.clone());
             if (plotName != null)

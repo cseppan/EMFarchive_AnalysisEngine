@@ -15,18 +15,18 @@ RCS file: /project/work3/mims/fwrep/mimsfw/gov/epa/mims/analysisengine/table/Col
 retrieving revision 1.6
 diff -w -r1.6 ColumnFormatGUI.java
 22c22
-<  * @version $Id: ppai_diffs_9_2.txt,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+<  * @version $Id: ppai_diffs_9_2.txt,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
 ---
->  * @version $Id: ppai_diffs_9_2.txt,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+>  * @version $Id: ppai_diffs_9_2.txt,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
 Index: ColumnFormatInfo.java
 ===================================================================
 RCS file: /project/work3/mims/fwrep/mimsfw/gov/epa/mims/analysisengine/table/ColumnFormatInfo.java,v
 retrieving revision 1.2
 diff -w -r1.2 ColumnFormatInfo.java
 17c17
-<  * @version $Id: ppai_diffs_9_2.txt,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+<  * @version $Id: ppai_diffs_9_2.txt,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
 ---
->  * @version $Id: ppai_diffs_9_2.txt,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+>  * @version $Id: ppai_diffs_9_2.txt,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
 35c35
 <    public Format format = FormattedCellRenderer.nullFormatter;
 ---
@@ -58,9 +58,9 @@ diff -w -r1.3 ColumnFormatPanel.java
 5d4
 < import java.text.DecimalFormat;
 20c19
-<  * @version $Id: ppai_diffs_9_2.txt,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+<  * @version $Id: ppai_diffs_9_2.txt,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
 ---
->  * @version $Id: ppai_diffs_9_2.txt,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+>  * @version $Id: ppai_diffs_9_2.txt,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
 113c112
 <          formatPanel.setFormat(formatInfo.format);
 ---
@@ -107,9 +107,9 @@ RCS file: /project/work3/mims/fwrep/mimsfw/gov/epa/mims/analysisengine/table/Dou
 retrieving revision 1.6
 diff -w -r1.6 DoubleFormatPanel.java
 26c26
-<  * @version $Id: ppai_diffs_9_2.txt,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+<  * @version $Id: ppai_diffs_9_2.txt,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
 ---
->  * @version $Id: ppai_diffs_9_2.txt,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+>  * @version $Id: ppai_diffs_9_2.txt,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
 81a82,83
 >       this.format = format;
 > 
@@ -326,9 +326,9 @@ RCS file: /project/work3/mims/fwrep/mimsfw/gov/epa/mims/analysisengine/table/For
 retrieving revision 1.3
 diff -w -r1.3 FormatChooserPanel.java
 18c18
-<  * @version $Id: ppai_diffs_9_2.txt,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+<  * @version $Id: ppai_diffs_9_2.txt,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
 ---
->  * @version $Id: ppai_diffs_9_2.txt,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+>  * @version $Id: ppai_diffs_9_2.txt,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
 157c157
 <        else if (format instanceof DecimalFormat)
 ---
@@ -345,9 +345,9 @@ diff -w -r1.6 FormattedCellRenderer.java
 7d6
 < import java.text.DecimalFormat;
 25c24
-<  * @version $Id: ppai_diffs_9_2.txt,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+<  * @version $Id: ppai_diffs_9_2.txt,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
 ---
->  * @version $Id: ppai_diffs_9_2.txt,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+>  * @version $Id: ppai_diffs_9_2.txt,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
 140d138
 <        FormattedCellRenderer fc = null;
 143,144c141,142
@@ -379,9 +379,9 @@ RCS file: /project/work3/mims/fwrep/mimsfw/gov/epa/mims/analysisengine/table/Loa
 retrieving revision 1.3
 diff -w -r1.3 LoadConfigurationGUI.java
 52c52
-<  * @version $Id: ppai_diffs_9_2.txt,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+<  * @version $Id: ppai_diffs_9_2.txt,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
 ---
->  * @version $Id: ppai_diffs_9_2.txt,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+>  * @version $Id: ppai_diffs_9_2.txt,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
 278d277
 <            formats = (Hashtable)(model.getColumnFormatInfo()).clone();
 290a290
@@ -399,9 +399,9 @@ RCS file: /project/work3/mims/fwrep/mimsfw/gov/epa/mims/analysisengine/table/Ove
 retrieving revision 1.5
 diff -w -r1.5 OverallTableModel.java
 18c18
-<  * @version $Id: ppai_diffs_9_2.txt,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+<  * @version $Id: ppai_diffs_9_2.txt,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
 ---
->  * @version $Id: ppai_diffs_9_2.txt,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+>  * @version $Id: ppai_diffs_9_2.txt,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
 21,22c21
 <       extends MultiRowHeaderTableModel implements TableModelListener,
 < java.io.Serializable, FormatAndIndexInfoIfc
@@ -417,9 +417,9 @@ RCS file: /project/work3/mims/fwrep/mimsfw/gov/epa/mims/analysisengine/table/Row
 retrieving revision 1.7
 diff -w -r1.7 RowHeaderTable.java
 21c21
-<  * @version $Id: ppai_diffs_9_2.txt,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+<  * @version $Id: ppai_diffs_9_2.txt,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
 ---
->  * @version $Id: ppai_diffs_9_2.txt,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+>  * @version $Id: ppai_diffs_9_2.txt,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
 227c227
 <             column.setCellRenderer(new FormattedCellRenderer(new DecimalFormat("0")));
 ---
@@ -434,9 +434,9 @@ RCS file: /project/work3/mims/fwrep/mimsfw/gov/epa/mims/analysisengine/table/Sig
 retrieving revision 1.1
 diff -w -r1.1 SignificantDigitsFormat.java
 12c12
-<  * @version $Id: ppai_diffs_9_2.txt,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+<  * @version $Id: ppai_diffs_9_2.txt,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
 ---
->  * @version $Id: ppai_diffs_9_2.txt,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+>  * @version $Id: ppai_diffs_9_2.txt,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
 64a65
 >       setFromPattern(pattern);
 132a134,135
@@ -496,9 +496,9 @@ RCS file: /project/work3/mims/fwrep/mimsfw/gov/epa/mims/analysisengine/table/Sor
 retrieving revision 1.13
 diff -w -r1.13 SortFilterTablePanel.java
 36c36
-<  * @version $Id: ppai_diffs_9_2.txt,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+<  * @version $Id: ppai_diffs_9_2.txt,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
 ---
->  * @version $Id: ppai_diffs_9_2.txt,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+>  * @version $Id: ppai_diffs_9_2.txt,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
 92a93,95
 >    /** to keep track of the columnformatinfo for multiple columns **/
 >    protected ColumnFormatInfo formatInfo = null;

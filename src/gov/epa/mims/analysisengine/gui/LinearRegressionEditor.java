@@ -17,7 +17,7 @@ import javax.swing.*;
  * LinearRegressionEditor.java
  * A editor for the LinearRegression.
  * @author  Parthee R Partheepan
- * @version $Id: LinearRegressionEditor.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: LinearRegressionEditor.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  */
 public class LinearRegressionEditor extends OptionDialog
 {

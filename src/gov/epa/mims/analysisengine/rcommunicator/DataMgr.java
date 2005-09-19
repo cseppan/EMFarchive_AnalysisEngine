@@ -19,7 +19,7 @@ import java.util.Set;
 /**
  * controls the generation of the R data file
  *
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @author Tommy E. Cathey
  */
 public class DataMgr
@@ -289,7 +289,7 @@ public class DataMgr
     * inner class which wraps a DataSetIfc obj; it contains the ugly details of
     * writing the R data file
     *
-    * @version $Revision: 1.1 $
+    * @version $Revision: 1.2 $
     * @author Tommy E. Cathey
     */
    private class DataInfo

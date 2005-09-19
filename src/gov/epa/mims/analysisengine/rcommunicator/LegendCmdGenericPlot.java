@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * create generic legends
  *
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @author Tommy E. Cathey
  */
 public class LegendCmdGenericPlot extends LegendCmd implements java.io.Serializable

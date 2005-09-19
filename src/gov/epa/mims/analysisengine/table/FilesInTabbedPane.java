@@ -17,7 +17,7 @@ import java.util.Vector;
  *
  * Created on March 30, 2004, 11:34 AM
  * @author  parthee
- * @version $Id: FilesInTabbedPane.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: FilesInTabbedPane.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  */
 public class FilesInTabbedPane
 {

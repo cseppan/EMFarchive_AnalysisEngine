@@ -12,7 +12,7 @@ import gov.epa.mims.analysisengine.gui.StringEditableTablePanel;
  * This Dialog comes up when the user clicks the "Plot" button
  *
  * @author Prashant Pai, CEP UNC
- * @version $Id: PlottingInfoDialog.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: PlottingInfoDialog.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  */
 
 public class PlottingInfoDialog extends JDialog

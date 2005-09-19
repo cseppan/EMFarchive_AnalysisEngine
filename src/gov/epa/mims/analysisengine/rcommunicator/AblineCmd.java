@@ -6,7 +6,7 @@ import java.awt.Color;
 /**
  * DOCUMENT_ME
  *
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @author $author$
  */
 public class AblineCmd extends Cmd implements java.io.Serializable

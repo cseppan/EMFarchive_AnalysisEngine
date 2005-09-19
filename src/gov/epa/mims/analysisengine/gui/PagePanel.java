@@ -19,7 +19,7 @@ import java.awt.*;
  * OptionsPanel for that plot in the lower part of the panel.
  *
  * @author Alison Eyth
- * @version $Id: PagePanel.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: PagePanel.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  *
  **/
 

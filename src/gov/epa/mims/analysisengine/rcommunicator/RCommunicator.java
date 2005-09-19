@@ -20,7 +20,7 @@ import java.io.FileNotFoundException;
  * communicating with R
  *
  * @author Tommy E. Cathey
- * @version $Id: RCommunicator.java,v 1.1 2005/09/19 14:14:10 rhavaldar Exp $
+ * @version $Id: RCommunicator.java,v 1.2 2005/09/19 14:50:10 rhavaldar Exp $
  *
  **/
 public class RCommunicator extends Exec implements java.io.Serializable,
@@ -488,7 +488,7 @@ public class RCommunicator extends Exec implements java.io.Serializable,
     * thread class to communicate to R
     *
     * @author Tommy E. Cathey
-    * @version $Id: RCommunicator.java,v 1.1 2005/09/19 14:14:10 rhavaldar Exp $
+    * @version $Id: RCommunicator.java,v 1.2 2005/09/19 14:50:10 rhavaldar Exp $
     *
     **/
    class IssueCmdThread extends Thread

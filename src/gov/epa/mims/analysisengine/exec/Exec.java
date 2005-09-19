@@ -22,7 +22,7 @@ import java.util.Set;
  * abstract class for exec-ing a child process
  *
  * @author Tommy E. Cathey
- * @version $Id: Exec.java,v 1.1 2005/09/19 14:16:05 rhavaldar Exp $
+ * @version $Id: Exec.java,v 1.2 2005/09/19 14:50:15 rhavaldar Exp $
  *
  **/
 abstract public class Exec implements java.io.Serializable, Cloneable
@@ -603,7 +603,7 @@ abstract public class Exec implements java.io.Serializable, Cloneable
     * IO thread to read childs IO
     *
     * @author Tommy E. Cathey
-    * @version $Id: Exec.java,v 1.1 2005/09/19 14:16:05 rhavaldar Exp $
+    * @version $Id: Exec.java,v 1.2 2005/09/19 14:50:15 rhavaldar Exp $
     *
     **/
    class StdIOThread extends Thread

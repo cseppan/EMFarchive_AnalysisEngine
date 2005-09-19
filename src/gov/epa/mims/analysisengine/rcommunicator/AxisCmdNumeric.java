@@ -6,7 +6,7 @@ import gov.epa.mims.analysisengine.tree.AxisNumeric;
 /**
  * DOCUMENT_ME
  *
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @author $author$
  ********************************************************/
 public class AxisCmdNumeric extends AxisCmdGrids

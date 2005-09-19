@@ -8,7 +8,7 @@ import javax.swing.table.*;
  * <p>A data model that sorts it's data in ascending and descending order.
  *   It can also sort by multiple columns. </p>
  * @author Daniel Gatti
- * @version $Id: SortingTableModel.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: SortingTableModel.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  */
 public class SortingTableModel
       extends MultiRowHeaderTableModel
@@ -209,7 +209,7 @@ public class SortingTableModel
       int lower = start;
       int upper = middle + 1;
       int[] tmp = new int[finish - start + 1];
-System.out.println("column class="+getColumnClass(column));
+//System.out.println("column class="+getColumnClass(column));
       if (ascending)
       {
          int i = 0;

@@ -12,7 +12,7 @@ import gov.epa.mims.analysisengine.tree.TextBorder;
  * TextBorderEditor.java
  * A editor for the Text Border
  * @author  Parthee R Partheepan
- * @version $Id: TextBorderEditor.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: TextBorderEditor.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  */
 
 

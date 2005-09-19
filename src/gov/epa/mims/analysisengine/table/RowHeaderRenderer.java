@@ -7,7 +7,7 @@ import javax.swing.table.*;
 /**
  * A Render for the row of numbers on the left side of a table.
  * @author  Daniel Gatti
- * @version $Id: RowHeaderRenderer.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: RowHeaderRenderer.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  */
 public class RowHeaderRenderer extends JLabel implements TableCellRenderer
 {

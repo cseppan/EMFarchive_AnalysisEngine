@@ -7,7 +7,7 @@ import java.io.Serializable;
  * describes lines and point symbols for a plot
  *
  * @author Tommy E. Cathey
- * @version $Id: PageType.java,v 1.1 2005/09/19 14:14:14 rhavaldar Exp $
+ * @version $Id: PageType.java,v 1.2 2005/09/19 14:50:10 rhavaldar Exp $
  *
  **/
 public class PageType

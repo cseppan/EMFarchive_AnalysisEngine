@@ -14,7 +14,7 @@ import javax.swing.*;
  * TextBoxArrowEditor.java
  * An editor for the TextBoxArrow
  * @see TextBoxArrow.java
- * @version $Id: TextBoxArrowEditor.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: TextBoxArrowEditor.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  */
 public class TextBoxArrowEditor extends OptionDialog
 {

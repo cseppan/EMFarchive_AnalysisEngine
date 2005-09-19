@@ -57,7 +57,7 @@ import java.util.Vector;
  * The GUI will also contain a PagePanel for editing page and plot options
  *
  * @author Alison Eyth
- * @version $Id: TreeDialog.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: TreeDialog.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  *
  * @see gov.epa.mims.analysisengine.tree.Node
  * @see gov.epa.mims.analysisengine.tree.DataSets
@@ -262,7 +262,8 @@ public class TreeDialog extends JDialog
       dialog.dispose();
       return retVal;
    }
-
+   
+   
    /**
     * constructor with options for supplying a tree and datasetsadapter
     * @param tree Branch the optional tree which the dialog will work off of
@@ -612,7 +613,7 @@ public class TreeDialog extends JDialog
          rgenerator = createNewRGenerator();
       }
       this.pack();
-      //setLocation(ScreenUtils.getPointToCenter(this));
+      setLocation(ScreenUtils.getPointToCenter(this));
    }//initialize()
 
 
@@ -820,7 +821,14 @@ public class TreeDialog extends JDialog
    private void executeTree()
    {
       // trigger the creation of the plots by executing the tree
-      rgenerator.execute( tree );
+	  try
+	  {
+	        rgenerator.execute( tree );
+	  }
+	  catch (Exception e) {
+		DefaultUserInteractor.get().notifyOfException(this,"Error",e,UserInteractor.ERROR);
+		return;
+	  }
 
       // We needed to add this in to get the image files to write out properly.
       // Previously, we weren't calling RCommunicator.closePlotWindows() and
@@ -1499,7 +1507,9 @@ System.out.println("plotType="+plotType);
             /** use example data sets only  - don't build the whole tree */
             ExampleTree example = new ExampleTree(false);
             DataSets dataSets = example.getTree();
-            branch = TreeDialog.showTreeDialog(new JFrame(), plotType, dataSets, null, textValues);
+            TreeDialog dialog = new TreeDialog(new JFrame(), plotType, dataSets, null, textValues);
+            dialog.show();
+            branch = dialog.getResultTree();
          }
          else
          {

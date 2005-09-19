@@ -20,7 +20,7 @@ import java.util.NoSuchElementException;
  * blows up when I try this. We wanted to try and implement LabeledDataSetIfc
  * to be able to use these series in bar charts. DMG
  *
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @author Tommy E. Cathey
  */
 public class DoubleTimeSeries

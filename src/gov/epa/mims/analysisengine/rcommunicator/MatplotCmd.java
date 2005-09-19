@@ -17,7 +17,7 @@ import gov.epa.mims.analysisengine.tree.TimeSeries;
 /**
  * generates the matplot command
  *
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @author Tommy E. Cathey
  ********************************************************/
 public class MatplotCmd extends PlotCmd

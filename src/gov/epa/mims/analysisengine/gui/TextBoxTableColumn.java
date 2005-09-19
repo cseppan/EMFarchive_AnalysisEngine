@@ -19,7 +19,7 @@ import javax.swing.table.*;
  * @see TextBox.java
  * @see TextBoxArrow.java
  * @author Parthee Partheepan UNC
- * @version $Id: TextBoxTableColumn.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: TextBoxTableColumn.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  */
 
 public class TextBoxTableColumn extends SpecialTableColumn

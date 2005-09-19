@@ -11,7 +11,7 @@ import javax.swing.table.*;
  * example, if your underlying data contains integers and your filter says to
  * filter out any value less than 5, the map in this model will only contain
  * the data in the underlying model with values < 5.
- * @version $Id: FilteringTableModel.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: FilteringTableModel.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  * @author  Daniel Gatti
  */
 public class FilteringTableModel
@@ -233,7 +233,7 @@ implements TableModelListener
    public int getRowCount()
    {
       //System.out.println("Filter : getRowCount() " + rowMap.length);
-      return underlyingModel.getRowCount();
+      return rowMap.length;
    } // getRowCount()
    
    /**
@@ -247,7 +247,7 @@ implements TableModelListener
    
    public Object getValueAt(int rowIndex, int columnIndex)
    {
-//      System.out.println("Filter : getValueAt("+rowIndex+", "+columnIndex+")");
+      //System.out.println("Filter : getValueAt("+rowIndex+", "+columnIndex+")");
       return underlyingModel.getValueAt(rowMap[rowIndex], colMap[columnIndex]);
    } // getValueAt()
    

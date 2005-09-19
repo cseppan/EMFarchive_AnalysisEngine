@@ -5,7 +5,7 @@ import java.io.OutputStream;
 /** FileInfo is a vector that stores all information required to import a file
  *
  * @author  Krithiga Thangavelu, CEP, UNC CHAPEL HILL.
- * @version $Id: FileInfo.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: FileInfo.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  */
 
 

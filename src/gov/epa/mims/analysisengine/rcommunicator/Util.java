@@ -23,7 +23,7 @@ import java.util.StringTokenizer;
 /**
  * DOCUMENT ME!
  *
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @author $author$
  */
 public class Util implements java.io.Serializable

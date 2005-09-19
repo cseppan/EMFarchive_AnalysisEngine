@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * generate a ScatterPlotCmd R command
  *
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @author Tommy E. Cathey
  ********************************************************/
 public class TimeSeriesPlotCmd extends MatplotCmd

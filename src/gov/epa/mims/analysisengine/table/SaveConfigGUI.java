@@ -52,7 +52,7 @@ import javax.swing.event.ListSelectionEvent;
  * in the selected output file.
  *
  * @author  Krithiga Thangavelu, CEP, UNC CHAPEL HILL.
- * @version $Id: SaveConfigGUI.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: SaveConfigGUI.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  **/
 
 public class SaveConfigGUI extends javax.swing.JDialog {

@@ -10,7 +10,7 @@ import gov.epa.mims.analysisengine.tree.OutlineType;
  * A utility panel which have a Label, the ImageChooserPanel, the DoubleValuePanel
  * and a CheckBox
  * @author Alison Eyth, Daniel Gatti, Parthee Partheepan, CEP UNC
- * @version $Id: OutlineStylePanel.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: OutlineStylePanel.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  */
 
 public class OutlineStylePanel extends javax.swing.JPanel

@@ -18,7 +18,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
-import java.util.StringTokenizer;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -27,7 +26,7 @@ import java.util.Set;
 /**
  * DOCUMENT ME!
  *
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @author $author$
  */
 public class LookUp implements java.io.Serializable,

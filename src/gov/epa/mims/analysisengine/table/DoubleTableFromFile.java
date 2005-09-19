@@ -11,7 +11,7 @@ import java.io.*;
  * this class implements the DoubleTable interface of the cosu package
  *
  * @author Steve Howard
- * @version $Id: DoubleTableFromFile.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: DoubleTableFromFile.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  *
  **/
 

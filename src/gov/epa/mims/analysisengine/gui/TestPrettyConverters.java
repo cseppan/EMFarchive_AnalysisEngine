@@ -9,7 +9,7 @@ import javax.swing.ImageIcon;
  * A class to test the PrettyOptionStringConverter and the PrettyOptionImageIconConverter.
  *
  * @author Daniel Gatti
- * @version $Id: TestPrettyConverters.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: TestPrettyConverters.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  */
 public class TestPrettyConverters extends TestCase
 {

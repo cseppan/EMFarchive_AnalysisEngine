@@ -1,54 +1,29 @@
 package gov.epa.mims.analysisengine.table;
 
-import gov.epa.mims.analysisengine.gui.ChildHasChangedListener;
 import gov.epa.mims.analysisengine.gui.DefaultUserInteractor;
-import gov.epa.mims.analysisengine.gui.GUIUserInteractor;
-import gov.epa.mims.analysisengine.gui.HasChangedListener;
-import gov.epa.mims.analysisengine.gui.OptionDialog;
 import gov.epa.mims.analysisengine.gui.UserInteractor;
+import gov.epa.mims.analysisengine.gui.GUIUserInteractor;
+import gov.epa.mims.analysisengine.gui.ChildHasChangedListener;
+import gov.epa.mims.analysisengine.gui.HasChangedListener;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.File;
+import java.awt.*;
+import java.awt.event.*;
 import java.text.Format;
-import java.util.Arrays;
-import java.util.Calendar;
-
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JToolBar;
-import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+import java.util.*;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
+import javax.swing.*;
+import javax.swing.table.*;
+import java.io.File;
+
+import gov.epa.mims.analysisengine.gui.OptionDialog;
 
 /**
  * <p>Title: Sorting Filter Table</p>
  * <p>Description: This table can both sort and filter data based on criteria
  *    entred by the user. </p>
  * @author Daniel Gatti
- * @version $Id: SortFilterTablePanel.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: SortFilterTablePanel.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  */
 public class SortFilterTablePanel extends JPanel implements TableModelListener, 
    ChildHasChangedListener
@@ -334,9 +309,6 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener,
       
    }
    
-   public JTable getTable() {
-       return table;
-   }
    
    /**
     * Create the table models.
@@ -883,7 +855,7 @@ ColumnFormatInfo(table.getColumnModel().getColumn(i)));
    public void tableChanged(TableModelEvent e)
    {
       updateStatusLabel();
-//      update();
+      update();
    } // tableChanged()
    
    protected void updateFormat()

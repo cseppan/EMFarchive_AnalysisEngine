@@ -7,7 +7,7 @@ import javax.swing.table.DefaultTableModel;
  * <p>Copyright: Copyright (c) 2003</p>
  * <p>Company: </p>
  * @author Daniel Gatti
- * @version $Id: SimpleTestModel.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: SimpleTestModel.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  */
 public class SimpleTestModel extends MultiRowHeaderTableModel
 {

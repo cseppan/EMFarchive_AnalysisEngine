@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * describes a text box object
  *
  * @author Tommy E. Cathey
- * @version $Id: TextBox.java,v 1.1 2005/09/19 14:14:14 rhavaldar Exp $
+ * @version $Id: TextBox.java,v 1.2 2005/09/19 14:50:10 rhavaldar Exp $
  *
  * <p>Elided Code Example:
  * <pre>

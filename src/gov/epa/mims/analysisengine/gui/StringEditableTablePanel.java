@@ -2,6 +2,8 @@ package gov.epa.mims.analysisengine.gui;
 
 import java.awt.event.*;
 import java.util.Arrays;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Comparator;
 import javax.swing.*;
 import javax.swing.table.*;
@@ -12,7 +14,7 @@ import javax.swing.table.*;
  *
  * @author Daniel Gatti, CEP, UNC
  * @see gov.epa.mims.analysisengine.gui.EditableTablePanel.java
- * @version $Id: StringEditableTablePanel.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: StringEditableTablePanel.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  */
 public class StringEditableTablePanel extends EditableTablePanel
 {
@@ -46,11 +48,17 @@ public class StringEditableTablePanel extends EditableTablePanel
     */
    public Object[] getValue()
    {
-      String[] retval = new String[tableModel.getRowCount()];
+      List list = new ArrayList();
       for (int r = tableModel.getRowCount() - 1; r >= 0; --r)
-         retval[r] = (String)tableModel.getValueAt(r, 1);
-      
-      return retval;
+      {
+         String value = (String)tableModel.getValueAt(r, 1);
+         if(!value.equalsIgnoreCase(DOUBLE_CLICK_TO_SELECT) &&
+            !value.equalsIgnoreCase(DOUBLE_CLICK_TO_ENTER))
+         {
+            list.add(value);
+         }
+      }
+      return list.toArray();
    }
    
    /**

@@ -10,7 +10,7 @@ import javax.swing.table.AbstractTableModel;
 * SpecialTableModel.java
  * A model which have header and footer information inaddition to the parent class
  * @author  Parthee Partheepan
- * @version $Id: SpecialTableModel.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: SpecialTableModel.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  */
 public class SpecialTableModel extends MultiRowHeaderTableModel
 {

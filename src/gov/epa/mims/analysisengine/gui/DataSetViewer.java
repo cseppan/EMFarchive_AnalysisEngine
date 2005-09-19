@@ -24,7 +24,7 @@ import java.text.DecimalFormat;
  * To see an example, run main
  *
  * @author Steve Howard
- * @version $Id: DataSetViewer.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: DataSetViewer.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  *
  **/
 

@@ -11,7 +11,7 @@ import java.util.List;
  * generate a ParFigCmd R command
  * <br>
  *
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @author Tommy E. Cathey
  ********************************************************/
 public class ParFigCmd extends Cmd

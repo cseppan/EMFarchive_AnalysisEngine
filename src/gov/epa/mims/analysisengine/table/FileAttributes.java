@@ -7,7 +7,7 @@ package gov.epa.mims.analysisengine.table;
  * Copyright:    Copyright (c) 1998
  * Company:      MCNC-North Carolina Supercomputing Center
  * @author Daniel Gatti
- * @version $Id: FileAttributes.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: FileAttributes.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  */
 public class FileAttributes
 {

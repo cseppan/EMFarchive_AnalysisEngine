@@ -24,7 +24,7 @@ import java.util.Vector;
  *   loading and editing to the user.
  *
  *   @author  Krithiga Thangavelu, CEP, UNC CHAPEL HILL.
- *   @version $Id: FileHistoryDialog.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ *   @version $Id: FileHistoryDialog.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  */
 
 public class FileHistoryDialog extends javax.swing.JDialog {

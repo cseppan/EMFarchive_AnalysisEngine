@@ -116,7 +116,7 @@ import java.util.Vector;
  *
  *
  * @author Tommy E. Cathey
- * @version $Id: BarPlot.java,v 1.1 2005/09/19 14:14:14 rhavaldar Exp $
+ * @version $Id: BarPlot.java,v 1.2 2005/09/19 14:50:10 rhavaldar Exp $
  *
  **/
 public class BarPlot
@@ -392,7 +392,7 @@ public class BarPlot
     */
    public void createDataSetKeys(ArrayList dataSets) throws Exception
    {
-System.out.println("the datasets size ="+dataSets.size());
+//System.out.println("the datasets size ="+dataSets.size());
       if(dataSets.size() >1)
       {
          throw new Exception(

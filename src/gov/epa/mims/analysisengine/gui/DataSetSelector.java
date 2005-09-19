@@ -20,7 +20,7 @@ import gov.epa.mims.analysisengine.tree.DataSetInfo;
  * Select the data sets to use in a plot from the list of available datasets
  *
  * @author Alison Eyth, CEP UNC
- * @version $Id: DataSetSelector.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: DataSetSelector.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  */
 public class DataSetSelector
     extends JDialog {
@@ -83,6 +83,7 @@ public class DataSetSelector
     // set up list of all data sets and selected data sets
     initializeDataSets(initialSelection);
     initialize();
+    
   }//ArrayEditorDialog(double[])
 
 
@@ -174,8 +175,6 @@ public class DataSetSelector
 
   private void initialize()
   {
-    // make the dialog come up in the center of the screen
-    //this.setLocationRelativeTo(JOptionPane.getRootFrame());
     Container contentPane = this.getContentPane();
     contentPane.setLayout(new BorderLayout());
     JPanel listPanel = new JPanel();
@@ -376,6 +375,8 @@ public class DataSetSelector
 
     setModal(true);
     pack();
+//  make the dialog come up in the center of the screen
+    this.setLocationRelativeTo(getParent());
     setVisible(true);
   }//initialize()
 

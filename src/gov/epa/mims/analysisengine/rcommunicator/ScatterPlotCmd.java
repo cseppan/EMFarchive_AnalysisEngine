@@ -17,7 +17,7 @@ import gov.epa.mims.analysisengine.tree.LinearRegression;
  * This class extends MatplotCmd and is responsible for setting
  * parameters particular to generating a Scatter Plot
  *
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @author Tommy E. Cathey
  ********************************************************/
 public class ScatterPlotCmd extends MatplotCmd

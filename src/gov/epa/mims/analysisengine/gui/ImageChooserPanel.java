@@ -7,7 +7,7 @@ import javax.swing.*;
  * A utility panel for choosing among icon values.. includes options to have a label,
  * place the label on top or on the side
  * @author Prashant Pai, Parthee Partheepan CEP UNC
- * @version $Id: ImageChooserPanel.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: ImageChooserPanel.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  * @see
  */
 

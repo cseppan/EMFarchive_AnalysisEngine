@@ -14,7 +14,7 @@ import gov.epa.mims.analysisengine.gui.OptionDialog;
  * A GUI that allows the user to specify sorting information for a table.
  *
  * @author  Daniel Gatti
- * @version $Id: SortGUI.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: SortGUI.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  */
 public class SortGUI extends OptionDialog
 {

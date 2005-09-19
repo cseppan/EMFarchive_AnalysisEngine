@@ -7,7 +7,7 @@ import java.awt.Color;
  * a Constants interface
  *
  * @author Tommy E. Cathey
- * @version $Id: ColorConstantsIfc.java,v 1.1 2005/09/19 14:14:13 rhavaldar Exp $
+ * @version $Id: ColorConstantsIfc.java,v 1.2 2005/09/19 14:50:10 rhavaldar Exp $
  *
  ***************************************************************/
 public interface ColorConstantsIfc

@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * class for drawing logrithmic grid lines in R
  *
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @author Tommy E. Cathey
  ********************************************************/
 public class LogGridCmd extends Cmd

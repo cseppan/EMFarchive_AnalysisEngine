@@ -16,7 +16,7 @@ import java.io.IOException;
  * It derives from FileParser for compatibility with the rest of the model
  * Created on April 1, 2004, 12:31 PM
  * @author  Krithiga Thangavelu, CEP, UNC-CHAPEL HILL
- * @version $Id: FixedWidthReader.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: FixedWidthReader.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  */
 
 public class FixedWidthReader extends FileParser

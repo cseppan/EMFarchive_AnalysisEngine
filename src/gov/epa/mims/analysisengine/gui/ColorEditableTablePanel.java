@@ -15,7 +15,7 @@ import javax.swing.table.TableColumn;
  *
  * @author Daniel Gatti, CEP, UNC
  * @see gov.epa.mims.analysisengine.gui.EditableTablePanel.java
- * @version $Id: ColorEditableTablePanel.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: ColorEditableTablePanel.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  */
 public class ColorEditableTablePanel extends EditableTablePanel
 {

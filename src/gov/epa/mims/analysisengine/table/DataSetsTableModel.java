@@ -14,7 +14,7 @@ import gov.epa.mims.analysisengine.tree.DataSetIfc;
  * <p>Copyright: Copyright (c) 2003</p>
  * <p>Company: CEP, UNC-Chapel Hill </p>
  * @author Daniel Gatti, Parthee Partheepan
- * @version $Id: DataSetsTableModel.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: DataSetsTableModel.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  */
 public class DataSetsTableModel extends SpecialTableModel
 {

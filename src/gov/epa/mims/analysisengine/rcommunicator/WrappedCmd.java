@@ -1,12 +1,11 @@
 package gov.epa.mims.analysisengine.rcommunicator;
 
-import java.util.StringTokenizer;
 
 /**
  * class_description
  *
  * @author Tommy E. Cathey
- * @version $Id: WrappedCmd.java,v 1.1 2005/09/19 14:14:10 rhavaldar Exp $
+ * @version $Id: WrappedCmd.java,v 1.2 2005/09/19 14:50:10 rhavaldar Exp $
  *
  **/
 public class WrappedCmd

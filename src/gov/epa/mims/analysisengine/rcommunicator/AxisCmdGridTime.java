@@ -11,7 +11,7 @@ import java.util.TimeZone;
 /**
  * DOCUMENT_ME
  *
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @author $author$
  ********************************************************/
 public class AxisCmdGridTime extends AxisCmdTime

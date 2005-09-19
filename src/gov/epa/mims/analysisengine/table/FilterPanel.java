@@ -25,7 +25,7 @@ import gov.epa.mims.analysisengine.gui.HasChangedListener;
  * <p>Copyright: Copyright (c) 2003</p>
  * <p>Company: UNC - CEP</p>
  * @author Daniel Gatti
- * @version $Id: FilterPanel.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: FilterPanel.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  */
 public class FilterPanel extends JPanel implements ChildHasChangedListener, ActionListener
 {
@@ -254,11 +254,13 @@ public class FilterPanel extends JPanel implements ChildHasChangedListener, Acti
   {
       if(e.getSource() == addBtn)
       {
+         stopTableEditing();
          addRow();
          update();
       }
       else if(e.getSource() == deleteBtn)
       {
+         stopTableEditing();
          deleteSelectedRows();
          update();
       }
@@ -276,7 +278,17 @@ public class FilterPanel extends JPanel implements ChildHasChangedListener, Acti
       {
          update();
       }
-  }   
+  }
+  
+  // This handles the case where the user has entered a value in the cell
+      // but has not pressed "Enter" to stop editing and record the value.
+  private void stopTableEditing()
+  {
+     if (table.isEditing())
+      {
+         table.getCellEditor().stopCellEditing();
+      }
+  }
 
    /**
     *  Return the Strings in the table as a String[][].
@@ -286,10 +298,7 @@ public class FilterPanel extends JPanel implements ChildHasChangedListener, Acti
    {
       // This handles the case where the user has entered a value in the cell
       // but has not pressed "Enter" to stop editing and record the value.
-      if (table.isEditing())
-      {
-         table.getCellEditor().stopCellEditing();
-      }
+      stopTableEditing();
 
       int numRows = table.getRowCount();
       int numCols = table.getColumnCount();
@@ -358,7 +367,10 @@ public class FilterPanel extends JPanel implements ChildHasChangedListener, Acti
 
 
    /**
+    *
     *  Set the Strings in the table as a String[][].
+    *  If the data contains columns names not exist in the filterChoices then that row won't be added
+    *  If the rows already exist then it will be removed first before adding the data
     *  @param String[][] that is the new data in the table.
     */
    public void setTableData(String[][] newData)
@@ -379,9 +391,18 @@ public class FilterPanel extends JPanel implements ChildHasChangedListener, Acti
 
       // Fill the table with new data.
       numRows = newData.length;
+      List filterChoiceList = Collections.EMPTY_LIST;
+      if(filteringChoices != null)
+      {
+         filterChoiceList = Arrays.asList(filteringChoices);
+      }
+      
       for (int r = 0; r < numRows; r++)
       {
-         model.addRow(newData[r]);
+         if(filterChoiceList.contains(newData[r][NAME_COLUMN]))
+         {
+            model.addRow(newData[r]);
+         }
       } // for(r)
 
       model.fireTableDataChanged();

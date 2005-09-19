@@ -17,7 +17,7 @@ import gov.epa.mims.analysisengine.tree.*;
  * It is up to sub-classes to layout the GUI elements and call the get and set
  * methods.
  * @author Daniel Gatti
- * @version $Id: AxisEditor.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: AxisEditor.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  */
 
 public class AxisEditor

@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.HashMap;
 /**
  * @author Prashant Pai, UNC Chapel Hill
- * @version $Id: DBManager.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: DBManager.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  **/
 
 public class DBManager
@@ -269,44 +269,7 @@ public class DBManager
 //      return null;
 //    }
 
-   /** a helper method for checking whether required tables for a particular
-    * db type exist in a database
-    * @param dbTypeTables String [] required tables for a particual type of db
-    * @param dbNameTables String [] a set of tables in a particular database
-    * @return boolean true if dbTypeTables are subset of dbNameTables
-    */
-   private static boolean checkTables(String[] dbTypeTables, String [] dbNameTables)
-   {
-
-      boolean check = false;
-      if(dbTypeTables != null || dbTypeTables.length !=0
-         || dbNameTables != null || dbNameTables.length !=0)
-      {
-        for(int i=0; i < dbTypeTables.length; i++)
-        {
-          for(int j=0; j< dbNameTables.length; j++)
-          {
-            if (dbTypeTables[i].compareToIgnoreCase(dbNameTables[j]) == 0)
-            {
-               check = true;
-               break;
-            }
-            else
-            {
-              check = false;
-              continue;
-            }
-          }
-          if(!check)
-          {
-            return check;
-          }
-        }
-      }
-      return check;
-   }
-
-    /**
+   /**
    * Create the table using the header
    * @param colNames the column names
    * @param colTypes the column types

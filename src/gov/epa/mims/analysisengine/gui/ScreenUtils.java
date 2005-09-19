@@ -4,7 +4,7 @@ package gov.epa.mims.analysisengine.gui;
  * <p>Title: ScreenUtils </p>
  * <p>Description: Utilities for positioning windows on the screen</p>
  * @author Alison Eyth
- * @version $Id: ScreenUtils.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: ScreenUtils.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  *
  */
 import java.awt.*;

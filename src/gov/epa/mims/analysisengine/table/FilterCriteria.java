@@ -9,7 +9,7 @@ import java.util.*;
 /**
  * A set of criteria for filtering data in a table.
  * @author  Daniel Gatti
- * @version $Id: FilterCriteria.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: FilterCriteria.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  */
 public class FilterCriteria implements java.io.Serializable,Cloneable
 {
@@ -64,7 +64,7 @@ public class FilterCriteria implements java.io.Serializable,Cloneable
     *  Could be a Date, String, Integer, Double... */
    private Comparable[] values = null;
    
-   //private List valuesList = null;
+   private Class[] allColumnClasses = null;
    
    
    /** The formatters that are used for each column. This is needed to handle
@@ -92,6 +92,8 @@ public class FilterCriteria implements java.io.Serializable,Cloneable
    private transient FormatAndIndexInfoIfc model = null;
    
    private boolean applyFilters = true;
+   
+   
 
    public FilterCriteria()
    {
@@ -581,6 +583,21 @@ public class FilterCriteria implements java.io.Serializable,Cloneable
          append(OPERATION_STRINGS[length-1]).append(" ").
          append(values[length-1]);     
       return sb.toString();
+   }
+   
+   public Class[] getAllColumnClasses()
+   {
+      return allColumnClasses;
+   }
+   
+   public void setAllColumnClasses(Class[] columnClasses)
+   {
+      if(columnClasses.length != allColumnNames.length)
+      {
+         throw new IllegalArgumentException("The column classes and " +
+            "allColumnNames arrays should be of same length");
+      }
+      this.allColumnClasses = columnClasses;
    }
     
 //    /** Getter for property id.

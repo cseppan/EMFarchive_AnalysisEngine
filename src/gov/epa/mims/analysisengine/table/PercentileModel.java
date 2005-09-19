@@ -6,7 +6,7 @@ package gov.epa.mims.analysisengine.table;
  * <p>Copyright: Copyright (c) 2004</p>
  * <p>Company: CEP, UNC-Chapel Hill </p>
  * @author Parthee Partheepan
- * @version $Id: PercentileModel.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: PercentileModel.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  */
 
 public class PercentileModel

@@ -9,7 +9,7 @@ import java.util.Set;
 /**
  * The information needed to sort a set of columns.
  * @author  Daniel Gatt
- * @version $Id: SortCriteria.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: SortCriteria.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  */
 public class SortCriteria implements java.io.Serializable
 {

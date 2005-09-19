@@ -7,7 +7,7 @@ import java.io.Serializable;
  * World coordinates class
  *
  * @author Alison Eyth
- * @version $Id: WorldCoordinates.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: WorldCoordinates.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  *
  **/
 public class WorldCoordinates implements Cloneable

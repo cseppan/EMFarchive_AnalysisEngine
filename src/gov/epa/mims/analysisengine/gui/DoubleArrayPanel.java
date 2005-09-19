@@ -8,7 +8,7 @@ import java.awt.event.*;
  * A utility panel to display and edit color arrays
  *
  * @author Prashant Pai, CEP UNC
- * @version $Id: DoubleArrayPanel.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: DoubleArrayPanel.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  */
 
 public class DoubleArrayPanel extends JPanel {

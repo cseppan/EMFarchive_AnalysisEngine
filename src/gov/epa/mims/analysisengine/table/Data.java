@@ -5,7 +5,7 @@ import gov.epa.mims.analysisengine.tree.Branch;
 
 /**  Data - Storage for configuration information
  * @author  Krithiga Thangavelu, CEP, UNC CHAPEL HILL.
- * @version $Id: Data.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $  
+ * @version $Id: Data.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $  
  */
 
 public class Data implements java.io.Serializable {

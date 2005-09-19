@@ -17,7 +17,7 @@ import javax.swing.table.JTableHeader;
  * User can select files from a list shown using FileHistoryDialog and load them in the TableApp.
  *
  * @author  Krithiga Thangavelu, CEP, UNC CHAPEL HILL.
- * @version $Id: FileHistory.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: FileHistory.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  *
  */
 

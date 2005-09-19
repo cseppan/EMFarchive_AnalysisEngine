@@ -20,7 +20,7 @@ import gov.epa.mims.analysisengine.gui.UserInteractor;
  * data.
  *
  * @author  Daniel Gatti
- * @version $Id: FilterRowGUI.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: FilterRowGUI.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  */
 
 public class FilterRowGUI extends OptionDialog

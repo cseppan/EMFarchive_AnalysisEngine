@@ -53,7 +53,7 @@ import java.io.Serializable;
  * </pre>
  *
  * @author Tommy E. Cathey
- * @version $Id: Layout.java,v 1.1 2005/09/19 14:14:14 rhavaldar Exp $
+ * @version $Id: Layout.java,v 1.2 2005/09/19 14:50:10 rhavaldar Exp $
  *
  **/
 public class Layout

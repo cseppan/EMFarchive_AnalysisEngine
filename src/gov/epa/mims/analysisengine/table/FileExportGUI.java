@@ -29,7 +29,7 @@ import javax.swing.table.TableColumnModel;
  * GUIInterface to the exportGUI
  * Created on April 5, 2004, 2:46 PM
  * @author  Parthee Partheepan, CEP, UNC CHAPEL HILL.
- * @version $Id: FileExportGUI.java,v 1.1 2005/09/19 14:14:04 rhavaldar Exp $
+ * @version $Id: FileExportGUI.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  */
 public class FileExportGUI extends JDialog
 {

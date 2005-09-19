@@ -16,7 +16,7 @@ import gov.epa.mims.analysisengine.AnalysisEngineConstants;
 /**
  * DOCUMENT_ME
  *
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @author Tommy E. Cathey
  ********************************************************/
 public class ReadTableCmd extends Cmd

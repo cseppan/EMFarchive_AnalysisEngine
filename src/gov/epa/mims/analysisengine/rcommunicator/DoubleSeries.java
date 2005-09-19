@@ -17,7 +17,7 @@ import java.util.NoSuchElementException;
  * class to hold Double series data
  *
  * @author Tommy E. Cathey
- * @version $Id: DoubleSeries.java,v 1.1 2005/09/19 14:14:10 rhavaldar Exp $
+ * @version $Id: DoubleSeries.java,v 1.2 2005/09/19 14:50:10 rhavaldar Exp $
  *
  *****************************************************/
 public class DoubleSeries extends AbstractDataSet implements DataSetIfc,

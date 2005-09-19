@@ -4,7 +4,7 @@ package gov.epa.mims.analysisengine;
  * class used to safely suspend threads
  *
  * @author Tommy E. Cathey
- * @version $Id: SuspendRequestor.java,v 1.1 2005/09/19 14:16:05 rhavaldar Exp $
+ * @version $Id: SuspendRequestor.java,v 1.2 2005/09/19 14:50:15 rhavaldar Exp $
  *
  **/
 public class SuspendRequestor
