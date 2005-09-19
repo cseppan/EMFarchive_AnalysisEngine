@@ -1,0 +1,562 @@
+? META-INF
+? build.xml
+? diffs_2_18.txt
+? gui/.nbattrs
+? gui/META-INF
+? gui/diff_12_17
+? gui/diffs
+? gui/diffs_10_15.txt
+? gui/diffs_10_29.txt
+? gui/diffs_12_19.txt
+? gui/diffs_12_21.txt
+? gui/diffs_1_12.txt
+? gui/diffs_2_17.txt
+? gui/diffs_8_26.txt
+? gui/diffs_9_2.txt
+? gui/icons.zip
+? gui/icons/Thumbs.db
+? gui/icons/lineStyles/Thumbs.db
+? gui/icons/symbols/Thumbs.db
+? rcommunicator/diffs_10_15.txt
+? stats/.nbattrs
+? stats/META-INF
+? table/.nbattrs
+? table/FormattedCellRenderer.sav
+? table/META-INF
+? table/PlotTypeConverter.java_p
+? table/diff_7_30.txt
+? table/diff_7_30_v2.txt
+? table/diffs_10_15.txt
+? table/diffs_10_29.txt
+? table/diffs_11_19.txt
+? table/diffs_2_17.txt
+? table/diffs_8_26_krith.txt
+? table/diffs_8_26_parthee.ttxt
+? table/diffs_8_6.txt
+? table/diffs_9_16.txt
+? table/diffs_9_2.txt
+? table/diffs_9_20.txt
+? table/diffs_9_22.txt
+? table/example
+? table/ppai_diffs_9_2.txt
+? table/icons/Thumbs.db
+? tree/.nbattrs
+? tree/META-INF
+? tree/New Folder
+? tree/diffs_10_15.txt
+? tree/diffs_10_29.txt
+? tree/diffs_1_12.txt
+? tree/doc-files/.nbattrs
+? tree/doc-files/MissingDataWithRankOrder.java
+? tree/doc-files/NaNInDSRankOrder.java
+? tree/doc-files/Rplots.ps
+? tree/doc-files/TestBarPlotLabelSort.java
+? tree/doc-files/TestBarPlotOneElementDS.java
+? tree/doc-files/mylogfile.txt
+Index: gui/LinearRegressionEditor.java
+===================================================================
+RCS file: /project/work3/mims/fwrep/mimsfw/gov/epa/mims/analysisengine/gui/LinearRegressionEditor.java,v
+retrieving revision 1.3
+diff -w -r1.3 LinearRegressionEditor.java
+88a89
+>       setTitle("Linear Regression Editor");
+Index: gui/LinearRegressionTypeEditor.java
+===================================================================
+RCS file: /project/work3/mims/fwrep/mimsfw/gov/epa/mims/analysisengine/gui/LinearRegressionTypeEditor.java,v
+retrieving revision 1.2
+diff -w -r1.2 LinearRegressionTypeEditor.java
+50a51
+>       setTitle("LR Type Editor");
+Index: gui/OptionInfo.java
+===================================================================
+RCS file: /project/work3/mims/fwrep/mimsfw/gov/epa/mims/analysisengine/gui/OptionInfo.java,v
+retrieving revision 1.32
+diff -w -r1.32 OptionInfo.java
+182c182
+<       defaultSortType.setMissingData(SortType.REMOVE);
+---
+>       defaultSortType.setMissingData(SortType.BEGINNING);
+518c518,524
+<       if(plotType.equals(AnalysisEngineConstants.CDF_PLOT))
+---
+>       if(plotType.equals(AnalysisEngineConstants.SCATTER_PLOT)){
+>          setScatterPlotDefaults();
+>       }
+>       else if(plotType.equals(AnalysisEngineConstants.DISCRETE_CATEGORY_PLOT)){
+>          setDiscreteCategoryPlotDefaults();
+>       }
+>       else if(plotType.equals(AnalysisEngineConstants.CDF_PLOT))
+525a532,537
+>       else if(plotType.equals(AnalysisEngineConstants.TIME_SERIES_PLOT)){
+>          setTimeSeriesPlotDefaults();
+>       }
+> //      else{
+> //         throw new IllegalArgumentException("'" + plotType + "' is not a valid argument");
+> //      }
+527a540,562
+>    private static void setScatterPlotDefaults()
+>    {
+>       LineType defaultLineType = new LineType();
+>       defaultLineType.setPlotStyle(LineType.POINTS);
+>       AvailableOptionsAndDefaults.addGlobalDefaultValue(LINE_TYPE, defaultLineType);
+>    }//setScatterPlotDefaults
+>    
+>    private static void setTimeSeriesPlotDefaults()
+>    {
+>       LineType defaultLineType = new LineType();
+>       defaultLineType.setPlotStyle(LineType.LINES);
+>       
+>       AvailableOptionsAndDefaults.addGlobalDefaultValue(LINE_TYPE, defaultLineType);
+>    }//setTimeSeriesPlotDefaults
+>    
+>    private static void setDiscreteCategoryPlotDefaults()
+>    {
+>       LineType defaultLineType = new LineType();
+>       defaultLineType.setPlotStyle(LineType.POINTS);
+>       
+>       AvailableOptionsAndDefaults.addGlobalDefaultValue(LINE_TYPE, defaultLineType);
+>    }//setDiscreteCategoryPlotDefaults
+>     
+Index: gui/TextBorderEditor.java
+===================================================================
+RCS file: /project/work3/mims/fwrep/mimsfw/gov/epa/mims/analysisengine/gui/TextBorderEditor.java,v
+retrieving revision 1.5
+diff -w -r1.5 TextBorderEditor.java
+88a89,98
+>    /** Creates a new instance of TextBorderEditor */
+>    public TextBorderEditor(TextBorder textBorder, String purpose)
+>    {
+>       super(true);
+>       this.purpose = purpose;
+>       this.initialize();
+>       addButtonPanel();
+>       setDataSource(textBorder, "");
+> 
+>    }
+Index: gui/TextBorderTableColumn.java
+===================================================================
+RCS file: /project/work3/mims/fwrep/mimsfw/gov/epa/mims/analysisengine/gui/TextBorderTableColumn.java,v
+retrieving revision 1.4
+diff -w -r1.4 TextBorderTableColumn.java
+140c140
+<             cellTextBorderEditor = new TextBorderEditor((TextBorder)obj);
+---
+>             cellTextBorderEditor = new TextBorderEditor((TextBorder)obj,TextEditor.EDITOR_REFLINE);
+Index: gui/TextEditor.java
+===================================================================
+RCS file: /project/work3/mims/fwrep/mimsfw/gov/epa/mims/analysisengine/gui/TextEditor.java,v
+retrieving revision 1.21
+diff -w -r1.21 TextEditor.java
+94,98c94,101
+<    /**A boolean to indicate whether this gui is used for setting labels in the Axis
+<     * Editors
+<     */
+<    private boolean axisLabelEditor = false;
+< 
+---
+>    //   /**A boolean to indicate whether this gui is used for setting labels in the Axis 
+> //    * Editors
+> //    */
+> //   private boolean axisLabelEditor = false;
+> //   
+> //   /**A boolean to indicate whether this gui is used for setting text for the reference lines 
+> //    */
+> //   private boolean referenceLineText = false; 
+105a109,115
+>    /** defining the constants for this editor to be used in contex */
+>    public static final String EDITOR_DEFAULT = "editorDefault";
+>    public static final String EDITOR_AXIS = "editorAxis";
+>    public static final String EDITOR_REFLINE = "editorRefLine";
+>    
+>    protected String purpose = EDITOR_DEFAULT;
+>    
+127c137,138
+<     * @param flag boolean whether this gui is user for setting labels in the Axis
+---
+>     * @param isAxis boolean whether this gui is user for setting labels in the Axis
+>     * @param refLine boolean whehter this gui is used for setting labels for 
+129c140
+<    public TextEditor(Text aText, boolean flag)
+---
+>    public TextEditor(Text aText, String purpose)
+132c143,150
+<       axisLabelEditor = flag;
+---
+>       if(purpose.equals(EDITOR_DEFAULT)|| purpose.equals(EDITOR_AXIS) 
+>          ||purpose.equals(EDITOR_REFLINE)){
+>       }
+>       else{
+>          throw new IllegalArgumentException("Please use constants one of the following" + 
+>          " constants: EDITOR_DEFAULT, EDITOR_AXIS, EDITOR_REFLINE");
+>       }
+>       this.purpose = purpose;
+139,140d156
+< 
+< 
+277a294,296
+>       if(purpose.equals(EDITOR_REFLINE)){
+>          rotationPanel.setEnabled(false);
+>       }
+325c344
+<       if(axisLabelEditor)
+---
+>       if(purpose.equals(EDITOR_AXIS))
+417c436
+<       if(axisLabelEditor)
+---
+>       if(purpose.equals(EDITOR_AXIS))
+468c487
+<          if(!axisLabelEditor)
+---
+>          if(!purpose.equals(EDITOR_AXIS))
+519c538
+<          TextEditor textEditor = new TextEditor(titleText1,true);
+---
+>          TextEditor textEditor = new TextEditor(titleText1,EDITOR_DEFAULT);
+Index: gui/TextValuePanel.java
+===================================================================
+RCS file: /project/work3/mims/fwrep/mimsfw/gov/epa/mims/analysisengine/gui/TextValuePanel.java,v
+retrieving revision 1.5
+diff -w -r1.5 TextValuePanel.java
+91c91
+<          ed = new TextEditor(text,true);
+---
+>          ed = new TextEditor(text,TextEditor.EDITOR_AXIS);
+Index: gui/TreeDialog.java
+===================================================================
+RCS file: /project/work3/mims/fwrep/mimsfw/gov/epa/mims/analysisengine/gui/TreeDialog.java,v
+retrieving revision 1.38
+diff -w -r1.38 TreeDialog.java
+280d279
+<       OptionInfo.setPlotTypeDefaults(this.plotType);
+1416,1417d1414
+< 
+< 
+1430d1426
+< 
+Index: rcommunicator/BarPlotAxisHelper.java
+===================================================================
+RCS file: /project/work3/mims/fwrep/mimsfw/gov/epa/mims/analysisengine/rcommunicator/BarPlotAxisHelper.java,v
+retrieving revision 1.6
+diff -w -r1.6 BarPlotAxisHelper.java
+314c314,315
+<             rtrn = "c(as.character(" + y[0] + "Label" + "))";
+---
+>             //rtrn = "c(as.character(" + y[0] + "Label" + "))";
+>             rtrn = "c(as.character(lx[,1]))";
+Index: stats/Histogram.java
+===================================================================
+RCS file: /project/work3/mims/fwrep/mimsfw/gov/epa/mims/analysisengine/stats/Histogram.java,v
+retrieving revision 1.9
+diff -w -r1.9 Histogram.java
+109a110
+> //System.out.println("firstBinEntry="+firstBinEntry + " binLabels[0]= " + binLabels[0]);                     
+116a118
+> //System.out.println("hist.binEntries("+i+")="+hist.binEntries(i) + " binLabels["+(i+1)+"]= " + binLabels[i+1]);                        
+118a121
+> //System.out.println("lastBinEntry="+lastBinEntry + " binLabels[last]= " + binLabels[binLabels.length - 1]);         
+Index: table/FileParser.java
+===================================================================
+RCS file: /project/work3/mims/fwrep/mimsfw/gov/epa/mims/analysisengine/table/FileParser.java,v
+retrieving revision 1.11
+diff -w -r1.11 FileParser.java
+144c144
+< System.out.println("delimiter="+delim);      
+---
+> //System.out.println("delimiter="+delim);      
+318a319
+>          //the first time inside the loop, you won't get inside if elseif loop
+323c324
+<          else if (noOfColumnHeaderRows != 0) //ie noOfColumnHeaderRows >=1
+---
+>          else if (noOfColumnHeaderRows != 0) //ie noOfColumnHeaderRows >=1???RP
+329c330
+<             while (line1Tokens.length == 1 && line1Tokens[0].sym == TokenConstants.NULL_LITERAL);
+---
+>             while (line1Tokens!= null && line1Tokens.length == 1 && line1Tokens[0].sym == TokenConstants.NULL_LITERAL);
+332c333
+<          if (line1Tokens.length != valuesPerLine)
+---
+>          if (line1Tokens!= null  && line1Tokens.length != valuesPerLine)
+335c336
+<             while(line1Tokens.length != valuesPerLine)
+---
+>             while(line1Tokens!= null && line1Tokens.length != valuesPerLine)
+353c354
+<          
+---
+>          if(line1Tokens != null){
+380c381
+<                      if(j == valuesPerLine-1)
+---
+>                         if(j == valuesPerLine-1)//turn of flag once u read the first line
+391d391
+<                   
+400d399
+<          
+405a405,408
+>          }//if(token1Tokens != null)
+>          else{
+>              stillInColumnHeader = false;
+>          }
+407a411,415
+>       if(noOfColumnHeaderRows > 0 && line1Tokens == null){
+>          throw new Exception("The file contains atleast one numerical data column.If this is true\n"
+>          + "check the delimiter" 
+>           + "File Content upto 50 Lines:\n");
+>       }
+412d419
+<       
+414d420
+<       
+Index: table/FormattedCellRenderer.java
+===================================================================
+RCS file: /project/work3/mims/fwrep/mimsfw/gov/epa/mims/analysisengine/table/FormattedCellRenderer.java,v
+retrieving revision 1.9
+diff -w -r1.9 FormattedCellRenderer.java
+155c155,156
+<          else if (columnClass.equals(Double.class))
+---
+>          else if (columnClass.equals(Double.class) || 
+>             columnClass.equals(Float.class))
+Index: table/SortFilterTablePanel.java
+===================================================================
+RCS file: /project/work3/mims/fwrep/mimsfw/gov/epa/mims/analysisengine/table/SortFilterTablePanel.java,v
+retrieving revision 1.22
+diff -w -r1.22 SortFilterTablePanel.java
+452d451
+< 
+455d453
+< 
+458d455
+< 
+Index: table/TableApp.java
+===================================================================
+RCS file: /project/work3/mims/fwrep/mimsfw/gov/epa/mims/analysisengine/table/TableApp.java,v
+retrieving revision 1.23
+diff -w -r1.23 TableApp.java
+3a4
+> import gov.epa.mims.analysisengine.gui.OptionDialog;
+18a20,22
+> import java.sql.Connection;
+> import java.sql.Statement;
+> import java.sql.ResultSet;
+55c59
+<    static String version = "November 18, 2004";
+---
+>    static String version = "February 16, 2005";
+71a76
+>    JMenuItem queryMenuItem;
+130a136,142
+>    public TableApp(ResultSet rs, String tabName)
+>    {
+>       this();
+>       System.out.println(TITLE+" Version "+this.version+" (C4)");
+>       addNewTab(rs, tabName);
+>       
+>    }// TableApp();
+426c438,439
+<       mainTabbedPane.addMouseListener(new MouseAdapter() {
+---
+>       mainTabbedPane.addMouseListener(new MouseAdapter()
+>       {
+479d491
+< 
+632d643
+< 
+634d644
+< 
+638d647
+< 
+663a673,677
+>       queryMenuItem = createQueryMenuItem();
+>       queryMenuItem.setAccelerator(
+>          KeyStroke.getKeyStroke(KeyEvent.VK_D,ActionEvent.ALT_MASK));
+>       fileMenu.add(queryMenuItem);
+>       
+887a902,941
+>    /** a helper method to create importQueryItem
+>     */
+>    private JMenuItem createQueryMenuItem()
+>    {
+>       JMenuItem queryMenu = new JMenuItem("Database Query");
+>       // create a file chooser
+>       queryMenu.addActionListener(new ActionListener()
+>       {
+>          public void actionPerformed(ActionEvent e)
+>          {
+>             showDBQueryViewer();
+>          }// actionPerformed()
+>       });
+>       return queryMenu;
+>    }// createQueryMenuItem()
+>    
+>    
+>    private void showDBQueryViewer()
+>    {
+>       DBQueryViewer viewer = new DBQueryViewer(TableApp.this);
+>       if(viewer.getResult() == OptionDialog.OK_RESULT)
+>       {
+>          String dbName = viewer.getDBName();
+>          String query = viewer.getQuery();
+>          String tabName = viewer.getTabName();
+>          try
+>          {
+>             Connection con = DBManager.openConnection(dbName);
+>             Statement stmt = con.createStatement();
+>             ResultSet rs = stmt.executeQuery(query);
+>             addNewTab(rs, tabName);
+>          }
+>          catch(Exception e)
+>          {
+>             DefaultUserInteractor.get().notifyOfException(TableApp.this,"Error", e, UserInteractor.ERROR);
+>          }
+>          
+>       }
+>       
+>    }
+918a973,974
+>    
+>    
+1002a1059,1068
+>    /** Add a new tab and show the resultset in a sort filter table panel 
+>     *@param rs A ResultSet 
+>     *@param tabName A String name of the tab
+>     *@pre rs != null and not empty
+>     */
+>    public void addNewTab(ResultSet rs,String tabName){
+>       ResultSetTableModel rsModel = new ResultSetTableModel(rs);
+>       insertIntoTabbedPane(rsModel, tabName, tabName, "db");
+>    }
+>    
+Index: table/TablePanel.java
+===================================================================
+RCS file: /project/work3/mims/fwrep/mimsfw/gov/epa/mims/analysisengine/table/TablePanel.java,v
+retrieving revision 1.4
+diff -w -r1.4 TablePanel.java
+69,70c69,70
+<       fileNamePanel.add(label);
+<       fileNamePanel.add(fileNameTextField);
+---
+>       //fileNamePanel.add(label);
+>       //fileNamePanel.add(fileNameTextField);
+77c77,87
+<       add(headerPanel, BorderLayout.NORTH);
+---
+>       //add(headerPanel, BorderLayout.NORTH);
+>       JPanel tempHeader = new JPanel();
+>       String [] projectList = new String[3];
+>       projectList[0] = "Example Assessment";
+>       projectList[1] = "CAIR";
+>       projectList[2] = "ALL";
+>       JComboBox projects = new JComboBox(projectList);
+>       JLabel projLabel = new JLabel("Project: ");
+>       tempHeader.add(projLabel);
+>       tempHeader.add(projects);
+>       add(tempHeader, BorderLayout.NORTH);
+93c103,119
+<       add(footerPanel, BorderLayout.SOUTH);
+---
+>       //add(footerPanel, BorderLayout.SOUTH);
+>       JPanel tempFooter = new JPanel();
+>       JButton newButton = new JButton("New");
+>       JButton copyButton = new JButton("Copy");
+>       JButton editButton = new JButton("Edit");
+>       JButton delButton = new JButton("Delete");
+>       JButton runButton = new JButton("Run");
+>       JButton renameButton = new JButton("Rename");
+>       JButton helpButton = new JButton("Help");
+>       tempFooter.add(newButton);
+>       tempFooter.add(copyButton);
+>       tempFooter.add(editButton);
+>       tempFooter.add(delButton);
+>       tempFooter.add(runButton);
+>       tempFooter.add(renameButton);
+>       tempFooter.add(helpButton);
+>       add(tempFooter, BorderLayout.SOUTH);
+Index: tree/doc-files/ExampleBarPlot123.java
+===================================================================
+RCS file: /project/work3/mims/fwrep/mimsfw/gov/epa/mims/analysisengine/tree/doc-files/ExampleBarPlot123.java,v
+retrieving revision 1.3
+diff -w -r1.3 ExampleBarPlot123.java
+7a8
+> import gov.epa.mims.analysisengine.rcommunicator.DoubleSeries;
+236c237
+<    private LabeledDoubleSeries initData1(String seriesName)
+---
+>    private DoubleSeries initData1(String seriesName)
+238c239
+<       LabeledDoubleSeries lds = new LabeledDoubleSeries();
+---
+>       DoubleSeries lds = new DoubleSeries();
+241,244c242,245
+<       lds.addData(1E-6,"Formaldehyde");
+<       lds.addData(1E-5,"Benzene");
+<       lds.addData(2E-5,"Benzene");
+<       lds.addData(3E-5,"MethylMercury");
+---
+>       lds.addData(1E-5);//,"Formaldehyde");
+>       lds.addData(3E-5);//,"Benzene");
+>       lds.addData(5E-5);//,"Benzene");
+>       lds.addData(7E-5);//,"MethylMercury");
+249c250
+<    private LabeledDoubleSeries initData2(String seriesName)
+---
+>    private DoubleSeries initData2(String seriesName)
+251c252
+<       LabeledDoubleSeries lds = new LabeledDoubleSeries();
+---
+>       DoubleSeries lds = new DoubleSeries();
+254,257c255,258
+<       lds.addData(2E-6,"Chromium");
+<       lds.addData(3E-3,"Benzene");
+<       lds.addData(2E-5,"MethylMercury");
+< 
+---
+>       lds.addData(2E-6);////,"Chromium");
+>       lds.addData(4E-3);//,"Benzene");
+>       lds.addData(62E-5);//,"MethylMercury");
+>       lds.addData(8E-5);
+272c273
+<    private LabeledDoubleSeries initData(String seriesName, String labelPrefix, 
+---
+>    private DoubleSeries initData(String seriesName, String labelPrefix, 
+275c276
+<       LabeledDoubleSeries lds = new LabeledDoubleSeries();
+---
+>       DoubleSeries lds = new DoubleSeries();
+282c283
+<          lds.addData(value, labelName);
+---
+>          lds.addData(value);
+Index: tree/doc-files/ExampleDiscreteCategory01.java
+===================================================================
+RCS file: /project/work3/mims/fwrep/mimsfw/gov/epa/mims/analysisengine/tree/doc-files/ExampleDiscreteCategory01.java,v
+retrieving revision 1.6
+diff -w -r1.6 ExampleDiscreteCategory01.java
+6a7
+> import gov.epa.mims.analysisengine.rcommunicator.DoubleSeries;
+259c260
+<    private LabeledDoubleSeries initDataX(String seriesName, String[] labels)
+---
+>    private DoubleSeries initDataX(String seriesName, String[] labels)
+261c262
+<       LabeledDoubleSeries ds = new LabeledDoubleSeries();
+---
+>       DoubleSeries ds = new DoubleSeries();
+267c268
+<          ds.addData(j, label);
+---
+>          ds.addData(j);
+282c283
+<    private LabeledDoubleSeries initDataY(String seriesName, String[] labels, 
+---
+>    private DoubleSeries initDataY(String seriesName, String[] labels, 
+285c286
+<       LabeledDoubleSeries ds = new LabeledDoubleSeries();
+---
+>       DoubleSeries ds = new DoubleSeries();
+294c295
+<             ds.addData(Math.random(), label);
+---
+>             ds.addData(Math.random());

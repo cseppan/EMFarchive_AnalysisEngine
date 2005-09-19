@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Form style="Swing" ide="eclipse" builder="jigloo" version="2.7.2">
+<NonVisualComponents>
+		<Component class="java.lang.Object" name="object1">
+			<Constraints>
+				<LayoutConstraint/>
+			</Constraints>
+			<Properties>
+				<Property name="externalizeStrings" type="boolean" value="true"/>
+			</Properties>
+		</Component></NonVisualComponents>
+	<Component class="javax.swing.JDialog" name="SaveConfigGUI">
+		<Constraints>
+			<LayoutConstraint/>
+		</Constraints>
+		<Layout class="Box">
+			<Property name="axis" type="String" value="1"/>
+		</Layout>
+		<Events>
+		</Events>
+		<Properties>
+			<Property name="defaultCloseOperation" type="int" value="0"/>
+			<Property name="resizable" type="boolean" value="false"/>
+			<Property name="title" type="String" value="Save Configuration"/>
+			<Property name="undecorated" type="boolean" value="false"/>
+			<Property name="size" type="Dimension">
+				<Dimension value="[338, 235]"/>
+			</Property>
+			<Property name="externalizeStrings" type="boolean" value="true"/>
+		</Properties>
+		<SubComponents>
+			<Component class="javax.swing.JScrollPane" name="chooseConfigSPanel">
+				<Constraints>
+					<LayoutConstraint/>
+				</Constraints>
+				<Events>
+				</Events>
+				<Properties>
+					<Property name="externalizeStrings" type="boolean" value="true"/>
+				</Properties>
+				<SubComponents>
+					<Component class="javax.swing.table.JTableHeader" name="tableHeader">
+						<Constraints>
+							<LayoutConstraint/>
+						</Constraints>
+						<Events>
+						</Events>
+						<Properties>
+							<Property name="updateTableInRealTime" type="boolean" value="false"/>
+							<Property name="preferredSize" type="Dimension">
+								<Dimension value="[342, 15]"/>
+							</Property>
+							<Property name="verifyInputWhenFocusTarget" type="boolean" value="false"/>
+							<Property name="name" type="String" value=""/>
+							<Property name="bounds" type="Rectangle">
+								<Rectangle value="[-3, -4, 342, 15]"/>
+							</Property>
+							<Property name="externalizeStrings" type="boolean" value="true"/>
+						</Properties>
+					</Component>
+					<Component class="javax.swing.JTable" name="chooseConfigTable">
+						<Constraints>
+							<LayoutConstraint/>
+						</Constraints>
+						<Events>
+							<EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" handler="chooseConfigTableMouseClicked"/>
+						</Events>
+						<Properties>
+							<Property name="cellSelectionEnabled" type="boolean" value="false"/>
+							<Property name="preferredSize" type="Dimension">
+								<Dimension value="[332, 144]"/>
+							</Property>
+							<Property name="bounds" type="Rectangle">
+								<Rectangle value="[0, 0, 335, 144]"/>
+							</Property>
+							<Property name="externalizeStrings" type="boolean" value="true"/>
+						</Properties>
+					</Component>
+				</SubComponents>
+			</Component>
+			<Component class="javax.swing.JPanel" name="ConfigFilePanel">
+				<Constraints>
+					<LayoutConstraint/>
+				</Constraints>
+				<Layout class="Flow">
+					<Property name="alignment" type="int" value="1"/>
+					<Property name="hgap" type="int" value="5"/>
+					<Property name="vgap" type="int" value="5"/>
+				</Layout>
+				<Events>
+				</Events>
+				<Properties>
+					<Property name="externalizeStrings" type="boolean" value="true"/>
+				</Properties>
+				<SubComponents>
+					<Component class="javax.swing.JLabel" name="lSaveAs">
+						<Constraints>
+							<LayoutConstraint/>
+						</Constraints>
+						<Events>
+						</Events>
+						<Properties>
+							<Property name="text" type="String" value="Save As"/>
+							<Property name="visible" type="boolean" value="true"/>
+							<Property name="preferredSize" type="Dimension">
+								<Dimension value="[48, 15]"/>
+							</Property>
+							<Property name="bounds" type="Rectangle">
+								<Rectangle value="[9, 10, 48, 15]"/>
+							</Property>
+							<Property name="externalizeStrings" type="boolean" value="true"/>
+						</Properties>
+					</Component>
+					<Component class="javax.swing.JTextField" name="tFileName">
+						<Constraints>
+							<LayoutConstraint/>
+						</Constraints>
+						<Events>
+							<EventHandler event="keyTyped" listener="java.awt.event.KeyListener" handler="tFileNameKeyTyped"/>
+						</Events>
+						<Properties>
+							<Property name="text" type="String" value=""/>
+							<Property name="preferredSize" type="Dimension">
+								<Dimension value="[173, 19]"/>
+							</Property>
+							<Property name="bounds" type="Rectangle">
+								<Rectangle value="[62, 8, 173, 19]"/>
+							</Property>
+							<Property name="externalizeStrings" type="boolean" value="true"/>
+						</Properties>
+					</Component>
+					<Component class="javax.swing.JButton" name="bBrowse">
+						<Constraints>
+							<LayoutConstraint/>
+						</Constraints>
+						<Events>
+							<EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" handler="bBrowseMouseClicked"/>
+						</Events>
+						<Properties>
+							<Property name="text" type="String" value="Browse"/>
+							<Property name="preferredSize" type="Dimension">
+								<Dimension value="[88, 25]"/>
+							</Property>
+							<Property name="bounds" type="Rectangle">
+								<Rectangle value="[240, 5, 88, 25]"/>
+							</Property>
+							<Property name="externalizeStrings" type="boolean" value="true"/>
+						</Properties>
+					</Component>
+				</SubComponents>
+			</Component>
+			<Component class="javax.swing.JPanel" name="OKCancelPanel">
+				<Constraints>
+					<LayoutConstraint/>
+				</Constraints>
+				<Layout class="Flow">
+					<Property name="alignment" type="int" value="1"/>
+					<Property name="hgap" type="int" value="5"/>
+					<Property name="vgap" type="int" value="5"/>
+				</Layout>
+				<Events>
+				</Events>
+				<Properties>
+					<Property name="externalizeStrings" type="boolean" value="true"/>
+				</Properties>
+				<SubComponents>
+					<Component class="javax.swing.JButton" name="bCancel">
+						<Constraints>
+							<LayoutConstraint/>
+						</Constraints>
+						<Events>
+							<EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" handler="bCancelMouseClicked"/>
+						</Events>
+						<Properties>
+							<Property name="text" type="String" value="Cancel"/>
+							<Property name="externalizeStrings" type="boolean" value="true"/>
+						</Properties>
+					</Component>
+					<Component class="javax.swing.JButton" name="bOk">
+						<Constraints>
+							<LayoutConstraint/>
+						</Constraints>
+						<Events>
+							<EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" handler="bOkMouseClicked"/>
+						</Events>
+						<Properties>
+							<Property name="text" type="String" value="OK"/>
+							<Property name="preferredSize" type="Dimension">
+								<Dimension value="[88, 25]"/>
+							</Property>
+							<Property name="bounds" type="Rectangle">
+								<Rectangle value="[165, 5, 88, 25]"/>
+							</Property>
+							<Property name="externalizeStrings" type="boolean" value="true"/>
+						</Properties>
+					</Component>
+				</SubComponents>
+			</Component>
+		</SubComponents>
+	</Component>
+</Form>

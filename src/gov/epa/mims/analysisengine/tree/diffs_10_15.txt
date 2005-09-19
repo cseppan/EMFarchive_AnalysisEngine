@@ -1,0 +1,149 @@
+? .nbattrs
+? META-INF
+? New Folder
+? diffs_10_15.txt
+? diffs_1_12.txt
+? doc-files/Rplots.ps
+? doc-files/mylogfile.txt
+? doc-files/runeg.bat
+? doc-files/trimvars.bat
+Index: BarPlot.java
+===================================================================
+RCS file: /project/work3/mims/fwrep/mimsfw/gov/epa/mims/analysisengine/tree/BarPlot.java,v
+retrieving revision 1.28
+diff -w -r1.28 BarPlot.java
+394a395
+> System.out.println("the datasets size ="+dataSets.size());
+401,402c402,405
+<       /* TBD: come back and add this check
+<       Vector data = dataSets[0].getDataSets(null,null);
+---
+> /*System.out.println("In createDataSetKeys() class ="+ dataSets.get(0).getClass());
+>       Vector tmpDataSet = (Vector)dataSets.get(0);
+> System.out.println("the tmpDataSet class = "+tmpDataSet.get(0).getClass());      
+>       Vector data = ((DataSets)tmpDataSet.get(0)).getDataSets(null, null);
+404a408
+>          
+Index: CdfPlot.java
+===================================================================
+RCS file: /project/work3/mims/fwrep/mimsfw/gov/epa/mims/analysisengine/tree/CdfPlot.java,v
+retrieving revision 1.2
+diff -w -r1.2 CdfPlot.java
+394,395d393
+< 
+< 
+401c399,400
+<    }
+---
+>    }//initPlotInfo
+>    
+Index: RankOrderPlot.java
+===================================================================
+RCS file: /project/work3/mims/fwrep/mimsfw/gov/epa/mims/analysisengine/tree/RankOrderPlot.java,v
+retrieving revision 1.14
+diff -w -r1.14 RankOrderPlot.java
+495a496,497
+>    
+> 
+Index: ScatterPlot.java
+===================================================================
+RCS file: /project/work3/mims/fwrep/mimsfw/gov/epa/mims/analysisengine/tree/ScatterPlot.java,v
+retrieving revision 1.28
+diff -w -r1.28 ScatterPlot.java
+189c189,191
+<       if (keys.length != plotInfo.getNumDataSetInfo())
+---
+>       int length = plotInfo.getNumDataSetInfo();
+> 
+>       if (keys.length != length)
+337a340,343
+> <<<<<<< ScatterPlot.java
+>       //y data sets
+>       Vector ykeys = (Vector)dataSets.get(1);
+> =======
+365a372
+> >>>>>>> 1.28
+370d376
+< 
+379c385
+<       }
+---
+>       }//while (keyIt.hasNext())
+381c387,403
+<       Object[] retVal = new Object[2];
+---
+>       //xdata sets
+>       Vector xkey = (Vector)dataSets.get(0);
+>       int size = xkey.size();
+>       Object[] retVal;
+>       if(size ==0 )
+>       {
+>          retVal = new Object[2];
+>          String [] xKey = {};
+>          retVal[0] = xKey;
+>          retVal[1] = ykeyList;
+>       }
+>       else if (size ==1)
+>       {
+>          String[] xkeyList = new String[size];
+>          Iterator xkeyIt = xkey.iterator();
+>          xkeyList[0] = xkeyIt.next().toString();
+>          retVal = new Object[2];
+383a406,412
+>       }
+>       else //if (size > 1)
+>       {
+>          throw new Exception(
+>                "A single or no X data set is required for a Scatter Plot, but "
+>                + xkey.size() + " were provided");
+>       }
+Index: Text.java
+===================================================================
+RCS file: /project/work3/mims/fwrep/mimsfw/gov/epa/mims/analysisengine/tree/Text.java,v
+retrieving revision 1.28
+diff -w -r1.28 Text.java
+198a199
+>       xySet = false;
+Index: TextAttribute.java
+===================================================================
+RCS file: /project/work3/mims/fwrep/mimsfw/gov/epa/mims/analysisengine/tree/TextAttribute.java,v
+retrieving revision 1.1
+diff -w -r1.1 TextAttribute.java
+19c19
+<    private Color color;
+---
+>    private Color color = Color.black;
+22c22
+<    private String font;
+---
+>    private String font = PLAIN_TEXT;
+Index: TimeSeries.java
+===================================================================
+RCS file: /project/work3/mims/fwrep/mimsfw/gov/epa/mims/analysisengine/tree/TimeSeries.java,v
+retrieving revision 1.27
+diff -w -r1.27 TimeSeries.java
+252,253c252,253
+<       /* TBD: come back and readd the data checking
+<       if(dataSets.length >1)
+---
+>       
+>       if(dataSets.size() >1)
+257c257,259
+<       Vector data = dataSets[0].getDataSets(null,null);
+---
+> 
+> /**      
+>       Vector data = ((DataSets)dataSets.get(0)).getDataSets(null,null);
+Index: TornadoType.java
+===================================================================
+RCS file: /project/work3/mims/fwrep/mimsfw/gov/epa/mims/analysisengine/tree/TornadoType.java,v
+retrieving revision 1.1
+diff -w -r1.1 TornadoType.java
+43c43
+<    private double width;
+---
+>    private double width = 1.0;
+52c52
+<    private TextAttribute textAttribute = null;
+---
+>    private TextAttribute textAttribute = new TextAttribute();
