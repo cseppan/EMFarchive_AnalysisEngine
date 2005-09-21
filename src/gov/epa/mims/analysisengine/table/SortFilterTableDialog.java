@@ -1,21 +1,23 @@
 package gov.epa.mims.analysisengine.table;
 
-import gov.epa.mims.analysisengine.gui.DefaultUserInteractor;
 import gov.epa.mims.analysisengine.gui.ScreenUtils;
-import gov.epa.mims.analysisengine.gui.UserInteractor;
 
-import java.awt.Container;
 import java.awt.BorderLayout;
-import java.awt.event.*;
+import java.awt.Container;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.ResultSet;
-import javax.swing.*;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /*
  * SortFilterTableDialog.java
  *
  * Created on April 25, 2005, 11:07 AM
  * @author  Parthee R Partheepan
- * @version $Id: SortFilterTableDialog.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: SortFilterTableDialog.java,v 1.3 2005/09/21 19:17:09 parthee Exp $
  */
 public class SortFilterTableDialog extends JFrame
 {
@@ -27,7 +29,7 @@ public class SortFilterTableDialog extends JFrame
       setTitle(title);
       ResultSetTableModel model = new ResultSetTableModel(rs);
       tablePanel = new SortFilterTablePanel(this, model);
-      JButton okButton = new JButton("OK");
+      JButton okButton = new JButton("Close");
       okButton.addActionListener(new ActionListener()
       {
          public void actionPerformed(ActionEvent e)

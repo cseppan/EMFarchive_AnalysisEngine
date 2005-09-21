@@ -1,76 +1,66 @@
 <?xml version="1.0"?>
 <project name="AnalysisEngine" default="dist" basedir=".">
 
-    <!--  =================== Properties ====================================== -->
-    <property file="build.properties" />
-    <property file="${user.home}/build.properties" />
+	<!--  =================== Properties ====================================== -->
+	<property file="build.properties" />
+	<property file="${user.home}/build.properties" />
 
-    <property name="env" environment="env" value="env" />
-    <property name="J2EE_HOME" value="${env.J2EE_HOME}" />
-    <property name="JAVA_HOME" value="${env.JAVA_HOME}" />
-    <property name="src.dir" value="src" />
-    <property name="lib.dir" value="lib" />
+	<property name="env" environment="env" value="env" />
+	<property name="J2EE_HOME" value="${env.J2EE_HOME}" />
+	<property name="JAVA_HOME" value="${env.JAVA_HOME}" />
+	<property name="src.dir" value="src" />
+	<property name="lib.dir" value="lib" />
 
-    <property name="build.home" value="build/sandbox" />
-    <property name="build.dist.dir" value="${build.home}/dist" />
-    <property name="build.classes.dir" value="${build.dist.dir}/classes" />
+	<property name="build.home" value="build/sandbox" />
+	<property name="build.dist.dir" value="${build.home}/dist" />
+	<property name="build.classes.dir" value="${build.dist.dir}/classes" />
 
-    <property name="app.name" value="ae" />
-    <property name="app.path" value="/${app.name}" />
-
-
-    <path id="classpath">
-        <pathelement location="${build.classes.dir}" />
-        <fileset dir="${lib.dir}">
-            <include name="**/*.jar" />
-        </fileset>
-    </path>
-
-    <!--  ===================START Basic Targets ====================================== -->
-    <target name="init">
-        <mkdir dir="${build.home}" />
-        <mkdir dir="${build.classes.dir}" />
-    </target>
+	<property name="app.name" value="ae" />
+	<property name="app.path" value="/${app.name}" />
 
 
-    <target name="clean">
-        <delete includeemptydirs="true" failonerror="no">
-            <fileset dir="${build.home}" includes="**/*" />
-        </delete>
-    </target>
+	<path id="classpath">
+		<pathelement location="${build.classes.dir}" />
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
 
-    <target name="compile-src" depends="clean, init">
-        <javac srcdir="${src.dir}"
-               destdir="${build.classes.dir}"
-               classpathref="classpath"
-               debug="on"
-        />
-        <copy todir="${build.classes.dir}">
-            <fileset dir="${src.dir}" includes="**/*.*" />
-        </copy>
-    </target>
+	<!--  ===================START Basic Targets ====================================== -->
+	<target name="init">
+		<mkdir dir="${build.home}" />
+		<mkdir dir="${build.classes.dir}" />
+	</target>
 
-    <target name="compile" depends="clean, init, compile-src" />
-    <!--  ===============END  Basic ====================================== -->
 
-    <!-- ================START Distribution Targets ========================= -->
-    <target name="dist" depends="do-dist" />
+	<target name="clean">
+		<delete includeemptydirs="true" failonerror="no">
+			<fileset dir="${build.home}" includes="**/*" />
+		</delete>
+	</target>
 
-    <target name="do-dist" depends="compile">
-        <copy todir="${build.classes.dir}">
-            <fileset dir="${src.dir}" includes="**/*" />
-        </copy>
-        <jar jarfile="${build.home}/${app.name}-${app.version}.jar"
-             basedir="${build.classes.dir}"
-        />
-    </target>
-    <!-- ================END Distribution Targets ========================= -->
+	<target name="compile-src" depends="clean, init">
+		<javac srcdir="${src.dir}" destdir="${build.classes.dir}" classpathref="classpath" debug="on" />
+		<copy todir="${build.classes.dir}">
+			<fileset dir="${src.dir}">
+				<exclude name="**/*.java" />
+			</fileset>
+		</copy>
+	</target>
 
-    <!-- Continuous Integration target -->
-    <target name="ci-build"
-            depends="compile, dist"
-            description="Continuous Integration build"
-    />
+	<target name="compile" depends="clean, init, compile-src" />
+	<!--  ===============END  Basic ====================================== -->
+
+	<!-- ================START Distribution Targets ========================= -->
+	<target name="dist" depends="do-dist" />
+
+	<target name="do-dist" depends="compile">
+		<jar jarfile="${build.home}/${app.name}-${app.version}.jar" basedir="${build.classes.dir}" />
+	</target>
+	<!-- ================END Distribution Targets ========================= -->
+
+	<!-- Continuous Integration target -->
+	<target name="ci-build" depends="compile, dist" description="Continuous Integration build" />
 
 </project>
 

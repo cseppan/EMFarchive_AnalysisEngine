@@ -15,7 +15,7 @@ import gov.epa.mims.analysisengine.gui.UserInteractor;
  * <p>Copyright: Copyright (c) 2003</p>
  * <p>Company: CEP, UNC-Chapel Hill </p>
  * @author Prashant Pai
- * @version $Id: ResultSetTableModel.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: ResultSetTableModel.java,v 1.3 2005/09/21 19:17:09 parthee Exp $
  */
 public class ResultSetTableModel extends SpecialTableModel
 {
@@ -78,8 +78,9 @@ public class ResultSetTableModel extends SpecialTableModel
    {
       try
       {
-         //System.out.println("rs col class name="+rsMetaData.getColumnClassName(col+1));
-         return Class.forName(rsMetaData.getColumnClassName(col+1));
+         Class forName = Class.forName(rsMetaData.getColumnClassName(col+1));
+         //System.out.println("Column name-"+ getColumnName(col)+ " class name="+rsMetaData.getColumnClassName(col+1));
+		return forName;
       }
       catch (Exception e)
       {

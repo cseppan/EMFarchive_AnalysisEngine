@@ -6,10 +6,12 @@ import gov.epa.mims.analysisengine.gui.UserInteractor;
 import java.text.Format;
 import java.util.*;
 
+import sun.security.x509.IssuerAlternativeNameExtension;
+
 /**
  * A set of criteria for filtering data in a table.
  * @author  Daniel Gatti
- * @version $Id: FilterCriteria.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: FilterCriteria.java,v 1.3 2005/09/21 19:17:09 parthee Exp $
  */
 public class FilterCriteria implements java.io.Serializable,Cloneable
 {
@@ -258,30 +260,24 @@ public class FilterCriteria implements java.io.Serializable,Cloneable
       boolean retval = compareWithAnd;
       boolean tmp    = true;
       if(columnNames!=null)
-
-//System.out.println("rowData.length="+ rowData.length);
       for (int i = 0; i < columnNames.length; i++)
       {
         int index = model.getColumnNameIndex(columnNames[i]);
         Class colClass = ((OverallTableModel)model).getColumnClass(index);
-//System.out.println("column classes=" + colClass);        
-        if(colClass.equals(Double.class))
-        {
-            double d1 = ((Double)values[i]).doubleValue();
+        
+        boolean doubleValue = isDoubleValue(values[i]);
+       
+		if(colClass.equals(Double.class) && doubleValue){
+            double d1 = new Double(values[i].toString()).doubleValue();
             double d2 = ((Double)rowData[index]).doubleValue();
+            
             if(!Double.isNaN(d1) && Double.isNaN(d2))
             {
                return false;
             }
         }
-
-//System.out.println("index =" + index);        
+        
         Format format = model.getFormat(columnNames[i]);
-        
-        
-//System.out.println("format="+format.getClass());        
-//System.out.println("FilterCriteria.accept(): rowData["+index+"]="+rowData[index]);
-       //  int index = ((Integer)columnNameToIndex.get(columnNames[i])).intValue();
         // index of the column
          switch (operations[i])
          {
@@ -346,7 +342,17 @@ public class FilterCriteria implements java.io.Serializable,Cloneable
    } // accept()
 
 
-  /**
+  private boolean isDoubleValue(Comparable comparable) {
+	try{
+		new Double(comparable.toString());
+		return true;
+	}
+	catch (NumberFormatException e) {
+		return false;
+	}
+	
+}
+/**
     * Return the column names that are shown by this filter.
     */
    public String[] getAllColumnNames()
