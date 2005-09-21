@@ -13,7 +13,7 @@ import gov.epa.mims.analysisengine.tree.PageType;
  * Editor for the page type
  *
  * @author Alison Eyth, Prashant Pai
- * @version $Id: PageTypeEditor.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: PageTypeEditor.java,v 1.3 2005/09/21 14:19:48 parthee Exp $
  *
  **/
 public class PageTypeEditor
@@ -52,6 +52,7 @@ public class PageTypeEditor
      super();
      initialize();
      setDataSource(aPageType, "");
+     setLocation(ScreenUtils.getPointToCenter(this));
    }//PageTypeEditor(PageType)
 
    /**
@@ -81,7 +82,6 @@ public class PageTypeEditor
    {
      this.setModal(true);
      Container contentPane = getContentPane();
-     setLocationRelativeTo(JOptionPane.getRootFrame());
      setTitle("Edit PageType Properties");
 
      contentPane.setLayout(new BorderLayout());

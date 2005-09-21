@@ -28,7 +28,7 @@ import java.awt.event.*;
  * <p>Description: Sensitivity And UnThis table can both sort and filter data based on criteria
  *    entred by the user. </p>
  * @author Daniel Gatti
- * @version $Id: SUSortFilterTablePanel.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: SUSortFilterTablePanel.java,v 1.3 2005/09/21 14:22:48 parthee Exp $
  */
 public class SUSortFilterTablePanel extends SortFilterTablePanel
 {
@@ -428,7 +428,7 @@ public class SUSortFilterTablePanel extends SortFilterTablePanel
          } // try
          catch (Exception e)
          {
-            DefaultUserInteractor.get().notify(this,"Error creating datasets",
+            DefaultUserInteractor.get().notify(this,"Error",
                   e.getMessage(), UserInteractor.ERROR);
             e.printStackTrace();
          }

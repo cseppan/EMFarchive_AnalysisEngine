@@ -15,7 +15,7 @@
     <property name="build.dist.dir" value="${build.home}/dist" />
     <property name="build.classes.dir" value="${build.dist.dir}/classes" />
 
-    <property name="app.name" value="emf" />
+    <property name="app.name" value="ae" />
     <property name="app.path" value="/${app.name}" />
 
 

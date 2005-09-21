@@ -1,28 +1,43 @@
 package gov.epa.mims.analysisengine.table;
 
-import gov.epa.mims.analysisengine.gui.ScreenUtils;
-import gov.epa.mims.analysisengine.gui.OptionDialog;
 import gov.epa.mims.analysisengine.gui.DefaultUserInteractor;
 import gov.epa.mims.analysisengine.gui.GUIUserInteractor;
+import gov.epa.mims.analysisengine.gui.OptionDialog;
+import gov.epa.mims.analysisengine.gui.ScreenUtils;
 import gov.epa.mims.analysisengine.gui.UserInteractor;
-import gov.epa.mims.analysisengine.gui.TextValuePanel;
 import gov.epa.mims.analysisengine.help.HelpMenu;
-import gov.epa.mims.analysisengine.tree.Text;
-
 
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.Statement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
-import javax.swing.*;
+
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 
 /**
  * <p>Title:TableApp.java </p>
@@ -31,7 +46,7 @@ import javax.swing.*;
  * <p>Copyright: Copyright (c) 2004</p>
  * <p>Company: CEP, UNC-Chapel Hill </p>
  * @author Parthee Partheepan
- * @version $Id: TableApp.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: TableApp.java,v 1.3 2005/09/21 14:22:48 parthee Exp $
  */
 
 
@@ -227,6 +242,7 @@ public class TableApp extends JFrame
                   importFileStatus.add(get50Lines(fileNames[i]));
                }
                System.out.println("Error reading File "+e.getMessage());
+               e.printStackTrace();
             }// catch
 /**         }//try
       

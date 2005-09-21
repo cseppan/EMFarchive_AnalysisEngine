@@ -3,24 +3,17 @@ package gov.epa.mims.analysisengine.table;
 
 
 import java.awt.Component;
-import java.awt.Font;
 import java.awt.FontMetrics;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
-import java.text.Format;
-import java.util.Date;
+
 import javax.swing.JTable;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.table.*;
-import javax.swing.event.TableModelEvent;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 /**
  * <p>Description: The base table that can support row headers. </p>
  * @author Daniel Gatti
- * @version $Id: RowHeaderTable.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: RowHeaderTable.java,v 1.3 2005/09/21 14:22:48 parthee Exp $
  */
 public class RowHeaderTable extends JTable
 {

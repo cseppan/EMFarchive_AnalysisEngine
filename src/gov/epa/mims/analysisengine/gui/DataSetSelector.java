@@ -1,26 +1,36 @@
 package gov.epa.mims.analysisengine.gui;
 
-import javax.swing.*;
-import javax.swing.border.BevelBorder;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.ListSelectionEvent;
-import java.awt.*;
-import java.awt.event.*;
+import gov.epa.mims.analysisengine.tree.DataSetIfc;
+import gov.epa.mims.analysisengine.tree.DataSetInfo;
+import gov.epa.mims.analysisengine.tree.DataSetsAdapter;
+
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Vector;
 import java.util.TreeMap;
+import java.util.Vector;
 
-import gov.epa.mims.analysisengine.tree.DataSetIfc;
-import gov.epa.mims.analysisengine.tree.DataSets;
-import gov.epa.mims.analysisengine.tree.DataSetsAdapter;
-import gov.epa.mims.analysisengine.tree.DataSetInfo;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.border.BevelBorder;
 
 /**
  * Select the data sets to use in a plot from the list of available datasets
  *
  * @author Alison Eyth, CEP UNC
- * @version $Id: DataSetSelector.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: DataSetSelector.java,v 1.3 2005/09/21 14:22:48 parthee Exp $
  */
 public class DataSetSelector
     extends JDialog {
@@ -376,7 +386,7 @@ public class DataSetSelector
     setModal(true);
     pack();
 //  make the dialog come up in the center of the screen
-    this.setLocationRelativeTo(getParent());
+    this.setLocation(30,30);
     setVisible(true);
   }//initialize()
 

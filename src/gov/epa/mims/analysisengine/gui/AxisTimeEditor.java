@@ -20,7 +20,7 @@ import gov.epa.mims.analysisengine.tree.*;
 /**
  * An Editor to display the AxisTime values.
  * @author Daniel Gatti
- * @version $Id: AxisTimeEditor.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: AxisTimeEditor.java,v 1.3 2005/09/21 14:22:48 parthee Exp $
  */
 public class AxisTimeEditor extends AxisContinuousEditor
 {
@@ -186,6 +186,7 @@ public class AxisTimeEditor extends AxisContinuousEditor
       super(axis);
       initialize();
       setDataSource(axis, "Time Axis Editor");
+      setLocation(ScreenUtils.getPointToCenter(this));
    }
 
 

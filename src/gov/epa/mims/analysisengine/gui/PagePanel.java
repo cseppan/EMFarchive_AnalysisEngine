@@ -2,6 +2,7 @@ package gov.epa.mims.analysisengine.gui;
 
 import gov.epa.mims.analysisengine.tree.AnalysisOptions;
 import gov.epa.mims.analysisengine.tree.DataSetsAdapter;
+import gov.epa.mims.analysisengine.tree.DisplaySizeType;
 import gov.epa.mims.analysisengine.tree.Page;
 import gov.epa.mims.analysisengine.tree.PageInfo;
 import gov.epa.mims.analysisengine.tree.PageType;
@@ -19,7 +20,7 @@ import java.awt.*;
  * OptionsPanel for that plot in the lower part of the panel.
  *
  * @author Alison Eyth
- * @version $Id: PagePanel.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: PagePanel.java,v 1.3 2005/09/21 14:19:48 parthee Exp $
  *
  **/
 
@@ -121,20 +122,15 @@ public class PagePanel
    protected AnalysisOptions getPageOptions()
    {
       pageOptions = pageOptionsPanel.getOptions();
-      // RP: Temporary Hack
-      // adding the display size options to the page ref. to plot display size
-      // options
       plotOptions = plotPanel.getPlotOptions();
-      gov.epa.mims.analysisengine.tree.DisplaySizeType displayType = 
-      (gov.epa.mims.analysisengine.tree.DisplaySizeType)
-         plotOptions.getOption(DISPLAY_SIZE_TYPE);
+      DisplaySizeType displayType =(DisplaySizeType)plotOptions.getOption(DISPLAY_SIZE_TYPE);
       if(displayType.getEnable())
       {
          pageOptions.addOption(DISPLAY_SIZE_TYPE, displayType);
       }
       else
       {
-         pageOptions.addOption(DISPLAY_SIZE_TYPE, null);
+         pageOptions.addOption(DISPLAY_SIZE_TYPE, new DisplaySizeType());
       } 
       return pageOptions;
    }

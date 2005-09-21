@@ -14,7 +14,7 @@ import gov.epa.mims.analysisengine.tree.BarType;
  * options for a barplot.
  *
  * @author Alison Eyth, Prashant Pai, CEP UNC
- * @version $Id: BarTypeEditor.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: BarTypeEditor.java,v 1.3 2005/09/21 14:22:48 parthee Exp $
  * @see BarType.java
  * @see BarPlot.java
  * @see AnalysisOptions.java
@@ -84,6 +84,7 @@ public class BarTypeEditor
     super();
     initialize();
     setDataSource(aBarType, "");
+    setLocation(ScreenUtils.getPointToCenter(this));
     //show();
   }//BarTypeEditor()
 
@@ -116,7 +117,6 @@ public class BarTypeEditor
     this.setModal(true);
     // set the title
     this.setTitle("Edit Bar Type Properties");
-    //this.setLocationRelativeTo(JOptionPane.getRootFrame());
     Container contentPane = this.getContentPane();
     // set the layout
     contentPane.setLayout(new BorderLayout());

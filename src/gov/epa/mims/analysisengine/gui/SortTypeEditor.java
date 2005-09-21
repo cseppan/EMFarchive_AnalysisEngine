@@ -18,7 +18,7 @@ import gov.epa.mims.analysisengine.tree.SortType;
  * @author Daniel Gatti
  * @see gov.epa.mims.analysisengine.tree.SortType.java
  * @see gov.epa.mims.analysisengine.tree.RankOrderPlot.java
- * @version $Id: SortTypeEditor.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: SortTypeEditor.java,v 1.3 2005/09/21 14:19:48 parthee Exp $
  */
 public class SortTypeEditor
    extends OptionDialog
@@ -61,6 +61,7 @@ public class SortTypeEditor
       this.sortType = sortType;
       this.setDataSource(sortType, "");
       initialize();
+      setLocation(ScreenUtils.getPointToCenter(this));
    }
 
 

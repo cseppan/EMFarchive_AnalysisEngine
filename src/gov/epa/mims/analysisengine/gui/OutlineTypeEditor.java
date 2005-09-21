@@ -12,7 +12,7 @@ import gov.epa.mims.analysisengine.tree.OutlineType;
  * Editor for outline type
  *
  * @author Alison Eyth, Prashant Pai
- * @version $Id: OutlineTypeEditor.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: OutlineTypeEditor.java,v 1.3 2005/09/21 14:19:48 parthee Exp $
  *
  **/
 public class OutlineTypeEditor
@@ -62,7 +62,7 @@ extends OptionDialog
       super();
       initialize();
       setDataSource(anOutlineType, "");
-      setLocationRelativeTo(getParent());
+      setLocation(ScreenUtils.getPointToCenter(this));
    }//OutlineTypeEditor(OutlineType)
 
    /**

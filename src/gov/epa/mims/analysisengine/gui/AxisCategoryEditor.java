@@ -17,7 +17,7 @@ import javax.swing.border.TitledBorder;
  * A GUI to edit an AxisCategory.
  *
  * @author Daniel Gatti
- * @version $Id: AxisCategoryEditor.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: AxisCategoryEditor.java,v 1.3 2005/09/21 14:22:48 parthee Exp $
  */
 public class AxisCategoryEditor
 extends AxisEditor
@@ -36,6 +36,7 @@ extends AxisEditor
       super(axis);
       initialize();
       setDataSource(axis, "");
+      setLocation(ScreenUtils.getPointToCenter(this));
    }
 
    /**

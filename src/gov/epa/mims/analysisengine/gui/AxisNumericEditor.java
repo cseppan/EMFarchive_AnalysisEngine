@@ -18,7 +18,7 @@ import gov.epa.mims.analysisengine.tree.Text;
  * @author Daniel Gatti
  * @see gov.epa.mims.analysisengine.tree.axis.java
  * @see gov.epa.mims.analysisengine.tree.Axis.java
- * @version $Id: AxisNumericEditor.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: AxisNumericEditor.java,v 1.3 2005/09/21 14:22:48 parthee Exp $
  */
 public class AxisNumericEditor extends AxisContinuousEditor
 {
@@ -83,6 +83,7 @@ public class AxisNumericEditor extends AxisContinuousEditor
       super(axis);
       initialize();
       setDataSource(axis, "");
+      setLocation(ScreenUtils.getPointToCenter(this));
    }
 
    /**

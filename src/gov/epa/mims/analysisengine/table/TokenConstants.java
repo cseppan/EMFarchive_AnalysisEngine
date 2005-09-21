@@ -7,13 +7,12 @@
  *  Rename sym.EOF in FileScanner.java to TokenConstants.EOF whenever FileScanner.java is generated from FileScanner.flex
  *
  * @author  Krithiga Thangavelu, CEP, UNC CHAPEL HILL.
- * @version $Id: TokenConstants.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: TokenConstants.java,v 1.3 2005/09/21 14:22:48 parthee Exp $
 
  */
 
 package gov.epa.mims.analysisengine.table;
 import java.util.Date;
-import java.util.HashMap;
 
 public  class TokenConstants {
   // a mapping between type and corresponding Class Type
@@ -83,5 +82,5 @@ public  class TokenConstants {
         }
         return String.valueOf((char)type);
   }
-
+ 
 }

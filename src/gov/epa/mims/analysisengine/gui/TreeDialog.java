@@ -1,11 +1,10 @@
 package gov.epa.mims.analysisengine.gui;
 
 import gov.epa.mims.analysisengine.AnalysisEngineConstants;
-import gov.epa.mims.analysisengine.tree.AnalysisOptionConstantsIfc;
-import gov.epa.mims.analysisengine.tree.PageConstantsIfc;
-import gov.epa.mims.analysisengine.tree.Axis;
-import gov.epa.mims.analysisengine.tree.DataSetsAdapter;
+import gov.epa.mims.analysisengine.rcommunicator.RCommunicator;
+import gov.epa.mims.analysisengine.rcommunicator.RGenerator;
 import gov.epa.mims.analysisengine.tree.AnalysisOption;
+import gov.epa.mims.analysisengine.tree.AnalysisOptionConstantsIfc;
 import gov.epa.mims.analysisengine.tree.AnalysisOptions;
 import gov.epa.mims.analysisengine.tree.BarPlot;
 import gov.epa.mims.analysisengine.tree.BoxPlot;
@@ -13,31 +12,50 @@ import gov.epa.mims.analysisengine.tree.Branch;
 import gov.epa.mims.analysisengine.tree.CdfPlot;
 import gov.epa.mims.analysisengine.tree.DataSetIfc;
 import gov.epa.mims.analysisengine.tree.DataSets;
+import gov.epa.mims.analysisengine.tree.DataSetsAdapter;
 import gov.epa.mims.analysisengine.tree.DiscreteCategoryPlot;
 import gov.epa.mims.analysisengine.tree.HistogramPlot;
 import gov.epa.mims.analysisengine.tree.Node;
 import gov.epa.mims.analysisengine.tree.Page;
-import gov.epa.mims.analysisengine.tree.TreeSummary;
+import gov.epa.mims.analysisengine.tree.PageConstantsIfc;
 import gov.epa.mims.analysisengine.tree.PageType;
 import gov.epa.mims.analysisengine.tree.Plot;
 import gov.epa.mims.analysisengine.tree.PlotInfo;
 import gov.epa.mims.analysisengine.tree.RankOrderPlot;
 import gov.epa.mims.analysisengine.tree.ScatterPlot;
-import gov.epa.mims.analysisengine.tree.Text;
 import gov.epa.mims.analysisengine.tree.TextIfc;
 import gov.epa.mims.analysisengine.tree.TimeSeries;
 import gov.epa.mims.analysisengine.tree.TornadoPlot;
-import gov.epa.mims.analysisengine.rcommunicator.RCommunicator;
-import gov.epa.mims.analysisengine.rcommunicator.RGenerator;
+import gov.epa.mims.analysisengine.tree.TreeSummary;
 
-import java.io.*;
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.HeadlessException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.Vector;
+
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JEditorPane;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  * The main GUI for a MIMS analysis engine tree.  Eventually this will allow
@@ -57,7 +75,7 @@ import java.util.Vector;
  * The GUI will also contain a PagePanel for editing page and plot options
  *
  * @author Alison Eyth
- * @version $Id: TreeDialog.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: TreeDialog.java,v 1.3 2005/09/21 14:15:20 parthee Exp $
  *
  * @see gov.epa.mims.analysisengine.tree.Node
  * @see gov.epa.mims.analysisengine.tree.DataSets
@@ -213,10 +231,11 @@ public class TreeDialog extends JDialog
     *      supports single page and plot tree only
     * @return Branch the result of the dialog - null if user pressed Cancel,
     *    a new tree if the user pressed Save
+ * @throws Exception 
     */
    public static Branch showTreeDialog(JFrame parent, Branch tree,
       DataSetsAdapter dataSetsAdapter, RGenerator rgenerator,
-      HashMap textValues)
+      HashMap textValues) throws Exception
    {
        TreeDialog dialog = new TreeDialog(parent, tree, dataSetsAdapter, rgenerator,
           textValues);
@@ -252,7 +271,7 @@ public class TreeDialog extends JDialog
     */
    public static Branch showTreeDialog(JFrame parent, String plotType,
       DataSetsAdapter dataSetsAdapter, RGenerator rgenerator,
-      HashMap textValues)
+      HashMap textValues) throws Exception
    {
       TreeDialog dialog = new TreeDialog(parent, plotType, dataSetsAdapter, rgenerator,
          textValues);
@@ -273,9 +292,10 @@ public class TreeDialog extends JDialog
     * @param textValues HashMap initial text values to use for plot; keywords
     *      should be standard analysis option keywords; current implementation
     *      supports single page and plot tree only
+ * @throws Exception 
     */
    public TreeDialog(JFrame parent, Branch tree, DataSetsAdapter dataSetsAdapter,
-      RGenerator rgenerator, HashMap textValues)
+      RGenerator rgenerator, HashMap textValues) throws Exception
    {
       super(parent);
       setDataValues(tree, dataSetsAdapter, rgenerator, textValues);
@@ -303,9 +323,10 @@ public class TreeDialog extends JDialog
     *      should be standard analysis option keywords; current implementation
     *      supports single page and plot tree only
     * @param rgenerator RGenerator to use to execute trees (could be null)
+ * @throws Exception 
     */
    public TreeDialog(JFrame parent, String plotType, DataSetsAdapter dataSetsAdapter,
-      RGenerator rgenerator, HashMap textValues)
+      RGenerator rgenerator, HashMap textValues) throws Exception
    {
       super(parent);
       this.dataSetsAdapter = dataSetsAdapter;
@@ -337,13 +358,14 @@ public class TreeDialog extends JDialog
          currentPlot =  createNewPlot(plotType);
          pagePanel = new PagePanel(pageOptions, plotOptions, currentPlot,
                                    dataSetsAdapter, this);
-         initialize();
+         
       }
       catch (Exception e)
       {
          DefaultUserInteractor.get().notifyOfException(this,
                "Error Creating Plot", e, UserInteractor.ERROR);
       }
+      initialize();
    }//TreeDialog(tree, DataSetsAdapter)
 
 
@@ -460,8 +482,9 @@ public class TreeDialog extends JDialog
 
    /**
     * method to initialize the dialog
+ * @throws Exception 
     */
-   private void initialize()
+   private void initialize() throws Exception
    {
       this.setTitle("MIMS Analysis Engine "+plotType);
       setModal(true);
@@ -613,7 +636,7 @@ public class TreeDialog extends JDialog
          rgenerator = createNewRGenerator();
       }
       this.pack();
-      setLocation(ScreenUtils.getPointToCenter(this));
+      setLocation(20,20); //easy for others to change the plot settings and view the plot in the same time
    }//initialize()
 
 
@@ -623,9 +646,10 @@ public class TreeDialog extends JDialog
     * @param dataSetsAdapter DataSetsAdapter that contains the datasets that we should use.
     * @param rgenerator RGenerator to use to drive R.
     * @param textValues HashMap that contains text to replace in analysis options.
+ * @throws Exception 
     */
    private void setDataValues(Branch tree, DataSetsAdapter dataSetsAdapter,
-      RGenerator rgenerator, HashMap textValues)
+      RGenerator rgenerator, HashMap textValues) throws Exception
    {
       this.tree = tree;
       if (tree == null)
@@ -850,12 +874,14 @@ public class TreeDialog extends JDialog
    /**
     * creates a new instance of an RGenerator
     * @return RGenerator a new RGenerator
+ * @throws Exception 
     */
-   private RGenerator createNewRGenerator()
+   private RGenerator createNewRGenerator() throws Exception
    {
       // TBD: replace with new method to do this
       String Rexec = System.getProperty("os.name").startsWith("Windows") ? "RTerm.exe" : "R";
       RGenerator rGen = new RGenerator( Rexec );
+    
       try
       {
          rGen.setLog( new File("myLogFile.txt") );
@@ -1507,7 +1533,14 @@ System.out.println("plotType="+plotType);
             /** use example data sets only  - don't build the whole tree */
             ExampleTree example = new ExampleTree(false);
             DataSets dataSets = example.getTree();
-            TreeDialog dialog = new TreeDialog(new JFrame(), plotType, dataSets, null, textValues);
+            TreeDialog dialog = null;
+            try {
+				dialog = new TreeDialog(new JFrame(), plotType, dataSets, null, textValues);
+			} catch (HeadlessException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
             dialog.show();
             branch = dialog.getResultTree();
          }
@@ -1516,7 +1549,13 @@ System.out.println("plotType="+plotType);
             /** use full example tree */
             ExampleTree example = new ExampleTree();
             DataSets tree = example.getTree();
-            branch = TreeDialog.showTreeDialog(new JFrame(), tree, null, null, textValues);
+            try {
+				branch = TreeDialog.showTreeDialog(new JFrame(), tree, null, null, textValues);
+			} catch (HeadlessException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
          }
       }
       else  // (showGUI == false)
