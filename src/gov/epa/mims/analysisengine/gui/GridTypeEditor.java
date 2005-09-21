@@ -11,7 +11,7 @@ import gov.epa.mims.analysisengine.tree.GridType;
  * Editor for grid type
  *
  * @author Alison Eyth, Prashant Pai
- * @version $Id: GridTypeEditor.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: GridTypeEditor.java,v 1.3 2005/09/21 14:16:01 parthee Exp $
  *
  **/
 public class GridTypeEditor
@@ -60,6 +60,7 @@ public class GridTypeEditor
      super();
      initialize();
      setDataSource(aGridType, "");
+     setLocation(ScreenUtils.getPointToCenter(this));
    }//BarTypeEditor()
 
    /**
@@ -89,7 +90,6 @@ public class GridTypeEditor
    {
      this.setModal(true);
      Container contentPane = getContentPane();
-     setLocationRelativeTo(JOptionPane.getRootFrame());
      setTitle("Edit GridType Properties");
 
      contentPane.setLayout(new BorderLayout());

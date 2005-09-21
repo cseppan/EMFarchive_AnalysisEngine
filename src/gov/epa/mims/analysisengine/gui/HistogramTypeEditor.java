@@ -10,7 +10,7 @@ import gov.epa.mims.analysisengine.tree.HistogramType;
  * A GUI that allows the user to edit a HistogramType.
  *
  * @author Daniel Gatti
- * @version $Id: HistogramTypeEditor.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: HistogramTypeEditor.java,v 1.3 2005/09/21 14:16:49 parthee Exp $
  * @see gov.epa.mims.analysisengine.tree.HistogramType.java
  * @see gov.epa.mims.analysisengine.tree.HistogramPlot.java
  * @see gov.epa.mims.analysisengine.tree.AnalysisOptions.java
@@ -76,6 +76,7 @@ extends OptionDialog
       super();
       initialize();
       setDataSource(histogramType, "");
+      setLocation(ScreenUtils.getPointToCenter(this));
 
    } // HistogramTypeEditor()
 

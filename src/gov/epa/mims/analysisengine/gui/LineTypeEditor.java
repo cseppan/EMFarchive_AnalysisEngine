@@ -13,7 +13,7 @@ import gov.epa.mims.analysisengine.tree.LineType;
  * Editor for line type
  *
  * @author Prashant Pai, Parthee Partheepan UNC
- * @version $Id: LineTypeEditor.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: LineTypeEditor.java,v 1.3 2005/09/21 14:16:49 parthee Exp $
  *
  **/
 
@@ -83,6 +83,7 @@ extends OptionDialog
       super();
       initialize();
       setDataSource(aLineType, "");
+      setLocation(ScreenUtils.getPointToCenter(this));
    }//LineTypeEditor(LineType)
 
    /**
@@ -121,7 +122,6 @@ extends OptionDialog
    {
       this.setModal(true);
       Container contentPane = getContentPane();
-      setLocationRelativeTo(JOptionPane.getRootFrame());
       setTitle("Edit LineType Properties");
       contentPane.setLayout(new BorderLayout());
 

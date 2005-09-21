@@ -12,7 +12,7 @@ import gov.epa.mims.analysisengine.AnalysisEngineConstants;
  * Editor for the legend
  *
  * @author Prashant Pai, UNC
- * @version $Id: LegendEditor.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: LegendEditor.java,v 1.3 2005/09/21 14:16:49 parthee Exp $
  *
  **/
 public class LegendEditor
@@ -189,7 +189,8 @@ extends OptionDialog
       });
 
       Container contentPane = getContentPane();
-      setLocationRelativeTo(JOptionPane.getRootFrame());
+      //setLocationRelativeTo(JOptionPane.getRootFrame());
+      setLocation(ScreenUtils.getPointToCenter(this));
       setTitle("Edit Legend Properties");
 
       contentPane.setLayout(new BorderLayout());

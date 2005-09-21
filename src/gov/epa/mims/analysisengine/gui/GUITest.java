@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * class_description
  *
  * @author Tommy E. Cathey
- * @version $Id: GUITest.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: GUITest.java,v 1.3 2005/09/21 14:16:19 parthee Exp $
  *
  **/
 public class GUITest
@@ -834,7 +834,7 @@ gov.epa.mims.analysisengine.tree.AnalysisOptionConstantsIfc
      }
    }
 
-   public void generatePlots()
+   public void generatePlots() throws Exception
    {
      //====================================================================
      //
