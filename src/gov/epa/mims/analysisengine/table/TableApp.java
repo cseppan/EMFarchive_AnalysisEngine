@@ -5,6 +5,7 @@ import gov.epa.mims.analysisengine.gui.GUIUserInteractor;
 import gov.epa.mims.analysisengine.gui.OptionDialog;
 import gov.epa.mims.analysisengine.gui.ScreenUtils;
 import gov.epa.mims.analysisengine.gui.UserInteractor;
+import gov.epa.mims.analysisengine.help.AnalysisEngineHelp;
 import gov.epa.mims.analysisengine.help.HelpMenu;
 
 import java.awt.BorderLayout;
@@ -46,7 +47,7 @@ import javax.swing.KeyStroke;
  * <p>Copyright: Copyright (c) 2004</p>
  * <p>Company: CEP, UNC-Chapel Hill </p>
  * @author Parthee Partheepan
- * @version $Id: TableApp.java,v 1.3 2005/09/21 14:22:48 parthee Exp $
+ * @version $Id: TableApp.java,v 1.4 2005/09/23 21:54:59 parthee Exp $
  */
 
 
@@ -72,7 +73,7 @@ public class TableApp extends JFrame
     */
    private FileExportGUI fileExportGUI = null;
 
-   static String version = "February 16, 2005";
+   static String version = "September 16, 2005";
 
    /** File History
     */
@@ -951,47 +952,21 @@ public class TableApp extends JFrame
 
       });
 
-      JMenu helpMenu = HelpMenu.createStandardMenu(HelpMenu.TABLE_OF_CONTENTS, HelpMenu.TABLEAPP_WINDOW,this);
-
-      //JMenu helpMenu = new JMenu("Help");
-
-      //helpMenu.setMnemonic('H');
-
+      JMenu helpMenu = new JMenu("Help"); // HelpMenu.createStandardMenu(HelpMenu.TABLE_OF_CONTENTS, HelpMenu.TABLEAPP_WINDOW,this);
+      JMenuItem helpMenuItem = new JMenuItem("Help");
+      helpMenuItem.addActionListener(new ActionListener() {
+    	  public void actionPerformed(ActionEvent e){
+    		  AnalysisEngineHelp.showHelp(AnalysisEngineHelp.ANALYSIS_ENGINE_TARGET);
+    	  }
+      });
+      helpMenu.add(helpMenuItem);
       menuBar.add(helpMenu);
-
-      //      JMenuItem userGuideMenuItem = new JMenuItem("User Guide");
-
-      //
-
-      //      userGuideMenuItem.setAccelerator(KeyStroke.getKeyStroke("F1"));
-
-      //      helpMenu.add(userGuideMenuItem);
-
-      //      userGuideMenuItem.addActionListener(new ActionListener()
-
-      //      {
-
-      //         public void actionPerformed(ActionEvent e)
-
-      //         {
-
-      //            JOptionPane.showMessageDialog(TableApp.this, "User Guide is not ready yet.");
-
-      //         }
-
-      //      });
-
-      
 
       JMenuItem aboutMenuItem = new JMenuItem("About");
 
       helpMenu.add(aboutMenuItem);
 
-      aboutMenuItem.addActionListener(
-
-      new ActionListener()
-
-      {
+      aboutMenuItem.addActionListener(new ActionListener() {
 
          public void actionPerformed(ActionEvent e)
 

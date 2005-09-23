@@ -28,7 +28,7 @@ import java.awt.event.*;
  * <p>Description: Sensitivity And UnThis table can both sort and filter data based on criteria
  *    entred by the user. </p>
  * @author Daniel Gatti
- * @version $Id: SUSortFilterTablePanel.java,v 1.3 2005/09/21 14:22:48 parthee Exp $
+ * @version $Id: SUSortFilterTablePanel.java,v 1.4 2005/09/23 21:54:59 parthee Exp $
  */
 public class SUSortFilterTablePanel extends SortFilterTablePanel
 {
@@ -412,7 +412,7 @@ public class SUSortFilterTablePanel extends SortFilterTablePanel
             HashMap hashMap = new HashMap();
             String depAxis = TreeDialog.getDependentAxis(this,aePlotType);
             hashMap.put(depAxis, unit);
-            String title = "Cutomizing "+aePlotType;
+            String title = "Cutomize "+aePlotType;
             TreeDialog dialog = new TreeDialog((JFrame)parent,
                   aePlotType, dataSets, null, hashMap);
             dialog.setTitle(title);
