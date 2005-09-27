@@ -14,13 +14,14 @@
     <type>javax.help.TOCView</type>
     <data>ae_help_toc.xml</data>
   </view>
-  
+<!--  
   <view>
       <name>Search</name>
       <label>Search</label>
       <type>javax.help.SearchView</type>
       <data engine="com.sun.java.help.search.DefaultSearchEngine">JavaHelpSearch</data>
   </view>  
+-->  
 <!--
   <view>
     <name>Index</name>

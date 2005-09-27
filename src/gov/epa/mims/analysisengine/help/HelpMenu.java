@@ -1,36 +1,28 @@
 package gov.epa.mims.analysisengine.help;
 
-//import gov.epa.mims.session.MIMSProperties;
-//import gov.epa.mims.util.MDialog;
-//import gov.epa.mims.util.LabeledPair;
-//import gov.epa.mims.util.LabeledField;
-//import gov.epa.mims.util.FileMethods;
-//import gov.epa.mims.session.admin.AdminInfo;
-//import gov.epa.mims.session.admin.ViewerList;
 import gov.epa.mims.analysisengine.gui.DefaultUserInteractor;
-import gov.epa.mims.analysisengine.gui.UserInteractor;
 import gov.epa.mims.analysisengine.gui.ScreenUtils;
+import gov.epa.mims.analysisengine.gui.UserInteractor;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import javax.swing.event.*;
-import javax.swing.table.*;
-import javax.swing.text.*;
-import javax.help.*;
+import java.awt.Component;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.net.URL;
-import java.util.Date;
-import java.util.Vector;
-import java.util.Iterator;
-import java.text.SimpleDateFormat;
-import javax.help.JHelpContentViewer;
+
+import javax.help.HelpBroker;
+import javax.help.HelpSet;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 
 /*
  * HelpMenu.java
  * Resources used by multiple classes to implement help menus
  *
  * @author Steve Howard
- * @version $Id: HelpMenu.java,v 1.2 2005/09/19 14:50:15 rhavaldar Exp $
+ * @version $Id: HelpMenu.java,v 1.3 2005/09/27 14:02:01 parthee Exp $
  * Created on October 15, 2004, 11:14 AM
  */
 
