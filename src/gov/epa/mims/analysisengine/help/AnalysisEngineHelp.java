@@ -6,6 +6,7 @@ import gov.epa.mims.analysisengine.gui.UserInteractor;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -30,7 +31,8 @@ public class AnalysisEngineHelp extends JFrame {
 		setTitle("Analysis Engine Users Guide");
 		helpViewer = createHelpViewer();
 		JPanel mainPanel = new JPanel(new BorderLayout());
-		mainPanel.setPreferredSize(new Dimension(800,800));
+		Dimension size = calculatePrefDimension();
+		mainPanel.setPreferredSize(size);
 		mainPanel.add(helpViewer);
 		getContentPane().add(mainPanel);
 		pack();
@@ -38,10 +40,21 @@ public class AnalysisEngineHelp extends JFrame {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
 	}
+	private Dimension calculatePrefDimension() {
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		int width = 900;
+		int height= 800;
+		if(width > screenSize.width-50){
+			width = screenSize.width-50;
+		}
+		if(height > screenSize.height-100){
+			height = screenSize.height-100;
+		}
+		return new Dimension(width,height);
+	}
 
 	private JHelp createHelpViewer() {
 		String value = System.getProperty(ANALYSIS_ENGINE_HELPSET);
-		System.out.println("value -"+value);
 		if(value == null || !new File(value).isFile() ||  !value.endsWith(".hs")){
 			throw new RuntimeException("Please specify the emisview help set file in the batch file");
 		}
@@ -63,6 +76,7 @@ public class AnalysisEngineHelp extends JFrame {
 			return null;
 		}
 	}
+	
 
 	private void setCurrentTarget(String target) {
 		helpViewer.setCurrentID(target);
