@@ -4,14 +4,15 @@ import gov.epa.mims.analysisengine.gui.DefaultUserInteractor;
 import gov.epa.mims.analysisengine.gui.UserInteractor;
 
 import java.text.Format;
-import java.util.*;
-
-import sun.security.x509.IssuerAlternativeNameExtension;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Hashtable;
 
 /**
  * A set of criteria for filtering data in a table.
  * @author  Daniel Gatti
- * @version $Id: FilterCriteria.java,v 1.3 2005/09/21 19:17:09 parthee Exp $
+ * @version $Id: FilterCriteria.java,v 1.4 2005/10/04 21:18:57 parthee Exp $
  */
 public class FilterCriteria implements java.io.Serializable,Cloneable
 {
@@ -263,10 +264,10 @@ public class FilterCriteria implements java.io.Serializable,Cloneable
       for (int i = 0; i < columnNames.length; i++)
       {
         int index = model.getColumnNameIndex(columnNames[i]);
-        Class colClass = ((OverallTableModel)model).getColumnClass(index);
+        Class colClass = ((OverallTableModel)model).getColumnClass(index+1);
         
         boolean doubleValue = isDoubleValue(values[i]);
-       
+        
 		if(colClass.equals(Double.class) && doubleValue){
             double d1 = new Double(values[i].toString()).doubleValue();
             double d2 = ((Double)rowData[index]).doubleValue();

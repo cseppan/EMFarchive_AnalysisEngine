@@ -25,8 +25,7 @@ public class AnalysisEngineHelp extends JFrame {
 
 	private static AnalysisEngineHelp emisviewHelp = null;
 	
-	public static final String ANALYSIS_ENGINE_HELPSET="ANALYSIS_ENGINE_HELPSET";
-
+	
 	private AnalysisEngineHelp() {
 		setTitle("Analysis Engine Users Guide");
 		helpViewer = createHelpViewer();
@@ -54,9 +53,16 @@ public class AnalysisEngineHelp extends JFrame {
 	}
 
 	private JHelp createHelpViewer() {
-		String value = System.getProperty(ANALYSIS_ENGINE_HELPSET);
-		if(value == null || !new File(value).isFile() ||  !value.endsWith(".hs")){
-			throw new RuntimeException("Please specify the emisview help set file in the batch file");
+		String value = System.getProperty("HOME_DIR");
+		if(value==null){
+			throw new RuntimeException("Please specify the HOME_DIR system variable");
+		}
+		char sep = File.separatorChar;
+		
+		value += (sep+"docs"+sep+"help"+sep+ "analysisengine"+sep+ "ae_help.hs");
+		if(!new File(value).isFile() ||  !value.endsWith(".hs")){
+			throw new RuntimeException("The '"+value +" is not a correct analysis engine helpset file"+
+					"\nPlease check whether file exist");
 		}
 		ClassLoader cl = AnalysisEngineHelp.class.getClassLoader();
 		URL url = null;

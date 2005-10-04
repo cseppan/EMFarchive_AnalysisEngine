@@ -1,16 +1,9 @@
 package gov.epa.mims.analysisengine;
 
-import gov.epa.mims.analysisengine.tree.BoxPlot;
-import gov.epa.mims.analysisengine.tree.BarPlot;
-import gov.epa.mims.analysisengine.tree.DiscreteCategoryPlot;
-import gov.epa.mims.analysisengine.tree.HistogramPlot;
-import gov.epa.mims.analysisengine.tree.RankOrderPlot;
-import gov.epa.mims.analysisengine.tree.ScatterPlot;
-import gov.epa.mims.analysisengine.tree.TimeSeries;
 
 /**
  * global constants used in the analysisengine code
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  * @author Tommy E. Cathey
  */
 public class AnalysisEngineConstants
