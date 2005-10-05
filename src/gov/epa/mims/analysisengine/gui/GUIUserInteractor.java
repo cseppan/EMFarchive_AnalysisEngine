@@ -9,7 +9,7 @@ import javax.swing.*;
  * Interaction with the user via a GUI.
  *
  * @author Steve Fine
- * @version $Id: GUIUserInteractor.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: GUIUserInteractor.java,v 1.3 2005/10/05 20:56:55 parthee Exp $
  *
  */
 
@@ -160,7 +160,7 @@ public class GUIUserInteractor implements UserInteractor
                               "Invalid argument: " + type);
       }
    
-      int result = JOptionPane.showOptionDialog(null, message, title, dtype,
+      int result = JOptionPane.showOptionDialog(parent, message, title, dtype,
          JOptionPane.PLAIN_MESSAGE, null, null, null);
    
       switch (result)
@@ -205,7 +205,7 @@ public class GUIUserInteractor implements UserInteractor
    
       // changing the implementation makes the dialog come to the front with the
       // TRIM window instead of staying behind it
-      int result = JOptionPane.showOptionDialog(null, message,
+      int result = JOptionPane.showOptionDialog(parent, message,
          title, dtype, JOptionPane.PLAIN_MESSAGE, null, btnNames, btnNames[defaultValue]);
       return result;
    }
