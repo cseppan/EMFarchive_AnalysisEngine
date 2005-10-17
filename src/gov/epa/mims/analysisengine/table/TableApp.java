@@ -47,7 +47,7 @@ import javax.swing.KeyStroke;
  * <p>Copyright: Copyright (c) 2004</p>
  * <p>Company: CEP, UNC-Chapel Hill </p>
  * @author Parthee Partheepan
- * @version $Id: TableApp.java,v 1.5 2005/09/27 21:06:51 parthee Exp $
+ * @version $Id: TableApp.java,v 1.6 2005/10/17 14:16:47 parthee Exp $
  */
 
 
@@ -73,7 +73,7 @@ public class TableApp extends JFrame
     */
    private FileExportGUI fileExportGUI = null;
 
-   static String version = "September 30, 2005";
+   static String version = "October 17, 2005";
 
    /** File History
     */
