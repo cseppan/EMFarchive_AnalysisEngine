@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project name="AnalysisEngine" default="dist" basedir=".">
+<project name="AnalysisEngine" default="tests" basedir=".">
 
 	<!--  =================== Properties ====================================== -->
 	<property file="build.properties" />
@@ -15,6 +15,11 @@
 	<property name="build.dist.dir" value="${build.home}/dist" />
 	<property name="build.classes.dir" value="${build.dist.dir}/classes" />
 
+	<property name="reports.dir" value="${build.home}/reports" />
+	<property name="reports.tests.dir" value="${reports.dir}/tests" />
+
+	<property name="test.unit.dir" value="test/unit" />
+	
 	<property name="app.name" value="ae" />
 	<property name="app.path" value="/${app.name}" />
 
@@ -26,10 +31,11 @@
 		</fileset>
 	</path>
 
-	<!--  ===================START Basic Targets ====================================== -->
 	<target name="init">
 		<mkdir dir="${build.home}" />
 		<mkdir dir="${build.classes.dir}" />
+		<mkdir dir="${reports.dir}" />
+		<mkdir dir="${reports.tests.dir}" />			
 	</target>
 
 
@@ -49,18 +55,33 @@
 	</target>
 
 	<target name="compile" depends="clean, init, compile-src" />
-	<!--  ===============END  Basic ====================================== -->
 
-	<!-- ================START Distribution Targets ========================= -->
 	<target name="dist" depends="do-dist" />
 
 	<target name="do-dist" depends="compile">
 		<jar jarfile="${build.home}/${app.name}-${app.version}.jar" basedir="${build.classes.dir}" />
 	</target>
-	<!-- ================END Distribution Targets ========================= -->
 
-	<!-- Continuous Integration target -->
 	<target name="ci-build" depends="compile, dist" description="Continuous Integration build" />
+
+	<!-- Test Targets -->
+	<target name="tests" depends="compile-tests, do-tests" />
+	
+	<target name="compile-tests" depends="clean, init, compile-src">
+		<javac srcdir="${test.unit.dir}" destdir="${build.classes.dir}" classpathref="classpath" debug="on" />
+	</target>
+	
+	<target name="do-tests">
+	        <junit printsummary="yes" haltonfailure="no">
+	            <classpath refid="classpath" />
+	            <formatter type="xml" />
+	            <batchtest fork="yes" todir="${reports.tests.dir}">
+	                <fileset dir="${build.classes.dir}">
+	                    <include name="**/*Test.class" />
+	                </fileset>
+	            </batchtest>
+	        </junit>
+	    </target>
 
 </project>
 
