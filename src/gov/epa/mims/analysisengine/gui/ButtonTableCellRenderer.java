@@ -1,11 +1,8 @@
 package gov.epa.mims.analysisengine.gui;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.event.*;
-import java.util.*;
-import javax.swing.*;
-import javax.swing.table.*;
+import javax.swing.JButton;
+import javax.swing.JTable;
+import javax.swing.table.TableCellRenderer;
 
 /**
 * ButtonTableCellEditor class

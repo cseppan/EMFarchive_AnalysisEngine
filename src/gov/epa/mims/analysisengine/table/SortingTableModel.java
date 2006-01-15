@@ -122,7 +122,7 @@ public class SortingTableModel extends MultiRowHeaderTableModel implements Table
 		int upper = middle + 1;
 		int[] tmp = new int[finish - start + 1];
 		if(ascending){
-			sorting(ascending, middle, finish, column, caseSensitive, lower, upper, tmp);
+			sorting(middle, finish, column, caseSensitive, lower, upper, tmp);
 		}else{
 			decscending(middle, finish, column, caseSensitive, lower, upper, tmp);
 		}
@@ -130,8 +130,8 @@ public class SortingTableModel extends MultiRowHeaderTableModel implements Table
 		System.arraycopy(tmp, 0, sortingMap, start, tmp.length);
 	}
 
-	private void sorting(boolean ascending, int middle, int finish, int column, boolean caseSensitive, int lower,
-			int upper, int[] tmp) {
+	private void sorting(int middle, int finish, int column, boolean caseSensitive, int lower, int upper,
+			int[] tmp) {
 		int i = 0;
 		for (i = 0; i < tmp.length; i++) {
 			if (lower > middle) {
@@ -139,16 +139,11 @@ public class SortingTableModel extends MultiRowHeaderTableModel implements Table
 			} else if (upper > finish) {
 				tmp[i] = sortingMap[lower++];
 			} else {
-				if (!ascending) {
-					int cache = upper;
-					upper = lower;
-					lower = cache;
-				}
 				Object comp1 = getValueAt(lower, column);
 				Object comp2 = getValueAt(upper, column);
 				if (comp1 == null || comp2 == null) {
 					if (comp1 == null && comp2 == null) {
-						// don't do any thing
+						tmp[i]= sortingMap[lower++];
 					} else if (comp1 == null && comp2 != null) {
 						tmp[i] = sortingMap[lower++];
 					} else {// if ( comp1!=null && comp2 ==null)
@@ -194,7 +189,7 @@ public class SortingTableModel extends MultiRowHeaderTableModel implements Table
 				Object comp2 = getValueAt(upper, column);
 				if (comp1 == null || comp2 == null) {
 					if (comp1 == null && comp2 == null) {
-						// don't do any thing
+						tmp[i] = sortingMap[upper++];
 					} else if (comp1 == null && comp2 != null) {
 						tmp[i] = sortingMap[upper++];
 					} else {// if ( comp1!=null && comp2 ==null)

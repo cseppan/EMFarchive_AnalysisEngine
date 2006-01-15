@@ -4,21 +4,18 @@ package gov.epa.mims.analysisengine.table;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
-import java.awt.Insets;
-import java.awt.Point;
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.text.Format;
 import java.text.SimpleDateFormat;
-import java.text.DecimalFormat;
+import java.util.Date;
+
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.table.TableCellRenderer;
-import java.util.Date;
-import gov.epa.mims.analysisengine.gui.OptionDialog;
 
 
 
@@ -28,7 +25,7 @@ import gov.epa.mims.analysisengine.gui.OptionDialog;
  * <p>Copyright: Copyright (c) 2003</p>
  * <p>Company: UNC - CEP</p>
  * @author Daniel Gatti
- * @version $Id: FormattedCellRenderer.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: FormattedCellRenderer.java,v 1.3 2006/01/15 04:30:53 parthee Exp $
  */
 public class FormattedCellRenderer extends JLabel
       implements TableCellRenderer, HasFormatter

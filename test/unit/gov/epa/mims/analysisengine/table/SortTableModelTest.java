@@ -14,7 +14,7 @@ import junit.framework.TestCase;
  * </p>
  * 
  * @author Daniel Gatti
- * @version $Id: SortTableModelTest.java,v 1.1 2006/01/10 23:29:38 parthee Exp $
+ * @version $Id: SortTableModelTest.java,v 1.2 2006/01/15 04:30:53 parthee Exp $
  */
 public class SortTableModelTest extends TestCase {
 	static Integer[][] intData = new Integer[5][5];
@@ -51,6 +51,7 @@ public class SortTableModelTest extends TestCase {
 		strData[3] = new String[] { "d", "a", "d", "b", "a" };
 		strData[4] = new String[] { "c", "e", "b", "a", "c" };
 
+
 		Calendar cal = Calendar.getInstance();
 		cal.set(2000, 0, 1, 0, 0);
 		cal.set(Calendar.SECOND, 0);
@@ -73,10 +74,6 @@ public class SortTableModelTest extends TestCase {
 		super(name);
 	} // TableTest()
 
-	/**
-	 * Make sure that when no sot has been applied, that the sorting model returns what is in the underlying model.
-	 */
-
 	public void testModelTransparent() {
 		SimpleTestModel dfm = new SimpleTestModel(intData, null, columnNames);
 		SortingTableModel stm = new SortingTableModel(dfm);
@@ -93,6 +90,54 @@ public class SortTableModelTest extends TestCase {
 			} // for(c)
 		} // for(r)
 	} // testModelTransparent()
+
+	public void testSortOneColumnWithNullsAscending() {
+		String[][] strDataWithNulls = new String[5][1];
+		strDataWithNulls[0][0] = null;
+		strDataWithNulls[1][0] = "a";
+		strDataWithNulls[2][0] = null;
+		strDataWithNulls[3][0] = "c";
+		strDataWithNulls[4][0] = "b";
+		SimpleTestModel dfm = new SimpleTestModel(strDataWithNulls, null, new String[][] { { "col1" } });
+		FilteringTableModel ftm = new FilteringTableModel(dfm);
+		SortingTableModel stm = new SortingTableModel(ftm);
+		String[] columnsToSort = new String[1];
+
+		// Sort column 0 ascending.
+		columnsToSort[0] = columnNames[0][0];
+		SortCriteria sc = new SortCriteria(columnsToSort, new boolean[] { true }, new boolean[] { false });
+		stm.sortTable(sc, stm.getRowCount() - 1);
+
+		String[] correctOrder = new String[] { null, null, "a", "b", "c" };
+		for (int r = 0; r < stm.getRowCount(); r++) {
+			System.out.println(stm.getValueAt(r, 0));
+			assertEquals(correctOrder[r], stm.getValueAt(r, 0));
+		}
+	}
+	
+	public void testSortOneColumnWithNullsDescending() {
+		String[][] strDataWithNulls = new String[5][1];
+		strDataWithNulls[0][0] = null;
+		strDataWithNulls[1][0] = "a";
+		strDataWithNulls[2][0] = null;
+		strDataWithNulls[3][0] = "c";
+		strDataWithNulls[4][0] = "b";
+		SimpleTestModel dfm = new SimpleTestModel(strDataWithNulls, null, new String[][] { { "col1" } });
+		FilteringTableModel ftm = new FilteringTableModel(dfm);
+		SortingTableModel stm = new SortingTableModel(ftm);
+		String[] columnsToSort = new String[1];
+
+		// Sort column 0 ascending.
+		columnsToSort[0] = columnNames[0][0];
+		SortCriteria sc = new SortCriteria(columnsToSort, new boolean[] { false }, new boolean[] { false });
+		stm.sortTable(sc, stm.getRowCount() - 1);
+
+		String[] correctOrder = new String[] { "c","b", "a", null, null  };
+		for (int r = 0; r < stm.getRowCount(); r++) {
+			assertEquals(correctOrder[r], stm.getValueAt(r, 0));
+		}
+	}
+
 
 	/**
 	 * Sort each column and see if it is sorted. Sort one column ascending, the next descending, the next ascending...
