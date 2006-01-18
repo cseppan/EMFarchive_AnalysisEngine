@@ -53,56 +53,23 @@ public class FilterCriteria implements Serializable, Cloneable {
 		}
 	} // static
 
-	/** The column names on which to perform the filter operation. */
 	private String[] columnNames = null;
 
-	/**
-	 * The operation to perform on each value in the given column. Must be one of the constants in this class.
-	 */
 	private int[] operations = null;
 
-	/**
-	 * The value to which the table values should be compared. Could be a Date, String, Integer, Double...
-	 */
 	private Comparable[] values = null;
 
 	private Class[] allColumnClasses = null;
 
-	/**
-	 * The formatters that are used for each column. This is needed to handle filtering on String operations for Number
-	 * and Date classes.
-	 */
-	// protected Format[] formats = null;
-	/**
-	 * The list of all column names in the main table. Note that this array and the showColumns array must be the same
-	 * length.
-	 */
 	private String[] allColumnNames = null;
 
-	/**
-	 * A hashtable that accepts column names as keys and returns Integers that are the index of the column in the table.
-	 * Used to find the column index in the accept() method.
-	 */
-	// private Hashtable columnNameToIndex = new Hashtable();
-	/**
-	 * True if we should compare all of the filter criteria with an "AND", and false if we should compare all of the
-	 * filter criteria with an "OR".
-	 */
 	protected boolean compareWithAnd = true;
 
-	/**
-	 * The boolean array that contains true for each column that we show. Note that this array and the allColumnNames
-	 * array must be the same length.
-	 */
 	private boolean[] showColumns = null;
 
-	/** the model of which the filter criteria will work */
 	private transient FormatAndIndexInfoIfc model = null;
 
 	private boolean applyFilters = true;
-
-	public FilterCriteria() {
-	}
 
 	/**
 	 * Constructor or filtering Rows.
@@ -141,7 +108,7 @@ public class FilterCriteria implements Serializable, Cloneable {
 		this.compareWithAnd = comparison;
 		this.showColumns = new boolean[allColumnNames.length];
 		Arrays.fill(showColumns, true);
-	} // FilterCriteria()
+	}
 
 	public void setTableModel(FormatAndIndexInfoIfc model) {
 		this.model = model;
@@ -365,10 +332,10 @@ public class FilterCriteria implements Serializable, Cloneable {
 		StringBuffer sb = new StringBuffer();
 		int length = columnNames.length;
 		for (int i = 0; i < length - 1; i++) {
-			sb.append(columnNames[i]).append(" ").append(OPERATION_STRINGS[i]).append(" ").append(values[i]).append(
+			sb.append(columnNames[i]).append(" ").append(getOperationString(i)).append(" ").append(values[i]).append(
 					", ");
 		}
-		sb.append(columnNames[length - 1]).append(" ").append(OPERATION_STRINGS[length - 1]).append(" ").append(
+		sb.append(columnNames[length - 1]).append(" ").append(getOperationString(length - 1)).append(" ").append(
 				values[length - 1]);
 		return sb.toString();
 	}
