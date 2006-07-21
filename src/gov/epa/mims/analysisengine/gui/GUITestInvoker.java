@@ -16,10 +16,10 @@ import java.util.ArrayList;
  * class_description
  *
  * @author Tommy E. Cathey
- * @version $Id: GUITest.java,v 1.3 2005/09/21 14:16:19 parthee Exp $
+ * @version $Id: GUITestInvoker.java,v 1.1 2006/07/21 17:36:37 parthee Exp $
  *
  **/
-public class GUITest
+public class GUITestInvoker
 implements
 gov.epa.mims.analysisengine.tree.AnalysisOptionConstantsIfc
 {
@@ -119,7 +119,7 @@ gov.epa.mims.analysisengine.tree.AnalysisOptionConstantsIfc
    /**
     * Creates a new GUITest object.
     ********************************************************/
-   public GUITest()
+   public GUITestInvoker()
    {
      optionsGlobal = new AnalysisOptions();
      optionsLocalPlot1 = new AnalysisOptions();
@@ -876,7 +876,7 @@ gov.epa.mims.analysisengine.tree.AnalysisOptionConstantsIfc
       String guiName = args[0];
       try
       {
-        GUITest guiTest = new GUITest();
+        GUITestInvoker guiTest = new GUITestInvoker();
         guiTest.constructTree(guiName);
         guiTest.generatePlots();
         System.exit(1);

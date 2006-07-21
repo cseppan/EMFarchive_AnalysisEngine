@@ -14,7 +14,7 @@ import gov.epa.mims.analysisengine.tree.DataSetIfc;
  * <p>Copyright: Copyright (c) 2003</p>
  * <p>Company: CEP, UNC-Chapel Hill </p>
  * @author Daniel Gatti, Parthee Partheepan
- * @version $Id: DataSetsTableModel.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: DataSetsTableModel.java,v 1.3 2006/07/21 17:36:36 parthee Exp $
  */
 public class DataSetsTableModel extends SpecialTableModel
 {
@@ -259,7 +259,7 @@ public class DataSetsTableModel extends SpecialTableModel
                f.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
                java.awt.Container contentPane = f.getContentPane();
                contentPane.setLayout(new javax.swing.BoxLayout(contentPane, javax.swing.BoxLayout.X_AXIS));
-               SUSortFilterTablePanel sftp = new SUSortFilterTablePanel(f, tableModel);
+               SUSortFilterTablePanel sftp = new SUSortFilterTablePanel(f, "Datasets Table Model", null,null, tableModel);
                contentPane.add(sftp);
 
                f.pack();

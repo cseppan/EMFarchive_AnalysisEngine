@@ -19,7 +19,7 @@
 	<property name="reports.tests.dir" value="${reports.dir}/tests" />
 
 	<property name="test.unit.dir" value="test/unit" />
-	
+
 	<property name="app.name" value="ae" />
 	<property name="app.path" value="/${app.name}" />
 
@@ -35,7 +35,7 @@
 		<mkdir dir="${build.home}" />
 		<mkdir dir="${build.classes.dir}" />
 		<mkdir dir="${reports.dir}" />
-		<mkdir dir="${reports.tests.dir}" />			
+		<mkdir dir="${reports.tests.dir}" />
 	</target>
 
 
@@ -65,23 +65,24 @@
 	<target name="ci-build" depends="compile, dist" description="Continuous Integration build" />
 
 	<!-- Test Targets -->
-	<target name="tests" depends="compile-tests, do-tests" />
 	
 	<target name="compile-tests" depends="clean, init, compile-src">
 		<javac srcdir="${test.unit.dir}" destdir="${build.classes.dir}" classpathref="classpath" debug="on" />
 	</target>
-	
+
 	<target name="do-tests">
-	        <junit printsummary="yes" haltonfailure="no">
-	            <classpath refid="classpath" />
-	            <formatter type="xml" />
-	            <batchtest fork="yes" todir="${reports.tests.dir}">
-	                <fileset dir="${build.classes.dir}">
-	                    <include name="**/*Test.class" />
-	                </fileset>
-	            </batchtest>
-	        </junit>
-	    </target>
+		<junit printsummary="yes" haltonfailure="no">
+			<classpath refid="classpath" />
+			<formatter type="xml" />
+			<batchtest fork="yes" todir="${reports.tests.dir}">
+				<fileset dir="${build.classes.dir}">
+					<include name="**/*Test.class" />
+				</fileset>
+			</batchtest>
+		</junit>
+	</target>
+	
+	<target name="tests" depends="compile-tests, do-tests"/>
 
 </project>
 

@@ -29,7 +29,7 @@ import javax.swing.border.Border;
  * <p>Copyright: Copyright (c) 2004</p>
  * <p>Company: CEP, UNC-Chapel Hill </p>
  * @author Parthee Partheepan
- * @version $Id: StatisticsGUI.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: StatisticsGUI.java,v 1.3 2006/07/21 17:36:36 parthee Exp $
  */
 
  public class StatisticsGUI extends JDialog
@@ -139,22 +139,6 @@ import javax.swing.border.Border;
    private String tabName;
 
    private JFrame parent;
-
-//   /** Creates a new instance of StatisticsGUI
-//    * @pre overallTableModel != null
-//    */
-//   public StatisticsGUI(OverallTableModel overallTableModel)
-//   {
-//      statisticsModel = new StatisticsModel(overallTableModel);
-//      this.setTitle("Statistics");
-//
-//      initialize();
-//      initGUIModel();
-//      pack();
-//      setLocation(ScreenUtils.getPointToCenter(this));
-//      setModal(true);
-//      setVisible(true);
-//   }
 
    /** Creates a new instance of StatisticsGUI  with the existing statistisModel
     * @pre statModel != null

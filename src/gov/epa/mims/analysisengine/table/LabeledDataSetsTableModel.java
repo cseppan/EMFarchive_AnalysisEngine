@@ -16,7 +16,7 @@ import gov.epa.mims.analysisengine.tree.LabeledDataSetIfc;
  * <p>Copyright: Copyright (c) 2003</p>
  * <p>Company: CEP, UNC-Chapel Hill </p>
  * @author Parthee Partheepan
- * @version $Id: LabeledDataSetsTableModel.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: LabeledDataSetsTableModel.java,v 1.3 2006/07/21 17:36:36 parthee Exp $
  */
 public class LabeledDataSetsTableModel extends DataSetsTableModel
 {
@@ -242,7 +242,7 @@ System.out.println("column name = "+ getColumnName(col));
                f.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
                java.awt.Container contentPane = f.getContentPane();
                contentPane.setLayout(new javax.swing.BoxLayout(contentPane, javax.swing.BoxLayout.X_AXIS));
-               SUSortFilterTablePanel sftp = new SUSortFilterTablePanel(null,tableModel);
+               SUSortFilterTablePanel sftp = new SUSortFilterTablePanel(null,"Labeled Dataset Table Model", null,null, tableModel);
                contentPane.add(sftp);
 
                f.pack();
