@@ -143,9 +143,6 @@ public class TableApp extends JFrame {
 		// System.out.println("fileNames.length="+fileNames.length);
 		for (int i = 0; i < fileNames.length; i++) {
 			SpecialTableModel model = null;
-			/**
-			 * try //Why we are catching the error ??? RP {
-			 */
 			try {
 				model = FileImportGUI.createAModel(fileNames[i], fileType[i], delimiter[i], noOfColumnNameRows[i]);
 				if (FileImportGUI.getLogMessages() != null) {

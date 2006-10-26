@@ -26,7 +26,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JTabbedPane;
-import javax.swing.ListSelectionModel;
 import javax.swing.table.TableColumn;
 
 /**
@@ -38,7 +37,7 @@ import javax.swing.table.TableColumn;
  * </p>
  * 
  * @author Daniel Gatti
- * @version $Id: SUSortFilterTablePanel.java,v 1.5 2006/07/21 17:36:36 parthee Exp $
+ * @version $Id: SUSortFilterTablePanel.java,v 1.6 2006/10/26 21:50:47 parthee Exp $
  */
 public class SUSortFilterTablePanel extends SortFilterTablePanel {
 
@@ -164,7 +163,7 @@ public class SUSortFilterTablePanel extends SortFilterTablePanel {
 
 		table.getTableHeader().addMouseListener(tableMouseAdapter);
 		table.addMouseListener(popupMouseAdapter);
-		table.getColumnModel().getSelectionModel().setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		// table.getColumnModel().getSelectionModel().setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 	} // createPopupMenu()
 
 	public void loadConfigFile(File file, boolean loadTableConfig) {

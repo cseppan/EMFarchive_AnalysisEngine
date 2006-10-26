@@ -1,22 +1,41 @@
 package gov.epa.mims.analysisengine.table;
 
-import gov.epa.mims.analysisengine.gui.DefaultUserInteractor;
-import gov.epa.mims.analysisengine.gui.UserInteractor;
-import gov.epa.mims.analysisengine.gui.GUIUserInteractor;
 import gov.epa.mims.analysisengine.gui.ChildHasChangedListener;
+import gov.epa.mims.analysisengine.gui.DefaultUserInteractor;
+import gov.epa.mims.analysisengine.gui.GUIUserInteractor;
 import gov.epa.mims.analysisengine.gui.HasChangedListener;
+import gov.epa.mims.analysisengine.gui.OptionDialog;
+import gov.epa.mims.analysisengine.gui.UserInteractor;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.File;
 import java.text.Format;
-import java.util.*;
+import java.util.Arrays;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JToolBar;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
-import javax.swing.*;
-import javax.swing.table.*;
-import java.io.File;
-
-import gov.epa.mims.analysisengine.gui.OptionDialog;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 /**
  * <p>
@@ -27,7 +46,7 @@ import gov.epa.mims.analysisengine.gui.OptionDialog;
  * </p>
  * 
  * @author Daniel Gatti
- * @version $Id: SortFilterTablePanel.java,v 1.4 2006/01/18 19:47:30 parthee Exp $
+ * @version $Id: SortFilterTablePanel.java,v 1.5 2006/10/26 21:50:47 parthee Exp $
  */
 public class SortFilterTablePanel extends JPanel implements TableModelListener, ChildHasChangedListener {
 
@@ -239,10 +258,9 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 		java.net.URL imgURL = getClass().getResource(path);
 		if (imgURL != null) {
 			return new ImageIcon(imgURL);
-		} else {
-			System.err.println("Could not find file: " + path + " in classpath.");
-			return null;
 		}
+		System.err.println("Could not find file: " + path + " in classpath.");
+		return null;
 	} // createImageIcon()
 
 	/**
@@ -289,7 +307,7 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 		PopupMouseAdapter popupMouseAdapter = new PopupMouseAdapter(scrollPane);
 		table.getTableHeader().addMouseListener(tableMouseAdapter);
 		table.addMouseListener(popupMouseAdapter);
-		table.getColumnModel().getSelectionModel().setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		// table.getColumnModel().getSelectionModel().setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
 	}
 
@@ -537,23 +555,15 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 			// colHeadersList.add(overallModel.getColumnHeaders(c));
 			columnHeaders[c] = overallModel.getColumnHeaders(c);
 			column = columnModel.getColumn(c + 1);
-			// column = columnModel.getColumn(c+1);
 			TableCellRenderer rend = column.getCellRenderer();
 			if (rend instanceof HasFormatter) {
 				HasFormatter hf = (HasFormatter) rend;
 				// formatsList.add(hf.getFormat());
 				formats[c] = hf.getFormat();
 			} else {
-				// formatsList.add(FormattedCellRenderer.nullFormatter);
 				formats[c] = FormattedCellRenderer.nullFormatter;
 			}
-			// }//if(!colClass.equals(Boolean.class))
 		} // for(c)
-		// int size = colHeadersList.size();
-		// String[][] columnHeaders = new String[size][];
-		// Format[] formats = new Format[size];
-		// colHeadersList.toArray(columnHeaders);
-		// formatsList.toArray(formats);
 		ColumnFormatGUI formatGUI = null;
 		if (selFormatColName == null) {
 			formatGUI = new ColumnFormatGUI((JFrame) parent, columnHeaders, formats, formatInfo);
@@ -662,11 +672,7 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 			int numcols = overallModel.getBaseColumnCount();
 			boolean[] selected = new boolean[numcols];
 			Arrays.fill(selected, true);
-			/*
-			 * Format[] allColumnFormats = new Format[numcols]; TableColumnModel model = table.getColumnModel(); for(int
-			 * i=1; i < numcols ; i++) { allColumnFormats[i-1]=((FormattedCellRenderer)model.getColumn(i
-			 * ).getCellRenderer()).getFormat(); }
-			 */
+
 			filterCriteria = new FilterCriteria(overallModel.getBaseColumnNames(),
 			/* allColumnFormats, */selected);
 			filterCriteria.setTableModel(overallModel);
@@ -829,80 +835,6 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 		}
 	}// showLoadConfigGUI
 
-	/**
-	 * main() for testing.
-	 */
-	public static void main(String[] args) {
-		Calendar cal = Calendar.getInstance();
-		cal.set(Calendar.MILLISECOND, 0);
-		cal.set(1990, 0, 1, 0, 0, 0);
-		final int NUM_ROWS = 26;
-		final int NUM_COLS = 5;
-		Object[][] data = new Object[NUM_ROWS][NUM_COLS];
-		char[] charArray1 = { 'a', 'a', 'a', 'a', 'a' };
-		char[] charArray2 = { 'Z', 'Z', 'Z', 'Z', 'Z' };
-		int arrayIndex = 0;
-		for (int r = 0; r < NUM_ROWS; r++) {
-			data[r] = new Object[NUM_COLS];
-			data[r][2] = new Integer(r);
-			data[r][3] = new Double(r * 10.0);
-			data[r][4] = cal.getTime();
-			cal.add(Calendar.HOUR, 1);
-		} // for(r)
-		int r = 0;
-		charArray1[0] = 'a';
-		charArray2[0] = 'Z';
-		outer: for (int i = 0; i < 26 && r < NUM_ROWS; i++) {
-			charArray1[1] = 'a';
-			charArray2[1] = 'Z';
-			for (int j = 0; j < 26 && r < NUM_ROWS; j++) {
-				charArray1[2] = 'a';
-				charArray2[2] = 'Z';
-				for (int k = 0; k < 26 && r < NUM_ROWS; k++) {
-					charArray1[3] = 'a';
-					charArray2[3] = 'Z';
-					for (int l = 0; l < 26 && r < NUM_ROWS; l++) {
-						charArray1[4] = 'a';
-						charArray2[4] = 'Z';
-						for (int m = 0; m < 26 && r < NUM_ROWS; m++) {
-							data[r][0] = new String(charArray1);
-							data[r][1] = new String(charArray2);
-							charArray1[4]++;
-							charArray2[4]--;
-							r++;
-							if (r >= NUM_ROWS) {
-								break outer;
-							}
-						}
-						charArray1[3]++;
-						charArray2[3]--;
-					}
-					charArray1[2]++;
-					charArray2[2]--;
-				}
-				charArray1[1]++;
-				charArray2[1]--;
-			}
-			charArray1[0]++;
-			charArray1[0]--;
-		}
-		final String[][] columnHeaders = { { "String 1", "String 2", "Integer", "Double", "Date" },
-				{ "g/cm3", "lb/in^2", "m/s", "items/hectare", "years" } };
-		final SimpleTestModel tableModel = new SimpleTestModel(data, null, columnHeaders);
-		javax.swing.SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				JFrame f = new JFrame("SortFilterTablePanel");
-				f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				Container contentPane = f.getContentPane();
-				contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
-				SortFilterTablePanel sftp = new SortFilterTablePanel(f, tableModel);
-				contentPane.add(sftp);
-				f.pack();
-				f.setVisible(true);
-			}
-		});
-	}
-
 	public void setHasChanged(boolean hasChanged) {
 		this.hasChanged = hasChanged;
 	}
@@ -919,8 +851,6 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 			hasChanged = true;
 		}
 	}
-
-	// main()
 
 	// ////////////////// CLASSES ////////////////////////////
 
@@ -991,9 +921,7 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 	/**
 	 * Action for formatting multiple columns.
 	 */
-	protected class MultipleFormatAction extends AbstractAction
-
-	{
+	protected class MultipleFormatAction extends AbstractAction {
 		SortFilterTablePanel parent = null;
 
 		public MultipleFormatAction(SortFilterTablePanel parent) {
@@ -1006,9 +934,6 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 		} // actionPerformed()
 	} // class MultipleFormatAction
 
-	/**
-	 * An action that adds a Total and Average row to the table.
-	 */
 	protected class AggregateRowsAction extends AbstractAction {
 		SortFilterTablePanel parent = null;
 
@@ -1019,8 +944,8 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 
 		public void actionPerformed(ActionEvent e) {
 			parent.aggregateRows();
-		} // actionPerformed()
-	} // class AggregateRowsAction
+		}
+	}
 
 	/**
 	 * An action that adds 2 columns to the table.
@@ -1064,12 +989,12 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 		public ShowHideColumnsAction(SortFilterTablePanel parent) {
 			super("Show/Hide columns...", showHideIcon);
 			this.parent = parent;
-		} // FilterAction()
+		}
 
 		public void actionPerformed(ActionEvent e) {
 			parent.showFilterColumnsGUI();
-		} // actionPerformed()
-	} // class ShowHideColumnsAction
+		}
+	}
 
 	/**
 	 * Action for formatting one column.
@@ -1111,7 +1036,7 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 		public void actionPerformed(ActionEvent e) {
 			JFileChooser chooser = new JFileChooser();
 			do {
-				int returnVal = chooser.showOpenDialog((Component) parent);
+				int returnVal = chooser.showOpenDialog(parent);
 				try {
 					if (returnVal == JFileChooser.CANCEL_OPTION) {
 						return;
@@ -1125,8 +1050,8 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 							UserInteractor.ERROR);
 				}
 			} while (true);
-		} // actionPerformed()
-	} // class LoadConfigAction
+		}
+	}
 
 	/**
 	 * Mouse Listener to bring up the popup and sort columns.
@@ -1140,18 +1065,15 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 
 		public void mousePressed(MouseEvent e) {
 			Point point = e.getPoint();
-			// System.out.println("point.x="+point.x+", point.y="+point.y);
 			SortFilterTablePanel.this.currentX = point.x;
 			if ((e.getModifiers() & MouseEvent.BUTTON3_MASK) == MouseEvent.BUTTON3_MASK) {
 				popupMenu.show(SortFilterTablePanel.this, point.x - scrollPane.getViewport().getViewPosition().x,
 						point.y - scrollPane.getViewport().getViewPosition().y);
 			}
 		}
-	} // class PopupMouseAdapter
+		
+	}
 
-	/**
-	 * Mouse Listener to sort columns.
-	 */
 	protected class TableMouseAdapter extends MouseAdapter {
 		boolean sortToggle = false;
 
@@ -1165,6 +1087,6 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 				SortFilterTablePanel.this.sortAtCurrentX(sortToggle);
 				sortToggle = !sortToggle;
 			}
-		} // mouseClicked()
-	} // class TableMouseAdapter
-} // class SortFilterTablePanel
+		}
+	}
+}
