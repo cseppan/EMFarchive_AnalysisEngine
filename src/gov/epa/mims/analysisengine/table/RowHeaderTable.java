@@ -29,7 +29,7 @@ public class RowHeaderTable extends JTable {
 
 		//setColumnSelectionAllowed(true);
 		//setRowSelectionAllowed(true);
-		//setCellSelectionEnabled(false);
+		setCellSelectionEnabled(true);
 	} // RowHeaderTable()
 
 	/**

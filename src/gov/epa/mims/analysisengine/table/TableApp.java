@@ -189,6 +189,7 @@ public class TableApp extends JFrame {
 			}// if(!allSuccessful)
 		} // try
 		catch (Exception e) {
+			e.printStackTrace();
 			DefaultUserInteractor.get().notifyOfException(this, "Failed to show import status dialog", e,
 					UserInteractor.ERROR);
 		}// catch

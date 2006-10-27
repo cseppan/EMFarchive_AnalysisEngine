@@ -14,23 +14,12 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.TableCellRenderer;
 
-/**
- * <p>
- * Description: A TabelCellRenderer that can hold a formatter to format the data before presentation.
- * </p>
- * <p>
- * Copyright: Copyright (c) 2003
- * </p>
- * <p>
- * Company: UNC - CEP
- * </p>
- * 
- * @author Daniel Gatti
- * @version $Id: FormattedCellRenderer.java,v 1.4 2006/10/26 21:50:47 parthee Exp $
- */
 public class FormattedCellRenderer extends JLabel implements TableCellRenderer, HasFormatter {
+
 	/** The formatter to use when displaying values. Could be null. */
 	protected Format format = null;
 
@@ -49,12 +38,10 @@ public class FormattedCellRenderer extends JLabel implements TableCellRenderer, 
 	/** A null formatter to use when there is no formatter in a column. */
 	public static final NullFormatter nullFormatter = new NullFormatter();
 
-	/**
-	 * Constructor.
-	 * 
-	 * @param format
-	 *            Format touse to format the cells. Could be null in which case we won't do any formatting.
-	 */
+	protected static Border noFocusBorder = new EmptyBorder(1, 1, 1, 1);
+
+	private static final Border SAFE_NO_FOCUS_BORDER = new EmptyBorder(1, 1, 1, 1);
+
 	public FormattedCellRenderer(Format format, int horizontalAlignment) {
 		if (format == null) {
 			format = nullFormatter;
@@ -65,71 +52,60 @@ public class FormattedCellRenderer extends JLabel implements TableCellRenderer, 
 		setHorizontalAlignment(horizontalAlignment);
 		setOpaque(true);
 		this.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-	} // FormattedCellRenderer()
+	}
 
-	/**
-	 * Return the formatter being ued by this renderer. This is used by the RowHeaderTable.setColumnWidths method.
-	 * 
-	 * @return Format that is used to render values in this GUI.
-	 */
 	public Format getFormat() {
 		return format;
-	} // getFormat()
+	}
 
-	/**
-	 * Return the rendering component with the value in it.
-	 */
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
 			int row, int column) {
-		//System.out.println("row-"+row+", col-"+column+" value= " + value);
-		if (isSelected) {
-			setBackground(selectionColor);
-		} else {
-			setBackground(backgroundColor);
-		}
-		// Return and empty cell if there is no value.
-		if (value == null) {
-			setText("");
-		}
-		// RP: Function below handled by SignificantDigitsFormat.format()
-		// else if( table.getColumnClass(column).equals(Double.class)
-		// && ((Double)table.getValueAt(row,column)).isNaN())
-		// {
-		// setText("N/A");
-		// }
-		else if (format == null) {
-			setText(value.toString());
-		} else {
-			setText(format.format(value));
-		}
-		return this;
-	} // getTableCellRendererComponent()
 
-	/**
-	 * Save the non-selected background color.
-	 */
+		if (isSelected) {
+			super.setBackground(table.getSelectionBackground());
+		} else {
+			super.setBackground(table.getBackground());
+		}
+
+		if (hasFocus) {
+			setBorder(UIManager.getBorder("Table.focusCellHighlightBorder"));
+			if (table.isCellEditable(row, column)) {
+				super.setForeground(UIManager.getColor("Table.focusCellForeground"));
+				super.setBackground(UIManager.getColor("Table.focusCellBackground"));
+			}
+		} else {
+			setBorder(getNoFocusBorder());
+		}
+
+		setValue(value, format);
+
+		return this;
+
+	}
+
+	private static Border getNoFocusBorder() {
+		if (System.getSecurityManager() != null) {
+			return SAFE_NO_FOCUS_BORDER;
+		}
+		return noFocusBorder;
+	}
+
+	protected void setValue(Object value, Format format) {
+		if (format == null)
+			setText((value == null) ? "" : value.toString());
+		else
+			setText(format.format(value));
+	}
+
 	public void setBackground(Color c) {
 		super.setBackground(c);
 		backgroundColor = c;
 	}
 
-	/**
-	 * Set the format to be used by this renderer.
-	 * 
-	 * @param newFormat
-	 *            Format to be used by this renderer.
-	 */
 	public void setFormat(Format newFormat) {
 		format = newFormat;
-	} // setFormat()
+	}
 
-	/**
-	 * returns an instance of FormattedCellRenderer given the class type
-	 * 
-	 * @param columnClass
-	 *            Class
-	 * @return FormattedCellRenderer
-	 */
 	public static FormattedCellRenderer getDefaultFormattedCellRenderer(Class columnClass) {
 		Format format = getDefaultFormat(columnClass);
 		int alignment = getDefaultAlignment(columnClass);
@@ -141,28 +117,15 @@ public class FormattedCellRenderer extends JLabel implements TableCellRenderer, 
 	public static int getDefaultAlignment(Class columnClass) {
 		if (columnClass.equals(Double.class) || columnClass.equals(Float.class) || columnClass.equals(Integer.class)) {
 			return SwingConstants.RIGHT;
-		} else {
-			return SwingConstants.LEFT;
 		}
+		return SwingConstants.LEFT;
 	}
 
-	/**
-	 * returns an instance of Format given the class type
-	 * 
-	 * @param columnClass
-	 *            Class
-	 * @return Format
-	 */
 	public static Format getDefaultFormat(Class columnClass) {
 		if (columnClass.equals(Integer.class)) {
-			// return new SignificantDigitsFormat("0");
 			return new DecimalFormat("0");
 		} else if (columnClass.equals(Double.class) || columnClass.equals(Float.class)) {
-			SignificantDigitsFormat sigFormat =
-
-			new SignificantDigitsFormat();
-			// sigFormat.setSelectedOption(SignificantDigitsFormat.SCIENTIFIC_FORMAT);
-			// sigFormat.setNumberOfSignificantDigits(3);
+			SignificantDigitsFormat sigFormat = new SignificantDigitsFormat();
 			sigFormat.applyPattern(sigFormat.toPattern());
 			return sigFormat;
 		} else if (columnClass.equals(Date.class) || columnClass.equals(Timestamp.class)) {
@@ -172,5 +135,4 @@ public class FormattedCellRenderer extends JLabel implements TableCellRenderer, 
 		}
 	}
 
-} // class FormattedCellRenderer
-
+}

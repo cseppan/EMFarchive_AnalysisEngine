@@ -15,6 +15,7 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.text.Format;
 import java.util.Arrays;
@@ -46,7 +47,7 @@ import javax.swing.table.TableColumnModel;
  * </p>
  * 
  * @author Daniel Gatti
- * @version $Id: SortFilterTablePanel.java,v 1.5 2006/10/26 21:50:47 parthee Exp $
+ * @version $Id: SortFilterTablePanel.java,v 1.6 2006/10/27 16:27:50 parthee Exp $
  */
 public class SortFilterTablePanel extends JPanel implements TableModelListener, ChildHasChangedListener {
 
@@ -1071,7 +1072,7 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 						point.y - scrollPane.getViewport().getViewPosition().y);
 			}
 		}
-		
+
 	}
 
 	protected class TableMouseAdapter extends MouseAdapter {
@@ -1088,5 +1089,6 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 				sortToggle = !sortToggle;
 			}
 		}
+
 	}
 }
