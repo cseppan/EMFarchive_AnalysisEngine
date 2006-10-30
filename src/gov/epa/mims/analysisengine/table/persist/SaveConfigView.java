@@ -33,13 +33,13 @@ import javax.swing.table.TableModel;
 public class SaveConfigView extends JDialog {
 
 	/** OK button to close the panel and save configurations */
-	private JButton bOk;
+	private JButton okButton;
 
 	/** Cancel button to not proceed with saving configuration */
-	private JButton bCancel;
+	private JButton cancelButton;
 
 	/** Panel containing OK and Cancel */
-	private JPanel OKCancelPanel;
+	private JPanel okCancelPanel;
 
 	/** Browse button for a poping up a FileChooser Dialog */
 	private JButton bBrowse;
@@ -85,13 +85,6 @@ public class SaveConfigView extends JDialog {
 	/** Model for the Save Config Model */
 	private SaveConfigModel model;
 
-	/**
-	 * Creates a new instance of SaveConfigGUI
-	 * 
-	 * @param model
-	 *            SaveConfigModel
-	 */
-
 	public SaveConfigView(Frame parent, SaveConfigModel model) {
 		super(parent);
 		this.model = model;
@@ -100,9 +93,6 @@ public class SaveConfigView extends JDialog {
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 	}
 
-	/**
-	 * Initializes the GUI.
-	 */
 	public void initGUI() {
 		try {
 
@@ -119,9 +109,9 @@ public class SaveConfigView extends JDialog {
 			lSaveAs = new JLabel();
 			tFileName = new JTextField();
 			bBrowse = new JButton();
-			OKCancelPanel = new JPanel();
-			bCancel = new JButton();
-			bOk = new JButton();
+			okCancelPanel = new JPanel();
+			cancelButton = new JButton();
+			okButton = new JButton();
 			OverallPanel = new JPanel();
 
 			BoxLayout thisLayout = new BoxLayout(OverallPanel, 1);
@@ -283,26 +273,26 @@ public class SaveConfigView extends JDialog {
 
 			FlowLayout OKCancelPanelLayout = new FlowLayout();
 
-			OKCancelPanel.setLayout(OKCancelPanelLayout);
-			OKCancelPanel.setPreferredSize(new java.awt.Dimension(400, 35));
+			okCancelPanel.setLayout(OKCancelPanelLayout);
+			okCancelPanel.setPreferredSize(new java.awt.Dimension(400, 35));
 			OKCancelPanelLayout.setAlignment(FlowLayout.CENTER);
 			OKCancelPanelLayout.setHgap(5);
 			OKCancelPanelLayout.setVgap(5);
-			OverallPanel.add(OKCancelPanel);
+			OverallPanel.add(okCancelPanel);
 
-			bOk.setText("OK");
-			bOk.setPreferredSize(new java.awt.Dimension(88, 25));
-			OKCancelPanel.add(bOk);
-			bOk.addMouseListener(new MouseAdapter() {
+			okButton.setText("OK");
+			okButton.setPreferredSize(new java.awt.Dimension(88, 25));
+			okCancelPanel.add(okButton);
+			okButton.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					bOkMouseClicked(evt);
 				}
 			});
 
-			bCancel.setText("Cancel");
-			bCancel.setPreferredSize(new java.awt.Dimension(88, 25));
-			OKCancelPanel.add(bCancel);
-			bCancel.addMouseListener(new MouseAdapter() {
+			cancelButton.setText("Cancel");
+			cancelButton.setPreferredSize(new java.awt.Dimension(88, 25));
+			okCancelPanel.add(cancelButton);
+			cancelButton.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					bCancelMouseClicked(evt);
 				}
