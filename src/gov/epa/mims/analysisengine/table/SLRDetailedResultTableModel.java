@@ -71,8 +71,7 @@ public class SLRDetailedResultTableModel extends SpecialTableModel {
 	public Class getColumnClass(int col) {
 		if (col == 0 || col == 1 || col == 5)
 			return String.class;
-		else
-			return Double.class;
+		return Double.class;
 	}
 
 }

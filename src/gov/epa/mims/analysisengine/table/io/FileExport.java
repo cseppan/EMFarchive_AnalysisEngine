@@ -15,7 +15,7 @@ import javax.swing.table.TableModel;
  * Created on April 5, 2004, 11:59 AM
  * 
  * @author parthee
- * @version $Id: FileExport.java,v 1.1 2006/10/30 17:26:13 parthee Exp $
+ * @version $Id: FileExport.java,v 1.2 2006/10/30 21:43:51 parthee Exp $
  */
 public class FileExport {
 
@@ -144,7 +144,7 @@ public class FileExport {
 	 */
 	private void printColumnHeaderAndColumnRowHeader(String[] columnRowHeaders,
 			String[][] columnHeaders) throws Exception {
-
+		//TODO:
 	}
 
 	/**
@@ -229,15 +229,6 @@ public class FileExport {
 			printer.print(aWord);
 			printer.print(delimiter);
 		}
-	}
-
-	/**
-	 * helper method to print the data with quotes and followed by End of Line
-	 */
-	private void printAWordPlusQuoteAndEndOfLine(String aWord) {
-		printer.print("\"");
-		printer.print(aWord);
-		printer.println("\"");
 	}
 
 	/**

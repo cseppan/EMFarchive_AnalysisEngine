@@ -1,6 +1,5 @@
 package gov.epa.mims.analysisengine.table.io;
 
-
 import java.io.FileReader;
 import java.util.ArrayList;
 
@@ -36,7 +35,7 @@ import java_cup.runtime.Symbol;
  * Created on March 31, 2004, 10:11 AM
  *
  * @author  Krithiga Thangavelu, CEP, UNC CHAPEL HILL.
- * @version $Id: FileParser.java,v 1.1 2006/10/30 17:26:13 parthee Exp $
+ * @version $Id: FileParser.java,v 1.2 2006/10/30 21:43:50 parthee Exp $
  */
 
 public class FileParser {
@@ -89,13 +88,11 @@ public class FileParser {
 	 *            String
 	 * @param noOfColumnNameRows
 	 */
-	public FileParser(String fileName, String delimiter,
-			int noOfColumnHeaderRows, boolean multipleOccurences)
+	public FileParser(String fileName, String delimiter, int noOfColumnHeaderRows, boolean multipleOccurences)
 			throws Exception {
 		this.fileName = fileName;
 		if (delimiter.length() > 1) {
-			throw new Exception(
-					"Only Single Character Delimiters are supported!");
+			throw new Exception("Only Single Character Delimiters are supported!");
 		}
 		this.delimiter = delimiter;
 		// this.noOfColumnHeaderRows = noOfColumnHeaderRows;
@@ -104,24 +101,20 @@ public class FileParser {
 	}
 
 	/**
-	 * creates a new instance of FileParser For use of creating readers as an
-	 * extension of FileParser without using the parsing functionality of
-	 * FileParser
+	 * creates a new instance of FileParser For use of creating readers as an extension of FileParser without using the
+	 * parsing functionality of FileParser
 	 */
 	public FileParser() {
-
+		// Empty
 	}
 
 	/**
-	 * create an instance of FileParser which can read data from a stream handed
-	 * out instead from a FileName
+	 * create an instance of FileParser which can read data from a stream handed out instead from a FileName
 	 */
-	public FileParser(java.io.Reader reader, String delimiter,
-			int noOfColumnHeaderRows, boolean multipleOccurences)
+	public FileParser(java.io.Reader reader, String delimiter, int noOfColumnHeaderRows, boolean multipleOccurences)
 			throws Exception {
 		if (delimiter.length() > 1) {
-			throw new Exception(
-					"Only Single Character Delimiters are supported!");
+			throw new Exception("Only Single Character Delimiters are supported!");
 		}
 		this.delimiter = delimiter;
 		// this.noOfColumnHeaderRows = noOfColumnHeaderRows;
@@ -163,8 +156,7 @@ public class FileParser {
 			emptylines++;
 			line2Tokens = scanner.getTokensPerLine(delim, multipleOccurences);
 			line2 = scanner.getLine();
-		} while (line2Tokens != null && line2Tokens.length == 1
-				&& line2Tokens[0].sym == TokenConstants.NULL_LITERAL);
+		} while (line2Tokens != null && line2Tokens.length == 1 && line2Tokens[0].sym == TokenConstants.NULL_LITERAL);
 
 		// if end of file encountered in line 2 of the file
 		// ie file contains only a single valid line
@@ -191,12 +183,10 @@ public class FileParser {
 		// Find two consequtive lines with matching number(>1) of tokens
 		// (Assumption: a file should consist atleast two colunns)
 		// until then, add all encountered lines to header
-		while (line1Tokens.length != line2Tokens.length
-				|| line1Tokens.length == 1) {
+		while (line1Tokens.length != line2Tokens.length || line1Tokens.length == 1) {
 			// at this point noOfColumnHeaderRows = 0, => we should take out the
 			// noOfColumnHeaderRows from the constructor
-			if (noOfColumnHeaderRows <= 1 && line2Tokens.length == 1
-					&& line1Tokens.length > 1) {
+			if (noOfColumnHeaderRows <= 1 && line2Tokens.length == 1 && line1Tokens.length > 1) {
 				while (emptylines-- > 0) {
 					line2 += "\n";
 				}
@@ -205,11 +195,9 @@ public class FileParser {
 				// line
 				Symbol[] tokens = null;
 				do {
-					tokens = scanner
-							.getTokensPerLine(delim, multipleOccurences);
+					tokens = scanner.getTokensPerLine(delim, multipleOccurences);
 					emptylines++;
-				} while (tokens != null && tokens.length == 1
-						&& tokens[0].sym == TokenConstants.NULL_LITERAL);
+				} while (tokens != null && tokens.length == 1 && tokens[0].sym == TokenConstants.NULL_LITERAL);
 
 				// if no tokens returned for the delimiter
 				if (tokens == null) {
@@ -218,10 +206,8 @@ public class FileParser {
 					fileHeader = tempBuffer.toString();
 					// Unexpected end of file encountered while
 					// processing Header
-					log.append("WARNING: Possibly wrong delimiter " + delim
-							+ " specified: Only file header found\n");
-					log.append("\nFile Content upto 50 Lines:\n"
-							+ get50Lines(tempBuffer));
+					log.append("WARNING: Possibly wrong delimiter " + delim + " specified: Only file header found\n");
+					log.append("\nFile Content upto 50 Lines:\n" + get50Lines(tempBuffer));
 					logger = log.toString();
 					fileFooter = null; // ??
 					return;
@@ -263,24 +249,20 @@ public class FileParser {
 			boolean emptyLine = false;
 			emptylines = 0;
 			do {
-				line2Tokens = scanner.getTokensPerLine(delim,
-						multipleOccurences);
+				line2Tokens = scanner.getTokensPerLine(delim, multipleOccurences);
 				if (line2Tokens == null) {
 					fileHeader = tempBuffer.toString();
 
 					// Unexpected end of file encountered while
 					// processing Header
-					log.append("WARNING: Possibly wrong delimiter " + delim
-							+ " specified: Only file header found");
-					log.append("File Content upto 50 Lines:\n"
-							+ get50Lines(tempBuffer));
+					log.append("WARNING: Possibly wrong delimiter " + delim + " specified: Only file header found");
+					log.append("File Content upto 50 Lines:\n" + get50Lines(tempBuffer));
 					logger = log.toString();
 					fileFooter = null;
 					return;
 				}// if (line2Tokens == null)
 
-				if (line2Tokens.length == 1
-						&& line2Tokens[0].sym == TokenConstants.NULL_LITERAL) {
+				if (line2Tokens.length == 1 && line2Tokens[0].sym == TokenConstants.NULL_LITERAL) {
 					emptyLine = true;
 					emptylines++;
 				}// if (line2Tokens.length == 1....
@@ -319,20 +301,17 @@ public class FileParser {
 			// >=1???RP
 			{
 				do {
-					line1Tokens = scanner.getTokensPerLine(delim,
-							multipleOccurences);
+					line1Tokens = scanner.getTokensPerLine(delim, multipleOccurences);
 				} while (line1Tokens != null && line1Tokens.length == 1
 						&& line1Tokens[0].sym == TokenConstants.NULL_LITERAL);
 			}// else if (noOfColumnHeaderRows != 0)
 
 			if (line1Tokens != null && line1Tokens.length != valuesPerLine) {
 				// System.out.println("line1Tokens BEOFRE = " + line1Tokens);
-				while (line1Tokens != null
-						&& line1Tokens.length != valuesPerLine) {
+				while (line1Tokens != null && line1Tokens.length != valuesPerLine) {
 					// System.out.println("line1Tokens AFTER = " + line1Tokens);
 					tempBuffer.append(scanner.getLine());
-					line1Tokens = scanner.getTokensPerLine(delim,
-							multipleOccurences);
+					line1Tokens = scanner.getTokensPerLine(delim, multipleOccurences);
 				}
 				stillInColumnHeader = false;
 				continue;
@@ -349,7 +328,6 @@ public class FileParser {
 				Symbol examinedToken;
 				for (int j = 0; j < valuesPerLine; j++) {
 					examinedToken = line1Tokens[j];
-					
 
 					if (examinedToken.sym == TokenConstants.NULL_LITERAL) {
 						columnNamesPerRow[j] = " ";
@@ -358,17 +336,14 @@ public class FileParser {
 								&& examinedToken.sym != TokenConstants.SPACE) {
 							// System.out.println("non string literal " +
 							// examinedToken.sym);
-							if (firstTimeDoubleORInteger
-									&& noOfColumnHeaderRows == 0) {
+							if (firstTimeDoubleORInteger && noOfColumnHeaderRows == 0) {
 								// System.out.println("first Time " + j);
 								if (examinedToken.sym == TokenConstants.INTEGER_LITERAL) {
-									columnNamesPerRow[j] = ((Integer) examinedToken.value)
-											.toString();
+									columnNamesPerRow[j] = ((Integer) examinedToken.value).toString();
 									// System.out.println("Integer =
 									// "+columnNamesPerRow[j]);
 								} else if (examinedToken.sym == TokenConstants.DOUBLE_LITERAL) {
-									columnNamesPerRow[j] = ((Double) examinedToken.value)
-											.toString();
+									columnNamesPerRow[j] = ((Double) examinedToken.value).toString();
 									// System.out.println("Double = "
 									// +columnNamesPerRow[j]);
 								}
@@ -386,8 +361,7 @@ public class FileParser {
 						}// if (examinedToken.sym !=
 						// TokenConstants.STRING_LITERAL)
 						else {
-							columnNamesPerRow[j] = ((String) examinedToken.value)
-									.trim();
+							columnNamesPerRow[j] = ((String) examinedToken.value).trim();
 						}// else
 					}// else
 				}// for(i)
@@ -402,10 +376,8 @@ public class FileParser {
 		}// while(stillInColumnHeader)
 
 		if (noOfColumnHeaderRows > 0 && line1Tokens == null) {
-			throw new Exception(
-					"The file contains atleast one numerical data column.If this is true\n"
-							+ "check the delimiter"
-							+ "File Content upto 50 Lines:\n");
+			throw new Exception("The file contains atleast one numerical data column.If this is true\n"
+					+ "check the delimiter" + "File Content upto 50 Lines:\n");
 		}
 		// First determine the columnTypes
 		// This is done to get convert NullTokens into appropriate types
@@ -459,8 +431,7 @@ public class FileParser {
 					examinedToken = line2Tokens[j];
 					if (examinedToken.sym != TokenConstants.NULL_LITERAL) {
 						if (temp[j] == false) {
-							if (examinedToken.sym == 2
-									|| examinedToken.sym == 3) {
+							if (examinedToken.sym == 2 || examinedToken.sym == 3) {
 								numCols.add(new Integer(j));
 							}
 							if (examinedToken.sym > 6 || examinedToken.sym < 0)
@@ -469,10 +440,8 @@ public class FileParser {
 								columnTypes[j] = TokenConstants.TypeToClass[examinedToken.sym];
 							temp[j] = true;
 						} else {
-							if (columnTypes[j].equals(Double.class)
-									|| columnTypes[j].equals(Integer.class)) {
-								if (!columnTypes[j]
-										.equals(TokenConstants.TypeToClass[examinedToken.sym])) {
+							if (columnTypes[j].equals(Double.class) || columnTypes[j].equals(Integer.class)) {
+								if (!columnTypes[j].equals(TokenConstants.TypeToClass[examinedToken.sym])) {
 									requiredToBeDouble[j] = true;
 								}
 							}
@@ -493,9 +462,9 @@ public class FileParser {
 
 					if (examinedToken.sym > 6 || examinedToken.sym < 0)
 						columnTypes[j] = String.class;
-					else{
+					else {
 						columnTypes[j] = TokenConstants.TypeToClass[examinedToken.sym];
-						
+
 					}
 					temp[j] = true;
 				}
@@ -504,34 +473,29 @@ public class FileParser {
 			classDetermined = areClassTypesDetermined(temp);
 		}// switch (noOfColumnHeaderRows)
 
-		while ((line1Tokens = scanner.getTokensPerLine(delim,
-				multipleOccurences)) != null) {
+		while ((line1Tokens = scanner.getTokensPerLine(delim, multipleOccurences)) != null) {
 			if (valuesPerLine != line1Tokens.length) {
 				line1 = scanner.getLine();
 				if (linetokens.size() == 0) {
 					tempBuffer.append(line1);
 					continue;
 					// data line not yet started
-				} else {
-					if (line1Tokens.length == 1
-							&& line1Tokens[0].sym == TokenConstants.NULL_LITERAL) {
-						continue;
-					} // skip empty line
-					// we can continue if we want by skipping lines with
-					// improper number of tokens
-					line2Tokens = scanner.getTokensPerLine(delim,
-							multipleOccurences);
-					if (line2Tokens == null) {
-						break;
-					}
-					if (line2Tokens.length == valuesPerLine) {
-						log.append("Truncated line "
-								+ ((line1Tokens[0].left) + 1) + ":\n" + line1);
-						line1Tokens = line2Tokens;
-					} else {
-						break;
-					} // end of data
 				}
+				if (line1Tokens.length == 1 && line1Tokens[0].sym == TokenConstants.NULL_LITERAL) {
+					continue;
+				} // skip empty line
+				// we can continue if we want by skipping lines with
+				// improper number of tokens
+				line2Tokens = scanner.getTokensPerLine(delim, multipleOccurences);
+				if (line2Tokens == null) {
+					break;
+				}
+				if (line2Tokens.length == valuesPerLine) {
+					log.append("Truncated line " + ((line1Tokens[0].left) + 1) + ":\n" + line1);
+					line1Tokens = line2Tokens;
+				} else {
+					break;
+				} // end of data
 			}
 
 			if (!classDetermined) {
@@ -540,14 +504,12 @@ public class FileParser {
 					if (examinedToken.sym != TokenConstants.NULL_LITERAL) {
 						if (temp[j] == false) {
 							columnTypes[j] = TokenConstants.TypeToClass[examinedToken.sym];
-							if (examinedToken.sym == 2
-									|| examinedToken.sym == 3) {
+							if (examinedToken.sym == 2 || examinedToken.sym == 3) {
 								numCols.add(new Integer(j));
 							}
 							temp[j] = true;
 						} else if (!requiredToBeDouble[j] && numCols.size() > 0) {
-							if (!columnTypes[j]
-									.equals(TokenConstants.TypeToClass[examinedToken.sym])) {
+							if (!columnTypes[j].equals(TokenConstants.TypeToClass[examinedToken.sym])) {
 								requiredToBeDouble[j] = true;
 							}
 						}
@@ -560,8 +522,7 @@ public class FileParser {
 					int k = ((Integer) numCols.get(j)).intValue();
 
 					if (!requiredToBeDouble[k]) {
-						if (!columnTypes[k]
-								.equals(TokenConstants.TypeToClass[line1Tokens[k].sym])) {
+						if (!columnTypes[k].equals(TokenConstants.TypeToClass[line1Tokens[k].sym])) {
 							requiredToBeDouble[k] = true;
 						}
 					}
@@ -583,21 +544,14 @@ public class FileParser {
 		// check for correct estimation of class types -- doing it for a random
 		// line for performance
 		if (linetokens.size() >= 1) { // if there is data
-			Symbol[] linetoken = (Symbol[]) linetokens
-					.get(linetokens.size() - 1);
+			Symbol[] linetoken = (Symbol[]) linetokens.get(linetokens.size() - 1);
 			for (int l = 0; l < valuesPerLine; l++) {
 				if (linetoken[l].sym != TokenConstants.NULL_LITERAL) {
-					if (!(columnTypes[l].equals(linetoken[l].value.getClass()))
-							&& !requiredToBeDouble[l]) {
+					if (!(columnTypes[l].equals(linetoken[l].value.getClass())) && !requiredToBeDouble[l]) {
 						throw new Exception(
 								"Possibly wrong input of #ColumnHeaderDataRows: Type mismatch in column data. Column no:"
-										+ (l + 1)
-										+ " Row: "
-										+ linetokens.size()
-										+ " \nExpected type "
-										+ columnTypes[l]
-										+ " but found "
-										+ linetoken[l].value.getClass() + "\n");
+										+ (l + 1) + " Row: " + linetokens.size() + " \nExpected type " + columnTypes[l]
+										+ " but found " + linetoken[l].value.getClass() + "\n");
 					}
 				}
 			}
@@ -622,8 +576,7 @@ public class FileParser {
 		// Time to read footer and log extraneous lines encountered during file
 		// processing
 		if (tempBuffer.length() > 0) {
-			log.append("Non Data Line(s) between header and data Line. \n"
-					+ tempBuffer.toString());
+			log.append("Non Data Line(s) between header and data Line. \n" + tempBuffer.toString());
 			tempBuffer.setLength(0); // whatever stored in FileFooter so far
 			// were improper data found between
 			// Column Header and Data
@@ -635,8 +588,7 @@ public class FileParser {
 
 		do {
 			tempBuffer.append(scanner.getLine());
-		} while ((line1Tokens = scanner.getTokensPerLine(delim,
-				multipleOccurences)) != null);
+		} while ((line1Tokens = scanner.getTokensPerLine(delim, multipleOccurences)) != null);
 
 		fileFooter = tempBuffer.toString();
 		// end of footer
@@ -663,14 +615,12 @@ public class FileParser {
 	}
 
 	/**
-	 * moved storeFileData to separate method for readability purposes. from
-	 * readAndStoreData.
+	 * moved storeFileData to separate method for readability purposes. from readAndStoreData.
 	 * 
 	 * @param ArrayList -
 	 *            list of single element array of tokens per line
 	 */
-	void storeFileData(ArrayList linetokens, boolean[] doubleTypeColumns)
-			throws Exception {
+	void storeFileData(ArrayList linetokens, boolean[] doubleTypeColumns) throws Exception {
 		ArrayList rowValues;
 		int numDataLines = linetokens.size();
 		int dataLines = linetokens.size();
@@ -682,28 +632,19 @@ public class FileParser {
 			rowValues = new ArrayList();
 			int j = 0;
 			for (j = 0; j < valuesPerLine; j++) {
-				if (doubleTypeColumns[j]
-						&& tokens[j].sym != TokenConstants.DOUBLE_LITERAL) {
+				if (doubleTypeColumns[j] && tokens[j].sym != TokenConstants.DOUBLE_LITERAL) {
 					if (tokens[j].sym == TokenConstants.INTEGER_LITERAL) {
-						rowValues.add(new Double(((Integer) tokens[j].value)
-								.intValue()));
+						rowValues.add(new Double(((Integer) tokens[j].value).intValue()));
 					} else if (tokens[j].sym == TokenConstants.NULL_LITERAL) {
 						rowValues.add(new Double("NaN"));
 					} else if (tokens[j].sym != TokenConstants.DOUBLE_LITERAL) {
 						if (tokens[j].sym == TokenConstants.STRING_LITERAL) {
 							try {
-								rowValues.add(new Double(
-										(String) tokens[j].value));
+								rowValues.add(new Double((String) tokens[j].value));
 							} catch (Exception e) {
-								throw new Exception(
-										"Type Mismatch of data found in Column :"
-												+ (j + 1)
-												+ " Row "
-												+ (dataLines - numDataLines + 1)
-												+ " Expected Double but found "
-												+ TokenConstants
-														.printType(tokens[j].sym)
-												+ " Value: " + tokens[j].value);
+								throw new Exception("Type Mismatch of data found in Column :" + (j + 1) + " Row "
+										+ (dataLines - numDataLines + 1) + " Expected Double but found "
+										+ TokenConstants.printType(tokens[j].sym) + " Value: " + tokens[j].value);
 							}
 						}
 					}
@@ -762,8 +703,7 @@ public class FileParser {
 		if (type.equals(Integer.class)) {
 			return new Integer(Integer.MIN_VALUE);
 		}
-		throw new Exception("Missing Data with no equivalent Null Object of "
-				+ type + " type");
+		throw new Exception("Missing Data with no equivalent Null Object of " + type + " type");
 	}
 
 	/**
@@ -779,9 +719,8 @@ public class FileParser {
 		}
 		if (logger.trim().length() == 0) {
 			return null;
-		} else {
-			return logger;
 		}
+		return logger;
 	}
 
 	/**
@@ -858,11 +797,9 @@ public class FileParser {
 
 	public static void main(String[] argv) {
 		try {
-			FileParser parser = new FileParser(argv[1], argv[0], Integer
-					.parseInt(argv[2]), false);
+			FileParser parser = new FileParser(argv[1], argv[0], Integer.parseInt(argv[2]), false);
 
-			System.out.println("File Header\n================\n"
-					+ parser.getFileHeader());
+			System.out.println("File Header\n================\n" + parser.getFileHeader());
 			System.out.println("\n\nColumn Name Rows \n ============\n");
 			ArrayList result = parser.getColumnHeaderData();
 			StringBuffer line_construct = new StringBuffer();
@@ -906,10 +843,8 @@ public class FileParser {
 			Class[] classes = parser.getColumnClass();
 			for (int i = 0; i < classes.length; i++)
 				System.out.println(classes[i]);
-			System.out.println("File Footer\n================\n"
-					+ parser.fileFooter);
-			System.out.println("Log file\n=========\n"
-					+ parser.getLogMessages());
+			System.out.println("File Footer\n================\n" + parser.fileFooter);
+			System.out.println("Log file\n=========\n" + parser.getLogMessages());
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.exit(1);

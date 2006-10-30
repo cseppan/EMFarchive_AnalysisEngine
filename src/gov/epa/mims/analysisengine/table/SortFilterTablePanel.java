@@ -49,7 +49,7 @@ import javax.swing.table.TableColumnModel;
  * </p>
  * 
  * @author Daniel Gatti
- * @version $Id: SortFilterTablePanel.java,v 1.8 2006/10/30 17:55:59 parthee Exp $
+ * @version $Id: SortFilterTablePanel.java,v 1.9 2006/10/30 21:43:50 parthee Exp $
  */
 public class SortFilterTablePanel extends JPanel implements TableModelListener, ChildHasChangedListener {
 
@@ -505,8 +505,6 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 		String[] cols = new String[numCols - 1];
 		Class[] classes = new Class[numCols - 1];
 		// Format[] formats = new Format[numCols - 1];
-		TableColumnModel columnModel = table.getColumnModel();
-		TableColumn tableColumn = null;
 		// HasFormatter renderer = null;
 		// Note that we're getting colunmns 1 through n here.
 		int c = 0;
@@ -515,7 +513,6 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 			c = i - 1;
 			cols[c] = table.getColumnName(i);
 			classes[c] = table.getColumnClass(i);
-			tableColumn = columnModel.getColumn(i);
 			// renderer = (HasFormatter) tableColumn.getCellRenderer();
 			// formats[c] = renderer.getFormat();
 		} // for (i)
@@ -547,15 +544,8 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 		int numCols = overallModel.getDataColumnCount();
 
 		String[][] columnHeaders = new String[numCols][];
-		// ArrayList colHeadersList = new ArrayList();
 		Format[] formats = new Format[numCols];
-		// ArrayList formatsList = new ArrayList();
 		for (int c = 0; c < numCols; c++) {
-			Class colClass = overallModel.getColumnClass(c + 1);
-			// if(!colClass.equals(Boolean.class))
-			// {
-			// System.out.println("colHeaders="+overallModel.getColumnHeaders(c)[0]);
-			// colHeadersList.add(overallModel.getColumnHeaders(c));
 			columnHeaders[c] = overallModel.getColumnHeaders(c);
 			column = columnModel.getColumn(c + 1);
 			TableCellRenderer rend = column.getCellRenderer();
@@ -707,7 +697,6 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 		sortGUI.setLocationRelativeTo(this);
 		sortGUI.setVisible(true);
 		SortCriteria sortCriteria = null;
-		FilterCriteria filterCriteria = overallModel.getFilterCriteria();
 		if (sortGUI.getResult() == OptionDialog.OK_RESULT) {
 			sortCriteria = sortGUI.getSortCriteria();
 			/*
@@ -1032,6 +1021,7 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 		boolean sortToggle = false;
 
 		public TableMouseAdapter() {
+			// Empty
 		}
 
 		public void mouseClicked(MouseEvent e) {

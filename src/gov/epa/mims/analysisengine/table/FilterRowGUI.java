@@ -1,26 +1,18 @@
 package gov.epa.mims.analysisengine.table;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.text.Format;
-import java.text.ParseException;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Hashtable;
-import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.table.*;
-
-import gov.epa.mims.analysisengine.gui.DefaultUserInteractor;
 import gov.epa.mims.analysisengine.gui.OptionDialog;
-import gov.epa.mims.analysisengine.gui.UserInteractor;
+
+import java.awt.BorderLayout;
+import java.awt.Container;
+
+import javax.swing.JFrame;
 
 /**
  * A Window that allows the user to enter information about how to filter
  * data.
  *
  * @author  Daniel Gatti
- * @version $Id: FilterRowGUI.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: FilterRowGUI.java,v 1.3 2006/10/30 21:43:50 parthee Exp $
  */
 
 public class FilterRowGUI extends OptionDialog

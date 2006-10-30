@@ -24,7 +24,7 @@ import javax.swing.event.TableModelListener;
  * </p>
  * 
  * @author Daniel Gatti
- * @version $Id: ColumnFormatGUI.java,v 1.3 2006/10/30 17:26:13 parthee Exp $
+ * @version $Id: ColumnFormatGUI.java,v 1.4 2006/10/30 21:43:50 parthee Exp $
  */
 public class ColumnFormatGUI extends OptionDialog implements TableModelListener {
 	/** The underlying data model for this panel. */
@@ -140,12 +140,9 @@ public class ColumnFormatGUI extends OptionDialog implements TableModelListener 
 		pack();
 	} // ColumnFormatGUI()
 
-	/**
-	 * Populate the GUI with the values in the model.
-	 */
 	protected void initGUIFromModel() {
-
-	} // initGUIFromModel()
+		//
+	}
 
 	/**
 	 * Build the GUI.
@@ -225,10 +222,9 @@ public class ColumnFormatGUI extends OptionDialog implements TableModelListener 
 		}
 		if (selColsNames.size() == 0) {
 			return null;
-		} else {
-			String[] a = {};
-			return (String[]) selColsNames.toArray(a);
-		}// else
+		}
+		String[] a = {};
+		return (String[]) selColsNames.toArray(a);
 	}
 
 	/**

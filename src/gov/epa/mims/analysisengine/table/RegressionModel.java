@@ -215,13 +215,13 @@ public class RegressionModel implements java.io.Serializable, FormatAndIndexInfo
 			indepInstances = (Instances) data.get(indepVars.get(0));
 
 			for (int i = 1; i < indepVars.size(); i++) {
-				indepInstances = Instances.mergeInstances((Instances) indepInstances, (Instances) data.get(indepVars
+				indepInstances = Instances.mergeInstances(indepInstances, (Instances) data.get(indepVars
 						.get(i)));
 			}
 
 			for (int i = 0; i < depVars.size(); i++) {
 				if (indepVars.contains(depVars.get(i))) {
-					indepInstances.setClassIndex(indepVars.indexOf((String) depVars.get(i)));
+					indepInstances.setClassIndex(indepVars.indexOf(depVars.get(i)));
 				} else {
 					indepInstances = Instances.mergeInstances(indepInstances, (Instances) data.get(depVars.get(i)));
 					indepInstances.setClassIndex(indepInstances.numAttributes() - 1);
@@ -298,13 +298,13 @@ public class RegressionModel implements java.io.Serializable, FormatAndIndexInfo
 				if (obj instanceof Double) {
 					value[0] = ((Double) model.getValueAt(i, colIndex)).doubleValue();
 				} else {
-					value[0] = (double) ((Integer) model.getValueAt(i, colIndex)).intValue();
+					value[0] = ((Integer) model.getValueAt(i, colIndex)).intValue();
 				}
 
 				data1.add(new Instance(1.0, value));
 			}
 
-			result.put((String) vars.get(k), data1);
+			result.put(vars.get(k), data1);
 		}
 
 		return result;

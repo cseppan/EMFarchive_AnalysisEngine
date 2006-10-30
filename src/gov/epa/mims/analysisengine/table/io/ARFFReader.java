@@ -1,17 +1,16 @@
 package gov.epa.mims.analysisengine.table.io;
 
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.ArrayList;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.io.*;
 
 /*
  * ARFFReader.java
  * This class is customized to read Monte Carlo inputfile
  * Created on April 1, 2004, 12:31 PM
  * @author  Parthee Partheepan, CEP, UNC-CHAPEL HILL
- * @version $Id: ARFFReader.java,v 1.1 2006/10/30 17:26:13 parthee Exp $
+ * @version $Id: ARFFReader.java,v 1.2 2006/10/30 21:43:51 parthee Exp $
  */
 public class ARFFReader extends FileParser
 {

@@ -29,7 +29,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JTabbedPane;
-import javax.swing.table.TableColumn;
 
 public class SUSortFilterTablePanel extends SortFilterTablePanel {
 
@@ -271,11 +270,6 @@ public class SUSortFilterTablePanel extends SortFilterTablePanel {
 				String[] column = { table.getColumnName(selectedColumn) };
 				int[] ops = { operation };
 				Comparable[] values = { value };
-				TableColumn tableColumn = table.getColumnModel().getColumn(selectedColumn);
-				/*
-				 * HasFormatter rend = (HasFormatter) tableColumn.getCellRenderer(); Format[] formats = {
-				 * rend.getFormat()};
-				 */
 				// The value for and/or does not matter here since we have only
 				// one criteria on which to filter.
 				filterCriteria = new FilterCriteria(column, ops, values,
@@ -288,12 +282,6 @@ public class SUSortFilterTablePanel extends SortFilterTablePanel {
 				String[] column = { table.getColumnName(selectedColumn) };
 				int[] ops = { operation };
 				Comparable[] values = { value };
-
-				/*
-				 * Format[] allColumnFormats = new Format[table.getColumnCount()-1]; TableColumnModel model =
-				 * table.getColumnModel(); for(int i=1; i < table.getColumnCount(); i++) {
-				 * allColumnFormats[i-1]=((FormattedCellRenderer)model.getColumn(i ).getCellRenderer()).getFormat(); }
-				 */
 				// The value for and/or does not matter here since we have only
 				// one criteria on which to filter.
 				filterCriteria.setRowCriteria(column, ops, values,
@@ -332,7 +320,6 @@ public class SUSortFilterTablePanel extends SortFilterTablePanel {
 			boolean[] doubleCols = overallModel.getDoubleColumnTypes();
 			String[] selCols = setSelectedDataColumns(doubleCols);
 			plotInfo.setSelDataColumns(selCols);
-			String plotType = plotInfo.getPlotType();
 		} // if (plotInfo == null)
 
 		plotInfo.setPlotName("Plot" + (aconfig.getCount() + 1));
@@ -597,8 +584,6 @@ public class SUSortFilterTablePanel extends SortFilterTablePanel {
 		Object[][] data = new Object[NUM_ROWS][NUM_COLS];
 		char[] charArray1 = { 'a', 'a', 'a', 'a', 'a' };
 		char[] charArray2 = { 'Z', 'Z', 'Z', 'Z', 'Z' };
-		int arrayIndex = 0;
-
 		for (int r = 0; r < NUM_ROWS; r++) {
 			data[r] = new Object[NUM_COLS];
 			data[r][2] = new Integer(r);

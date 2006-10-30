@@ -2,14 +2,12 @@ package gov.epa.mims.analysisengine.tree;
 
 import java.io.Serializable;
 
-import java.util.NoSuchElementException;
-
 
 /**
  * Data Set interface functions
  *
  * @author Tommy E. Cathey
- * @version $Id: LabeledDataSetIfc.java,v 1.2 2005/09/19 14:50:10 rhavaldar Exp $
+ * @version $Id: LabeledDataSetIfc.java,v 1.3 2006/10/30 21:43:50 parthee Exp $
  *
  **************************************************/
 public interface LabeledDataSetIfc

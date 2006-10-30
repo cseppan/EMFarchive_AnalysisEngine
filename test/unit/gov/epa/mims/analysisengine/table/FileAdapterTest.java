@@ -5,16 +5,6 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-/*
- * <p>Title:TestFileAdapter.java </p>
- * <p>Description: JUnit test for the file adapter. Each String array represent a
- * test case for the File adapter </p>
- * <p>Copyright: Copyright (c) 2004</p>
- * <p>Company: CEP, UNC-Chapel Hill </p>
- * @author Parthee Partheepan
- * @version $Id: FileAdapterTest.java,v 1.2 2006/10/30 17:26:13 parthee Exp $
- */
-
 public class FileAdapterTest extends TestCase {
 	static String dataFolder;
 
@@ -173,11 +163,6 @@ public class FileAdapterTest extends TestCase {
 			FileAdapterTest.fileName3, _fileType, FileImportGUI.GENERIC_FILE, _delimiter, delimiter, _hRows,
 			noOfColumnHeaderRows, _startPos, startPos, _endPos, lessThanOne };
 
-	/** Creates a new instance of TestFileAdapter */
-	public FileAdapterTest() {
-
-	}// TestFileAdapter()
-
 	/**
 	 * Test for when arguments are correctly specified with one file name and one file type
 	 */
@@ -284,7 +269,7 @@ public class FileAdapterTest extends TestCase {
 	public void testFileNamesMissing() {
 		String message = "You have to specify atleast one file name";
 		try {
-			FileAdapter fAdapter = new FileAdapter(fNMissing);
+			new FileAdapter(fNMissing);
 			assertEquals(true, false);
 		} catch (Exception e) {
 			assertEquals(e.getMessage(), message);
@@ -297,7 +282,7 @@ public class FileAdapterTest extends TestCase {
 	public void testFileNotExist() {
 		String message = "The file " + wrongFileName + " is not exist";
 		try {
-			FileAdapter fAdapter = new FileAdapter(fNNotExist);
+			new FileAdapter(fNNotExist);
 			assertEquals(true, false);
 		} catch (Exception e) {
 			assertEquals(e.getMessage(), message);
@@ -310,7 +295,7 @@ public class FileAdapterTest extends TestCase {
 	public void testFileTypeMissing() {
 		String message = "You have to specify the file type for the file names ";
 		try {
-			FileAdapter fAdapter = new FileAdapter(fTMissing);
+			new FileAdapter(fTMissing);
 			assertEquals(true, false);
 		} catch (Exception e) {
 			assertEquals(e.getMessage(), message);
@@ -323,7 +308,7 @@ public class FileAdapterTest extends TestCase {
 	public void testFileTypeNotAvailable() {
 		String message = "Unrecognized file type '" + wrongFileType + "'.";
 		try {
-			FileAdapter fAdapter = new FileAdapter(fTNotExist);
+			new FileAdapter(fTNotExist);
 			assertEquals(true, false);
 		} catch (Exception e) {
 			assertEquals(e.getMessage(), message);
@@ -336,7 +321,7 @@ public class FileAdapterTest extends TestCase {
 	public void testDelMissing() {
 		String message = "For the '" + FileImportGUI.DAVE_OUTPUT_FILE + "' delimiter should be specified";
 		try {
-			FileAdapter fAdapter = new FileAdapter(delMissing);
+			new FileAdapter(delMissing);
 			assertEquals(true, false);
 		} catch (Exception e) {
 			assertEquals(e.getMessage(), message);
@@ -349,12 +334,12 @@ public class FileAdapterTest extends TestCase {
 	public void testNumHeaderRowsMissing() {
 		String message = "The file type '" + FileImportGUI.GENERIC_FILE + "' requires noOfRows to be specified.";
 		try {
-			FileAdapter fAdapter = new FileAdapter(hRowsMissing);
+			new FileAdapter(hRowsMissing);
 			assertEquals(true, false);
 		} catch (Exception e) {
 			assertEquals(e.getMessage(), message);
 		}
-	}// testNumHeaderRowsMissing()
+	}
 
 	/**
 	 * Test for when number of header rows specified cannot be converted to integer
@@ -362,12 +347,12 @@ public class FileAdapterTest extends TestCase {
 	public void testNumHeaderRowsConversion() {
 		String message = "Could not convert no of column header " + notAnInteger + " to an integer";
 		try {
-			FileAdapter fAdapter = new FileAdapter(hRowsIsNotInteger);
+			new FileAdapter(hRowsIsNotInteger);
 			assertEquals(true, false);
 		} catch (Exception e) {
 			assertEquals(e.getMessage(), message);
 		}
-	}// testNumHeaderRowsConversion()
+	}
 
 	/**
 	 * Test for when number of header rows is less than one
@@ -375,12 +360,12 @@ public class FileAdapterTest extends TestCase {
 	public void testNumHeaderRowsLessThanOne() {
 		String message = "The value specified for " + "No of header rows" + " should be >= 1";
 		try {
-			FileAdapter fAdapter = new FileAdapter(hRowsLessOne);
+			new FileAdapter(hRowsLessOne);
 			assertEquals(true, false);
 		} catch (Exception e) {
 			assertEquals(e.getMessage(), message);
 		}
-	}// testNumHeaderRowsLessThanOne()
+	}
 
 	/**
 	 * Test for when start position specified cannot be converted to integer
@@ -388,12 +373,12 @@ public class FileAdapterTest extends TestCase {
 	public void testStartPosConversion() {
 		String message = "Could not convert startPos " + notAnInteger + " to an integer";
 		try {
-			FileAdapter fAdapter = new FileAdapter(startPosIsNotInteger);
+			new FileAdapter(startPosIsNotInteger);
 			assertEquals(true, false);
 		} catch (Exception e) {
 			assertEquals(e.getMessage(), message);
 		}
-	}// testStartPosConversion()
+	}
 
 	/**
 	 * Test for when start position is less than one
@@ -401,12 +386,12 @@ public class FileAdapterTest extends TestCase {
 	public void testStartPosLessThanOne() {
 		String message = "The value specified for " + "start position" + " should be >= 1";
 		try {
-			FileAdapter fAdapter = new FileAdapter(startPosLessOne);
+			new FileAdapter(startPosLessOne);
 			assertEquals(true, false);
 		} catch (Exception e) {
 			assertEquals(e.getMessage(), message);
 		}
-	}// testStartPosLessThanOne()
+	}
 
 	/**
 	 * Test for when end position specified cannot be converted to integer
@@ -414,12 +399,12 @@ public class FileAdapterTest extends TestCase {
 	public void testEndPosConversion() {
 		String message = "Could not convert endPos " + notAnInteger + " to an integer";
 		try {
-			FileAdapter fAdapter = new FileAdapter(endPosIsNotInteger);
+			new FileAdapter(endPosIsNotInteger);
 			assertEquals(true, false);
 		} catch (Exception e) {
 			assertEquals(e.getMessage(), message);
 		}
-	}// testEndPosConversion()
+	}
 
 	/**
 	 * Test for when end position is less than one
@@ -427,26 +412,17 @@ public class FileAdapterTest extends TestCase {
 	public void testEndPosLessThanOne() {
 		String message = "The value specified for " + "end position" + " should be >= 1";
 		try {
-			FileAdapter fAdapter = new FileAdapter(endPosLessOne);
+			new FileAdapter(endPosLessOne);
 			assertEquals(true, false);
 		} catch (Exception e) {
 			assertEquals(e.getMessage(), message);
 		}
-	}// testEndPosLessThanOne()
+	}
 
-	/*******************************************************************************************************************
-	 * retrieve this test suite
-	 * 
-	 * @return this test suite
-	 ******************************************************************************************************************/
 	public static Test suite() {
 		return new TestSuite(FileAdapterTest.class);
 	}
 
-	/**
-	 * @param args
-	 *            the command line arguments
-	 */
 	public static void main(String[] args) {
 		junit.swingui.TestRunner.run(FileAdapterTest.class);
 	}// main()

@@ -302,22 +302,6 @@ public class SaveConfigView extends JDialog {
 		}
 	}
 
-	public static void main(String[] args) {
-		AnalysisConfiguration aconfig = new AnalysisConfiguration(null);
-
-		aconfig.storePlotConfig("PlotName1", null, null, true);
-		aconfig.storePlotConfig("PlotName2", null, null, true);
-		aconfig.storePlotConfig("PlotName3", null, null, true);
-		try {
-			showGUI(null, new SaveConfigModel(aconfig));
-		} catch (Exception e) {
-		}
-	}
-
-	/**
-	 * This static method creates a new instance of this class and shows it inside a new JFrame, (unless it is already a
-	 * JFrame).
-	 */
 	public static void showGUI(Frame parent, SaveConfigModel model) {
 		try {
 			SaveConfigView inst = new SaveConfigView(parent, model);
@@ -401,6 +385,7 @@ public class SaveConfigView extends JDialog {
 		try {
 			model.showTree(configName);
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -509,6 +494,7 @@ public class SaveConfigView extends JDialog {
 		}
 
 		public void editingCanceled(ChangeEvent e) {
+			//
 		}
 
 	}

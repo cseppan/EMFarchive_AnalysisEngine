@@ -1,32 +1,31 @@
 package gov.epa.mims.analysisengine.table;
 
 
+import gov.epa.mims.analysisengine.gui.GUIUserInteractor;
 import gov.epa.mims.analysisengine.gui.ScreenUtils;
-import javax.swing.BoxLayout;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JComboBox;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import javax.swing.WindowConstants;
+import gov.epa.mims.analysisengine.gui.UserInteractor;
+import gov.epa.mims.analysisengine.table.io.FileImportGUI;
+
 import java.awt.Dialog;
-import java.awt.Component;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 
-import javax.swing.JFileChooser;
-import gov.epa.mims.analysisengine.gui.UserInteractor;
-import gov.epa.mims.analysisengine.gui.GUIUserInteractor;
-import gov.epa.mims.analysisengine.table.io.FileImportGUI;
+import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 
 
 /**
  * Class SaveToDialog - dialog displaying file type choice
  * and option to choose file using JFileChooser
  * @author  Krithiga Thangavelu, CEP, UNC CHAPEL HILL.
- * @version $Id: SaveToDialog.java,v 1.3 2006/10/30 17:26:13 parthee Exp $
+ * @version $Id: SaveToDialog.java,v 1.4 2006/10/30 21:43:50 parthee Exp $
  */
 
 public class SaveToDialog extends javax.swing.JDialog

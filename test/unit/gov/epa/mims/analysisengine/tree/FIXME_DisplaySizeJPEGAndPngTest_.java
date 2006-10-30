@@ -51,7 +51,7 @@ public class FIXME_DisplaySizeJPEGAndPngTest_ extends TestCase implements Analys
     private boolean flag;
     
     public FIXME_DisplaySizeJPEGAndPngTest_(){
-        
+        //
     }
 
     public FIXME_DisplaySizeJPEGAndPngTest_(String form, String file, boolean flag) {

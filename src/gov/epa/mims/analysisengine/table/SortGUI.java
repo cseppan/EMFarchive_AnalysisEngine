@@ -1,274 +1,254 @@
 package gov.epa.mims.analysisengine.table;
 
-import java.awt.*;
+import gov.epa.mims.analysisengine.gui.OptionDialog;
+
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.*;
-import javax.swing.*;
-import javax.swing.border.TitledBorder;
-import javax.swing.table.*;
+import java.util.Vector;
 
-import gov.epa.mims.analysisengine.gui.OptionDialog;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import javax.swing.JToolBar;
+import javax.swing.border.TitledBorder;
 
 /**
  * A GUI that allows the user to specify sorting information for a table.
- *
- * @author  Daniel Gatti
- * @version $Id: SortGUI.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * 
+ * @author Daniel Gatti
+ * @version $Id: SortGUI.java,v 1.3 2006/10/30 21:43:50 parthee Exp $
  */
-public class SortGUI extends OptionDialog
-{
-   /** The SotCritria that this GUI represents. */
-   protected SortCriteria sortCriteria = null;
+public class SortGUI extends OptionDialog {
+	/** The SotCritria that this GUI represents. */
+	protected SortCriteria sortCriteria = null;
 
-   /** The list of SortPanels that we have added to the GUI. */
-   protected Vector sortPanels = new Vector();
+	/** The list of SortPanels that we have added to the GUI. */
+	protected Vector sortPanels = new Vector();
 
-   /** The column names that are available to sort with. */
-   protected String[] columnNames = null;
+	/** The column names that are available to sort with. */
+	protected String[] columnNames = null;
 
-   /** Scrollpane on which the sort panels ride. */
-   protected JScrollPane scrollPane = null;
+	/** Scrollpane on which the sort panels ride. */
+	protected JScrollPane scrollPane = null;
 
-   /** The panel that sort panels are added to in the scroll pane. */
-   protected JPanel sortContentPanel = new JPanel();
+	/** The panel that sort panels are added to in the scroll pane. */
+	protected JPanel sortContentPanel = new JPanel();
 
-   /** Button to add a new sort column. */
-   protected JButton addBtn = new JButton("Add");
+	/** Button to add a new sort column. */
+	protected JButton addBtn = new JButton("Add");
 
-   /** Button to clear all of the sort criteria. */
-   protected JButton clearBtn = new JButton("Clear");
+	/** Button to clear all of the sort criteria. */
+	protected JButton clearBtn = new JButton("Clear");
 
-   public static final int SORT_COLUMN = 0;
-   public static final int ORDER_COLUMN = 1;
-   public static final int ASCENDING_COLUMN = 2;
-   public static final int NAME_COLUMN = 3;
+	public static final int SORT_COLUMN = 0;
 
-   public static final int NUM_PANELS_VISIBLE = 3;
+	public static final int ORDER_COLUMN = 1;
 
-   /**
-    * Consructor.
-    */
-   public SortGUI(JFrame parent, String[] columnNames, SortCriteria sortCriteria)
-   {
-      super(parent);
+	public static final int ASCENDING_COLUMN = 2;
 
-      this.columnNames  = columnNames;
-      this.sortCriteria = sortCriteria;
+	public static final int NAME_COLUMN = 3;
 
-      JToolBar toolBar = new JToolBar();
-      toolBar.add(addBtn);
-      toolBar.add(clearBtn);
+	public static final int NUM_PANELS_VISIBLE = 3;
 
-      addBtn.addActionListener(new ActionListener()
-      {
-         public void actionPerformed(ActionEvent e)
-         {
-            addNewSortPanel(sortPanels.isEmpty());
-         }
-      });
+	/**
+	 * Consructor.
+	 */
+	public SortGUI(JFrame parent, String[] columnNames, SortCriteria sortCriteria) {
+		super(parent);
 
-      clearBtn.addActionListener(new ActionListener()
-      {
-         public void actionPerformed(ActionEvent e)
-         {
-            clearSortPanel();
-         }
-      });
+		this.columnNames = columnNames;
+		this.sortCriteria = sortCriteria;
 
-      sortContentPanel.setLayout(new BoxLayout(sortContentPanel, BoxLayout.Y_AXIS));
+		JToolBar toolBar = new JToolBar();
+		toolBar.add(addBtn);
+		toolBar.add(clearBtn);
 
-      scrollPane = new JScrollPane(sortContentPanel,
-         JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-         JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-      initGUIFromModel();
+		addBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				addNewSortPanel(sortPanels.isEmpty());
+			}
+		});
 
-      Container contentPane = getContentPane();
-      contentPane.add(toolBar, BorderLayout.NORTH);
-      contentPane.add(scrollPane, BorderLayout.CENTER);
-      contentPane.add(getButtonPanel(), BorderLayout.SOUTH);
-      pack();
-      setModal(true);
-      setTitle("Sort Columns");
-   } // SortGUI()
+		clearBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clearSortPanel();
+			}
+		});
 
+		sortContentPanel.setLayout(new BoxLayout(sortContentPanel, BoxLayout.Y_AXIS));
 
-   /**
-    * Add a new empty SortPanel.
-    * @param isFirst boolean that is true if this is the first panel in the
-    * list. This is used to set the "Sort by", "Then sort by" labels.
-    */
-   protected void addNewSortPanel(boolean isFirst)
-   {
-      SortPanel sortPanel = new SortPanel(columnNames, isFirst);
-      sortPanel.setAscending(true);
-      sortContentPanel.add(sortPanel);
-      sortPanels.add(sortPanel);
+		scrollPane = new JScrollPane(sortContentPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		initGUIFromModel();
 
-      // Set the size to be fit at most 3 panels in the scrollpane.
-      int numPanelsVisible = NUM_PANELS_VISIBLE;
-      if (sortPanels.size() < 3)
-      {
-         numPanelsVisible = sortPanels.size();
-      }
+		Container contentPane = getContentPane();
+		contentPane.add(toolBar, BorderLayout.NORTH);
+		contentPane.add(scrollPane, BorderLayout.CENTER);
+		contentPane.add(getButtonPanel(), BorderLayout.SOUTH);
+		pack();
+		setModal(true);
+		setTitle("Sort Columns");
+	} // SortGUI()
 
-      // Get the dimension of one sort panel.
-      Dimension onePanelDimension = sortPanel.getPreferredSize();
-      // Set the preferred size of the viewport to the panel hieght * the
-      // number of panels or 3, whichever is smaller.
-      scrollPane.getViewport().setPreferredSize(new Dimension(onePanelDimension.width,
-            onePanelDimension.height * numPanelsVisible));
-      pack();
+	/**
+	 * Add a new empty SortPanel.
+	 * 
+	 * @param isFirst
+	 *            boolean that is true if this is the first panel in the list. This is used to set the "Sort by", "Then
+	 *            sort by" labels.
+	 */
+	protected void addNewSortPanel(boolean isFirst) {
+		SortPanel sortPanel = new SortPanel(columnNames, isFirst);
+		sortPanel.setAscending(true);
+		sortContentPanel.add(sortPanel);
+		sortPanels.add(sortPanel);
 
-      // Move the scroll bar to the bottom to show the new panel.
-      JScrollBar verticalScrollBar = scrollPane.getVerticalScrollBar();
-      verticalScrollBar.setValue(verticalScrollBar.getMaximum());
-   } // addNewSortPanel()
+		// Set the size to be fit at most 3 panels in the scrollpane.
+		int numPanelsVisible = NUM_PANELS_VISIBLE;
+		if (sortPanels.size() < 3) {
+			numPanelsVisible = sortPanels.size();
+		}
 
+		// Get the dimension of one sort panel.
+		Dimension onePanelDimension = sortPanel.getPreferredSize();
+		// Set the preferred size of the viewport to the panel hieght * the
+		// number of panels or 3, whichever is smaller.
+		scrollPane.getViewport().setPreferredSize(
+				new Dimension(onePanelDimension.width, onePanelDimension.height * numPanelsVisible));
+		pack();
 
-   /**
-    * Clear all of the sort criteria.
-    */
-   protected void clearSortPanel()
-   {
-      sortContentPanel.removeAll();
-      sortPanels.clear();
-      addNewSortPanel(true);
-   } // clearSortPanel()
+		// Move the scroll bar to the bottom to show the new panel.
+		JScrollBar verticalScrollBar = scrollPane.getVerticalScrollBar();
+		verticalScrollBar.setValue(verticalScrollBar.getMaximum());
+	} // addNewSortPanel()
 
+	/**
+	 * Clear all of the sort criteria.
+	 */
+	protected void clearSortPanel() {
+		sortContentPanel.removeAll();
+		sortPanels.clear();
+		addNewSortPanel(true);
+	} // clearSortPanel()
 
-   /**
-    * Initialize the GUI based on the SortCriteria passed in.
-    */
-   public void initGUIFromModel()
-   {
-      if (sortCriteria == null)
-      {
-         addNewSortPanel(true);
-      }
-      else
-      {
-         String[] cols = sortCriteria.getColumnNames();
-         boolean[] asc = sortCriteria.getAscending();
-         boolean[] cas = sortCriteria.getCaseSensitive();
-         for (int i = 0; i < cols.length; i++)
-         {
-            SortPanel sortPanel = new SortPanel(columnNames, (i == 0));
-            sortPanel.setColumnName(cols[i]);
-            sortPanel.setAscending(asc[i]);
-            sortPanel.setCaseSensitive(cas[i]);
-            sortContentPanel.add(sortPanel);
-            sortPanels.add(sortPanel);
-            pack();
-         }
-      }
-   } // initGUIFromModel()
+	/**
+	 * Initialize the GUI based on the SortCriteria passed in.
+	 */
+	public void initGUIFromModel() {
+		if (sortCriteria == null) {
+			addNewSortPanel(true);
+		} else {
+			String[] cols = sortCriteria.getColumnNames();
+			boolean[] asc = sortCriteria.getAscending();
+			boolean[] cas = sortCriteria.getCaseSensitive();
+			for (int i = 0; i < cols.length; i++) {
+				SortPanel sortPanel = new SortPanel(columnNames, (i == 0));
+				sortPanel.setColumnName(cols[i]);
+				sortPanel.setAscending(asc[i]);
+				sortPanel.setCaseSensitive(cas[i]);
+				sortContentPanel.add(sortPanel);
+				sortPanels.add(sortPanel);
+				pack();
+			}
+		}
+	} // initGUIFromModel()
 
+	/**
+	 * Return the SortCriteria that was collected from the GUI. Could be null.
+	 */
+	public SortCriteria getSortCriteria() {
+		return sortCriteria;
+	} // getSortCriteria()
 
-   /**
-    * Return the SortCriteria that was collected from the GUI.
-    * Could be null.
-    */
-   public SortCriteria getSortCriteria()
-   {
-      return sortCriteria;
-   } // getSortCriteria()
+	protected void saveGUIValuesToModel() {
+		sortCriteria = null;
+		String[] cols = new String[sortPanels.size()];
+		boolean[] asc = new boolean[sortPanels.size()];
+		boolean[] cas = new boolean[sortPanels.size()];
 
+		for (int i = 0; i < sortPanels.size(); i++) {
+			SortPanel sp = (SortPanel) sortPanels.get(i);
+			cols[i] = sp.getColumnName();
+			asc[i] = sp.getAscending();
+			cas[i] = sp.getCaseSensitive();
+		}
 
-   protected void saveGUIValuesToModel()
-   {
-      sortCriteria = null;
-      String[] cols = new String[sortPanels.size()];
-      boolean[] asc = new boolean[sortPanels.size()];
-      boolean[] cas = new boolean[sortPanels.size()];
+		sortCriteria = new SortCriteria(cols, asc, cas);
+	} // saveGUIDataToModel()
 
-      for (int i = 0; i < sortPanels.size(); i++)
-      {
-         SortPanel sp = (SortPanel)sortPanels.get(i);
-         cols[i] = sp.getColumnName();
-         asc[i] = sp.getAscending();
-         cas[i] = sp.getCaseSensitive();
-      }
+	/**
+	 * A private class that contains a panel with sorting information for one column.
+	 */
+	class SortPanel extends JPanel {
+		private JComboBox columnBox = new JComboBox();
 
-      sortCriteria = new SortCriteria(cols, asc, cas);
-   } // saveGUIDataToModel()
+		private JCheckBox ascendingBtn = new JCheckBox("Ascending?");
 
+		private JCheckBox caseSensitiveBtn = new JCheckBox("Case Sensitive?");
 
-/**
- * A private class that contains a panel with sorting information for
- * one column.
- */
-class SortPanel extends JPanel
-{
-   private JComboBox columnBox = new JComboBox();
+		public SortPanel(String[] columnNames, boolean isFirst) {
+			DefaultComboBoxModel model = new DefaultComboBoxModel(columnNames);
+			columnBox.setModel(model);
+			columnBox.setEditable(false);
+			JPanel comboPanel = new JPanel();
+			comboPanel.add(columnBox);
 
-   private JCheckBox ascendingBtn = new JCheckBox("Ascending?");
+			JPanel orderPanel = new JPanel();
+			orderPanel.setLayout(new BoxLayout(orderPanel, BoxLayout.Y_AXIS));
+			orderPanel.add(ascendingBtn);
+			orderPanel.add(caseSensitiveBtn);
 
-   private JCheckBox caseSensitiveBtn = new JCheckBox("Case Sensitive?");
+			String borderTitle = "Then Sort By";
+			if (isFirst) {
+				borderTitle = "Sort By";
+			}
 
-   public SortPanel(String[] columnNames, boolean isFirst)
-   {
-      DefaultComboBoxModel model = new DefaultComboBoxModel(columnNames);
-      columnBox.setModel(model);
-      columnBox.setEditable(false);
-      JPanel comboPanel = new JPanel();
-      comboPanel.add(columnBox);
+			setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), borderTitle,
+					TitledBorder.LEFT, TitledBorder.TOP));
 
-      JPanel orderPanel = new JPanel();
-      orderPanel.setLayout(new BoxLayout(orderPanel, BoxLayout.Y_AXIS));
-      orderPanel.add(ascendingBtn);
-      orderPanel.add(caseSensitiveBtn);
+			setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+			add(comboPanel);
+			add(orderPanel);
+		}
 
-      String borderTitle = "Then Sort By";
-      if (isFirst)
-      {
-         borderTitle = "Sort By";
-      }
+		public boolean getAscending() {
+			return ascendingBtn.isSelected();
+		}
 
-      setBorder(BorderFactory.createTitledBorder(
-            BorderFactory.createEtchedBorder(), borderTitle,
-            TitledBorder.LEFT, TitledBorder.TOP));
+		public boolean getCaseSensitive() {
+			return caseSensitiveBtn.isSelected();
+		}
 
-      setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-      add(comboPanel);
-      add(orderPanel);
-   }
+		public int getColumnIndex() {
+			return columnBox.getSelectedIndex();
+		}
 
-   public boolean getAscending()
-   {
-      return ascendingBtn.isSelected();
-   }
+		public String getColumnName() {
+			return (String) columnBox.getSelectedItem();
+		}
 
-   public boolean getCaseSensitive()
-   {
-      return caseSensitiveBtn.isSelected();
-   }
+		public void setColumnName(String columnName) {
+			columnBox.setSelectedItem(columnName);
+		}
 
-   public int getColumnIndex()
-   {
-      return columnBox.getSelectedIndex();
-   }
+		public void setAscending(boolean ascending) {
+			ascendingBtn.setSelected(ascending);
+		}
 
-   public String getColumnName()
-   {
-      return (String)columnBox.getSelectedItem();
-   }
-
-   public void setColumnName(String columnName)
-   {
-      columnBox.setSelectedItem(columnName);
-   }
-
-   public void setAscending(boolean ascending)
-   {
-      ascendingBtn.setSelected(ascending);
-   }
-
-   public void setCaseSensitive(boolean caseSensitive)
-   {
-      caseSensitiveBtn.setSelected(caseSensitive);
-   }
-} // class SortPanel
+		public void setCaseSensitive(boolean caseSensitive) {
+			caseSensitiveBtn.setSelected(caseSensitive);
+		}
+	} // class SortPanel
 
 } // class SortGUI
 

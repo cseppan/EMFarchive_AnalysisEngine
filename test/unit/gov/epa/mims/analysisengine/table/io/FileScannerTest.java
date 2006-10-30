@@ -6,21 +6,19 @@
  */
 package gov.epa.mims.analysisengine.table.io;
 
-import junit.framework.TestCase;
-import java.io.FileReader;
 import java.io.BufferedReader;
-import java.io.StringBufferInputStream;
-import java.util.ArrayList;
-import java.io.IOException;
-import junit.framework.Test;
-import junit.framework.TestSuite;
 import java.io.File;
-
-import gov.epa.mims.analysisengine.table.io.FileScanner;
-import gov.epa.mims.analysisengine.table.io.TokenConstants;
-import java_cup.runtime.Symbol;
-import java.util.Date;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.StringBufferInputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
+import java_cup.runtime.Symbol;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * @author kthanga
@@ -51,9 +49,8 @@ public class FileScannerTest extends TestCase {
 
 	public void FIXME_testGetLine() {
 		String filename = new File(fileLocation, "NormalFile").getAbsolutePath();
-		String[] lines = null;
 		try {
-			lines = readLines(filename);
+			readLines(filename);
 		} catch (IOException e) {
 			System.out.println("File " + filename + " missing");
 			return;
@@ -69,9 +66,6 @@ public class FileScannerTest extends TestCase {
 		String line = scanner.getLine();
 		assertEquals(line, "");
 
-		// during normal data processing, assert getLine() returns same line
-		// as that was input
-		int i = 0;
 		try {
 			while (scanner.getTokensPerLine(',', false) != null) {
 				line = scanner.getLine();
@@ -134,26 +128,28 @@ public class FileScannerTest extends TestCase {
 	}
 
 	private boolean compareSymbol(Symbol sym1, Symbol sym2) {
-		if (sym1 == null)
+		if (sym1 == null) {
 			if (sym2 == null)
 				return true;
-			else
-				return false;
+
+			return false;
+		}
 
 		if (sym2 == null)
 			return false;
 
-		if (sym1.sym == TokenConstants.NULL_LITERAL)
+		if (sym1.sym == TokenConstants.NULL_LITERAL) {
 			if (sym2.sym == TokenConstants.NULL_LITERAL)
 				return true;
-			else
-				return false;
+			return false;
+		}
 
-		if (sym1.value == null || sym2.value == null)
+		if (sym1.value == null || sym2.value == null) {
 			if (sym2.value == null && sym1.value == null)
 				return true;
-			else
-				return false;
+
+			return false;
+		}
 
 		if (sym1.sym != sym2.sym)
 			return false;
@@ -165,23 +161,22 @@ public class FileScannerTest extends TestCase {
 	}
 
 	private boolean compareSymbols(Symbol[] sym1, Symbol[] sym2) {
-		if (sym1 == null || sym2 == null)
+		if (sym1 == null || sym2 == null) {
 			if (sym1 == null && sym2 == null)
 				return true;
-			else
-				return false;
+			return false;
+		}
 
 		if (sym1.length != sym2.length) {
 			return false;
 		}
 
-		for (int i = 0; i < sym1.length; i++)
+		for (int i = 0; i < sym1.length; i++) {
 			if (compareSymbol(sym1[i], sym2[i])) {
 				continue;
-			} else {
-				return false;
 			}
-
+			return false;
+		}
 		return true;
 	}
 
@@ -192,8 +187,6 @@ public class FileScannerTest extends TestCase {
 		try {
 			scanner = new FileScanner(new StringBufferInputStream(line));
 		} catch (Exception e) {
-			System.out.println("testWithNormalLineWithWrongDelimiter");
-			e.printStackTrace();
 			assertEquals(true, false);
 		}
 
@@ -457,18 +450,13 @@ public class FileScannerTest extends TestCase {
 	 * assertEquals(line,scanner.getLine()); } catch(IOException ie) { assertEquals(true, false); } }
 	 */
 	public void testWithSpaceDelimitedData() {
-
+		//TODO:
 	}
 
 	public void testWithTabInsideQuotes() {
-
+		//TODO:
 	}
 
-	/*******************************************************************************************************************
-	 * retrieve this test suite
-	 * 
-	 * @return this test suite
-	 ******************************************************************************************************************/
 	public static Test suite() {
 		return new TestSuite(FileScannerTest.class);
 	}

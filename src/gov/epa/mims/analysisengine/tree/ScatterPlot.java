@@ -4,11 +4,9 @@ import gov.epa.mims.analysisengine.AnalysisEngineConstants;
 import gov.epa.mims.analysisengine.AnalysisException;
 
 import java.io.Serializable;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 import java.util.Vector;
 
 /**
@@ -118,7 +116,7 @@ import java.util.Vector;
  * <br><A HREF="doc-files/ExampleLineType14.html"><B>View Example</B></A>
  *
  * @author Tommy E. Cathey
- * @version $Id: ScatterPlot.java,v 1.2 2005/09/19 14:50:10 rhavaldar Exp $
+ * @version $Id: ScatterPlot.java,v 1.3 2006/10/30 21:43:50 parthee Exp $
  *
  **/
 public class ScatterPlot
@@ -140,10 +138,6 @@ public class ScatterPlot
 
    /** data keys associated with this Plot */
    private Object[] keys;
-
-   // static initialization block
-   {
-   }
 
    /**
     * Creates a new ScatterPlot object.
@@ -356,8 +350,6 @@ public class ScatterPlot
       String[] ykeyList = new String[ykeys.size()];
       Iterator keyIt = ykeys.iterator();
       int i = 0;
-      int numKeys = ykeys.size();
-
       while (keyIt.hasNext())
       {
          String key = keyIt.next().toString();

@@ -4,14 +4,8 @@ package gov.epa.mims.analysisengine.table;
 import gov.epa.mims.analysisengine.stats.Histogram;
 import gov.epa.mims.analysisengine.tree.DataSetIfc;
 import gov.epa.mims.analysisengine.tree.DataSetsAdapter;
-import gov.epa.mims.analysisengine.tree.DataSets;
-import gov.epa.mims.analysisengine.tree.LabeledDataSetIfc;
-
-import gov.epa.mims.analysisengine.gui.DefaultUserInteractor;
-import gov.epa.mims.analysisengine.gui.UserInteractor;
 
 import java.util.Vector;
-import java.text.DecimalFormat;
 
 
 /** HistogramModel.java
@@ -19,7 +13,7 @@ import java.text.DecimalFormat;
  * <p>Copyright: Copyright (c) 2004</p>
  * <p>Company: CEP, UNC-Chapel Hill </p>
  * @author Parthee Partheepan
- * @version $Id: HistogramModel.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: HistogramModel.java,v 1.3 2006/10/30 21:43:50 parthee Exp $
  */
 
 public class HistogramModel
@@ -32,7 +26,7 @@ public class HistogramModel
    public final static String DEFAULT_EFORMAT= "0.00E00";
    
    /** format for the labels */
-   private SignificantDigitsFormat format =  new SignificantDigitsFormat(DEFAULT_EFORMAT);;
+   private SignificantDigitsFormat format =  new SignificantDigitsFormat(DEFAULT_EFORMAT);
    
    /** type of the histogram */
    private byte histogramType = Histogram.FREQUENCY;

@@ -19,7 +19,7 @@ import javax.swing.table.*;
  * </p>
  * 
  * @author Daniel Gatti
- * @version $Id: OverallTableModel.java,v 1.3 2006/10/26 21:50:47 parthee Exp $
+ * @version $Id: OverallTableModel.java,v 1.4 2006/10/30 21:43:50 parthee Exp $
  */
 public class OverallTableModel extends MultiRowHeaderTableModel implements TableModelListener, java.io.Serializable,
 		FormatAndIndexInfoIfc {
@@ -463,9 +463,8 @@ public class OverallTableModel extends MultiRowHeaderTableModel implements Table
 		ColumnFormatInfo info = (ColumnFormatInfo) ColumnNameToFormats.get(columnName);
 		if (info == null) {
 			return getValueAt(rowIndex, columnIndex).toString();
-		} else {
-			return info.getFormat().format(getValueAt(rowIndex, columnIndex));
 		}
+		return info.getFormat().format(getValueAt(rowIndex, columnIndex));
 	}// getFormattedValueAt
 
 	/**

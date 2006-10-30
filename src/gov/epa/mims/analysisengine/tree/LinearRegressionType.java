@@ -1,16 +1,13 @@
 package gov.epa.mims.analysisengine.tree;
 
-import java.awt.Color;
-
 import java.io.Serializable;
-
 import java.util.ArrayList;
 
 
 /**
  * @author    Tommy E. Cathey
  * @created   October 7, 2004
- * @version   $Id: LinearRegressionType.java,v 1.2 2005/09/19 14:50:10 rhavaldar Exp $
+ * @version   $Id: LinearRegressionType.java,v 1.3 2006/10/30 21:43:50 parthee Exp $
  */
 
 public class LinearRegressionType

@@ -1,1496 +1,1251 @@
 package gov.epa.mims.analysisengine.table;
 
-
-
 import gov.epa.mims.analysisengine.gui.DefaultUserInteractor;
-
 import gov.epa.mims.analysisengine.gui.OptionDialog;
-
-import gov.epa.mims.analysisengine.gui.PlotConstantsIfc;
-
 import gov.epa.mims.analysisengine.gui.ScreenUtils;
-
 import gov.epa.mims.analysisengine.gui.StringChooserPanel;
-
 import gov.epa.mims.analysisengine.gui.StringValuePanel;
-
 import gov.epa.mims.analysisengine.gui.TreeDialog;
-
 import gov.epa.mims.analysisengine.gui.UserInteractor;
 
-
-
-import java.awt.*;
-
-import java.awt.event.*;
-
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.Format;
-
-import java.text.SimpleDateFormat;
-
 import java.text.ParseException;
-
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
 import java.util.Date;
 
-import javax.swing.*;
-
+import javax.swing.AbstractAction;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
-
 import javax.swing.border.Border;
-
 import javax.swing.border.TitledBorder;
 
-
-
 /**
-
  * This Dialog comes up when the user clicks the "Plot" button
-
- *
-
+ * 
  * @author Prashant Pai, CEP UNC
-
- * @version $Id: PlottingInfoGUI.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
-
+ * @version $Id: PlottingInfoGUI.java,v 1.3 2006/10/30 21:43:50 parthee Exp $
  */
 
-public class PlottingInfoGUI extends OptionDialog
+public class PlottingInfoGUI extends OptionDialog {
+	/** the plotting info object for this GUI * */
+	protected PlottingInfo plottingInfo = null;
 
-{
+	/** the string chooser panel for the plot type * */
+	protected StringChooserPanel plotTypePanel = null;
 
-   /** the plotting info object for this GUI **/
+	/** the string combo box for the units * */
+	protected JComboBox unitsHeaderComboBox = null;
 
-   protected PlottingInfo plottingInfo = null;
+	/** user specified unit */
+	protected JTextField unitsUserTextField = null;
 
+	/** radio button for to get the units from the table header */
+	protected JRadioButton headerRB;
 
+	/** radio button for to get the units as user specified */
+	protected JRadioButton userSpecRB;
 
-   /** the string chooser panel for the plot type **/
+	/** the panel for the separator * */
+	protected StringValuePanel separatorPanel = null;
 
-   protected StringChooserPanel plotTypePanel = null;
+	/** the editable string to give the plot a name * */
+	protected JTextField plotNameField = null;
 
+	/** label that displays the number of columns selected * */
+	protected JLabel dataMessageLabel = null;
 
+	/** textfield that displays the columns selected * */
+	protected JTextField dataMessageField = null;
 
-   /** the string combo box for the units **/
+	/** to indicate whether columns are selected for data */
+	private boolean[] showDataColumns;
 
-   protected JComboBox unitsHeaderComboBox = null;
+	/** */
+	private StringChooserPanel firstLabelPanel;
 
+	private StringChooserPanel secondLabelPanel;
 
+	private StringChooserPanel thirdLabelPanel;
 
-   /** user specified unit */
+	private JPanel labelPanel = null;
 
-   protected JTextField unitsUserTextField = null;
+	private StringChooserPanel datePlusTimePanel;
 
+	private StringChooserPanel timePanel;
 
+	private StringChooserPanel formatPanel;
 
-   /** radio button for to get the units from the table header */
+	private JPanel labelOrDatePanel;
 
-   protected JRadioButton headerRB;
+	private JPanel datePanel = null;
 
+	/** whether to show the header panel * */
+	protected boolean showHeaders = true;
 
+	protected JPanel plotNamePanel = null;
 
-   /** radio button for to get the units as user specified */
+	protected JPanel typeNamePanel = null;
 
-   protected JRadioButton userSpecRB;
+	private final String LABEL_BORDER = "Columns for Labels";
 
+	private final String TIME_LABEL_BORDER = "Date and Time Columns";
 
+	private String labelBorderTitle = LABEL_BORDER;
 
-   /** the panel for the separator **/
+	private TitledBorder labelTitleBorder = BorderFactory.createTitledBorder(labelBorderTitle);
 
-   protected StringValuePanel separatorPanel = null;
+	public static final String[] timeFormats = { "HH:mm:ss", "HH:mm:ss zzz", "HH:mm", "HH", "hh a" };
 
+	private final Border labelBorder = BorderFactory.createCompoundBorder(labelTitleBorder, BorderFactory
+			.createEmptyBorder(5, 5, 5, 5));
 
+	private JFrame parent;
 
-   /** the editable string to give the plot a name **/
+	public PlottingInfoGUI(JFrame parent, PlottingInfo plottingInfo, boolean showPlotSelection)
+	{
+		super(parent);
+		this.parent = parent;
+		this.plottingInfo = plottingInfo;
+		setTitle("Select Plotting Options");
+		setModal(true);
+		initialize(showPlotSelection);
+		initGUIFromModel();
+		pack();
+		setLocation(ScreenUtils.getPointToCenter(this));
+	}
 
-   protected JTextField plotNameField = null;
+	private void initialize(boolean showPlotSelection)
+	{
+		plotTypePanel = new StringChooserPanel("Plot Type: ", false,
+		PlotTypeConverter.AVAILABLE_PLOT_TYPES);
+		ActionListener listener = new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				String plotType = plotTypePanel.getValue();
+				addRemovePanel(plotType);
+				enableLabelColums();
+			}
+		};
 
+		plotTypePanel.addActionListener(listener);
+		// if (showPlotSelection)
 
+		FlowLayout plotNamePanelLayout = new FlowLayout();
 
-   /** label that displays the number of columns selected **/
+		plotNamePanel = new JPanel();
 
-   protected JLabel dataMessageLabel = null;
+		plotNamePanel.setLayout(plotNamePanelLayout);
 
+		plotNamePanelLayout.setAlignment(FlowLayout.LEFT);
 
+		plotNamePanelLayout.setHgap(5);
 
-   /** textfield that displays the columns selected **/
+		plotNamePanelLayout.setVgap(5);
 
-   protected JTextField dataMessageField = null;
+		JLabel lplotName = new JLabel("Plot Name:");
 
+		lplotName.setVisible(true);
 
+		plotNamePanel.add(lplotName);
 
-   /** to indicate whether  columns are selected for data */
+		plotNameField = new JTextField(10);
 
-   private boolean [] showDataColumns;
+		plotNameField.setBackground(Color.white);
 
+		plotNameField.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
 
+		plotNameField.setEditable(true);
 
-   /** */
+		plotNameField.setVisible(true);
 
-   private  StringChooserPanel firstLabelPanel;
+		plotNamePanel.add(plotNameField);
 
+		typeNamePanel = new JPanel();
 
+		if (showPlotSelection)
 
-   private  StringChooserPanel secondLabelPanel;
+		{
 
+			typeNamePanel.add(plotTypePanel);
 
+		}
 
-   private  StringChooserPanel thirdLabelPanel;
+		typeNamePanel.add(plotNamePanel);
 
+		dataMessageField = new JTextField(10);
 
+		dataMessageField.setBackground(Color.white);
 
-   private JPanel labelPanel = null;
+		dataMessageField.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
 
+		dataMessageField.setEditable(false);
 
+		dataMessageLabel = new JLabel("[0 cols]");
 
-   private StringChooserPanel datePlusTimePanel;
+		JPanel dsPanel = new JPanel();
 
+		dsPanel.add(dataMessageLabel);
 
+		dsPanel.add(new JButton(new SelectAction(this)));
 
-   private StringChooserPanel timePanel;
+		headerRB = new JRadioButton("Header", false);
 
+		headerRB.setToolTipText("The unit for each datasets is from the column " +
 
+		"header of each column");
 
-   private StringChooserPanel formatPanel ;
+		userSpecRB = new JRadioButton("User", true);
 
+		userSpecRB.setToolTipText("The unit for each datasets is user specified");
 
+		ButtonGroup bg = new ButtonGroup();
 
-   private JPanel labelOrDatePanel;
+		bg.add(headerRB);
 
+		bg.add(userSpecRB);
 
+		ActionListener rbListener = new ActionListener()
 
-   private JPanel datePanel = null;
+		{
 
+			public void actionPerformed(ActionEvent e)
 
+			{
 
+				boolean enable = false;
 
+				if (headerRB.isSelected())
 
-   /** whether to show the header panel **/
+				{
 
-   protected boolean showHeaders = true;
+					enable = true;
 
-   protected JPanel plotNamePanel = null;
+				}
 
-   protected JPanel typeNamePanel = null;
+				unitsHeaderComboBox.setEnabled(enable);
 
+				unitsUserTextField.setEnabled(!enable);
 
+			}
 
+		};
 
+		headerRB.addActionListener(rbListener);
 
-   private final String LABEL_BORDER ="Columns for Labels";
+		userSpecRB.addActionListener(rbListener);
 
+		String[] units = plottingInfo.getUnitsChoices();
 
+		unitsHeaderComboBox = new JComboBox();
 
-   private final String TIME_LABEL_BORDER ="Date and Time Columns";
+		unitsHeaderComboBox.setToolTipText("Select the row column header");
 
+		// if there is no column row header or only one row header is available
 
+		// then user has to specify unit if he want to
 
-   private String labelBorderTitle = LABEL_BORDER;
+		if (units == null || units.length == 1)
 
+		{
 
+			headerRB.setSelected(false);
 
-   private TitledBorder labelTitleBorder = BorderFactory.createTitledBorder(
+			userSpecRB.setSelected(true);
 
-      labelBorderTitle);
+			headerRB.setEnabled(false);
 
+			unitsHeaderComboBox.setEnabled(false);
 
+		}
 
-   public static final String [] timeFormats = {"HH:mm:ss", "HH:mm:ss zzz","HH:mm","HH", "hh a"};
+		else
 
+		{
 
+			DefaultComboBoxModel model = new DefaultComboBoxModel(units);
 
-   private final Border labelBorder = BorderFactory.createCompoundBorder(
+			unitsHeaderComboBox.setModel(model);
 
-         labelTitleBorder, BorderFactory.createEmptyBorder(5,5,5,5));
+			unitsHeaderComboBox.setSelectedIndex(units.length - 1);
 
+		}
 
+		unitsHeaderComboBox.setPreferredSize(new Dimension(150, 30));
 
-   JFrame parent;
+		unitsUserTextField = new JTextField();
 
+		unitsUserTextField.setToolTipText("Enter the unit for all the data sets");
 
+		unitsUserTextField.setPreferredSize(new Dimension(100, 30));
 
-   /**
+		unitsUserTextField.setMaximumSize(new Dimension(150, 30));
 
-    * Basic Constructor for the PlottingGUI class
+		JPanel unitsPanel = new JPanel();
 
-    * @param plottingInfo
+		unitsPanel.setBorder(BorderFactory.createCompoundBorder(
 
-    * @param showPlotSelection boolean that is true if the plot type combo
+		BorderFactory.createTitledBorder("Units"),
 
-    *    box should be shown.
+		BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
-    */
+		unitsPanel.setLayout(new BoxLayout(unitsPanel, BoxLayout.X_AXIS));
 
-   public PlottingInfoGUI(JFrame parent, PlottingInfo plottingInfo, boolean showPlotSelection)
+		unitsPanel.add(headerRB);
 
-   {
+		unitsPanel.add(unitsHeaderComboBox);
 
-      super(parent);
+		unitsPanel.add(userSpecRB);
 
-      this.parent = parent;
+		unitsPanel.add(unitsUserTextField);
 
-      this.plottingInfo = plottingInfo;
+		JPanel dataColumnPanel = new JPanel();
 
-      setTitle("Select Plotting Options");
+		dataColumnPanel.setLayout(new BoxLayout(dataColumnPanel, BoxLayout.X_AXIS));
 
-      setModal(true);
+		dataColumnPanel.setBorder(BorderFactory.createCompoundBorder(
 
-      initialize(showPlotSelection);
+		BorderFactory.createTitledBorder("Data Columns"),
 
-      initGUIFromModel();
+		BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
-      pack();
+		dataColumnPanel.add(dataMessageField);
 
-      setLocation(ScreenUtils.getPointToCenter(this));
+		dataColumnPanel.add(dsPanel);
 
-   }
+		createLabelPanel();
 
+		createDateLabelPanel();
 
+		labelOrDatePanel = new JPanel(new BorderLayout());
 
-   // PlottingInfoGUI()
+		labelOrDatePanel.add(labelPanel);
 
+		// labelOrDatePanel.setPreferredSize(new Dimension(300, 500));
 
+		// labelOrDatePanel.setMinimumSize(new Dimension(300, 300));
 
-   /**
+		labelOrDatePanel.setBorder(labelBorder);
 
-    * initialize the dialog
+		Container contentPane = this.getContentPane();
 
-    */
+		contentPane.setLayout(new BorderLayout());
 
-   private void initialize(boolean showPlotSelection)
+		// the main panel that contains everything except the buttons at the bottom
 
-   {
+		JPanel mainPanel = new JPanel();
 
-      plotTypePanel =  new StringChooserPanel("Plot Type: ", false,
+		// mainPanel.setMinimumSize(new Dimension(550,300));
 
-                                PlotTypeConverter.AVAILABLE_PLOT_TYPES);
+		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
-      ActionListener  listener = new ActionListener()
+		mainPanel.setBorder(BorderFactory.createCompoundBorder(
 
-      {
+		BorderFactory.createBevelBorder(BevelBorder.LOWERED),
 
-         public void actionPerformed(ActionEvent e)
+		BorderFactory.createEmptyBorder(10, 10, 10, 10)));
 
-         {
+		mainPanel.add(typeNamePanel);
 
-            String plotType = plotTypePanel.getValue();
+		mainPanel.add(dataColumnPanel);
 
-            addRemovePanel(plotType);
+		mainPanel.add(unitsPanel);
 
-            enableLabelColums();
+		mainPanel.add(labelOrDatePanel);
 
-         }
+		contentPane.add(getButtonPanel(), BorderLayout.SOUTH);
 
-      };
+		contentPane.add(mainPanel, BorderLayout.CENTER);
 
-      plotTypePanel.addActionListener(listener);
+	}// initialize()
 
-      // if (showPlotSelection)
+	private void createLabelPanel()
 
-      FlowLayout plotNamePanelLayout = new FlowLayout();
+	{
 
+		String[] colNames = plottingInfo.getOverallTableModel().getColumnNames();
 
+		String[] colNamesWithNA = new String[colNames.length + 1];
 
-      plotNamePanel = new JPanel();
+		colNamesWithNA[0] = PlottingInfo.NOT_SELECTED;
 
-      plotNamePanel.setLayout(plotNamePanelLayout);
+		System.arraycopy(colNames, 0, colNamesWithNA, 1, colNames.length);
 
-      plotNamePanelLayout.setAlignment(FlowLayout.LEFT);
+		firstLabelPanel = new StringChooserPanel("", false, colNames);
 
-      plotNamePanelLayout.setHgap(5);
+		firstLabelPanel.setToolTipText("Select the first label column");
 
-      plotNamePanelLayout.setVgap(5);
+		// firstLabePanel.setPreferredSize(new Dimension(100,30));
 
+		secondLabelPanel = new StringChooserPanel("", false, colNamesWithNA);
 
+		secondLabelPanel.setToolTipText("Select the second label column");
 
-      JLabel lplotName = new JLabel("Plot Name:");
+		// secondLabelPanel.setPreferredSize(new Dimension(100,30));
 
-      lplotName.setVisible(true);
+		thirdLabelPanel = new StringChooserPanel("", false, colNamesWithNA);
 
-      plotNamePanel.add(lplotName);
+		thirdLabelPanel.setToolTipText("Select the third label column");
 
-      plotNameField = new JTextField(10);
+		// thirdLabelPanel.setPreferredSize(new Dimension(100,30));
 
-      plotNameField.setBackground(Color.white);
+		JPanel labelChooserPanel = new JPanel();
 
-      plotNameField.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
+		labelChooserPanel.setLayout(new BoxLayout(labelChooserPanel, BoxLayout.X_AXIS));
 
-      plotNameField.setEditable(true);
+		labelChooserPanel.add(firstLabelPanel);
 
-      plotNameField.setVisible(true);
+		labelChooserPanel.add(secondLabelPanel);
 
-      plotNamePanel.add(plotNameField);
+		labelChooserPanel.add(thirdLabelPanel);
 
+		separatorPanel = new StringValuePanel("Separator", false, true);
 
+		separatorPanel.setToolTipText("A single charator for joining the labels" +
 
-      typeNamePanel = new JPanel();
+		"\nfrom selected label columns");
 
-      if (showPlotSelection)
+		separatorPanel.addSelectAllFocusListener();
 
-      {
+		separatorPanel.setPreferredSize(new Dimension(90, 30));
 
-         typeNamePanel.add(plotTypePanel);
+		separatorPanel.setMinimumSize(new Dimension(90, 30));
 
-      }
+		separatorPanel.setMaximumSize(new Dimension(90, 30));
 
-      typeNamePanel.add(plotNamePanel);
+		labelPanel = new JPanel();
 
+		// labelPanel.setPreferredSize(new Dimension(550, 75));
 
+		labelPanel.setLayout(new BoxLayout(labelPanel, BoxLayout.X_AXIS));
 
+		labelPanel.add(labelChooserPanel);
 
+		labelPanel.add(separatorPanel);
 
-      JLabel dataLabel = new JLabel(" Data Columns:");
+		labelPanel.setToolTipText("Select one to three columns for the labels " +
 
-      dataMessageField = new JTextField(10);
+		"\nand enter a charactor for joining the labels from the columns");
 
-      dataMessageField.setBackground(Color.white);
+	}// createLabelPanel()
 
-      dataMessageField.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
+	private void createDateLabelPanel()
 
-      dataMessageField.setEditable(false);
+	{
 
-      dataMessageLabel = new JLabel("[0 cols]");
+		String[] colNames = plottingInfo.getOverallTableModel().getColumnNames();
 
-      JPanel dsPanel = new JPanel();
+		datePlusTimePanel = new StringChooserPanel("Date +[Time]", false, colNames);
 
-      dsPanel.add(dataMessageLabel);
+		datePlusTimePanel.setToolTipText("Select the colum of type date");
 
-      dsPanel.add(new JButton(new SelectAction(this)));
+		String[] colNamesWithNA = new String[colNames.length + 1];
 
+		colNamesWithNA[0] = PlottingInfo.NOT_SELECTED;
 
+		System.arraycopy(colNames, 0, colNamesWithNA, 1, colNames.length);
 
-      headerRB = new JRadioButton("Header",false);
+		timePanel = new StringChooserPanel("Time", false, colNamesWithNA);
 
-      headerRB.setToolTipText("The unit for each datasets is from the column " +
+		timePanel.setToolTipText("Select the column for the time");
 
-         "header of each column");
+		formatPanel = new StringChooserPanel("Format", false, timeFormats);
 
-      userSpecRB = new JRadioButton("User",true);
+		formatPanel.setToolTipText("Select the format that matches the selected " +
 
-      userSpecRB.setToolTipText("The unit for each datasets is user specified");
+		"time column format");
 
-      ButtonGroup bg = new ButtonGroup();
+		formatPanel.setPreferredSize(new Dimension(150, 30));
 
-      bg.add(headerRB);
+		formatPanel.setMinimumSize(new Dimension(150, 30));
 
-      bg.add(userSpecRB);
+		formatPanel.setMaximumSize(new Dimension(175, 30));
 
-      ActionListener rbListener = new ActionListener()
+		JPanel datePanel1 = new JPanel();
 
-      {
+		datePanel1.setLayout(new BoxLayout(datePanel1, BoxLayout.X_AXIS));
 
-         public void actionPerformed(ActionEvent e)
+		// datePanel.setPreferredSize(new Dimension(550, 75));
 
-         {
+		datePanel1.add(datePlusTimePanel);
 
-            boolean enable = false;
+		datePanel1.add(timePanel);
 
-            if(headerRB.isSelected())
+		datePanel = new JPanel(new BorderLayout());
 
-            {
+		datePanel.setToolTipText("Select upto two columns and time format for specifying date labels" +
 
-               enable = true;
+		"\n.The first column type should be date.");
 
-            }
+		datePanel.add(datePanel1, BorderLayout.CENTER);
 
-            unitsHeaderComboBox.setEnabled(enable);
+		datePanel.add(formatPanel, BorderLayout.EAST);
 
-            unitsUserTextField.setEnabled(!enable);
+	}// createDateLablePanel
 
-         }
+	private void enableLabelColums()
 
-      };
+	{
 
-      headerRB.addActionListener(rbListener);
+		String plotType = plotTypePanel.getValue();// plottingInfo.getPlotType();
 
-      userSpecRB.addActionListener(rbListener);
+		String aePlotType = PlotTypeConverter.getAEPlotType(plotType);
 
+		boolean enable = TreeDialog.isLabelRequired(this, aePlotType);
 
+		firstLabelPanel.setEnabled(enable);
 
-      String [] units = plottingInfo.getUnitsChoices();
+		secondLabelPanel.setEnabled(enable);
 
-      unitsHeaderComboBox = new JComboBox();
+		thirdLabelPanel.setEnabled(enable);
 
-      unitsHeaderComboBox.setToolTipText("Select the row column header");
+		separatorPanel.setEnabled(enable);
 
-      // if there is no column row header or only one row header is available
+	}// enableLabelColums()
 
-      // then user has to specify unit if he want to
+	/**
+	 * 
+	 * save the values from the GUI to the PLottingInfo object
+	 * 
+	 */
 
-      if(units == null || units.length ==1)
+	protected void saveGUIValuesToModel()
 
-      {
+	{
 
+		OverallTableModel model = plottingInfo.getOverallTableModel();
 
+		if (model.getRowCount() <= 0)
 
-         headerRB.setSelected(false);
+		{
 
-         userSpecRB.setSelected(true);
+			DefaultUserInteractor.get().notify(this, "Error", "No rows are selected for" +
 
-         headerRB.setEnabled(false);
+			" analyses", UserInteractor.ERROR);
 
-         unitsHeaderComboBox.setEnabled(false);
+			return;
 
-      }
+		}
 
-      else
+		String plotType = plotTypePanel.getValue();
 
-      {
+		plottingInfo.setPlotType(plotType);
 
-         DefaultComboBoxModel model = new DefaultComboBoxModel(units);
+		plottingInfo.setPlotName(plotNameField.getText());
 
-         unitsHeaderComboBox.setModel(model);
+		if (plottingInfo.getNumOfDataColumns() == 0)
 
-         unitsHeaderComboBox.setSelectedIndex(units.length-1);
+		{
 
-      }
+			DefaultUserInteractor.get().notify(this, "Error", "Please select atleast one "
 
-      unitsHeaderComboBox.setPreferredSize(new Dimension(150, 30));
+			+ "data column", UserInteractor.ERROR);
 
-      unitsUserTextField = new JTextField();
+			shouldContinueClosing = false;
 
-      unitsUserTextField.setToolTipText("Enter the unit for all the data sets");
+			return;
 
-      unitsUserTextField.setPreferredSize(new Dimension(100, 30));
+		}
 
-      unitsUserTextField.setMaximumSize(new Dimension(150, 30));
+		if (plotType.equals(PlotTypeConverter.TIMESERIES_PLOT))
 
-      JPanel unitsPanel = new JPanel();
+		{
 
-      unitsPanel.setBorder(BorderFactory.createCompoundBorder(
+			// check whether only one column is selected
 
-         BorderFactory.createTitledBorder("Units"),
+			String firstDateColName = datePlusTimePanel.getValue();
 
-         BorderFactory.createEmptyBorder(5,5,5,5)));
+			int index = model.getColumnNameIndex(firstDateColName);
 
-      unitsPanel.setLayout(new BoxLayout(unitsPanel, BoxLayout.X_AXIS));
+			if (index != -1)
 
-      unitsPanel.add(headerRB);
+			{
 
-      unitsPanel.add(unitsHeaderComboBox);
+				Format format = model.getFormat(firstDateColName);
 
-      unitsPanel.add(userSpecRB);
+				Class classType = model.getColumnClass(index + 1); // add 1 to skip the first col
 
-      unitsPanel.add(unitsUserTextField);
+				if (!classType.equals(Date.class) ||
 
+				!(format instanceof SimpleDateFormat))
 
+				{
 
-      JPanel dataColumnPanel = new JPanel();
+					DefaultUserInteractor.get().notify(this, "Error", "The Date + [Time] "
 
-      dataColumnPanel.setLayout(new BoxLayout(dataColumnPanel,BoxLayout.X_AXIS));
+					+ " column should be of type date.",
 
-      dataColumnPanel.setBorder(BorderFactory.createCompoundBorder(
+					UserInteractor.ERROR);
 
-         BorderFactory.createTitledBorder("Data Columns"),
+					shouldContinueClosing = false;
 
-         BorderFactory.createEmptyBorder(5,5,5,5)));
+					return;
 
-      dataColumnPanel.add(dataMessageField);
+				}
 
-      dataColumnPanel.add(dsPanel);
+				String pattern = ((SimpleDateFormat) format).toPattern();
 
-      createLabelPanel();
+				String[] newDateColumns;
 
-      createDateLabelPanel();
+				// select first row data fron each col and apply the pattern to see
 
-      labelOrDatePanel = new JPanel(new BorderLayout());
+				// whether you can convert it to a date
 
-      labelOrDatePanel.add(labelPanel);
+				int index1 = model.getColumnNameIndex(firstDateColName);
 
-      //labelOrDatePanel.setPreferredSize(new Dimension(300, 500));
+				// System.out.println("pattern="+pattern)
 
-      //labelOrDatePanel.setMinimumSize(new Dimension(300, 300));
+				String newDateString = model.getFormattedValueAt(0, index1 + 1);
 
-      labelOrDatePanel.setBorder(labelBorder);
+				String timeFormat = "";
 
-      Container contentPane = this.getContentPane();
+				String secondDateColName = timePanel.getValue();
 
-      contentPane.setLayout(new BorderLayout());
+				if (!secondDateColName.equals(PlottingInfo.NOT_SELECTED))
 
+				{
 
+					int index2 = model.getColumnNameIndex(secondDateColName);
 
-      // the main panel that contains everything except the buttons at the bottom
+					String s2 = model.getFormattedValueAt(0, index2 + 1);
 
-      JPanel mainPanel = new JPanel();
+					newDateString = s2 + ' ' + newDateString;
 
-      //mainPanel.setMinimumSize(new Dimension(550,300));
+					timeFormat = formatPanel.getValue();
 
-      mainPanel.setLayout(new BoxLayout(mainPanel,BoxLayout.Y_AXIS));
+					pattern = timeFormat + ' ' + pattern;
 
-      mainPanel.setBorder(BorderFactory.createCompoundBorder(
+				}
 
-          BorderFactory.createBevelBorder(BevelBorder.LOWERED),
+				// System.out.println("newDateString="+newDateString);
 
-          BorderFactory.createEmptyBorder(10,10,10,10)));
+				// System.out.println("pattern="+pattern);
 
-      mainPanel.add(typeNamePanel);
+				plottingInfo.setTimeFormat(timeFormat);
 
-      mainPanel.add(dataColumnPanel);
+				try
 
-      mainPanel.add(unitsPanel);
+				{
 
-      mainPanel.add(labelOrDatePanel);
+					SimpleDateFormat d = new SimpleDateFormat(pattern);
 
+					d.parse(newDateString);
 
+					newDateColumns = new String[2];
 
-      contentPane.add(getButtonPanel(), BorderLayout.SOUTH);
+					newDateColumns[0] = firstDateColName;
 
+					newDateColumns[1] = secondDateColName;
 
+					plottingInfo.setSelLabelDateColNames(newDateColumns);
 
-      contentPane.add(mainPanel, BorderLayout.CENTER);
+				}
 
+				catch (ParseException e)
 
+				{
 
-   }// initialize()
+					DefaultUserInteractor.get().notify(this, "Error", "Cannot combine two columns selected to " +
 
+					"form a date.\nPlease check the format in the table for the " +
 
+					"first column and selected time format in this GUI for the second"
 
-   private void createLabelPanel()
+					+ " column", UserInteractor.ERROR);
 
-   {
+					shouldContinueClosing = false;
 
-      String [] colNames = plottingInfo.getOverallTableModel().getColumnNames();
+					return;
 
-      String [] colNamesWithNA= new String[colNames.length +1];
+				}// catch()
 
-      colNamesWithNA[0] = PlottingInfo.NOT_SELECTED;
+			}// if(index != -1)
 
-      System.arraycopy(colNames,0, colNamesWithNA, 1, colNames.length);
+		}// if(plotType.equals(PlotTypeConverter.TIMESERIES_PLOT))
 
-      firstLabelPanel = new StringChooserPanel("",false,colNames);
+		else
 
-      firstLabelPanel.setToolTipText("Select the first label column");
+		{
 
-      //firstLabePanel.setPreferredSize(new Dimension(100,30));
+			String firstLabel = firstLabelPanel.getValue();
 
-      secondLabelPanel = new StringChooserPanel("",false,colNamesWithNA);
+			String secondLabel = secondLabelPanel.getValue();
 
-      secondLabelPanel.setToolTipText("Select the second label column");
+			String thirdLabel = thirdLabelPanel.getValue();
 
-      //secondLabelPanel.setPreferredSize(new Dimension(100,30));
+			if (secondLabel.equals(PlottingInfo.NOT_SELECTED) &&
 
-      thirdLabelPanel = new StringChooserPanel("",false,colNamesWithNA);
+			!thirdLabel.equals(PlottingInfo.NOT_SELECTED))
 
-      thirdLabelPanel.setToolTipText("Select the third label column");
+			{
 
-      //thirdLabelPanel.setPreferredSize(new Dimension(100,30));
+				DefaultUserInteractor.get().notify(this, "Error", "Please select the " +
 
-      JPanel labelChooserPanel = new JPanel();
+				"second column label before selecting the third column label",
 
-      labelChooserPanel.setLayout(new BoxLayout(labelChooserPanel,BoxLayout.X_AXIS));
+				UserInteractor.ERROR);
 
-      labelChooserPanel.add(firstLabelPanel);
+				shouldContinueClosing = false;
 
-      labelChooserPanel.add(secondLabelPanel);
+				return;
 
-      labelChooserPanel.add(thirdLabelPanel);
+			}// if
 
-      separatorPanel = new StringValuePanel("Separator", false, true);
+			else if (firstLabel.equals(secondLabel) ||
 
-      separatorPanel.setToolTipText("A single charator for joining the labels"+
+			firstLabel.equals(thirdLabel) ||
 
-         "\nfrom selected label columns");
+			(secondLabel.equals(thirdLabel) &&
 
-      separatorPanel.addSelectAllFocusListener();
+			!secondLabel.equals(PlottingInfo.NOT_SELECTED)))
 
+			{
 
+				DefaultUserInteractor.get().notify(this, "Error", "Please select different " +
 
-      separatorPanel.setPreferredSize(new Dimension(90,30));
+				"columns for labels",
 
-      separatorPanel.setMinimumSize(new Dimension(90,30));
+				UserInteractor.ERROR);
 
-      separatorPanel.setMaximumSize(new Dimension(90,30));
+				shouldContinueClosing = false;
 
-      labelPanel = new JPanel();
+				return;
 
-      //labelPanel.setPreferredSize(new Dimension(550, 75));
+			}// else if
 
-      labelPanel.setLayout(new BoxLayout(labelPanel, BoxLayout.X_AXIS));
+			else
 
-      labelPanel.add(labelChooserPanel);
+			{
 
-      labelPanel.add(separatorPanel);
+				String[] selColNames = new String[3];
 
-      labelPanel.setToolTipText("Select one to three columns for the labels " +
+				selColNames[0] = firstLabel;
 
-         "\nand enter a charactor for joining the labels from the columns");
+				selColNames[1] = secondLabel;
 
-   }//createLabelPanel()
+				selColNames[2] = thirdLabel;
 
+				plottingInfo.setSelLabelColumnNames(selColNames);
 
+			}// else
 
-   private void createDateLabelPanel()
+			String stringSepar = separatorPanel.getValue();
 
-   {
+			char charSepar;
 
-      String [] colNames = plottingInfo.getOverallTableModel().getColumnNames();
+			if (stringSepar == null)
 
-      datePlusTimePanel = new StringChooserPanel("Date +[Time]",false,colNames);
+			{
 
-      datePlusTimePanel.setToolTipText("Select the colum of type date");
+				charSepar = ' ';
 
-      String [] colNamesWithNA= new String[colNames.length +1];
+			}
 
-      colNamesWithNA[0] = PlottingInfo.NOT_SELECTED;
+			else
 
-      System.arraycopy(colNames,0, colNamesWithNA, 1, colNames.length);
+			{
 
-      timePanel = new StringChooserPanel("Time",false,colNamesWithNA);
+				charSepar = stringSepar.charAt(0);
 
-      timePanel.setToolTipText("Select the column for the time");
+			}
 
-      formatPanel = new StringChooserPanel("Format",false,timeFormats);
+			plottingInfo.setSeparator(charSepar);
 
-      formatPanel.setToolTipText("Select the format that matches the selected " +
+		}// else
 
-         "time column format");
+		if (headerRB.isSelected())
 
-      formatPanel.setPreferredSize(new Dimension(150,30));
+		{
 
-      formatPanel.setMinimumSize(new Dimension(150,30));
+			int colRowHeaderindex = unitsHeaderComboBox.getSelectedIndex();
 
-      formatPanel.setMaximumSize(new Dimension(175,30));
+			plottingInfo.setUserSpecifiedUnits(false);
 
-      JPanel datePanel1 = new JPanel();
+			plottingInfo.setColRowHeaderIndex(colRowHeaderindex);
 
-      datePanel1.setLayout(new BoxLayout(datePanel1, BoxLayout.X_AXIS));
+		}
 
-      //datePanel.setPreferredSize(new Dimension(550, 75));
+		else
 
-      datePanel1.add(datePlusTimePanel);
+		{
 
-      datePanel1.add(timePanel);
+			plottingInfo.setUserSpecifiedUnits(true);
 
+			// System.out.println("unitsUserTextField.getText()="+unitsUserTextField.getText());
 
+			plottingInfo.setUnits(unitsUserTextField.getText());
 
-      datePanel = new JPanel(new BorderLayout());
+		}// else
 
-      datePanel.setToolTipText("Select upto two columns and time format for specifying date labels" +
+	}// saveGUIValuesToModel()
 
-         "\n.The first column type should be date.");
+	/**
+	 * 
+	 * initialize the GUI with values from the PlottingInfo object
+	 * 
+	 */
 
-      datePanel.add(datePanel1,BorderLayout.CENTER);
+	protected void initGUIFromModel()
 
-      datePanel.add(formatPanel,BorderLayout.EAST);
+	{
 
-   }//createDateLablePanel
+		String plotType = plottingInfo.getPlotType();
 
+		plotTypePanel.setValue(plotType);
 
+		plotNameField.setText(plottingInfo.getPlotName());
 
-   private void enableLabelColums()
+		int colRowHeaderindex = plottingInfo.getColRowHeaderIndex();
 
-   {
+		if (headerRB.isEnabled() && colRowHeaderindex != -1)
 
-      String plotType = plotTypePanel.getValue();//plottingInfo.getPlotType();
+		{
 
-      String aePlotType = PlotTypeConverter.getAEPlotType(plotType);
+			unitsHeaderComboBox.setSelectedIndex(colRowHeaderindex);
 
-      boolean enable = TreeDialog.isLabelRequired(this,aePlotType);
+		}
 
-      firstLabelPanel.setEnabled(enable);
+		// System.out.println("plottingInfo.getUnits()="+plottingInfo.getUnits());
 
-      secondLabelPanel.setEnabled(enable);
+		unitsUserTextField.setText(plottingInfo.getUnits());
 
-      thirdLabelPanel.setEnabled(enable);
+		boolean userSpec = plottingInfo.isUserSpecifiedUnits();
 
-      separatorPanel.setEnabled(enable);
+		headerRB.setSelected(!userSpec);
 
-   }//enableLabelColums()
+		userSpecRB.setSelected(userSpec);
 
+		boolean enable = false;
 
+		if (headerRB.isSelected())
 
-   /**
+		{
 
-    * save the values from the GUI to the PLottingInfo object
+			enable = true;
 
-    */
+		}
 
-   protected void saveGUIValuesToModel()
+		unitsHeaderComboBox.setEnabled(enable);
 
-   {
+		unitsUserTextField.setEnabled(!enable);
 
-      OverallTableModel model = plottingInfo.getOverallTableModel();
+		separatorPanel.setValue(plottingInfo.getSeparator());
 
-      if(model.getRowCount() <=0)
+		OverallTableModel overallModel = plottingInfo.getOverallTableModel();
 
-      {
+		int numCol = overallModel.getColumnCount();
 
-         DefaultUserInteractor.get().notify(this,"Error", "No rows are selected for"+
+		// checking & initializing data columns
 
-            " analyses",UserInteractor.ERROR);
+		String[] selDataColNames = plottingInfo.getSelDataColumnNames();
 
-         return;
+		int newNoOfDataSelCols = -1;
 
-      }
+		if ((selDataColNames != null) && (selDataColNames.length != 0))
 
+		{
 
+			showDataColumns = new boolean[numCol - 1]; // deduting one for the first column
 
-      String plotType =plotTypePanel.getValue();
+			for (int i = 0; i < selDataColNames.length; i++)
 
-      plottingInfo.setPlotType(plotType);
+			{
 
+				int index = overallModel.getColumnNameIndex(selDataColNames[i]);
 
+				if (index != -1)
 
-      plottingInfo.setPlotName(plotNameField.getText());
+				{
 
+					showDataColumns[index] = true;
 
+				}
 
-      if(plottingInfo.getNumOfDataColumns() == 0)
+				// if
 
-      {
+			}// for(i)
 
-         DefaultUserInteractor.get().notify(this,"Error", "Please select atleast one "
+			setSelectedDataColumns(showDataColumns);
 
-            + "data column", UserInteractor.ERROR);
+			newNoOfDataSelCols = plottingInfo.getNumOfDataColumns();
 
-         shouldContinueClosing = false;
+			dataMessageLabel.setText("[" + newNoOfDataSelCols + " cols]");
 
-         return;
+			dataMessageField.setText(plottingInfo.getDataColumnSelection());
 
-      }
+		}// if ((selDataColNames != null) && (selDataColNames.length != 0))
 
+		// dataMessageLabel.setText("[" + plottingInfo.getNumOfDataColumns()
 
+		// + " cols]");
 
-      if(plotType.equals(PlotTypeConverter.TIMESERIES_PLOT))
+		// dataMessageField.setText(plottingInfo.getDataColumnSelection());
 
-      {
+		String[] selLabelColNames = plottingInfo.getSelLabelColumnNames();
 
-         //check whether only one column is selected
+		String[] allColNames = overallModel.getColumnNames();
 
-         String firstDateColName = datePlusTimePanel.getValue();
+		if (selLabelColNames[0].equals(PlottingInfo.NOT_SELECTED) &&
 
-         int index = model.getColumnNameIndex(firstDateColName);
+		allColNames.length >= 1)
 
-         if(index != -1)
+		{
 
-         {
+			String firstColName = allColNames[0];
 
-            Format format = model.getFormat(firstDateColName);
+			firstLabelPanel.setValue(firstColName);
+			;
 
-            Class classType = model.getColumnClass(index+1); //add 1 to skip the first col
+		}
 
-            if(!classType.equals(Date.class) ||
+		else
 
-               !(format instanceof SimpleDateFormat))
+		{
 
-            {
+			firstLabelPanel.setValue(selLabelColNames[0]);
+			;
 
-               DefaultUserInteractor.get().notify(this,"Error", "The Date + [Time] "
+		}
 
-                  + " column should be of type date.",
+		secondLabelPanel.setValue(selLabelColNames[1]);
 
-                  UserInteractor.ERROR);
+		thirdLabelPanel.setValue(selLabelColNames[2]);
 
-               shouldContinueClosing = false;
+		// date col
 
-               return;
+		String[] selLabelDateColNames = plottingInfo.getSelLabelDateColNames();
 
-            }
+		String oneDateColName = selLabelDateColNames[0];
 
+		if (oneDateColName.equals(PlottingInfo.NOT_SELECTED))
 
+		{
 
-            String pattern = ((SimpleDateFormat)format).toPattern();
+			int[] dateCol = overallModel.getFirstDateColTypes();
 
-            String [] newDateColumns;
+			if (dateCol != null && dateCol.length >= 1)
 
-            //select first row data fron each col and apply the pattern to see
+			{
 
-            // whether you can convert it to a date
+				oneDateColName = overallModel.getColumnName(dateCol[0]);
 
-            int index1 = model.getColumnNameIndex(firstDateColName);
+			}// if()
 
-//System.out.println("pattern="+pattern)
+		}// if
 
-            String newDateString = model.getFormattedValueAt(0,index1+1);
+		datePlusTimePanel.setValue(oneDateColName);
 
-            String timeFormat = "";
+		timePanel.setValue(selLabelDateColNames[1]);
 
-            String secondDateColName = timePanel.getValue();
+		formatPanel.setValue(plottingInfo.getTimeFormat());
 
-            if(!secondDateColName.equals(PlottingInfo.NOT_SELECTED))
+		addRemovePanel(plotType);
 
-            {
+		enableLabelColums();
 
-               int index2 = model.getColumnNameIndex(secondDateColName);
+	}// initGUIFromModel()
 
-               String s2 = model.getFormattedValueAt(0,index2+1);
+	private void setSelectedDataColumns(boolean[] showDataColumns)
 
-               newDateString = s2+ ' ' + newDateString;
+	{
 
-               timeFormat = formatPanel.getValue();
+		ArrayList selColumns = new ArrayList();
 
-               pattern = timeFormat +' '+ pattern ;
+		OverallTableModel overallModel = plottingInfo.getOverallTableModel();
 
-            }
+		for (int i = 0; i < showDataColumns.length; i++)
 
+		{
 
+			if (showDataColumns[i])
 
-//System.out.println("newDateString="+newDateString);
+			{
 
-//System.out.println("pattern="+pattern);
+				selColumns.add(overallModel.getColumnName(i + 1));
 
-            plottingInfo.setTimeFormat(timeFormat);
+			}
 
-            try
+		}// for
 
-            {
+		String[] selDataCol = new String[selColumns.size()];
 
-               SimpleDateFormat d = new SimpleDateFormat(pattern);
+		selColumns.toArray(selDataCol);
 
-               d.parse(newDateString);
+		plottingInfo.setSelDataColumns(selDataCol);
 
-               newDateColumns = new String[2];
+	}
 
-               newDateColumns[0] = firstDateColName;
+	private void addRemovePanel(String plotType)
 
-               newDateColumns[1] = secondDateColName;
+	{
 
-               plottingInfo.setSelLabelDateColNames(newDateColumns);
+		if (plotType.equals(PlotTypeConverter.TIMESERIES_PLOT))
 
-            }
+		{
 
-            catch(ParseException e)
+			labelTitleBorder.setTitle(TIME_LABEL_BORDER);
 
-            {
+			labelOrDatePanel.remove(0);
 
-               DefaultUserInteractor.get().notify(this,"Error","Cannot combine two columns selected to " +
+			labelOrDatePanel.add(datePanel);
 
-               "form a date.\nPlease check the format in the table for the " +
+			labelOrDatePanel.validate();
 
-               "first column and selected time format in this GUI for the second"
+		}
 
-               +" column",UserInteractor.ERROR);
+		else
 
-               shouldContinueClosing = false;
+		{
 
-               return;
+			labelTitleBorder.setTitle(LABEL_BORDER);
 
-            }//catch()
+			labelOrDatePanel.remove(0);
 
-         }//if(index != -1)
+			labelOrDatePanel.add(labelPanel);
 
-      }//if(plotType.equals(PlotTypeConverter.TIMESERIES_PLOT))
+			labelOrDatePanel.validate();
 
-      else
+		}
 
-      {
+		labelOrDatePanel.repaint();
 
-         String firstLabel = firstLabelPanel.getValue();
+	}
 
-         String secondLabel = secondLabelPanel.getValue();
+	public PlottingInfo getPlottingInfo()
 
-         String thirdLabel = thirdLabelPanel.getValue();
+	{
 
-         if(secondLabel.equals(PlottingInfo.NOT_SELECTED) &&
+		return plottingInfo;
 
-            !thirdLabel.equals(PlottingInfo.NOT_SELECTED))
+	}
 
-         {
+	// getPlottingInfo()
 
-            DefaultUserInteractor.get().notify(this,"Error", "Please select the "+
+	public void setPlotName(String name)
 
-               "second column label before selecting the third column label",
+	{
 
-               UserInteractor.ERROR);
+		plotNameField.setText(name);
 
-            shouldContinueClosing = false;
+	}
 
-            return;
+	/**
+	 * 
+	 * 
+	 * 
+	 * @param plottingInfo
+	 * 
+	 * @deprecated not using this anymore
+	 * 
+	 */
 
-         }//if
+	public static void showPlottingDialog(JFrame parent, PlottingInfo plottingInfo)
 
-         else if(firstLabel.equals(secondLabel) ||
+	{
 
-            firstLabel.equals(thirdLabel) ||
+		PlottingInfoGUI dialog = new PlottingInfoGUI(parent, plottingInfo, true);
 
-               (secondLabel.equals(thirdLabel) &&
+		dialog.setVisible(true);
 
-               !secondLabel.equals(PlottingInfo.NOT_SELECTED)))
+	}
 
-         {
+	// showPlottingDialog(PlottingInfo)
 
-            DefaultUserInteractor.get().notify(this,"Error", "Please select different "+
+	/**
+	 * 
+	 * Show the include/exclude columns GUI. Set the selected columns based on the user's
+	 * 
+	 * selections once the dialog closes.
+	 * 
+	 */
 
-               "columns for labels",
+	public void showFilterColumnsGUI()
 
-               UserInteractor.ERROR);
+	{
 
-            shouldContinueClosing = false;
+		SelectColumnsGUI filterGUI = null;
 
-            return;
+		OverallTableModel overallModel = plottingInfo.getModel();
 
-         }//else if
+		FilterCriteria filterCriteria = overallModel.getFilterCriteria();
 
-         else
+		boolean[] showColumns = null;
 
-         {
+		String title = "";
 
-            String [] selColNames = new String[3];
+		// boolean[] columnSelections = null;
 
-            selColNames[0] = firstLabel;
+		title = "Select Data Columns";
 
-            selColNames[1] = secondLabel;
+		// columnSelections = plottingInfo.getDataColumns();
 
-            selColNames[2] = thirdLabel;
+		showColumns = showDataColumns;
 
-            plottingInfo.setSelLabelColumnNames(selColNames);
+		int numCols = overallModel.getColumnCount();
 
-         }//else
+		if (showColumns == null)
 
-         String stringSepar = separatorPanel.getValue();
+		{
 
-         char charSepar;
+			showColumns = new boolean[--numCols]; // deducting one for the first column
 
-         if(stringSepar ==  null)
+		}
 
-         {
+		String[] filterColNames = new String[showColumns.length];// deducting one for the first column
 
-            charSepar = ' ';
+		for (int i = 0; i < filterColNames.length; i++)
 
-         }
+		{
 
-         else
+			filterColNames[i] = overallModel.getColumnName(i + 1);// adding one to avoid the first col
 
-         {
+		}// for(i)
 
-           charSepar = stringSepar.charAt(0);
+		filterCriteria = new FilterCriteria(filterColNames, showColumns);
 
-         }
+		filterGUI = new SelectColumnsGUI(this.parent, filterCriteria, title, "Include", "Exclude");
 
-         plottingInfo.setSeparator(charSepar);
+		// Show the filter column GUI.
 
-      }//else
+		filterGUI.setLocationRelativeTo(this);
 
+		filterGUI.setVisible(true);
 
+		// Apply the filter if the user pressed OK.
 
-      if(headerRB.isSelected())
+		if (filterGUI.getResult() == OptionDialog.OK_RESULT)
 
-      {
+		{
 
-         int colRowHeaderindex = unitsHeaderComboBox.getSelectedIndex();
+			boolean[] selCols = filterGUI.getSelectedColumns();
 
-         plottingInfo.setUserSpecifiedUnits(false);
+			setSelectedDataColumns(selCols);
 
-         plottingInfo.setColRowHeaderIndex(colRowHeaderindex);
+			dataMessageLabel.setText("[" + plottingInfo.getNumOfDataColumns()
 
-         String [] colHeaders = model.getColumnHeadersInARow(colRowHeaderindex);
+			+ " cols]");
 
-      }
+			dataMessageField.setText(plottingInfo.getDataColumnSelection());
 
-      else
+		}
 
-      {
+	}// showFilterColumnsGUI
 
-         plottingInfo.setUserSpecifiedUnits(true);
+	// main method for testing purposes
 
-//System.out.println("unitsUserTextField.getText()="+unitsUserTextField.getText());
+	public static void main(String[] args)
 
-         plottingInfo.setUnits(unitsUserTextField.getText());
+	{
 
-      }//else
+		String[][] colHeader = { { "A", "B", "C" }, { "a", "b", "c" } };
 
+		String[] rowHeader = { "row1", "Units" };
 
+		Class[] colType = { Double.class, Double.class, Double.class };
 
-   }// saveGUIValuesToModel()
+		int count = 3;
 
+		ArrayList data = new ArrayList();
 
+		for (int i = 0; i < 10; i++)
 
-   /**
+		{
 
-    * initialize the GUI with values from the PlottingInfo object
+			ArrayList rowData = new ArrayList();
 
-    */
+			for (int j = 0; j < count; j++)
 
-    protected void initGUIFromModel()
+			{
 
-   {
+				rowData.add(new Double(j));
 
-      String plotType = plottingInfo.getPlotType();
+			}
 
-      plotTypePanel.setValue(plotType);
+			data.add(data);
 
-      plotNameField.setText(plottingInfo.getPlotName());
+		}// for(i)
 
-      int colRowHeaderindex = plottingInfo.getColRowHeaderIndex();
+		SpecialTableModel specialModel = new SpecialTableModel(rowHeader, colHeader, data, colType);
 
-      if(headerRB.isEnabled() && colRowHeaderindex != -1 )
+		OverallTableModel tableModel = new OverallTableModel(specialModel);
 
-      {
+		PlottingInfo plotInfo = new PlottingInfo(tableModel);
 
-         unitsHeaderComboBox.setSelectedIndex(colRowHeaderindex);
+		PlottingInfoGUI gui = new PlottingInfoGUI(null, plotInfo, true);
 
-      }
+		gui.setVisible(true);
 
-//System.out.println("plottingInfo.getUnits()="+plottingInfo.getUnits());
+		System.exit(0);
 
-      unitsUserTextField.setText(plottingInfo.getUnits());
+	}// main()
 
-      boolean userSpec = plottingInfo.isUserSpecifiedUnits();
+	/**
+	 * 
+	 * Select Multiple Columns
+	 * 
+	 */
 
-      headerRB.setSelected(!userSpec);
+	class SelectAction extends AbstractAction
 
-      userSpecRB.setSelected(userSpec);
+	{
 
-      boolean enable = false;
+		/** the GUI where this action is called from * */
 
-      if(headerRB.isSelected())
+		PlottingInfoGUI parent = null;
 
-      {
+		/**
+		 * 
+		 * The action for select the details for the plotting
+		 * 
+		 * @param parent
+		 * 
+		 * @param type
+		 * 
+		 */
 
-         enable = true;
+		public SelectAction(PlottingInfoGUI parent)
 
-      }
+		{
 
-      unitsHeaderComboBox.setEnabled(enable);
+			super("Select");
 
-      unitsUserTextField.setEnabled(!enable);
+			this.parent = parent;
 
-      separatorPanel.setValue(plottingInfo.getSeparator());
+		}
 
+		// SortMultipleAction()
 
+		public void actionPerformed(ActionEvent e)
 
-      OverallTableModel overallModel = plottingInfo.getOverallTableModel();
+		{
 
-      int numCol = overallModel.getColumnCount();
+			parent.showFilterColumnsGUI();
 
-      // checking & initializing data columns
+		}
 
-      String[] selDataColNames = plottingInfo.getSelDataColumnNames();
+		// actionPerformed()
 
-      int newNoOfDataSelCols = -1;
+	}
 
-
-
-      if ((selDataColNames != null) && (selDataColNames.length != 0))
-
-      {
-
-         showDataColumns = new boolean[numCol - 1]; // deduting one for the first column
-
-
-
-         for (int i = 0; i < selDataColNames.length; i++)
-
-         {
-
-            int index = overallModel.getColumnNameIndex(selDataColNames[i]);
-
-
-
-            if (index != -1)
-
-            {
-
-               showDataColumns[index] = true;
-
-            }
-
-            // if
-
-         }//for(i)
-
-         setSelectedDataColumns(showDataColumns);
-
-         newNoOfDataSelCols = plottingInfo.getNumOfDataColumns();
-
-         dataMessageLabel.setText("[" + newNoOfDataSelCols + " cols]");
-
-         dataMessageField.setText(plottingInfo.getDataColumnSelection());
-
-      }//if ((selDataColNames != null) && (selDataColNames.length != 0))
-
-      //dataMessageLabel.setText("[" + plottingInfo.getNumOfDataColumns()
-
-      //                         + " cols]");
-
-      //dataMessageField.setText(plottingInfo.getDataColumnSelection());
-
-
-
-      String [] selLabelColNames = plottingInfo.getSelLabelColumnNames();
-
-      String [] allColNames = overallModel.getColumnNames();
-
-      if(selLabelColNames[0].equals(PlottingInfo.NOT_SELECTED) &&
-
-         allColNames.length >=1)
-
-      {
-
-         String firstColName = allColNames[0];
-
-         firstLabelPanel.setValue(firstColName);;
-
-      }
-
-      else
-
-      {
-
-         firstLabelPanel.setValue(selLabelColNames[0]);;
-
-      }
-
-      secondLabelPanel.setValue(selLabelColNames[1]);
-
-      thirdLabelPanel.setValue(selLabelColNames[2]);
-
-      //date col
-
-      String [] selLabelDateColNames = plottingInfo.getSelLabelDateColNames();
-
-      String oneDateColName = selLabelDateColNames[0];
-
-      if(oneDateColName.equals(PlottingInfo.NOT_SELECTED))
-
-      {
-
-         int [] dateCol = overallModel.getFirstDateColTypes();
-
-         if(dateCol != null && dateCol.length >=1)
-
-         {
-
-            oneDateColName = overallModel.getColumnName(dateCol[0]);
-
-         }//if()
-
-      }//if
-
-      datePlusTimePanel.setValue(oneDateColName);
-
-      timePanel.setValue(selLabelDateColNames[1]);
-
-      formatPanel.setValue(plottingInfo.getTimeFormat());
-
-      addRemovePanel(plotType);
-
-      enableLabelColums();
-
-   }// initGUIFromModel()
-
-
-
-   private void setSelectedDataColumns(boolean [] showDataColumns)
-
-   {
-
-      ArrayList selColumns = new ArrayList();
-
-      OverallTableModel overallModel = plottingInfo.getOverallTableModel();
-
-      for(int i=0; i< showDataColumns.length; i++)
-
-      {
-
-         if(showDataColumns[i])
-
-         {
-
-            selColumns.add(overallModel.getColumnName(i+1));
-
-         }
-
-      }//for
-
-      String [] selDataCol = new String[selColumns.size()];
-
-      selColumns.toArray(selDataCol);
-
-      plottingInfo.setSelDataColumns(selDataCol);
-
-   }
-
-
-
-   private void addRemovePanel(String plotType)
-
-   {
-
-      if(plotType.equals(PlotTypeConverter.TIMESERIES_PLOT))
-
-      {
-
-         labelTitleBorder.setTitle(TIME_LABEL_BORDER);
-
-         labelOrDatePanel.remove(0);
-
-         labelOrDatePanel.add(datePanel);
-
-         labelOrDatePanel.validate();
-
-      }
-
-      else
-
-      {
-
-         labelTitleBorder.setTitle(LABEL_BORDER);
-
-         labelOrDatePanel.remove(0);
-
-         labelOrDatePanel.add(labelPanel);
-
-         labelOrDatePanel.validate();
-
-      }
-
-      labelOrDatePanel.repaint();
-
-   }
-
-
-
-   public PlottingInfo getPlottingInfo()
-
-   {
-
-      return plottingInfo;
-
-   }
-
-
-
-   // getPlottingInfo()
-
-   public void setPlotName(String name)
-
-   {
-
-      plotNameField.setText(name);
-
-   }
-
-
-
-   /**
-
-    *
-
-    * @param plottingInfo
-
-    * @deprecated not using this anymore
-
-    */
-
-   public static void showPlottingDialog(JFrame parent, PlottingInfo plottingInfo)
-
-   {
-
-      PlottingInfoGUI dialog = new PlottingInfoGUI(parent,plottingInfo, true);
-
-
-
-      dialog.setVisible(true);
-
-   }
-
-
-
-   // showPlottingDialog(PlottingInfo)
-
-
-
-   /**
-
-    * Show the include/exclude columns GUI. Set the selected columns based on the user's
-
-    * selections once the dialog closes.
-
-    */
-
-   public void showFilterColumnsGUI()
-
-   {
-
-      SelectColumnsGUI filterGUI = null;
-
-      OverallTableModel overallModel = plottingInfo.getModel();
-
-
-
-      FilterCriteria filterCriteria = overallModel.getFilterCriteria();
-
-      boolean [] showColumns = null;
-
-      String title = "";
-
-      //boolean[] columnSelections = null;
-
-
-
-      title = "Select Data Columns";
-
-      //columnSelections = plottingInfo.getDataColumns();
-
-      showColumns = showDataColumns;
-
-
-
-      int numCols = overallModel.getColumnCount();
-
-      if(showColumns == null)
-
-      {
-
-         showColumns = new boolean[--numCols]; //deducting one for the first column
-
-      }
-
-      String [] filterColNames = new String[showColumns.length];//deducting one for the first column
-
-      for(int i=0; i< filterColNames.length; i++)
-
-      {
-
-         filterColNames[i] = overallModel.getColumnName(i+1);//adding one to avoid the first col
-
-      }//for(i)
-
-      filterCriteria = new FilterCriteria(filterColNames , showColumns);
-
-      filterGUI = new SelectColumnsGUI(this.parent, filterCriteria, title, "Include", "Exclude");
-
-
-
-      // Show the filter column GUI.
-
-      filterGUI.setLocationRelativeTo(this);
-
-      filterGUI.setVisible(true);
-
-
-
-      // Apply the filter if the user pressed OK.
-
-      if (filterGUI.getResult() == OptionDialog.OK_RESULT)
-
-      {
-
-            boolean [] selCols = filterGUI.getSelectedColumns();
-
-            setSelectedDataColumns(selCols);
-
-            dataMessageLabel.setText("[" + plottingInfo.getNumOfDataColumns()
-
-                                     + " cols]");
-
-            dataMessageField.setText(plottingInfo.getDataColumnSelection());
-
-      }
-
-   }//showFilterColumnsGUI
-
-
-
-   //main method for testing purposes
-
-   public static void main(String[] args)
-
-   {
-
-      String [][] colHeader = {{"A","B","C"},{"a","b","c"}};
-
-      String [] rowHeader = {"row1", "Units"};
-
-      Class[] colType = {Double.class,Double.class,Double.class};
-
-      int count = 3;
-
-      ArrayList data = new ArrayList();
-
-      for(int i=0; i<10;i++)
-
-      {
-
-         ArrayList rowData = new ArrayList();
-
-         for(int j=0; j<count; j++)
-
-         {
-
-            rowData.add(new Double(j));
-
-         }
-
-         data.add(data);
-
-      }//for(i)
-
-      SpecialTableModel specialModel= new SpecialTableModel(rowHeader,colHeader,data,colType);
-
-      OverallTableModel tableModel = new OverallTableModel(specialModel);
-
-
-
-      PlottingInfo plotInfo = new PlottingInfo(tableModel);
-
-      PlottingInfoGUI gui = new PlottingInfoGUI(null,plotInfo, true);
-
-      gui.setVisible(true);
-
-      System.exit(0);
-
-   }//main()
-
-
-
-   /**
-
-    * Select Multiple Columns
-
-    */
-
-   class SelectAction extends AbstractAction
-
-   {
-
-      /** the GUI where this action is called from **/
-
-      PlottingInfoGUI parent = null;
-
-
-
-
-
-      /**
-
-       * The action for select the details for the plotting
-
-       * @param parent
-
-       * @param type
-
-       */
-
-      public SelectAction(PlottingInfoGUI parent)
-
-      {
-
-         super("Select");
-
-         this.parent = parent;
-
-      }
-
-
-
-      // SortMultipleAction()
-
-      public void actionPerformed(ActionEvent e)
-
-      {
-
-         parent.showFilterColumnsGUI();
-
-      }
-
-      // actionPerformed()
-
-   }
-
-   // class PlotAction
+	// class PlotAction
 
 }
-

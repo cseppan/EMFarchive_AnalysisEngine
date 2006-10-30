@@ -20,7 +20,7 @@ import javax.swing.JPanel;
  *
  * Created on April 22, 2005, 12:56 PM
  * @author  Parthee R Partheepan
- * @version $Id: FilterRowPanel.java,v 1.3 2005/09/21 19:17:09 parthee Exp $
+ * @version $Id: FilterRowPanel.java,v 1.4 2006/10/30 21:43:50 parthee Exp $
  */
 public class FilterRowPanel extends JPanel implements ChildHasChangedListener {
 
@@ -197,21 +197,6 @@ public class FilterRowPanel extends JPanel implements ChildHasChangedListener {
 	protected boolean isStringOperation(int operation) {
 		return stringOperations[operation];
 	} // isStringOperation()
-
-	private boolean isStringColumnClass(String colName) {
-		int index = -1;
-		for (int i = 0; i < allColumnNames.length; i++) {
-			if (colName.equalsIgnoreCase(allColumnNames[i])) {
-				index = i;
-				break;
-			}
-		}
-		if (index == -1) {
-			throw new IllegalArgumentException(
-					"The argument is not in the 'allColumnNames' array");
-		}
-		return (allColumnClasses[index] == String.class) ? true : false;
-	}
 
 	/**
 	 * Save the data from the GUI to a FilterCriteria.

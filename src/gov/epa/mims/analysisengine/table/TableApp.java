@@ -54,8 +54,6 @@ public class TableApp extends JFrame {
 
 	private FileImportGUI fileImportGUI;
 
-	private FileExportGUI fileExportGUI = null;
-
 	static String version = "October 17, 2005";
 
 	private FileHistory history = null;
@@ -79,7 +77,7 @@ public class TableApp extends JFrame {
 	public TableApp() {
 		initialize();
 		pack();
-		System.out.println(TITLE + " Version " + this.version + " (C1)");
+		System.out.println(TITLE + " Version " + TableApp.version + " (C1)");
 		setDefaultCloseOperation();
 		setLocation(ScreenUtils.getPointToCenter(this));
 		setVisible(true);
@@ -87,7 +85,7 @@ public class TableApp extends JFrame {
 
 	public TableApp(String[] fileNames, String fileType, String delimiter, int noOfColumnNameRows) {
 		initialize();
-		System.out.println(TITLE + " Version " + this.version + " (C2)");
+		System.out.println(TITLE + " Version " + TableApp.version + " (C2)");
 		if (fileNames.length > 8) {
 			showImportGUI(fileNames, fileType, delimiter, noOfColumnNameRows);
 		} else {
@@ -103,7 +101,7 @@ public class TableApp extends JFrame {
 	public TableApp(String[] fileNames, String fileType, String delimiter, int noOfColumnNameRows, int startPos,
 			int endPos) {
 		initialize();
-		System.out.println(TITLE + " Version " + this.version + " (C3)");
+		System.out.println(TITLE + " Version " + TableApp.version + " (C3)");
 		String[] tabNames = createTabNames(startPos, endPos, fileNames);
 		importFiles(fileNames, tabNames, fileType, delimiter, noOfColumnNameRows);
 		pack();
@@ -114,7 +112,7 @@ public class TableApp extends JFrame {
 
 	public TableApp(ResultSet rs, String tabName) {
 		this();
-		System.out.println(TITLE + " Version " + this.version + " (C4)");
+		System.out.println(TITLE + " Version " + TableApp.version + " (C4)");
 		addNewTab(rs, tabName);
 	}// TableApp();
 
@@ -381,7 +379,7 @@ public class TableApp extends JFrame {
 	 */
 	public void showImportGUI(String[] fileNames, String fileType, String delimiter, int noOfColumnNameRows) {
 		if (fileImportGUI == null) {
-			fileImportGUI = new FileImportGUI((JFrame) this, fileNames, fileType);
+			fileImportGUI = new FileImportGUI(this, fileNames, fileType);
 		} else {
 			fileImportGUI.removeAllRows();
 			fileImportGUI.setVisible(true);
@@ -748,8 +746,8 @@ public class TableApp extends JFrame {
 				if (size == 0) {
 					return;
 				}// if(size == 0)
-				fileExportGUI = new FileExportGUI(TableApp.this, filesInTabbedPane.getAllTabUniqueNames(),
-						mainTabbedPane.getSelectedIndex());
+				new FileExportGUI(TableApp.this, filesInTabbedPane.getAllTabUniqueNames(), mainTabbedPane
+						.getSelectedIndex());
 			}// actionPerformed()
 		});
 		// create a file chooser

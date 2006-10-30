@@ -19,7 +19,7 @@ import cern.jet.random.engine.MersenneTwister;
  * </p>
  * 
  * @author Daniel Gatti
- * @version $Id: PercentileTest.java,v 1.1 2006/01/10 23:29:39 parthee Exp $
+ * @version $Id: PercentileTest.java,v 1.2 2006/10/30 21:43:51 parthee Exp $
  */
 public class PercentileTest extends TestCase {
 	// The tolerance that we will accept when comparing doubles.
@@ -52,9 +52,9 @@ public class PercentileTest extends TestCase {
 		double[] percentiles = new double[100];
 		double[] answers = new double[100];
 		for (int i = 0; i < 100; i++) {
-			ds1.addData((double) i);
-			percentiles[i] = (double) i / 100.0;
-			answers[i] = (double) i;
+			ds1.addData(i);
+			percentiles[i] = i / 100.0;
+			answers[i] = i;
 		}
 		ds1.addData(100.0);
 
@@ -103,7 +103,7 @@ public class PercentileTest extends TestCase {
 	 */
 	public void testSmallNumbers() {
 		for (int i = 0; i < 11; i++) {
-			ds2.addData((double) i * 1.0E-49);
+			ds2.addData(i * 1.0E-49);
 		}
 
 		double[] percentiles = { 0.01, 0.1, 0.25, 0.5, 0.75, 0.90, 0.99 };
@@ -128,7 +128,7 @@ public class PercentileTest extends TestCase {
 	 */
 	public void testLargeNumbers() {
 		for (int i = 0; i < 11; i++) {
-			ds3.addData((double) i * 1.0E200);
+			ds3.addData(i * 1.0E200);
 		}
 
 		double[] percentiles = { 0.01, 0.1, 0.25, 0.5, 0.75, 0.90, 0.99 };
@@ -150,7 +150,7 @@ public class PercentileTest extends TestCase {
 
 	public void testLargeDataSet() {
 		for (int i = 0; i < 1000000; i++) {
-			ds4.addData((double) i);
+			ds4.addData(i);
 		}
 
 		double[] percentiles = { 0.000001, 0.00001, 0.0001, 0.001, 0.01, 0.1, 0.25, 0.5, 0.75, 0.90, 0.99, 0.999,
@@ -175,7 +175,7 @@ public class PercentileTest extends TestCase {
 
 	public void FIXME_testLabels() {
 		for (int i = 0; i < 100; i++) {
-			ds5.addData((double) i);
+			ds5.addData(i);
 		}
 
 		double[] percentiles = { 0.10, 0.25, 0.5, 0.75, 0.90 };
@@ -225,7 +225,7 @@ public class PercentileTest extends TestCase {
 
 	public void testNegativeNumbers() {
 		for (int i = -100; i <= 0; i++) {
-			ds7.addData((double) i);
+			ds7.addData(i);
 		}
 
 		double[] percentiles = { 0.01, 0.1, 0.25, 0.5, 0.75, 0.90, 0.99 };

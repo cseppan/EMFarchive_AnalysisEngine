@@ -1,12 +1,17 @@
 package gov.epa.mims.analysisengine.table;
 
-import gov.epa.mims.analysisengine.table.io.FileImportGUI;
-
-import java.io.File;
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.io.File;
 import java.util.ArrayList;
-import javax.swing.*;
+
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
 
 /**
  * <p>
@@ -23,7 +28,7 @@ import javax.swing.*;
  * </p>
  * 
  * @author Parthee Partheepan
- * @version $Id: TablePanel.java,v 1.4 2006/10/30 17:26:13 parthee Exp $
+ * @version $Id: TablePanel.java,v 1.5 2006/10/30 21:43:50 parthee Exp $
  */
 public class TablePanel extends JPanel {
 
@@ -39,13 +44,6 @@ public class TablePanel extends JPanel {
 	/** name of the file opened in the tab pane (absolute file name) */
 	private String fileName;
 
-	/**
-	 * type of the file
-	 * 
-	 * @see FileImportGUI
-	 */
-	private String fileType;
-
 	private TablePanelModel tablePanelModel;
 
 	private String tabName;
@@ -55,7 +53,6 @@ public class TablePanel extends JPanel {
 	public TablePanel(Component parent, SpecialTableModel model, String fileName, String tabName, String fileType, JTabbedPane mainTabbedPane) {
 		this.fileName = fileName;
 		this.tabName = tabName;
-		this.fileType = fileType;
 		this.maintTabbedPane = mainTabbedPane;
 		tablePanelModel = new TablePanelModel(fileName, fileType);
 		String name = "";
@@ -165,13 +162,6 @@ public class TablePanel extends JPanel {
 
 		return retval;
 	}// transposeArrays()
-
-	/**
-	 * @param args
-	 *            the command line arguments
-	 */
-	public static void main(String[] args) {
-	}// main()
 
 }// ATabPanel
 

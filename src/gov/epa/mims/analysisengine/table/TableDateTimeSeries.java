@@ -7,14 +7,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.NoSuchElementException;
-import javax.swing.table.TableModel;
 
 /**
  * <p>Description: It provides a wrapper around </p>
  * <p>Copyright: Copyright (c) 2003</p>
  * <p>Company: </p>
  * @author Daniel Gatti
- * @version $Id: TableDateTimeSeries.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: TableDateTimeSeries.java,v 1.3 2006/10/30 21:43:50 parthee Exp $
  */
 public class TableDateTimeSeries extends TableDataSeries implements DateDataSetIfc
 {

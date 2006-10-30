@@ -1,8 +1,9 @@
 package gov.epa.mims.analysisengine.table;
 
-import java.util.*;
-import javax.swing.event.*;
-import javax.swing.table.*;
+import java.util.Hashtable;
+
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 
 /**
  * This model filters data based on FilterCriteria. It contains an underlying
@@ -11,7 +12,7 @@ import javax.swing.table.*;
  * example, if your underlying data contains integers and your filter says to
  * filter out any value less than 5, the map in this model will only contain
  * the data in the underlying model with values < 5.
- * @version $Id: FilteringTableModel.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: FilteringTableModel.java,v 1.3 2006/10/30 21:43:50 parthee Exp $
  * @author  Daniel Gatti
  */
 public class FilteringTableModel

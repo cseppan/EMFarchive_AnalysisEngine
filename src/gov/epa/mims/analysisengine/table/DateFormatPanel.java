@@ -1,14 +1,10 @@
 package gov.epa.mims.analysisengine.table;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Hashtable;
-import javax.swing.*;
-import java.util.Vector;
-import java.util.ArrayList;
+
+import javax.swing.BorderFactory;
 
 /**
  * <p>Description: A panel that accepts a SimpleDateFormat and displays a set
@@ -16,7 +12,7 @@ import java.util.ArrayList;
  * <p>Copyright: Copyright (c) 2003</p>
  * <p>Company: UNC - CEP</p>
  * @author Daniel Gatti
- * @version $Id: DateFormatPanel.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: DateFormatPanel.java,v 1.3 2006/10/30 21:43:50 parthee Exp $
  */
 public class DateFormatPanel extends FormatChooserPanel
 {
@@ -32,12 +28,6 @@ public class DateFormatPanel extends FormatChooserPanel
     "yyyyMMdd HH:mm:ss", "MM/dd/yyyy HH:mm:ss", "MMddyyyy HH:mm:ss",
     "yyyyDDD HH:mm:ss", "MM/dd/yyyy HH:mm:ss zzz", "HH:mm:ss",
     "HH:mm", "HH", "hh a"};
-
-     /** a vector date format strings */
-     static private Vector dateFormats = new Vector();
-
-     /** a vector time format strings */
-     static private Vector timeFormats = new Vector();
 
      /** empty date format */
      public static final String EMPTY_DATE_FORMAT = "";

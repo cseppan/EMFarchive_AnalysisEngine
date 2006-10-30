@@ -27,8 +27,8 @@ public class RowHeaderTable extends JTable {
 		setUpDataRenderers();
 		setColumnWidths();
 
-		//setColumnSelectionAllowed(true);
-		//setRowSelectionAllowed(true);
+		// setColumnSelectionAllowed(true);
+		// setRowSelectionAllowed(true);
 		setCellSelectionEnabled(true);
 	} // RowHeaderTable()
 
@@ -162,6 +162,7 @@ public class RowHeaderTable extends JTable {
 			column = columnModel.getColumn(c);
 			Class columnClass = getColumnClass(c);
 			if (columnClass.equals(Boolean.class)) {
+				//Empty
 			} else {
 				column.setCellRenderer(FormattedCellRenderer.getDefaultFormattedCellRenderer(columnClass));
 			}

@@ -4,276 +4,250 @@ import gov.epa.mims.analysisengine.gui.ScreenUtils;
 import gov.epa.mims.analysisengine.table.TableApp;
 import gov.epa.mims.analysisengine.table.TableSorter;
 
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.BoxLayout;
 import java.awt.BorderLayout;
-import javax.swing.border.Border;
-import javax.swing.border.EtchedBorder;
-import javax.swing.BorderFactory;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableColumn;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseEvent;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
-import java.util.Vector;
 
-/**  FileHistoryDialog - present the Recent Files list for
- *   loading and editing to the user.
- *
- *   @author  Krithiga Thangavelu, CEP, UNC CHAPEL HILL.
- *   @version $Id: FileHistoryDialog.java,v 1.1 2006/10/30 17:26:13 parthee Exp $
- */
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.TableColumn;
 
 public class FileHistoryDialog extends javax.swing.JDialog {
 
-       /** Close button for the panel */
-   private JButton bClose;
+	/** Close button for the panel */
+	private JButton bClose;
 
-       /** Clear selection button for the panel */
-   private JButton bClear;
+	/** Clear selection button for the panel */
+	private JButton bClear;
 
-       /** Import selected files button for the panel */
-   private JButton bImport;
+	/** Import selected files button for the panel */
+	private JButton bImport;
 
-        /** delete the selected files from history button */
-   private JButton bDelete;
+	/** delete the selected files from history button */
+	private JButton bDelete;
 
-        /** panel to have the above operator buttons */
-   private JPanel OperatorPanel;
+	/** panel to have the above operator buttons */
+	private JPanel OperatorPanel;
 
-        /** table displaying recent files */
-   private JTable FilesTable;
+	/** table displaying recent files */
+	private JTable FilesTable;
 
-        /** Scroll panel holding the recent files */
-   private JScrollPane ScrollPanel;
+	/** Scroll panel holding the recent files */
+	private JScrollPane ScrollPanel;
 
-        /** Panel containing the Scroll pane */
-   private JPanel FilesDisplayPanel;
+	/** Panel containing the Scroll pane */
+	private JPanel FilesDisplayPanel;
 
-        /** outer panel enclosing operator panel and Files display panel */
-   private JPanel OverallPanel;
+	/** outer panel enclosing operator panel and Files display panel */
+	private JPanel OverallPanel;
 
-        /** The History object */
-   private TableSorter history;
+	/** The History object */
+	private TableSorter history;
 
-        /** The TableApp to which the history belongs */
-   private TableApp app;
+	/** The TableApp to which the history belongs */
+	private TableApp app;
 
-   /** creates an instance of the FileHistoryDialog
-     * @param app TableApp
-     * @param history FileHistory
-     */
+	/**
+	 * creates an instance of the FileHistoryDialog
+	 * 
+	 * @param app
+	 *            TableApp
+	 * @param history
+	 *            FileHistory
+	 */
 
-   FileHistoryDialog(TableApp app, FileHistory history) {
-   super(app);
-   this.app = app;
-   this.history = new TableSorter(history);
-   initGUI();
-   setLocation(ScreenUtils.getPointToCenter(this));
+	FileHistoryDialog(TableApp app, FileHistory history) {
+		super(app);
+		this.app = app;
+		this.history = new TableSorter(history);
+		initGUI();
+		setLocation(ScreenUtils.getPointToCenter(this));
 
-   }
+	}
 
-   /** initializes GUI */
+	/** initializes GUI */
 
-   private void initGUI() {
+	private void initGUI() {
 
-   OverallPanel = new JPanel();
-   FilesDisplayPanel = new JPanel(new BorderLayout());
-   ScrollPanel = new JScrollPane();
-   FilesTable = new JTable() {
-     public String getToolTipText(java.awt.event.MouseEvent event) {
-        int row = rowAtPoint(event.getPoint());
-        int col = columnAtPoint(event.getPoint());
-        Object o = getValueAt(row,col);
-        if( o == null )
-            return null;
-        if( o.toString().equals("") )
-            return null;
-        return o.toString();
-      }
-    };
+		OverallPanel = new JPanel();
+		FilesDisplayPanel = new JPanel(new BorderLayout());
+		ScrollPanel = new JScrollPane();
+		FilesTable = new JTable() {
+			public String getToolTipText(java.awt.event.MouseEvent event) {
+				int row = rowAtPoint(event.getPoint());
+				int col = columnAtPoint(event.getPoint());
+				Object o = getValueAt(row, col);
+				if (o == null)
+					return null;
+				if (o.toString().equals(""))
+					return null;
+				return o.toString();
+			}
+		};
 
-    OperatorPanel = new JPanel();
-    bDelete = new JButton();
-    bImport = new JButton();
-    bClear = new JButton();
-    bClose = new JButton();
+		OperatorPanel = new JPanel();
+		bDelete = new JButton();
+		bImport = new JButton();
+		bClear = new JButton();
+		bClose = new JButton();
 
-   this.setResizable(true);
-   this.setSize(new java.awt.Dimension(445, 340));
-   this.setTitle("Import Recent Files");
+		this.setResizable(true);
+		this.setSize(new java.awt.Dimension(445, 340));
+		this.setTitle("Import Recent Files");
 
-    BorderLayout thisLayout = new BorderLayout();
-    this.getContentPane().setLayout(thisLayout);
-    thisLayout.setHgap(5);
-    thisLayout.setVgap(5);
+		BorderLayout thisLayout = new BorderLayout();
+		this.getContentPane().setLayout(thisLayout);
+		thisLayout.setHgap(5);
+		thisLayout.setVgap(5);
 
-    BoxLayout blayout = new BoxLayout(OverallPanel, 1);
-    this.getContentPane().add(OverallPanel, BorderLayout.CENTER);
+		this.getContentPane().add(OverallPanel, BorderLayout.CENTER);
 
-    //OverallPanel.setLayout(blayout);
-    OverallPanel.setLayout(new BorderLayout());
+		// OverallPanel.setLayout(blayout);
+		OverallPanel.setLayout(new BorderLayout());
 
-    OverallPanel.setPreferredSize(new java.awt.Dimension(422,280));
-    OverallPanel.setBorder( BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		OverallPanel.setPreferredSize(new java.awt.Dimension(422, 280));
+		OverallPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-    OverallPanel.add(FilesDisplayPanel, BorderLayout.CENTER);
+		OverallPanel.add(FilesDisplayPanel, BorderLayout.CENTER);
 
-    FilesDisplayPanel.setPreferredSize(new java.awt.Dimension(383,220));
+		FilesDisplayPanel.setPreferredSize(new java.awt.Dimension(383, 220));
 
-    FilesDisplayPanel.add(ScrollPanel, BorderLayout.CENTER);
+		FilesDisplayPanel.add(ScrollPanel, BorderLayout.CENTER);
 
-    ScrollPanel.setPreferredSize(new java.awt.Dimension(360,200));
-    ScrollPanel.add(FilesTable);
+		ScrollPanel.setPreferredSize(new java.awt.Dimension(360, 200));
+		ScrollPanel.add(FilesTable);
 
-    FilesTable.setModel(history);
-    FilesTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-    history.setTableHeader(FilesTable.getTableHeader());
-    FilesTable.addMouseListener(new MouseListener()
-      {
-         public void mouseClicked(MouseEvent e)
-         {
-            if(e.getClickCount()>1)
-            {
-               bImportActionPerformed(new ActionEvent(this, 0, ""));
-               bCloseActionPerformed(new ActionEvent(this, 0, ""));
-            }
-         }
+		FilesTable.setModel(history);
+		FilesTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		history.setTableHeader(FilesTable.getTableHeader());
+		FilesTable.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() > 1) {
+					doImport();
+					doClose();
+				}
+			}
+		});
 
-         public void mousePressed(MouseEvent e)
-         {
-         }
+		TableColumn column = null;
+		for (int i = 0; i < 5; i++) {
+			column = FilesTable.getColumnModel().getColumn(i);
+			column.setPreferredWidth(125);
+		}
 
-         public void mouseReleased(MouseEvent e)
-         {
-         }
+		ScrollPanel.setViewportView(FilesTable);
 
-         public void mouseExited(MouseEvent e)
-         {
-         }
+		FlowLayout flow = new FlowLayout(FlowLayout.CENTER, 5, 5);
 
-         public void mouseEntered(MouseEvent e)
-         {
+		OperatorPanel.setPreferredSize(new java.awt.Dimension(422, 40));
+		OperatorPanel.setLayout(flow);
+		OperatorPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
-         }
-     });
+		flow.layoutContainer(OperatorPanel);
 
-   TableColumn column = null;
-   for (int i = 0; i < 5; i++) {
-      column = FilesTable.getColumnModel().getColumn(i);
-      column.setPreferredWidth(125);
-   }
+		bImport.setSize(new java.awt.Dimension(90, 40));
+		bImport.setToolTipText("Import the selected files");
+		bImport.setText("Import");
+		bImport.setVisible(true);
+		bImport.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				doImport();
+			}
+		});
+		OperatorPanel.add(bImport);
 
-   ScrollPanel.setViewportView(FilesTable);
+		bDelete.setText("Remove");
+		bDelete.setSize(new java.awt.Dimension(90, 40));
+		bDelete.setToolTipText("Delete the selected files from history");
+		bDelete.setVisible(true);
+		bDelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				doDelete();
+			}
+		});
+		OperatorPanel.add(bDelete);
 
-   FlowLayout flow = new FlowLayout(FlowLayout.CENTER, 5, 5);
+		bClear.setSize(new java.awt.Dimension(90, 40));
+		bClear.setToolTipText("Clear the selection");
+		bClear.setText("Clear");
+		bClear.setVisible(true);
+		bClear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				doClear();
+			}
+		});
+		OperatorPanel.add(bClear);
 
-   OperatorPanel.setPreferredSize(new java.awt.Dimension(422,40));
-   OperatorPanel.setLayout(flow);
-   OperatorPanel.setBorder( BorderFactory.createEmptyBorder(5, 5, 5, 5));
+		bClose.setSize(new java.awt.Dimension(90, 40));
+		bClose.setToolTipText("Close this window");
+		bClose.setText("Close");
+		bClose.setVisible(true);
+		bClose.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				doClose();
+			}
+		});
+		OperatorPanel.add(bClose);
 
-   flow.layoutContainer(OperatorPanel);
+		OverallPanel.add(OperatorPanel, BorderLayout.SOUTH);
 
-   bImport.setSize(new java.awt.Dimension(90,40));
-   bImport.setToolTipText("Import the selected files");
-   bImport.setText("Import");
-   bImport.setVisible(true);
-   bImport.addActionListener(new ActionListener() {
-   public void actionPerformed(ActionEvent evt) {
-      bImportActionPerformed(evt);
-   }
-   });
-   OperatorPanel.add(bImport);
+	}
 
-   bDelete.setText("Remove");
-   bDelete.setSize(new java.awt.Dimension(90,40));
-   bDelete.setToolTipText("Delete the selected files from history");
-   bDelete.setVisible(true);
-   bDelete.addActionListener(new ActionListener() {
-   public void actionPerformed(ActionEvent evt) {
-      bDeleteActionPerformed(evt);
-   }
- });
- OperatorPanel.add(bDelete);
+	protected void doDelete() {
+		int[] indexs = FilesTable.getSelectedRows();
+		for (int i = indexs.length - 1; i >= 0; i--) {
+			history.remove(indexs[i]);
+		}
+	}
 
- bClear.setSize(new java.awt.Dimension(90,40));
- bClear.setToolTipText("Clear the selection");
- bClear.setText("Clear");
- bClear.setVisible(true);
- bClear.addActionListener(new ActionListener() {
-   public void actionPerformed(ActionEvent evt) {
-      bClearActionPerformed(evt);
-   }
- });
- OperatorPanel.add(bClear);
+	protected void doImport() {
+		int[] indexs = FilesTable.getSelectedRows();
+		String[] filename = new String[indexs.length];
+		String[] delimiter = new String[indexs.length];
+		String[] fileType = new String[indexs.length];
+		int[] numColHdrRows = new int[indexs.length];
 
- bClose.setSize(new java.awt.Dimension(90,40));
- bClose.setToolTipText("Close this window");
- bClose.setText("Close");
- bClose.setVisible(true);
- bClose.addActionListener(new ActionListener() {
-   public void actionPerformed(ActionEvent evt) {
-      bCloseActionPerformed(evt);
-   }
- });
- OperatorPanel.add(bClose);
+		for (int i = 0; i < indexs.length; i++) {
+			filename[i] = (String) history.getValueAt(indexs[i], 1) + File.separator
+					+ (String) history.getValueAt(indexs[i], 2);
+			delimiter[i] = (String) history.getValueAt(indexs[i], 3);
+			fileType[i] = (String) history.getValueAt(indexs[i], 0);
+			numColHdrRows[i] = ((Integer) history.getValueAt(indexs[i], 4)).intValue();
+		}
+		try {
+			app.importDifferentFiles(filename, fileType, delimiter, numColHdrRows, 1, 40);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
- OverallPanel.add(OperatorPanel, BorderLayout.SOUTH);
+	protected void doClear() {
+		FilesTable.clearSelection();
+	}
 
-}
+	protected void doClose() {
+		dispose();
+		return;
+	}
 
-protected void bDeleteActionPerformed(ActionEvent evt) {
-  int[] indexs = FilesTable.getSelectedRows();
-  for(int i=indexs.length-1; i>=0; i--) {
-   history.remove(indexs[i]);
-  }
-}
+	public static void showGUI(TableApp app, FileHistory history) {
 
-protected void bImportActionPerformed(ActionEvent evt) {
- int[] indexs = FilesTable.getSelectedRows();
- String[] filename = new String[indexs.length];
- String[] delimiter = new String[indexs.length];
- String[] fileType = new String[indexs.length];
- int[] numColHdrRows = new int[indexs.length];
+		FileHistoryDialog hisDialog = new FileHistoryDialog(app, history);
+		hisDialog.setVisible(true);
 
- for(int i=0; i< indexs.length; i++) {
-   filename[i] = (String)history.getValueAt(indexs[i],
-1)+File.separator+(String)history.getValueAt(indexs[i], 2);
-   delimiter[i] = (String)history.getValueAt(indexs[i], 3);
-   fileType[i]= (String)history.getValueAt(indexs[i], 0);
-   numColHdrRows[i]=((Integer)history.getValueAt(indexs[i], 4)).intValue();
- }
- try {
-   app.importDifferentFiles(filename, fileType , delimiter, numColHdrRows, 1, 40);
- } catch(Exception e) { }
-}
+	}
 
-protected void bClearActionPerformed(ActionEvent evt) {
-  FilesTable.clearSelection();
-}
+	public static void main(String[] args) {
 
-protected void bCloseActionPerformed(ActionEvent evt) {
- dispose();
- return;
-}
+		FileHistoryDialog.showGUI(null, new FileHistory());
 
-public static void showGUI(TableApp app, FileHistory history) {
-
-  FileHistoryDialog hisDialog= new FileHistoryDialog(app, history);
-  hisDialog.setVisible(true);
-
-}
-
-public static void main(String[] args) {
-
-   FileHistoryDialog.showGUI(null, new FileHistory());
-
-}
+	}
 
 }

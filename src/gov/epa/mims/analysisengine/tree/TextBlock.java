@@ -1,7 +1,5 @@
 package gov.epa.mims.analysisengine.tree;
 
-import java.awt.Color;
-
 import java.io.Serializable;
 
 

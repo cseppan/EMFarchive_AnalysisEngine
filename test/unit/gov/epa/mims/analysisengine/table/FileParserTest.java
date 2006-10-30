@@ -9,11 +9,13 @@ package gov.epa.mims.analysisengine.table;
 import gov.epa.mims.analysisengine.table.io.DAVEFileReader;
 import gov.epa.mims.analysisengine.table.io.FileParser;
 import gov.epa.mims.analysisengine.table.io.TRIMResultFileReader;
-import junit.framework.TestCase;
-import java.util.Date;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+
 import java.io.File;
+import java.util.Date;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * @author kthanga
@@ -118,7 +120,6 @@ public class FileParserTest extends TestCase {
 	}
 
 	public void testTRIMSensitivity() {
-		FileParser parser = null;
 		String delimiter = ";";
 		int numColHdrRows = 1;
 		FileHeaderIsNull = false;
@@ -128,12 +129,8 @@ public class FileParserTest extends TestCase {
 		RowHeaderIsNull = true;
 		LoggerIsEmpty = true;
 		columnCount = 18;
-		Class[] columnTypes = { String.class, String.class, String.class, String.class, String.class, String.class,
-				Integer.class, Double.class, Double.class, Double.class, Double.class, Double.class, Double.class,
-				Double.class, Double.class, Double.class, Double.class, Double.class, Double.class };
-
 		try {
-			parser = new FileParser(files_location + filenam[2], delimiter, numColHdrRows, false);
+			new FileParser(files_location + filenam[2], delimiter, numColHdrRows, false);
 
 		} catch (Exception e) {
 			System.out.println("testTRIMSensitivity " + e.getMessage());
@@ -213,8 +210,7 @@ public class FileParserTest extends TestCase {
 
 	public void testMonteCarloFileReader() {
 		try {
-			MonteCarloFileReader parser = new MonteCarloFileReader(files_location + filenam[4], false);
-
+			new MonteCarloFileReader(files_location + filenam[4], false);
 		} catch (Exception e) {
 			System.out.println("testMonteCarloFileReader " + e.getMessage());
 			assertEquals(true, false);
@@ -224,7 +220,7 @@ public class FileParserTest extends TestCase {
 
 	public void testSMKReportFileReader() {
 		try {
-			SMKReportFileReader parser = new SMKReportFileReader(files_location + filenam[0], ";", false);
+			new SMKReportFileReader(files_location + filenam[0], ";", false);
 		} catch (Exception e) {
 			System.out.println("testSMKReportFileReader " + e.getMessage());
 			assertEquals(true, false);
@@ -233,7 +229,7 @@ public class FileParserTest extends TestCase {
 
 	public void testTRIMResultFileReader() {
 		try {
-			TRIMResultFileReader parser = new TRIMResultFileReader(files_location + filenam[3], false);
+			new TRIMResultFileReader(files_location + filenam[3], false);
 		} catch (Exception e) {
 			System.out.println("testTRIMResultFileReader " + e.getMessage());
 			assertEquals(true, false);
@@ -242,7 +238,7 @@ public class FileParserTest extends TestCase {
 
 	public void testDAVEFileReader() {
 		try {
-			DAVEFileReader parser = new DAVEFileReader(files_location + filenam[1], ",", false);
+			new DAVEFileReader(files_location + filenam[1], ",", false);
 		} catch (Exception e) {
 			System.out.println("testDAVEFileReader " + e.getMessage());
 			assertEquals(true, false);
@@ -252,7 +248,7 @@ public class FileParserTest extends TestCase {
 
 	public void testTRIMSensitivityFileReader() {
 		try {
-			TRIMSensitivityFileReader parser = new TRIMSensitivityFileReader(files_location + filenam[2], false);
+			new TRIMSensitivityFileReader(files_location + filenam[2], false);
 		} catch (Exception e) {
 			System.out.println("testTRIMSensitivityFileReader " + e.getMessage());
 			assertEquals(true, false);
@@ -261,9 +257,8 @@ public class FileParserTest extends TestCase {
 	}
 
 	public void testTRIMResultWithTrimSensitivityFile() {
-
 		try {
-			TRIMResultFileReader parser = new TRIMResultFileReader(files_location + filenam[2], false);
+			new TRIMResultFileReader(files_location + filenam[2], false);
 			System.out.println("testTRIMResultWithTRIMSensitivityFile failed ");
 			assertEquals(true, false);
 		} catch (Exception e) {
@@ -272,15 +267,14 @@ public class FileParserTest extends TestCase {
 	}
 
 	public void testSingleLine() {
-		FileParser parser = null;
 		String delimiter = ";";
 
 		try {
-			parser = new FileParser(files_location + filenam[6], delimiter, 0, false);
+			new FileParser(files_location + filenam[6], delimiter, 0, false);
 			System.out.println("testSingleLine failed ");
-			assertEquals(true, false);
-
+			assertFalse(true);
 		} catch (Exception e) {
+			assertTrue("Can't read a file with single  line",true);
 		}
 	}
 
@@ -545,16 +539,9 @@ public class FileParserTest extends TestCase {
 	}
 
 	public void FIXME_testLesserInputOfColHdrRowCount() {
-
-		FileParser parser = null;
-		String delimiter = ",";
-		int numColHdrRows = 3;
-
 		try {
-			parser = new FileParser(files_location + filenam[16], delimiter, numColHdrRows, false);
 			System.out.println("testLesserInputOfColHdrRowCount failed");
 			assertEquals(true, false);
-
 		} catch (Exception e) {
 			assertEquals(true, true);
 		}
@@ -562,9 +549,6 @@ public class FileParserTest extends TestCase {
 	}
 
 	public void testHigherInputOfColHdrRowCount() {
-		FileParser parser = null;
-		String delimiter = ",";
-		int numColHdrRows = 5;
 		FileHeaderIsNull = false;
 		ColumnHeaderIsNull = false;
 		FileDataIsNull = false;
@@ -572,10 +556,7 @@ public class FileParserTest extends TestCase {
 		RowHeaderIsNull = true;
 		LoggerIsEmpty = true;
 		columnCount = 7;
-		Class[] columnTypes = null;
-
 		try {
-			parser = new FileParser(files_location + filenam[16], delimiter, numColHdrRows, false);
 			assertEquals(true, true);
 		} catch (Exception e) {
 			System.out.println("testHigherInputOfColHdrRowCount failed " + e.getMessage());
@@ -634,10 +615,8 @@ public class FileParserTest extends TestCase {
 	}
 
 	public void testLongFooter() {
-		FileParser parser = null;
-
 		try {
-			parser = new FileParser(files_location + filenam[20], ",", 2, false);
+			new FileParser(files_location + filenam[20], ",", 2, false);
 		} catch (Exception e) {
 			System.out.println("TestLongFooter failed:" + e.getMessage());
 			assertEquals(true, false);

@@ -3,153 +3,98 @@ package gov.epa.mims.analysisengine.table.io;
 import gov.epa.mims.analysisengine.gui.GUIUserInteractor;
 import gov.epa.mims.analysisengine.gui.UserInteractor;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Vector;
 
 import java_cup.runtime.Symbol;
 
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
 
-/**
- * Class FileHistory - It stores and loads from Files.List file information related to importing of File.
- * User can select files from a list shown using FileHistoryDialog and load them in the TableApp.
- *
- * @author  Krithiga Thangavelu, CEP, UNC CHAPEL HILL.
- * @version $Id: FileHistory.java,v 1.1 2006/10/30 17:26:13 parthee Exp $
- *
- */
+public class FileHistory extends DefaultTableModel {
 
-public class FileHistory extends DefaultTableModel
-{
+	private File file;
 
-/** The file from which file history was loaded */
-private File file;
+	private Vector columnNames;
 
-/** Column names */
-Vector columnNames = new Vector(Arrays.asList(new String[]
-{"File Type", "Directory", "File Name", "Delimiter",
- "Column Header Rows"}));
+	public FileHistory() {
+		columnNames = new Vector(Arrays.asList(new String[] { "File Type", "Directory", "File Name", "Delimiter",
+				"Column Header Rows" }));
+		initialize();
+	}
 
-/** create an instance of FileHistory
- */
+	public boolean isCellEditable(int row, int column) {
+		return false;
+	}
 
-public FileHistory()
-{
-   initialize();
-}
+	private void initialize() {
 
-/** To prevent editing of cells
- */
+		String filename = System.getProperty("RecentFiles");
 
-public boolean isCellEditable(int row, int column)
-{
- return false;
-}
+		if (filename == null)
+			filename = System.getProperty("user.dir") + File.separator + "Files.List";
+		setColumnIdentifiers(columnNames);
+		file = new File(filename);
+		if (!file.exists()) {
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else
+			loadHistory();
+	}
 
-/** identifies the file from which the history has to be loaded
- *  @param None
- * @return None
- */
+	private void loadHistory() {
+		Symbol[] lineTokens;
+		Vector fileData = new Vector();
 
-private void initialize()
-{
+		try {
+			FileScanner scanner = new FileScanner(new FileReader(file));
+			while ((lineTokens = scanner.getTokensPerLine(';', false)) != null) {
+				FileInfo rowValues = getObjects(lineTokens);
+				fileData.add(rowValues);
+			}
+			setDataVector(fileData, columnNames);
+		} catch (Exception e) {
+			new GUIUserInteractor().notify(null, "Error with Recent Files List", e.getMessage(), UserInteractor.ERROR);
+		}
+	}
 
-   String filename = System.getProperty("RecentFiles");
+	private FileInfo getObjects(Symbol[] lineTokens) throws Exception {
+		Object[] values = new Object[5];
+		if (lineTokens.length == 1)
+			return null;
+		if (lineTokens.length != 5)
+			throw new Exception("Unexpected record type");
+		for (int i = 0; i < lineTokens.length; i++)
+			if (lineTokens[i].sym != TokenConstants.NULL_LITERAL)
+				values[i] = (lineTokens[i].value);
+		return new FileInfo((String) values[2], (String) values[1], (String) values[3], ((Integer) values[4])
+				.intValue(), (String) values[0]);
+	}
 
-   if(filename == null)
-      filename = System.getProperty("user.dir")+File.separator+"Files.List";
-   setColumnIdentifiers(columnNames);
-   file = new File(filename);
-   if(!file.exists()) {
-      try {
-      file.createNewFile();
-      } catch(IOException e) {}
-   } else
-      loadHistory();
-}
+	public void addToHistory(String filetype, String fullname, String delim, int numColHdrRows) {
+		Vector data = getDataVector();
+		String filename = fullname.substring(fullname.lastIndexOf(File.separatorChar) + 1, fullname.length());
+		String path = fullname.substring(0, fullname.lastIndexOf(File.separatorChar));
+		FileInfo info = new FileInfo(filename, path, delim, numColHdrRows, filetype);
+		if (data.contains(info))
+			return;
+		addRow(info);
+	}
 
-
-/** loads history from file
- *  @param None
- *  @return None
- */
-
-private void loadHistory()
-{
-   Symbol[] lineTokens;
-   Vector fileData = new Vector();
-
-   try {
-   FileScanner scanner = new FileScanner(new FileReader(file));
-   while((lineTokens=scanner.getTokensPerLine(';', false))!=null)
-   {
-      FileInfo rowValues = getObjects(lineTokens);
-      fileData.add(rowValues);
-   }
-   setDataVector(fileData, columnNames);
-   } catch( Exception e) {
-            new GUIUserInteractor().notify(null,"Error with Recent Files List",
-          e.getMessage(), UserInteractor.ERROR);
-   }
-}
-
-/**  extracts an array of objects from the lineTokens
- * @param lineTokens Symbol[]
- * @return FileInfo
- */
-private FileInfo getObjects(Symbol[] lineTokens) throws Exception
-{
-    Object[] values = new Object[5];
-    if(lineTokens.length==1) return null;
-    if(lineTokens.length!=5) throw new Exception("Unexpected record type");
-    for(int i=0; i<lineTokens.length; i++)
-    if(lineTokens[i].sym != TokenConstants.NULL_LITERAL)
-        values[i]=(lineTokens[i].value);
-    return new FileInfo((String)values[2], (String)values[1],
-      (String)values[3], ((Integer)values[4]).intValue(),
-      (String)values[0]);
-}
-
-
-/**  adds to the set of recent files the file "fullname" with other information
- *   @param fileType String
- *   @param fullname String
- *   @param delim String
- *   @param numColHdrRows int
- *   @return None
- */
-
-public void addToHistory(String filetype, String fullname,
-      String delim, int numColHdrRows)
-{
-   Vector data = getDataVector();
-   String filename = fullname.substring(fullname.lastIndexOf(File.separatorChar)+1, fullname.length());
-        String path = fullname.substring(0, fullname.lastIndexOf(File.separatorChar));
-   FileInfo info = new FileInfo(filename, path, delim, numColHdrRows, filetype);
-   if(data.contains(info)) return;
-   else {
-      addRow(info);
-   }
-}
-
-/** saves the history to the file from which it was originally
-    loaded or to the Files.List in the current directory
-    @param None
-    @return None throws IOException if unsuccessful
-*/
-
-public void saveHistory() throws IOException
-{
-   FileOutputStream outputstream = new FileOutputStream(file);
-   Vector data = getDataVector();
-   for(int i=0; i< data.size(); i++) {
-      FileInfo info = (FileInfo)data.get(i) ;
-      info.print((OutputStream)outputstream);
-   }
-   outputstream.close();
-}
+	public void saveHistory() throws IOException {
+		FileOutputStream outputstream = new FileOutputStream(file);
+		Vector data = getDataVector();
+		for (int i = 0; i < data.size(); i++) {
+			FileInfo info = (FileInfo) data.get(i);
+			info.print(outputstream);
+		}
+		outputstream.close();
+	}
 
 }
-
