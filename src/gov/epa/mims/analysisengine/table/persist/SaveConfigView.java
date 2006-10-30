@@ -125,7 +125,6 @@ public class SaveConfigView extends JDialog {
 			OverallPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
 			chooseConfigTable.setRowSelectionAllowed(true);
-			chooseConfigTable.setPreferredSize(new java.awt.Dimension(400, 144));
 			chooseConfigSPanel.add(chooseConfigTable);
 			chooseConfigSPanel.setViewportView(chooseConfigTable);
 			chooseConfigTable.setModel(model);
@@ -197,7 +196,7 @@ public class SaveConfigView extends JDialog {
 			ConfigTableModifierPanel.add(bView);
 			bView.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
-					bViewMouseClicked(evt);
+					bViewMouseClicked();
 				}
 			});
 
@@ -208,7 +207,7 @@ public class SaveConfigView extends JDialog {
 			ConfigTableModifierPanel.add(bEdit);
 			bEdit.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
-					bEditMouseClicked(evt);
+					doEdit();
 				}
 			});
 
@@ -219,7 +218,7 @@ public class SaveConfigView extends JDialog {
 			ConfigTableModifierPanel.add(bDelete);
 			bDelete.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
-					bDeleteMouseClicked(evt);
+					doDelete();
 				}
 			});
 
@@ -230,7 +229,7 @@ public class SaveConfigView extends JDialog {
 			ConfigTableModifierPanel.add(bSelect);
 			bSelect.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
-					bSelectMouseClicked(evt);
+					doSelect();
 				}
 			});
 
@@ -241,7 +240,7 @@ public class SaveConfigView extends JDialog {
 			ConfigTableModifierPanel.add(bClear);
 			bClear.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
-					bClearMouseClicked(evt);
+					doClear();
 				}
 			});
 
@@ -267,7 +266,7 @@ public class SaveConfigView extends JDialog {
 			ConfigFilePanel.add(bBrowse);
 			bBrowse.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
-					bBrowseMouseClicked(evt);
+					browse();
 				}
 			});
 
@@ -285,7 +284,7 @@ public class SaveConfigView extends JDialog {
 			okCancelPanel.add(okButton);
 			okButton.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
-					bOkMouseClicked(evt);
+					doOK();
 				}
 			});
 
@@ -294,7 +293,7 @@ public class SaveConfigView extends JDialog {
 			okCancelPanel.add(cancelButton);
 			cancelButton.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
-					bCancelMouseClicked(evt);
+					doCancel();
 				}
 			});
 
@@ -329,7 +328,7 @@ public class SaveConfigView extends JDialog {
 		}
 	}
 
-	protected void bViewMouseClicked(MouseEvent evt) {
+	protected void bViewMouseClicked() {
 		int[] indexs = chooseConfigTable.getSelectedRows();
 
 		if (indexs.length < 1) {
@@ -376,7 +375,7 @@ public class SaveConfigView extends JDialog {
 		}
 	}
 
-	protected void bEditMouseClicked(MouseEvent evt) {
+	protected void doEdit() {
 		int[] indexs = chooseConfigTable.getSelectedRows();
 		if (indexs.length > 1) {
 			new GUIUserInteractor().notify(this, "Note", "Choose only one configuration " + "at a time to edit",
@@ -405,7 +404,7 @@ public class SaveConfigView extends JDialog {
 		}
 	}
 
-	protected void bDeleteMouseClicked(MouseEvent evt) {
+	protected void doDelete() {
 		SaveConfigModel model = (SaveConfigModel) chooseConfigTable.getModel();
 		int[] indexs = chooseConfigTable.getSelectedRows();
 
@@ -431,7 +430,7 @@ public class SaveConfigView extends JDialog {
 		}
 	}
 
-	protected void bSelectMouseClicked(MouseEvent evt) {
+	protected void doSelect() {
 		int[] indexs = chooseConfigTable.getSelectedRows();
 
 		if (indexs.length > 0) {
@@ -444,7 +443,7 @@ public class SaveConfigView extends JDialog {
 		return;
 	}
 
-	protected void bClearMouseClicked(MouseEvent evt) {
+	protected void doClear() {
 		int[] indexs = chooseConfigTable.getSelectedRows();
 
 		if (indexs.length > 0) {
@@ -457,12 +456,7 @@ public class SaveConfigView extends JDialog {
 		return;
 	}
 
-	// protected void bTablHdrMouseClicked() {
-	// SaveConfigModel model = (SaveConfigModel) chooseConfigTable.getModel();
-	// model.reorderColumns();
-	// }
-
-	protected void bBrowseMouseClicked(MouseEvent evt) {
+	protected void browse() {
 		JFileChooser chooser = new JFileChooser();
 
 		chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -476,12 +470,12 @@ public class SaveConfigView extends JDialog {
 		return;
 	}
 
-	protected void bCancelMouseClicked(MouseEvent evt) {
+	protected void doCancel() {
 		this.dispose();
 		return;
 	}
 
-	protected void bOkMouseClicked(MouseEvent evt) {
+	protected void doOK() {
 		String fileName = tFileName.getText();
 		if (fileName == null || fileName.length() == 0) {
 			new GUIUserInteractor().notify(this, "Error Saving Configuration", "No Configuration File specified",

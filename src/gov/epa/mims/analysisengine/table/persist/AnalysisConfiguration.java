@@ -35,12 +35,6 @@ public class AnalysisConfiguration {
 	private TreeMap configs;
 
 	/**
-	 * To keep track order of the plotNames recently returned The tricky thing is this variable is used in conjunction
-	 * with getConfigNames; Only for SaveConfigModel use.
-	 */
-	static boolean isConfigSorted = true;
-
-	/**
 	 * An array of names to keep track of the inserted order of configurations
 	 */
 	private Vector insertedOrder;
@@ -239,36 +233,15 @@ public class AnalysisConfiguration {
 	}
 
 	/**
-	 * gets the Configuration names with order based on Boolean IsConfigSorted.
-	 * 
-	 * Only for the use of SaveConfigModel. Use getKeys() for public usage.
-	 * 
-	 * @return String[]
+	 * gets the Configuration names
 	 */
 	public String[] getConfigNames() {
-		// IsConfigSorted = !IsConfigSorted;
-		// if (!isConfigSorted)
-		// {
 		return (String[]) insertedOrder.toArray(new String[0]);
-		// }
-		// else
-		// {
-		// return getKeys();
-		// }
 	}
 
 	/**
 	 * stores plot configuration in the AnalysisConfiguration object
-	 * 
-	 * @param plotName
-	 *            String
-	 * @param data
-	 *            Data
-	 * @param overWrite
-	 *            boolean
-	 * @return None
 	 */
-
 	public void storePlotConfig(String plotName, Data data, boolean overWrite) {
 		if (plotName == null || plotName.trim().length() == 0) {
 			new GUIUserInteractor().notify(null, "Warning", "Invalid plot name "
@@ -298,7 +271,6 @@ public class AnalysisConfiguration {
 	 * stores plot configuration in the AnalysisConfiguration object
 	 */
 	public void storePlotConfig(String plotName, Branch tree, PlottingInfo info, boolean overWrite) {
-		System.out.println("Plot name-"+plotName);
 		Data dat = new Data();
 		dat.info = info;
 		dat.tree = tree;
@@ -308,10 +280,7 @@ public class AnalysisConfiguration {
 
 	/**
 	 * returns the sorted keySet of plots HashMap
-	 * 
-	 * @return String[]
 	 */
-
 	public String[] getKeys() {
 		Set result = configs.keySet();
 

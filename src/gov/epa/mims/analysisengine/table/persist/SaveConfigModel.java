@@ -30,15 +30,17 @@ public class SaveConfigModel extends DefaultTableModel {
 			throw new Exception("There are no configurations available");
 		}
 		aconfig = config;
-
 		configNames = aconfig.getConfigNames();
-		Vector toSaveOrNot = new Vector();
-		Vector plotTypes = new Vector();
-
 		if (configNames.length == 0) {
 			throw new Exception("There are no configurations available");
 		}
+		createColumnAndData();
+	}
 
+	private void createColumnAndData() {
+		Vector toSaveOrNot = new Vector();
+		Vector plotTypes = new Vector();
+		
 		for (int i = 0; i < configNames.length; i++) {
 			plotTypes.add(getPlotType(configNames[i]));
 		}
