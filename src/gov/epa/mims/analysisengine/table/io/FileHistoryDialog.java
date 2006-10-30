@@ -1,6 +1,9 @@
-package gov.epa.mims.analysisengine.table;
+package gov.epa.mims.analysisengine.table.io;
 
 import gov.epa.mims.analysisengine.gui.ScreenUtils;
+import gov.epa.mims.analysisengine.table.TableApp;
+import gov.epa.mims.analysisengine.table.TableSorter;
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.BoxLayout;
@@ -24,7 +27,7 @@ import java.util.Vector;
  *   loading and editing to the user.
  *
  *   @author  Krithiga Thangavelu, CEP, UNC CHAPEL HILL.
- *   @version $Id: FileHistoryDialog.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ *   @version $Id: FileHistoryDialog.java,v 1.1 2006/10/30 17:26:13 parthee Exp $
  */
 
 public class FileHistoryDialog extends javax.swing.JDialog {

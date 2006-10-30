@@ -1,4 +1,4 @@
-package gov.epa.mims.analysisengine.table;
+package gov.epa.mims.analysisengine.table.io;
 
 
 import gov.epa.mims.analysisengine.gui.ScreenUtils;
@@ -6,6 +6,9 @@ import gov.epa.mims.analysisengine.gui.StringValuePanel;
 import gov.epa.mims.analysisengine.gui.DefaultUserInteractor;
 import gov.epa.mims.analysisengine.gui.GUIUserInteractor;
 import gov.epa.mims.analysisengine.gui.UserInteractor;
+import gov.epa.mims.analysisengine.table.TableApp;
+import gov.epa.mims.analysisengine.table.TablePanelModel;
+import gov.epa.mims.analysisengine.table.TextDialog;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -29,7 +32,7 @@ import javax.swing.table.TableColumnModel;
  * GUIInterface to the exportGUI
  * Created on April 5, 2004, 2:46 PM
  * @author  Parthee Partheepan, CEP, UNC CHAPEL HILL.
- * @version $Id: FileExportGUI.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: FileExportGUI.java,v 1.1 2006/10/30 17:26:13 parthee Exp $
  */
 public class FileExportGUI extends JDialog
 {

@@ -6,6 +6,9 @@
  */
 package gov.epa.mims.analysisengine.table;
 
+import gov.epa.mims.analysisengine.table.io.DAVEFileReader;
+import gov.epa.mims.analysisengine.table.io.FileParser;
+import gov.epa.mims.analysisengine.table.io.TRIMResultFileReader;
 import junit.framework.TestCase;
 import java.util.Date;
 import junit.framework.Test;

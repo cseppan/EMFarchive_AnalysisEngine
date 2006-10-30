@@ -1,11 +1,12 @@
-package gov.epa.mims.analysisengine.table;
+package gov.epa.mims.analysisengine.table.io;
 /*
  * TRIMResultFileReader.java
  * This class is customized to read TRIM Results file
  * Created on March 31, 2004, 1:38 PM
  * @author  Parthee Partheepan, CEP, UNC-CHAPEL HILL
- * @version $Id: TRIMResultFileReader.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: TRIMResultFileReader.java,v 1.1 2006/10/30 17:26:13 parthee Exp $
  */
+
 
 import java.util.ArrayList;
 import java.text.ParseException;

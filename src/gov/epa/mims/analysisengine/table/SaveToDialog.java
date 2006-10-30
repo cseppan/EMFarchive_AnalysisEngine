@@ -19,13 +19,14 @@ import java.io.File;
 import javax.swing.JFileChooser;
 import gov.epa.mims.analysisengine.gui.UserInteractor;
 import gov.epa.mims.analysisengine.gui.GUIUserInteractor;
+import gov.epa.mims.analysisengine.table.io.FileImportGUI;
 
 
 /**
  * Class SaveToDialog - dialog displaying file type choice
  * and option to choose file using JFileChooser
  * @author  Krithiga Thangavelu, CEP, UNC CHAPEL HILL.
- * @version $Id: SaveToDialog.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: SaveToDialog.java,v 1.3 2006/10/30 17:26:13 parthee Exp $
  */
 
 public class SaveToDialog extends javax.swing.JDialog

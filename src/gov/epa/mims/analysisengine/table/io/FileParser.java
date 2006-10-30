@@ -1,4 +1,5 @@
-package gov.epa.mims.analysisengine.table;
+package gov.epa.mims.analysisengine.table.io;
+
 
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ import java_cup.runtime.Symbol;
  * Created on March 31, 2004, 10:11 AM
  *
  * @author  Krithiga Thangavelu, CEP, UNC CHAPEL HILL.
- * @version $Id: FileParser.java,v 1.3 2005/09/21 14:22:48 parthee Exp $
+ * @version $Id: FileParser.java,v 1.1 2006/10/30 17:26:13 parthee Exp $
  */
 
 public class FileParser {

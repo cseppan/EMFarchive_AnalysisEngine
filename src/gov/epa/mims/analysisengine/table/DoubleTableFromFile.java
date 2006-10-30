@@ -1,9 +1,18 @@
 package gov.epa.mims.analysisengine.table;
 
+import gov.epa.mims.analysisengine.table.io.FileMethods;
+
+import java.io.BufferedReader;
+import java.io.CharArrayReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+
 import org.iscmem.cosu.DoubleTable;
 import org.iscmem.cosu.TableException;
-import java.util.*;
-import java.io.*;
 
 /**
  * A DoubleTable that stores it's data in a file
@@ -11,11 +20,11 @@ import java.io.*;
  * this class implements the DoubleTable interface of the cosu package
  *
  * @author Steve Howard
- * @version $Id: DoubleTableFromFile.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: DoubleTableFromFile.java,v 1.3 2006/10/30 17:26:13 parthee Exp $
  *
  **/
 
-public class DoubleTableFromFile implements org.iscmem.cosu.DoubleTable
+public class DoubleTableFromFile implements DoubleTable
 {
    static final long serialVersionUID = 1;
 

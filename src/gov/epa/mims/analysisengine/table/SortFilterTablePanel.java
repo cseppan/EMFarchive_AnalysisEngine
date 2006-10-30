@@ -6,6 +6,10 @@ import gov.epa.mims.analysisengine.gui.GUIUserInteractor;
 import gov.epa.mims.analysisengine.gui.HasChangedListener;
 import gov.epa.mims.analysisengine.gui.OptionDialog;
 import gov.epa.mims.analysisengine.gui.UserInteractor;
+import gov.epa.mims.analysisengine.table.persist.AnalysisConfiguration;
+import gov.epa.mims.analysisengine.table.persist.LoadConfigurationGUI;
+import gov.epa.mims.analysisengine.table.persist.SaveConfigModel;
+import gov.epa.mims.analysisengine.table.persist.SaveConfigView;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -47,7 +51,7 @@ import javax.swing.table.TableColumnModel;
  * </p>
  * 
  * @author Daniel Gatti
- * @version $Id: SortFilterTablePanel.java,v 1.6 2006/10/27 16:27:50 parthee Exp $
+ * @version $Id: SortFilterTablePanel.java,v 1.7 2006/10/30 17:26:13 parthee Exp $
  */
 public class SortFilterTablePanel extends JPanel implements TableModelListener, ChildHasChangedListener {
 
@@ -808,33 +812,25 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 		}
 	}
 
-	/**
-	 * Show Save Configuration GUI
-	 */
-
 	public void showSaveConfigGUI() {
 		try {
 			SaveConfigModel saveConfigModel = new SaveConfigModel(aconfig);
-			SaveConfigGUI.showGUI((JFrame) this.parent, saveConfigModel);
+			SaveConfigView.showGUI((JFrame) this.parent, saveConfigModel);
 		} catch (Exception e) {
 			new GUIUserInteractor().notify(this, "Saving Configuration?", e.getMessage(), UserInteractor.NOTE);
-			e.printStackTrace();
 		}
-	}// showSaveConfigGUI
+	}
 
 	public void showLoadConfigGUI(File file) {
 		try {
-			// AnalysisConfiguration config = new AnalysisConfiguration(
-			// aconfig.getModel()); // updated model ???? RP
 			AnalysisConfiguration config = new AnalysisConfiguration(overallModel);
 			config.loadConfiguration(file, false);
 			LoadConfigurationGUI gui = new LoadConfigurationGUI(config, aconfig, table, (JFrame) this.parent);
 			gui.show();
 		} catch (Exception e) {
 			new GUIUserInteractor().notify(this, "Load Configuration", e.getMessage(), UserInteractor.ERROR);
-			e.printStackTrace();
 		}
-	}// showLoadConfigGUI
+	}
 
 	public void setHasChanged(boolean hasChanged) {
 		this.hasChanged = hasChanged;
@@ -1012,47 +1008,6 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 			parent.showColumnFormatGUI();
 		} // actionPerformed()
 	} // class SingleFormatAction
-
-	class SaveConfigAction extends AbstractAction {
-		SortFilterTablePanel parent = null;
-
-		public SaveConfigAction(SortFilterTablePanel parent) {
-			super("Analysis Configuration", configIcon);
-			this.parent = parent;
-		} // SaveConfigAction()
-
-		public void actionPerformed(ActionEvent e) {
-			parent.showSaveConfigGUI();
-		} // actionPerformed()
-	} // class SaveConfigAction
-
-	class LoadConfigAction extends AbstractAction {
-		SortFilterTablePanel parent = null;
-
-		public LoadConfigAction(SortFilterTablePanel parent) {
-			super("Load Configuration", null);
-			this.parent = parent;
-		} // LoadConfigAction()
-
-		public void actionPerformed(ActionEvent e) {
-			JFileChooser chooser = new JFileChooser();
-			do {
-				int returnVal = chooser.showOpenDialog(parent);
-				try {
-					if (returnVal == JFileChooser.CANCEL_OPTION) {
-						return;
-					}
-					if (returnVal == JFileChooser.APPROVE_OPTION) {
-						parent.showLoadConfigGUI(chooser.getSelectedFile());
-						return;
-					}
-				} catch (Exception ex) {
-					new GUIUserInteractor().notify(SortFilterTablePanel.this, "Error loading file", ex.getMessage(),
-							UserInteractor.ERROR);
-				}
-			} while (true);
-		}
-	}
 
 	/**
 	 * Mouse Listener to bring up the popup and sort columns.

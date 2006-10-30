@@ -4,7 +4,7 @@
  * To change the template for this generated file go to
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
-package gov.epa.mims.analysisengine.table;
+package gov.epa.mims.analysisengine.table.io;
 
 import junit.framework.TestCase;
 import java.io.FileReader;
@@ -15,7 +15,9 @@ import java.io.IOException;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import java.io.File;
-import gov.epa.mims.analysisengine.table.FileScanner;
+
+import gov.epa.mims.analysisengine.table.io.FileScanner;
+import gov.epa.mims.analysisengine.table.io.TokenConstants;
 import java_cup.runtime.Symbol;
 import java.util.Date;
 import java.text.SimpleDateFormat;

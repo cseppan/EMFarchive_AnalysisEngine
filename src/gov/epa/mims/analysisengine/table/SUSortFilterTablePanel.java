@@ -6,6 +6,9 @@ import gov.epa.mims.analysisengine.gui.OptionDialog;
 import gov.epa.mims.analysisengine.gui.OptionInfo;
 import gov.epa.mims.analysisengine.gui.TreeDialog;
 import gov.epa.mims.analysisengine.gui.UserInteractor;
+import gov.epa.mims.analysisengine.table.persist.AnalysisConfiguration;
+import gov.epa.mims.analysisengine.table.persist.SaveConfigAction;
+import gov.epa.mims.analysisengine.table.persist.SaveConfigModel;
 import gov.epa.mims.analysisengine.tree.AvailableOptionsAndDefaults;
 import gov.epa.mims.analysisengine.tree.Branch;
 import gov.epa.mims.analysisengine.tree.DataSets;
@@ -28,17 +31,6 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTabbedPane;
 import javax.swing.table.TableColumn;
 
-/**
- * <p>
- * Title: SUSortFilterTablePanel
- * </p>
- * <p>
- * Description: Sensitivity And UnThis table can both sort and filter data based on criteria entred by the user.
- * </p>
- * 
- * @author Daniel Gatti
- * @version $Id: SUSortFilterTablePanel.java,v 1.6 2006/10/26 21:50:47 parthee Exp $
- */
 public class SUSortFilterTablePanel extends SortFilterTablePanel {
 
 	/** the plotting info object * */
@@ -63,7 +55,8 @@ public class SUSortFilterTablePanel extends SortFilterTablePanel {
 
 	static HashMap previousConfig = new HashMap();
 
-	public SUSortFilterTablePanel(Component parent, String source, String tabName, JTabbedPane maintTabbedPane, MultiRowHeaderTableModel tableModel) {
+	public SUSortFilterTablePanel(Component parent, String source, String tabName, JTabbedPane maintTabbedPane,
+			MultiRowHeaderTableModel tableModel) {
 		super(parent, tableModel);
 		this.source = source;
 		this.tabName = tabName;
@@ -142,7 +135,7 @@ public class SUSortFilterTablePanel extends SortFilterTablePanel {
 
 		popupMenu.addSeparator();
 
-		action = new SaveConfigAction(this);
+		action = new SaveConfigAction(this,configIcon);
 		popupMenu.add(action);
 		JButton saveConfigButton = toolBar.add(action);
 
@@ -258,7 +251,7 @@ public class SUSortFilterTablePanel extends SortFilterTablePanel {
 			// never see date like this.
 			if (numRows == 0) {
 				operation = FilterCriteria.STARTS_WITH;
-				value = (Comparable) "~|";
+				value = "~|";
 			} else if (showRows) {
 				// The desired value will always be N-1 rows from the top.
 				value = (Comparable) table.getValueAt(numRows - 1, selectedColumn);
@@ -266,7 +259,7 @@ public class SUSortFilterTablePanel extends SortFilterTablePanel {
 			{
 				// The desired value is a certain percentage from the top.
 				// In this case, numRows is the percentage to show.
-				int cutoffRow = (int) ((double) overallModel.getBaseRowCount() * ((double) numRows / 100.0)) - 1;
+				int cutoffRow = (int) (overallModel.getBaseRowCount() * (numRows / 100.0)) - 1;
 
 				value = (Comparable) table.getValueAt(cutoffRow, selectedColumn);
 			}
@@ -479,7 +472,7 @@ public class SUSortFilterTablePanel extends SortFilterTablePanel {
 				HistogramModel.histogram_counter++;
 				LabeledDataSetsTableModel dataSetTableModel = new LabeledDataSetsTableModel(histogramDataSets);
 				dataSetTableModel.setFirstColumnName("Bins");
-				insertTab(dataSetTableModel,histogramTabName);
+				insertTab(dataSetTableModel, histogramTabName);
 			}
 		}// if(statisticsModel.isHistogramAnalysis())
 
@@ -491,7 +484,7 @@ public class SUSortFilterTablePanel extends SortFilterTablePanel {
 				PercentileModel.percentile_counter++;
 				LabeledDataSetsTableModel dataSetTableModel = new LabeledDataSetsTableModel(percentileDataSets);
 				dataSetTableModel.setFirstColumnName("Percentiles");
-				insertTab(dataSetTableModel,percentileName);
+				insertTab(dataSetTableModel, percentileName);
 			}
 		}
 
@@ -499,7 +492,7 @@ public class SUSortFilterTablePanel extends SortFilterTablePanel {
 			try {
 				RegressionModel model = statisticsModel.getRegressionModel();
 				SpecialTableModel sModel = model.computeLR(source, true);
-				insertTab(sModel,model.getTabName(true));
+				insertTab(sModel, model.getTabName(true));
 			} catch (Exception ie) {
 				new GUIUserInteractor().notify(this, "Error", "Unable to generate 1-to-1 "
 						+ "correlation analysis data: " + ie.getMessage(), UserInteractor.ERROR);
@@ -512,7 +505,7 @@ public class SUSortFilterTablePanel extends SortFilterTablePanel {
 
 				RegressionModel model = statisticsModel.getRegressionModel();
 				SpecialTableModel sModel = model.computeLR(source, false);
-				insertTab(sModel,model.getTabName(true));
+				insertTab(sModel, model.getTabName(true));
 			} catch (Exception ie) {
 				new GUIUserInteractor().notify(this, "Error", "Unable to generate Linear " + "Regression data: "
 						+ ie.getMessage(), UserInteractor.ERROR);
@@ -528,11 +521,11 @@ public class SUSortFilterTablePanel extends SortFilterTablePanel {
 	} // showStatisticsGUI()
 
 	private void insertTab(SpecialTableModel tableModel, String tabName) {
-		if(parent instanceof TableApp){
-		((TableApp) parent).insertIntoTabbedPane(tableModel, tabName, tabName, null);
-		}else{
-			TablePanel panel = new TablePanel(parent, tableModel, source, tabName, null,mainTabbedPane);
-			mainTabbedPane.addTab(tabName,null,panel,source);
+		if (parent instanceof TableApp) {
+			((TableApp) parent).insertIntoTabbedPane(tableModel, tabName, tabName, null);
+		} else {
+			TablePanel panel = new TablePanel(parent, tableModel, source, tabName, null, mainTabbedPane);
+			mainTabbedPane.addTab(tabName, null, panel, source);
 		}
 	}
 
@@ -666,7 +659,8 @@ public class SUSortFilterTablePanel extends SortFilterTablePanel {
 				f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				java.awt.Container contentPane = f.getContentPane();
 				contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
-				SUSortFilterTablePanel sftp = new SUSortFilterTablePanel(f, "Simple Table Model", null,null, tableModel);
+				SUSortFilterTablePanel sftp = new SUSortFilterTablePanel(f, "Simple Table Model", null, null,
+						tableModel);
 
 				contentPane.add(sftp);
 

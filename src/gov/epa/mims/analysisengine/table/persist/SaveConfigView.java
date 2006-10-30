@@ -1,4 +1,4 @@
-package gov.epa.mims.analysisengine.table;
+package gov.epa.mims.analysisengine.table.persist;
 
 import gov.epa.mims.analysisengine.gui.DefaultUserInteractor;
 import gov.epa.mims.analysisengine.gui.GUIUserInteractor;
@@ -15,6 +15,7 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -29,20 +30,7 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
-/**
- * SaveConfigGUI.java - Dialog to save plots and table configuration configured during the current session since the
- * beginning of the opening of the table in the application. This dialog pops up when user clicks the Load Configuration
- * from TablePanel icons or from the file menu. It has several features: View - to view the configuration in the current
- * table context as a plot Edit - a Plot Options panel opens up displaying the current configuration for the user to
- * edit the selected configuration Delete - deletes the selected configuration from the currrent configuration Select -
- * enables the Save As options on the selected configurations Clear - clears the Save As option on the selected
- * configurations Save As - save the current configuration based on "Save?" selection in the selected output file.
- * 
- * @author Krithiga Thangavelu, CEP, UNC CHAPEL HILL.
- * @version $Id: SaveConfigGUI.java,v 1.3 2006/10/26 21:50:47 parthee Exp $
- */
-
-public class SaveConfigGUI extends javax.swing.JDialog {
+public class SaveConfigView extends JDialog {
 
 	/** OK button to close the panel and save configurations */
 	private JButton bOk;
@@ -104,7 +92,7 @@ public class SaveConfigGUI extends javax.swing.JDialog {
 	 *            SaveConfigModel
 	 */
 
-	public SaveConfigGUI(Frame parent, SaveConfigModel model) {
+	public SaveConfigView(Frame parent, SaveConfigModel model) {
 		super(parent);
 		this.model = model;
 		initGUI();
@@ -186,7 +174,7 @@ public class SaveConfigGUI extends javax.swing.JDialog {
 						model.renameConfig(selectedRow, enteredValue);
 						return enteredValue;
 					} catch (Exception e) {
-						DefaultUserInteractor.get().notify(SaveConfigGUI.this, "Error", e.getMessage(),
+						DefaultUserInteractor.get().notify(SaveConfigView.this, "Error", e.getMessage(),
 								UserInteractor.ERROR);
 						return originalObjectValue;
 					}
@@ -343,7 +331,7 @@ public class SaveConfigGUI extends javax.swing.JDialog {
 	 */
 	public static void showGUI(Frame parent, SaveConfigModel model) {
 		try {
-			SaveConfigGUI inst = new SaveConfigGUI(parent, model);
+			SaveConfigView inst = new SaveConfigView(parent, model);
 
 			inst.setVisible(true);
 		} catch (Exception e) {
@@ -531,7 +519,7 @@ public class SaveConfigGUI extends javax.swing.JDialog {
 			try {
 				model.renameConfig(row, (String) ((TableCellEditor) (e.getSource())).getCellEditorValue());
 			} catch (Exception ex) {
-				new GUIUserInteractor().notify(SaveConfigGUI.this, "Error", ex.getMessage(), UserInteractor.ERROR);
+				new GUIUserInteractor().notify(SaveConfigView.this, "Error", ex.getMessage(), UserInteractor.ERROR);
 				chooseConfigTable.getModel().setValueAt(model.getConfigName(row), row, 0);
 			}
 		}

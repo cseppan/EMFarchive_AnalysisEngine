@@ -1,4 +1,4 @@
-package gov.epa.mims.analysisengine.table;
+package gov.epa.mims.analysisengine.table.io;
 
 import java.io.*;
 import java.util.StringTokenizer;
@@ -6,7 +6,7 @@ import java.util.StringTokenizer;
 /**
  * File utilities
  *
- * @version $Id: FileMethods.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: FileMethods.java,v 1.1 2006/10/30 17:26:13 parthee Exp $
  * @reviewer Karl Castleton 2001/02/13, v 1.1
  * @review_comment Author signature missing.
  *

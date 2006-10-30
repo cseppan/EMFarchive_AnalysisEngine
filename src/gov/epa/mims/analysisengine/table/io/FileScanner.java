@@ -7,13 +7,12 @@
  *  @see FileScanner.flex
  *
  * @author  Krithiga Thangavelu, CEP, UNC CHAPEL HILL.
- * @version $Id: FileScanner.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: FileScanner.java,v 1.1 2006/10/30 17:26:13 parthee Exp $
  **/
 
-package gov.epa.mims.analysisengine.table;
+package gov.epa.mims.analysisengine.table.io;
 
 import java_cup.runtime.Symbol;
-import gov.epa.mims.analysisengine.table.TokenConstants;
 import java.util.Vector;
 import java.io.IOException;
 import java.util.Date;

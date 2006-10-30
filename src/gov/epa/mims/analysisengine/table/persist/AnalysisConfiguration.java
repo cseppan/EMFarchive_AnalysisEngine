@@ -1,10 +1,15 @@
-package gov.epa.mims.analysisengine.table;
+package gov.epa.mims.analysisengine.table.persist;
 
 
 import gov.epa.mims.analysisengine.gui.TreeDialog;
 import gov.epa.mims.analysisengine.gui.GUIUserInteractor;
 import gov.epa.mims.analysisengine.gui.DefaultUserInteractor;
 import gov.epa.mims.analysisengine.gui.UserInteractor;
+import gov.epa.mims.analysisengine.table.ColumnFormatInfo;
+import gov.epa.mims.analysisengine.table.FilterCriteria;
+import gov.epa.mims.analysisengine.table.OverallTableModel;
+import gov.epa.mims.analysisengine.table.PlottingInfo;
+import gov.epa.mims.analysisengine.table.SortCriteria;
 import gov.epa.mims.analysisengine.tree.AnalysisOptions;
 import gov.epa.mims.analysisengine.tree.DataSets;
 import gov.epa.mims.analysisengine.tree.PageType;
@@ -27,7 +32,7 @@ import java.io.*;
  *  added to the object and removed
  *
  * @author  Krithiga Thangavelu, CEP, UNC CHAPEL HILL.
- * @version $Id: AnalysisConfiguration.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: AnalysisConfiguration.java,v 1.1 2006/10/30 17:26:12 parthee Exp $
  */
 public class AnalysisConfiguration
 {
@@ -196,7 +201,6 @@ public class AnalysisConfiguration
          if(allColNames.contains(colName))
          {
             newFormats.put(colName, formats.get(colName));
-            //System.out.println("contians:"+colName);
             count ++;
          }
          else

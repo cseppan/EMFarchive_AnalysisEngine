@@ -1,7 +1,8 @@
-package gov.epa.mims.analysisengine.table;
+package gov.epa.mims.analysisengine.table.io;
 
 import gov.epa.mims.analysisengine.gui.DefaultUserInteractor;
 import gov.epa.mims.analysisengine.gui.UserInteractor;
+import gov.epa.mims.analysisengine.table.SignificantDigitsFormat;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import javax.swing.table.TableModel;
  * Created on April 5, 2004, 11:59 AM
  * 
  * @author parthee
- * @version $Id: FileExport.java,v 1.3 2005/09/21 14:22:48 parthee Exp $
+ * @version $Id: FileExport.java,v 1.1 2006/10/30 17:26:13 parthee Exp $
  */
 public class FileExport {
 

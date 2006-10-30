@@ -1,11 +1,11 @@
-package gov.epa.mims.analysisengine.table;
+package gov.epa.mims.analysisengine.table.io;
 
 import java.io.OutputStream;
 
 /** FileInfo is a vector that stores all information required to import a file
  *
  * @author  Krithiga Thangavelu, CEP, UNC CHAPEL HILL.
- * @version $Id: FileInfo.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: FileInfo.java,v 1.1 2006/10/30 17:26:13 parthee Exp $
  */
 
 

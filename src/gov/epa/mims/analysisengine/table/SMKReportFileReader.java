@@ -1,6 +1,8 @@
 package gov.epa.mims.analysisengine.table;
 
 
+import gov.epa.mims.analysisengine.table.io.FileParser;
+
 import java.util.ArrayList;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -11,7 +13,7 @@ import java.text.SimpleDateFormat;
  * This class is customized to read SMK Report file
  * Created on March 31, 2004, 1:38 PM
  * @author  Parthee Partheepan, CEP, UNC-CHAPEL HILL
- * @version $Id: SMKReportFileReader.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: SMKReportFileReader.java,v 1.3 2006/10/30 17:26:13 parthee Exp $
  */
 
 public class SMKReportFileReader extends FileParser {

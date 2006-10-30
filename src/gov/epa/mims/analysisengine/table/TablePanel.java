@@ -1,5 +1,7 @@
 package gov.epa.mims.analysisengine.table;
 
+import gov.epa.mims.analysisengine.table.io.FileImportGUI;
+
 import java.io.File;
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -21,7 +23,7 @@ import javax.swing.*;
  * </p>
  * 
  * @author Parthee Partheepan
- * @version $Id: TablePanel.java,v 1.3 2006/07/21 17:36:36 parthee Exp $
+ * @version $Id: TablePanel.java,v 1.4 2006/10/30 17:26:13 parthee Exp $
  */
 public class TablePanel extends JPanel {
 

@@ -7,11 +7,11 @@
  *  Rename sym.EOF in FileScanner.java to TokenConstants.EOF whenever FileScanner.java is generated from FileScanner.flex
  *
  * @author  Krithiga Thangavelu, CEP, UNC CHAPEL HILL.
- * @version $Id: TokenConstants.java,v 1.3 2005/09/21 14:22:48 parthee Exp $
+ * @version $Id: TokenConstants.java,v 1.1 2006/10/30 17:26:13 parthee Exp $
 
  */
 
-package gov.epa.mims.analysisengine.table;
+package gov.epa.mims.analysisengine.table.io;
 import java.util.Date;
 
 public  class TokenConstants {

@@ -1,6 +1,10 @@
 
 package gov.epa.mims.analysisengine.table;
 
+import gov.epa.mims.analysisengine.table.io.DAVEFileReader;
+import gov.epa.mims.analysisengine.table.io.FileImportGUI;
+import gov.epa.mims.analysisengine.table.io.TRIMResultFileReader;
+
 import java.io.File;
 import java.util.HashMap;
 import java.util.Vector;
@@ -12,7 +16,7 @@ import java.util.Vector;
  * <p>Copyright: Copyright (c) 2004</p>
  * <p>Company: CEP, UNC-Chapel Hill </p>
  * @author Parthee Partheepan
- * @version $Id: FileAdapter.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: FileAdapter.java,v 1.3 2006/10/30 17:26:13 parthee Exp $
 */
 public class FileAdapter
 {
