@@ -1,6 +1,8 @@
 package gov.epa.mims.analysisengine.table;
 
 import gov.epa.mims.analysisengine.gui.NumericSpinner;
+import gov.epa.mims.analysisengine.table.format.FormatChooserPanel;
+import gov.epa.mims.analysisengine.table.format.SignificantDigitsFormat;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -34,7 +36,7 @@ import javax.swing.JTextField;
  * </p>
  * 
  * @author Daniel Gatti, Prashant Pai (08/24)
- * @version $Id: DoubleFormatPanel.java,v 1.3 2006/10/30 21:43:50 parthee Exp $
+ * @version $Id: DoubleFormatPanel.java,v 1.4 2006/11/01 15:33:37 parthee Exp $
  */
 public class DoubleFormatPanel extends FormatChooserPanel implements ActionListener {
 	/** The default time/date format. */

@@ -2,7 +2,7 @@ package gov.epa.mims.analysisengine.table.io;
 
 import gov.epa.mims.analysisengine.gui.ScreenUtils;
 import gov.epa.mims.analysisengine.table.TableApp;
-import gov.epa.mims.analysisengine.table.TableSorter;
+import gov.epa.mims.analysisengine.table.sort.TableSorter;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;

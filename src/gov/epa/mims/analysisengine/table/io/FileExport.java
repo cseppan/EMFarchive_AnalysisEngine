@@ -2,7 +2,7 @@ package gov.epa.mims.analysisengine.table.io;
 
 import gov.epa.mims.analysisengine.gui.DefaultUserInteractor;
 import gov.epa.mims.analysisengine.gui.UserInteractor;
-import gov.epa.mims.analysisengine.table.SignificantDigitsFormat;
+import gov.epa.mims.analysisengine.table.format.SignificantDigitsFormat;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import javax.swing.table.TableModel;
  * Created on April 5, 2004, 11:59 AM
  * 
  * @author parthee
- * @version $Id: FileExport.java,v 1.2 2006/10/30 21:43:51 parthee Exp $
+ * @version $Id: FileExport.java,v 1.3 2006/11/01 15:33:39 parthee Exp $
  */
 public class FileExport {
 

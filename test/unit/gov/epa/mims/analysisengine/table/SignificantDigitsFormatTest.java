@@ -1,5 +1,6 @@
 package gov.epa.mims.analysisengine.table;
 
+import gov.epa.mims.analysisengine.table.format.SignificantDigitsFormat;
 import junit.framework.*;
 
 public class SignificantDigitsFormatTest extends TestCase {

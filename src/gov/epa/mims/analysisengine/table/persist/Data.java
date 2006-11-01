@@ -1,11 +1,11 @@
 package gov.epa.mims.analysisengine.table.persist;
 
-import gov.epa.mims.analysisengine.table.PlottingInfo;
+import gov.epa.mims.analysisengine.table.plot.PlottingInfo;
 import gov.epa.mims.analysisengine.tree.Branch;
 
 /**  Data - Storage for configuration information
  * @author  Krithiga Thangavelu, CEP, UNC CHAPEL HILL.
- * @version $Id: Data.java,v 1.1 2006/10/30 17:26:12 parthee Exp $  
+ * @version $Id: Data.java,v 1.2 2006/11/01 15:33:40 parthee Exp $  
  */
 
 public class Data implements java.io.Serializable {

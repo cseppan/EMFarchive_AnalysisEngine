@@ -1,5 +1,9 @@
 package gov.epa.mims.analysisengine.table;
 
+import gov.epa.mims.analysisengine.table.filter.FilteringTableModel;
+import gov.epa.mims.analysisengine.table.sort.SortCriteria;
+import gov.epa.mims.analysisengine.table.sort.SortingTableModel;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -14,7 +18,7 @@ import junit.framework.TestCase;
  * </p>
  * 
  * @author Daniel Gatti
- * @version $Id: SortTableModelTest.java,v 1.2 2006/01/15 04:30:53 parthee Exp $
+ * @version $Id: SortTableModelTest.java,v 1.3 2006/11/01 15:33:40 parthee Exp $
  */
 public class SortTableModelTest extends TestCase {
 	static Integer[][] intData = new Integer[5][5];

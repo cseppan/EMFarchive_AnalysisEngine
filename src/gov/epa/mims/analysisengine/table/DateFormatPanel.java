@@ -1,5 +1,7 @@
 package gov.epa.mims.analysisengine.table;
 
+import gov.epa.mims.analysisengine.table.format.FormatChooserPanel;
+
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,7 +14,7 @@ import javax.swing.BorderFactory;
  * <p>Copyright: Copyright (c) 2003</p>
  * <p>Company: UNC - CEP</p>
  * @author Daniel Gatti
- * @version $Id: DateFormatPanel.java,v 1.3 2006/10/30 21:43:50 parthee Exp $
+ * @version $Id: DateFormatPanel.java,v 1.4 2006/11/01 15:33:37 parthee Exp $
  */
 public class DateFormatPanel extends FormatChooserPanel
 {

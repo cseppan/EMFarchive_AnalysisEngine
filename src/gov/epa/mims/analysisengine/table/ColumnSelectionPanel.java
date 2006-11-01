@@ -1,5 +1,8 @@
 package gov.epa.mims.analysisengine.table;
 
+import gov.epa.mims.analysisengine.table.filter.FilterCriteria;
+import gov.epa.mims.analysisengine.table.filter.FilterPanel;
+
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

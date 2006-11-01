@@ -6,6 +6,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import gov.epa.mims.analysisengine.gui.*;
+import gov.epa.mims.analysisengine.table.filter.FilterCriteria;
 
 /**
  * <p>
@@ -19,7 +20,7 @@ import gov.epa.mims.analysisengine.gui.*;
  * </p>
  * 
  * @author Daniel Gatti
- * @version $Id: SelectColumnsGUI.java,v 1.3 2006/10/30 21:43:50 parthee Exp $
+ * @version $Id: SelectColumnsGUI.java,v 1.4 2006/11/01 15:33:36 parthee Exp $
  */
 public class SelectColumnsGUI extends OptionDialog {
 	/** The panel for selecting columns. */
@@ -120,7 +121,7 @@ public class SelectColumnsGUI extends OptionDialog {
 	 * 
 	 * @throws Exception
 	 */
-	protected void saveGUIValuesToModel() throws java.lang.Exception {
+	protected void saveGUIValuesToModel() throws Exception {
 		filterCriteria.setColumnsToShow(filterCriteria.getAllColumnNames(), selectionPanel.getCheckedColumns());
 	} // saveGUIValuesToModel()
 } // class SelectColumnsGUI

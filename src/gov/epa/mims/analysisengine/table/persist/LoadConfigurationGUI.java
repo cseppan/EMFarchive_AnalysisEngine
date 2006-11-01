@@ -4,12 +4,12 @@ import gov.epa.mims.analysisengine.gui.GUIUserInteractor;
 import gov.epa.mims.analysisengine.gui.ScreenUtils;
 import gov.epa.mims.analysisengine.gui.TreeDialog;
 import gov.epa.mims.analysisengine.gui.UserInteractor;
-import gov.epa.mims.analysisengine.table.ColumnFormatInfo;
-import gov.epa.mims.analysisengine.table.FilterCriteria;
-import gov.epa.mims.analysisengine.table.FormattedCellRenderer;
 import gov.epa.mims.analysisengine.table.OverallTableModel;
 import gov.epa.mims.analysisengine.table.SaveToDialog;
-import gov.epa.mims.analysisengine.table.SortCriteria;
+import gov.epa.mims.analysisengine.table.filter.FilterCriteria;
+import gov.epa.mims.analysisengine.table.format.ColumnFormatInfo;
+import gov.epa.mims.analysisengine.table.format.FormattedCellRenderer;
+import gov.epa.mims.analysisengine.table.sort.SortCriteria;
 import gov.epa.mims.analysisengine.tree.AnalysisOptions;
 import gov.epa.mims.analysisengine.tree.Branch;
 import gov.epa.mims.analysisengine.tree.DataSets;
@@ -45,7 +45,7 @@ import javax.swing.table.TableColumn;
  * chosen directory.
  * 
  * @author Krithiga Thangavelu, CEP, UNC CHAPEL HILL.
- * @version $Id: LoadConfigurationGUI.java,v 1.2 2006/10/30 21:43:51 parthee Exp $
+ * @version $Id: LoadConfigurationGUI.java,v 1.3 2006/11/01 15:33:40 parthee Exp $
  */
 public class LoadConfigurationGUI extends javax.swing.JDialog {
 

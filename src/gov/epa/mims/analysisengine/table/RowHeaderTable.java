@@ -1,5 +1,7 @@
 package gov.epa.mims.analysisengine.table;
 
+import gov.epa.mims.analysisengine.table.format.FormattedCellRenderer;
+
 import java.awt.Component;
 import java.awt.FontMetrics;
 

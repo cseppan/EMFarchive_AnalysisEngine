@@ -6,6 +6,8 @@
 
 package gov.epa.mims.analysisengine.table;
 
+import gov.epa.mims.analysisengine.table.stats.RegressionGUI;
+
 import java.util.ArrayList;
 import java.util.Vector;
 

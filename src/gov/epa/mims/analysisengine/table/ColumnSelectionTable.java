@@ -1,5 +1,7 @@
 package gov.epa.mims.analysisengine.table;
 
+import gov.epa.mims.analysisengine.table.sort.TableSorter;
+
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;

@@ -1,5 +1,8 @@
 package gov.epa.mims.analysisengine.table;
 
+import gov.epa.mims.analysisengine.table.format.FormatAndIndexInfoIfc;
+import gov.epa.mims.analysisengine.table.format.NullFormatter;
+
 import java.text.Format;
 import javax.swing.table.DefaultTableModel;
 

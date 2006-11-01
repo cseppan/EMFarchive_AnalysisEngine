@@ -6,6 +6,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 
 import gov.epa.mims.analysisengine.gui.*;
+import gov.epa.mims.analysisengine.table.filter.FilterCriteria;
 
 /**
  * <p>Description: Get an integer from the user to use for showing the
@@ -13,7 +14,7 @@ import gov.epa.mims.analysisengine.gui.*;
  * <p>Copyright: Copyright (c) 2003</p>
  * <p>Company: </p>
  * @author Daniel Gatti - UNC - CEP
- * @version $Id: TopNRowsGUI.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: TopNRowsGUI.java,v 1.3 2006/11/01 15:33:38 parthee Exp $
  */
 public class TopNRowsGUI extends OptionDialog
 {

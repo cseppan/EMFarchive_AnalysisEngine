@@ -1,6 +1,8 @@
 package gov.epa.mims.analysisengine.table;
 
 import gov.epa.mims.analysisengine.gui.ScreenUtils;
+import gov.epa.mims.analysisengine.table.db.ResultSetTableModel;
+import gov.epa.mims.analysisengine.table.filter.FilterCriteria;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -17,7 +19,7 @@ import javax.swing.JPanel;
  *
  * Created on April 25, 2005, 11:07 AM
  * @author  Parthee R Partheepan
- * @version $Id: SortFilterTableDialog.java,v 1.3 2005/09/21 19:17:09 parthee Exp $
+ * @version $Id: SortFilterTableDialog.java,v 1.4 2006/11/01 15:33:37 parthee Exp $
  */
 public class SortFilterTableDialog extends JFrame
 {
