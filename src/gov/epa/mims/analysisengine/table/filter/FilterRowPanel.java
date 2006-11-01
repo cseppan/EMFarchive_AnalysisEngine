@@ -4,7 +4,7 @@ import gov.epa.mims.analysisengine.gui.ChildHasChangedListener;
 import gov.epa.mims.analysisengine.gui.DefaultUserInteractor;
 import gov.epa.mims.analysisengine.gui.HasChangedListener;
 import gov.epa.mims.analysisengine.gui.UserInteractor;
-import gov.epa.mims.analysisengine.table.MyBoolean;
+import gov.epa.mims.analysisengine.table.ComparableBoolean;
 import gov.epa.mims.analysisengine.table.format.FormattedCellRenderer;
 
 import java.awt.BorderLayout;
@@ -22,7 +22,7 @@ import javax.swing.JPanel;
  *
  * Created on April 22, 2005, 12:56 PM
  * @author  Parthee R Partheepan
- * @version $Id: FilterRowPanel.java,v 1.1 2006/11/01 15:33:39 parthee Exp $
+ * @version $Id: FilterRowPanel.java,v 1.2 2006/11/01 16:18:50 parthee Exp $
  */
 public class FilterRowPanel extends JPanel implements ChildHasChangedListener {
 
@@ -287,7 +287,7 @@ public class FilterRowPanel extends JPanel implements ChildHasChangedListener {
 						Boolean bool = new Boolean(cellValue);
 						// System.out.println("bool=" +
 						// bool.booleanValue());
-						values[r] = new MyBoolean(bool);
+						values[r] = new ComparableBoolean(bool);
 					} else {
 						values[r] = cellValue;
 					}

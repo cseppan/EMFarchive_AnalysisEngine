@@ -1,7 +1,7 @@
 package gov.epa.mims.analysisengine.table.filter;
 
 import gov.epa.mims.analysisengine.table.MultiRowHeaderTableModel;
-import gov.epa.mims.analysisengine.table.MyBoolean;
+import gov.epa.mims.analysisengine.table.ComparableBoolean;
 
 import java.util.Hashtable;
 
@@ -15,7 +15,7 @@ import javax.swing.event.TableModelListener;
  * example, if your underlying data contains integers and your filter says to
  * filter out any value less than 5, the map in this model will only contain
  * the data in the underlying model with values < 5.
- * @version $Id: FilteringTableModel.java,v 1.1 2006/11/01 15:33:39 parthee Exp $
+ * @version $Id: FilteringTableModel.java,v 1.2 2006/11/01 16:18:50 parthee Exp $
  * @author  Daniel Gatti
  */
 public class FilteringTableModel
@@ -152,7 +152,7 @@ implements TableModelListener
          if(underlyingModel.getColumnClass(colMap[col]).equals(Boolean.class))
          {
             Boolean myBoolean = (Boolean)underlyingModel.getValueAt(row, colMap[col]);
-            rowValues[col] = new MyBoolean(myBoolean);
+            rowValues[col] = new ComparableBoolean(myBoolean);
          }
          else
          {
