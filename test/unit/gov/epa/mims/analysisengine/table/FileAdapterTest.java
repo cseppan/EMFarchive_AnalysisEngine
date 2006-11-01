@@ -1,6 +1,7 @@
 package gov.epa.mims.analysisengine.table;
 
 import gov.epa.mims.analysisengine.table.io.FileImportGUI;
+import gov.epa.mims.analysisengine.table.io.SMKReportFileReader;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

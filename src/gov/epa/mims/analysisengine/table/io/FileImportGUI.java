@@ -5,10 +5,7 @@ import gov.epa.mims.analysisengine.gui.GUIUserInteractor;
 import gov.epa.mims.analysisengine.gui.IntegerValuePanel;
 import gov.epa.mims.analysisengine.gui.ScreenUtils;
 import gov.epa.mims.analysisengine.gui.UserInteractor;
-import gov.epa.mims.analysisengine.table.MonteCarloFileReader;
-import gov.epa.mims.analysisengine.table.SMKReportFileReader;
 import gov.epa.mims.analysisengine.table.SpecialTableModel;
-import gov.epa.mims.analysisengine.table.TRIMSensitivityFileReader;
 import gov.epa.mims.analysisengine.table.TableApp;
 import gov.epa.mims.analysisengine.table.TextDialog;
 

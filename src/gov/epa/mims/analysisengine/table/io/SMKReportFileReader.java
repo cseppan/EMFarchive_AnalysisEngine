@@ -1,7 +1,6 @@
-package gov.epa.mims.analysisengine.table;
+package gov.epa.mims.analysisengine.table.io;
 
 
-import gov.epa.mims.analysisengine.table.io.FileParser;
 
 import java.util.ArrayList;
 
@@ -11,7 +10,7 @@ import java.util.ArrayList;
  * This class is customized to read SMK Report file
  * Created on March 31, 2004, 1:38 PM
  * @author  Parthee Partheepan, CEP, UNC-CHAPEL HILL
- * @version $Id: SMKReportFileReader.java,v 1.4 2006/10/30 21:43:50 parthee Exp $
+ * @version $Id: SMKReportFileReader.java,v 1.1 2006/11/01 15:13:33 parthee Exp $
  */
 
 public class SMKReportFileReader extends FileParser {

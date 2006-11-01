@@ -4,11 +4,14 @@
  * To change the template for this generated file go to
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
-package gov.epa.mims.analysisengine.table;
+package gov.epa.mims.analysisengine.table.io;
 
 import gov.epa.mims.analysisengine.table.io.DAVEFileReader;
 import gov.epa.mims.analysisengine.table.io.FileParser;
+import gov.epa.mims.analysisengine.table.io.MonteCarloFileReader;
+import gov.epa.mims.analysisengine.table.io.SMKReportFileReader;
 import gov.epa.mims.analysisengine.table.io.TRIMResultFileReader;
+import gov.epa.mims.analysisengine.table.io.TRIMSensitivityFileReader;
 
 import java.io.File;
 import java.util.Date;

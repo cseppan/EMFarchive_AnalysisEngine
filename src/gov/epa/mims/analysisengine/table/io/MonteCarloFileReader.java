@@ -1,6 +1,5 @@
-package gov.epa.mims.analysisengine.table;
+package gov.epa.mims.analysisengine.table.io;
 
-import gov.epa.mims.analysisengine.table.io.FileParser;
 
 import java.util.ArrayList;
 
@@ -9,7 +8,7 @@ import java.util.ArrayList;
  * This class is customized to read Monte Carlo inputfile
  * Created on April 1, 2004, 12:31 PM
  * @author  Parthee Partheepan, CEP, UNC-CHAPEL HILL
- * @version $Id: MonteCarloFileReader.java,v 1.4 2006/10/30 21:43:50 parthee Exp $
+ * @version $Id: MonteCarloFileReader.java,v 1.1 2006/11/01 15:13:33 parthee Exp $
  */
 public class MonteCarloFileReader extends FileParser {
 	public static final int NO_OF_COLUMN_HEADER_ROWS = 4;

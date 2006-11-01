@@ -2,7 +2,10 @@ package gov.epa.mims.analysisengine.table;
 
 import gov.epa.mims.analysisengine.table.io.DAVEFileReader;
 import gov.epa.mims.analysisengine.table.io.FileImportGUI;
+import gov.epa.mims.analysisengine.table.io.MonteCarloFileReader;
+import gov.epa.mims.analysisengine.table.io.SMKReportFileReader;
 import gov.epa.mims.analysisengine.table.io.TRIMResultFileReader;
+import gov.epa.mims.analysisengine.table.io.TRIMSensitivityFileReader;
 
 import java.io.File;
 import java.util.HashMap;
@@ -24,7 +27,7 @@ import java.util.Vector;
  * </p>
  * 
  * @author Parthee Partheepan
- * @version $Id: FileAdapter.java,v 1.4 2006/10/30 21:43:50 parthee Exp $
+ * @version $Id: FileAdapter.java,v 1.5 2006/11/01 15:13:33 parthee Exp $
  */
 public class FileAdapter {
 	/**

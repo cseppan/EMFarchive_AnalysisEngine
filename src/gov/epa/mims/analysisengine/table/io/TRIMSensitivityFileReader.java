@@ -1,13 +1,12 @@
-package gov.epa.mims.analysisengine.table;
+package gov.epa.mims.analysisengine.table.io;
 
-import gov.epa.mims.analysisengine.table.io.FileParser;
 
 /*
  * TRIMSensitivityFileReader.java
  * This class is customized to read TRIM Sensitivity file
  * Created on April 1, 2004, 12:31 PM
  * @author  Parthee Partheepan, CEP, UNC-CHAPEL HILL
- * @version $Id: TRIMSensitivityFileReader.java,v 1.4 2006/10/30 21:43:50 parthee Exp $
+ * @version $Id: TRIMSensitivityFileReader.java,v 1.1 2006/11/01 15:13:33 parthee Exp $
  */
 
 public class TRIMSensitivityFileReader extends  FileParser
