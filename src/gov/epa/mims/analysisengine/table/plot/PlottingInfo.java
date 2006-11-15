@@ -18,7 +18,7 @@ import java.util.Vector;
  * dataseries so they can correctly report back the data elements and the labels without any duplication of data.
  * 
  * @author Prashant Pai, CEP UNC
- * @version $Id: PlottingInfo.java,v 1.1 2006/11/01 15:33:40 parthee Exp $
+ * @version $Id: PlottingInfo.java,v 1.2 2006/11/15 20:28:54 parthee Exp $
  */
 public class PlottingInfo implements java.io.Serializable {
 	/** serial version UID */
@@ -59,49 +59,22 @@ public class PlottingInfo implements java.io.Serializable {
 
 	protected String plotName = " ";
 
-	// /** the columns from which to take the data values **/
-	// private int[] dataColumns = null;
-
 	public PlottingInfo(OverallTableModel model) {
 		this.tableModel = model;
-		// setHeaderMap();
 	}
 
-	// PlottingInfo()
-
-	/**
-	 * set the plottype
-	 * 
-	 * @param plotType
-	 */
 	public void setPlotType(String plotType) {
 		this.plotType = plotType;
 	}
 
-	// setPlotType(String)
-
-	/**
-	 * gets the currently selected plot type
-	 * 
-	 * @return
-	 */
 	public String getPlotType() {
 		return this.plotType;
 	}
 
-	// getPlotType()
-
-	/**
-	 * set the units
-	 * 
-	 * @param units
-	 */
 	public void setUnits(String units) {
-		// System.out.println("IN plotting info ="+units);
 		this.units = units;
 	}
 
-	// setUnits(String)
 	public void setPlotName(String name) {
 		this.plotName = name;
 	}
@@ -110,11 +83,6 @@ public class PlottingInfo implements java.io.Serializable {
 		return this.plotName;
 	}
 
-	/**
-	 * gets the currently selected units
-	 * 
-	 * @return
-	 */
 	public String getUnits() {
 		return this.units;
 	}
@@ -149,20 +117,10 @@ public class PlottingInfo implements java.io.Serializable {
 		// 2. rowHeaders.length > colHeaders.length
 	}// getUnits()
 
-	/**
-	 * return the tablemodel for this plottinginfo object
-	 * 
-	 * @return
-	 */
 	public OverallTableModel getModel() {
 		return tableModel;
 	}
 
-	/**
-	 * return the number of data columns
-	 * 
-	 * @return the number of data columns
-	 */
 	public int getNumOfDataColumns() {
 		if (selDataColNames != null) {
 			return selDataColNames.length;
@@ -171,60 +129,14 @@ public class PlottingInfo implements java.io.Serializable {
 		return 0;
 	}
 
-	/**
-	 * getter for the table model
-	 * 
-	 * @return OverallTableModel tableModel
-	 */
 	public OverallTableModel getOverallTableModel() {
 		return tableModel;
 	}
 
-	// getTableModel
-
-	/**
-	 * sets the data columns
-	 * 
-	 * @param dataCols
-	 */
 	public void setSelDataColumns(String[] dataColumns) {
-		// this.dataColumnSelections = dataCols;
-		// dataColumns = convertSelection(dataCols);
-		// if (dataColumnSelections != null)
-		// {
-		// int length = dataColumns.length;
-		// selDataColNames = new String[length];
-		// for (int i = 0; i < length; i++)
-		// {
-		// selDataColNames[i] = tableModel.getColumnName(dataColumns[i] + 1); // to discount the first col
-		// }
-		// // for(i)
-		// }
 		selDataColNames = dataColumns;
-		// if
 	}
 
-	// setDataColumns(int[])
-	//
-	// /**
-	// * return the data column selections
-	// * @return
-	// */
-	// public boolean[] getDataColumns()
-	// {
-	// return this.dataColumnSelections;
-	// }
-	//
-	// // getDataColumns
-
-	// setNameHeaders(int[])
-
-	/**
-	 * setter for the table model
-	 * 
-	 * @param OverallTableModel
-	 *            tableModel
-	 */
 	public void setOverallTableModel(OverallTableModel tableModel) throws Exception {
 		String[] arrayColumnNames = tableModel.getColumnNames();
 		Vector columnNames = new Vector();
@@ -331,11 +243,6 @@ public class PlottingInfo implements java.io.Serializable {
 		this.tableModel = tableModel;
 	}// setTableModel
 
-	/**
-	 * 
-	 * @param selected
-	 * @return
-	 */
 	public int[] convertSelection(boolean[] selected) {
 		int[] selections = new int[selected.length];
 		int count = 0;
@@ -391,12 +298,6 @@ public class PlottingInfo implements java.io.Serializable {
 		return retn;
 	}
 
-	/**
-	 * This method is able to understand the selections made by the user in the plotting dialog and chop up the data
-	 * accordingly.
-	 * 
-	 * @return the DataSets correctly chopped up
-	 */
 	public DataSets createDataSets() throws Exception {
 		if ((selDataColNames == null) || (selDataColNames.length == 0)) {
 			throw new Exception("There are no Data Columns selected. Please select some");
@@ -488,48 +389,10 @@ public class PlottingInfo implements java.io.Serializable {
 		}
 	}
 
-	// createDataSets(model)
-
-	// /** a helper method to create a date set containing the percentile values for the
-	// * CDF plot
-	// */
-	// private DataSetIfc createPercentileDataSeries(double [] percentile)
-	// {
-	// DoubleSeries labelSeries = new DoubleSeries();
-	// try
-	// {
-	// labelSeries.setName("Fraction");
-	// labelSeries.open();
-	// for(int i=0; i< percentile.length; i++)
-	// {
-	// labelSeries.addData(percentile[i]);
-	// }//for(i)
-	// labelSeries.close();
-	// }
-	// catch(Exception e)
-	// {
-	// DefaultUserInteractor.get().notifyOfException("Error", e, UserInteractor.ERROR);
-	// e.printStackTrace();
-	// }
-	// return labelSeries;
-	// }
-
-	/**
-	 * getter for the selected data column Names
-	 * 
-	 * @return String[]
-	 */
 	public String[] getSelDataColumnNames() {
 		return selDataColNames;
 	}
 
-	// getSelDataColumnNames()
-
-	/**
-	 * getter for the selected label column Names
-	 * 
-	 * @return String[]
-	 */
 	public String[] getSelLabelColumnNames() {
 		return selLabelColNames;
 	}
@@ -538,16 +401,11 @@ public class PlottingInfo implements java.io.Serializable {
 		selLabelColNames = labelColNames;
 	}
 
-	// getSelDataColumnNames()
 	public PlottingInfo copy() {
 		PlottingInfo info = new PlottingInfo(this.tableModel);
 		String sep = getSeparator();
 		info.setSeparator(sep.charAt(0));
 		info.setPlotType(getPlotType());
-		// if(dataColumnSelections != null)
-		// {
-		// info.setDataColumns(dataColumnSelections);
-		// }
 
 		info.setUserSpecifiedUnits(userSpecifiedUnits);
 		info.setColRowHeaderIndex(colRowHeaderIndex);
@@ -566,23 +424,10 @@ public class PlottingInfo implements java.io.Serializable {
 		return info;
 	}
 
-	/**
-	 * Getter for property colRowHeaderIndex.
-	 * 
-	 * @return Value of property colRowHeaderIndex.
-	 * 
-	 */
 	public int getColRowHeaderIndex() {
 		return colRowHeaderIndex;
 	}
 
-	/**
-	 * Setter for property colRowHeaderIndex.
-	 * 
-	 * @param colRowHeaderIndex
-	 *            New value of property colRowHeaderIndex.
-	 * 
-	 */
 	public void setColRowHeaderIndex(int colRowHeaderIndex) {
 		this.colRowHeaderIndex = colRowHeaderIndex;
 		String[] headers = tableModel.getColumnHeadersInARow(colRowHeaderIndex);
@@ -594,69 +439,27 @@ public class PlottingInfo implements java.io.Serializable {
 		}
 	}
 
-	/**
-	 * Getter for property userSpecifiedUnits.
-	 * 
-	 * @return Value of property userSpecifiedUnits.
-	 * 
-	 */
 	public boolean isUserSpecifiedUnits() {
 		return userSpecifiedUnits;
 	}
 
-	/**
-	 * Setter for property userSpecifiedUnits.
-	 * 
-	 * @param userSpecifiedUnits
-	 *            New value of property userSpecifiedUnits.
-	 * 
-	 */
 	public void setUserSpecifiedUnits(boolean userSpecifiedUnits) {
 		this.userSpecifiedUnits = userSpecifiedUnits;
 	}
 
-	/**
-	 * Getter for property selLabelDateColNames.
-	 * 
-	 * @return Value of property selLabelDateColNames.
-	 * 
-	 */
 	public String[] getSelLabelDateColNames() {
 		return this.selLabelDateColNames;
 	}
 
-	/**
-	 * Setter for property selLabelDateColNames.
-	 * 
-	 * @param selLabelDateColNames
-	 *            New value of property selLabelDateColNames.
-	 * 
-	 */
 	public void setSelLabelDateColNames(String[] selLabelDateColNames) {
 		this.selLabelDateColNames = selLabelDateColNames;
 	}
 
-	/**
-	 * Getter for property timeFormat.
-	 * 
-	 * @return Value of property timeFormat.
-	 * 
-	 */
 	public String getTimeFormat() {
 		return timeFormat;
 	}
 
-	/**
-	 * Setter for property timeFormat.
-	 * 
-	 * @param timeFormat
-	 *            New value of property timeFormat.
-	 * 
-	 */
 	public void setTimeFormat(String timeFormat) {
 		this.timeFormat = timeFormat;
 	}
-
 }
-
-// PlottingInfo

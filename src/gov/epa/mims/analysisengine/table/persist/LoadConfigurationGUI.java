@@ -19,8 +19,10 @@ import gov.epa.mims.analysisengine.tree.PageType;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 import java.util.Vector;
 
@@ -45,33 +47,19 @@ import javax.swing.table.TableColumn;
  * chosen directory.
  * 
  * @author Krithiga Thangavelu, CEP, UNC CHAPEL HILL.
- * @version $Id: LoadConfigurationGUI.java,v 1.3 2006/11/01 15:33:40 parthee Exp $
+ * @version $Id: LoadConfigurationGUI.java,v 1.4 2006/11/15 20:28:54 parthee Exp $
  */
 public class LoadConfigurationGUI extends javax.swing.JDialog {
 
-	/** Close button to close the GUI */
-	private JButton bClose;
+	private JButton closeButton;
 
-	/** Save button to save output of the configuration in the current table context */
-	private JButton bSave;
+	private JButton saveButton;
 
-	/** Import button to import the selected configuration into the current table */
-	private JButton bImport;
+	private JButton importButton;
 
-	/** View button to view selected plot in the configuration */
-	private JButton bView;
+	private JButton viewButton;
 
-	/** ConfigPanel in the GUI */
-	private JPanel jPanel1;
-
-	/** List to display configurations in the file */
 	private JList configList;
-
-	/** Scrollpane containing the configList */
-	private JScrollPane jScrollPane1;
-
-	/** The panel containing all the components */
-	private JPanel OverallPanel;
 
 	/** The Configuration object from the configuration file being loaded */
 	private AnalysisConfiguration input;
@@ -82,21 +70,8 @@ public class LoadConfigurationGUI extends javax.swing.JDialog {
 	/** The Table containing the model in the sort filter table panel */
 	private JTable table;
 
-	/**
-	 * Creates a new instance of LoadConfigurationGUI
-	 * 
-	 * @param input
-	 *            AnalysisConfiguration
-	 * @param dest
-	 *            AnalysisConfiguration
-	 * @param table
-	 *            Table displaying the info from OverallTableModel
-	 * @param parent
-	 *            The Owner component of this dialog
-	 */
 	public LoadConfigurationGUI(AnalysisConfiguration input, AnalysisConfiguration dest, JTable table,
 			java.awt.Frame parent) {
-
 		super(parent);
 		this.input = input;
 		this.dest = dest;
@@ -105,13 +80,10 @@ public class LoadConfigurationGUI extends javax.swing.JDialog {
 		setLocation(ScreenUtils.getPointToCenter(this));
 	}
 
-	/**
-	 * Initializes the GUI.
-	 */
 	public void initGUI() {
 		try {
-			OverallPanel = new JPanel();
-			jScrollPane1 = new JScrollPane();
+			JPanel overallPanel = new JPanel();
+			JScrollPane scrollPane = new JScrollPane();
 			// configList = new JList((Object[]) input.getKeys());
 			String[] configNames = input.getConfigNames();
 			int[] selectIndex = new int[configNames.length];
@@ -120,24 +92,22 @@ public class LoadConfigurationGUI extends javax.swing.JDialog {
 			}
 			configList = new JList(configNames);
 			configList.setSelectedIndices(selectIndex);
-			jPanel1 = new JPanel();
-			bView = new JButton();
-			bImport = new JButton();
-			bSave = new JButton();
-			bClose = new JButton();
+
+			JPanel buttonPanel = buttonPanel();
+
 			this.setResizable(true);
 			this.setTitle("Load Configuration Preview");
 			this.setSize(new java.awt.Dimension(375, 230));
-			this.getContentPane().add(OverallPanel);
-			BoxLayout thisLayout = new BoxLayout(OverallPanel, 0);
+			this.getContentPane().add(overallPanel);
+			BoxLayout thisLayout = new BoxLayout(overallPanel, 0);
 
-			OverallPanel.setLayout(thisLayout);
-			OverallPanel.setBorder(
+			overallPanel.setLayout(thisLayout);
+			overallPanel.setBorder(
 
 			BorderFactory.createCompoundBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED), BorderFactory
 					.createEmptyBorder(5, 5, 5, 5)));
 
-			jScrollPane1.setPreferredSize(new java.awt.Dimension(177, 200));
+			scrollPane.setPreferredSize(new java.awt.Dimension(177, 200));
 			JPanel configPanel = new JPanel();
 
 			configPanel.setLayout(new BoxLayout(configPanel, 1));
@@ -145,63 +115,71 @@ public class LoadConfigurationGUI extends javax.swing.JDialog {
 					.createEtchedBorder(EtchedBorder.LOWERED), BorderFactory.createEmptyBorder(10, 10, 10, 10)),
 					"Configurations"));
 
-			configPanel.add(jScrollPane1);
+			configPanel.add(scrollPane);
 			configList.setToolTipText(" Configurations in the file");
-			jScrollPane1.add(configList);
-			jScrollPane1.setViewportView(configList);
-			OverallPanel.add(configPanel);
-			FlowLayout jPanel1Layout = new FlowLayout(FlowLayout.CENTER, 3, 6);
-			jPanel1Layout.layoutContainer(jPanel1);
-			jPanel1.setLayout(jPanel1Layout);
-			jPanel1.setEnabled(true);
-			jPanel1.setVisible(true);
-			jPanel1.setPreferredSize(new java.awt.Dimension(120, 210));
-			OverallPanel.add(jPanel1);
+			scrollPane.add(configList);
+			scrollPane.setViewportView(configList);
+			overallPanel.add(configPanel);
 
-			bView.setText("    View    ");
-			bView.setToolTipText("View all or the selected plots");
-			bView.setPreferredSize(new java.awt.Dimension(100, 30));
-			jPanel1.add(bView);
-			bView.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-					doView();
-				}
-			});
-
-			bImport.setText("  Import   ");
-			bImport.setToolTipText("Import all or the selected configurations into the table");
-			bImport.setPreferredSize(new java.awt.Dimension(100, 30));
-			jPanel1.add(bImport);
-			bImport.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-					doImport();
-				}
-			});
-
-			bSave.setText("Save Plots");
-			bSave.setToolTipText("Save all or the selected plots to a directory");
-			bSave.setPreferredSize(new java.awt.Dimension(100, 30));
-			jPanel1.add(bSave);
-			bSave.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-					doSave();
-				}
-			});
-
-			bClose.setText("   Close    ");
-			bClose.setToolTipText("Close this window");
-			bClose.setPreferredSize(new java.awt.Dimension(100, 30));
-			jPanel1.add(bClose);
-			bClose.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-					dispose();
-					return;
-				}
-			});
+			buttonPanel.setPreferredSize(new java.awt.Dimension(120, 210));
+			overallPanel.add(buttonPanel);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	private JPanel buttonPanel() {
+		viewButton = new JButton();
+		importButton = new JButton();
+		saveButton = new JButton();
+		closeButton = new JButton();
+		viewButton.setText("    View    ");
+		viewButton.setToolTipText("View all or the selected plots");
+		viewButton.setPreferredSize(new java.awt.Dimension(100, 30));
+		viewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				doView();
+			}
+		});
+
+		importButton.setText("  Import   ");
+		importButton.setToolTipText("Import all or the selected configurations into the table");
+		importButton.setPreferredSize(new java.awt.Dimension(100, 30));
+		importButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				doImport();
+			}
+		});
+
+		saveButton.setText("Save Plots");
+		saveButton.setToolTipText("Save all or the selected plots to a directory");
+		saveButton.setPreferredSize(new java.awt.Dimension(100, 30));
+		saveButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				doSave();
+			}
+		});
+
+		closeButton.setText("   Close    ");
+		closeButton.setToolTipText("Close this window");
+		closeButton.setPreferredSize(new java.awt.Dimension(100, 30));
+		closeButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				dispose();
+				return;
+			}
+		});
+
+		JPanel buttonPanel = new JPanel();
+		FlowLayout flowLayout = new FlowLayout(FlowLayout.CENTER, 3, 6);
+		flowLayout.layoutContainer(buttonPanel);
+		buttonPanel.setLayout(flowLayout);
+		buttonPanel.add(viewButton);
+		buttonPanel.add(importButton);
+		buttonPanel.add(saveButton);
+		buttonPanel.add(closeButton);
+		return buttonPanel;
 	}
 
 	protected void doView() {
@@ -252,10 +230,6 @@ public class LoadConfigurationGUI extends javax.swing.JDialog {
 
 	/**
 	 * Shows the plot of the configuration "plotname" in the current table context
-	 * 
-	 * @param plotname
-	 *            String
-	 * @return None else returns Exception if the configuration is not applicable on the table
 	 */
 
 	protected void showPlot(String plotname) throws Exception {
@@ -312,7 +286,6 @@ public class LoadConfigurationGUI extends javax.swing.JDialog {
 					UserInteractor.NO);
 
 			if (result == UserInteractor.NO) {
-				// model.reset();
 				if (dat.criteria instanceof Hashtable)
 					formatTable(formats);
 				else {
@@ -327,16 +300,11 @@ public class LoadConfigurationGUI extends javax.swing.JDialog {
 			new GUIUserInteractor().notify(this, "Configuration Mismatch", "The "
 					+ "imported configuration is not applicable to the current table. " + e.getMessage(),
 					UserInteractor.ERROR);
-			e.printStackTrace();
 		}
 	}
 
 	/**
 	 * Sets the plot output to SCREEN
-	 * 
-	 * @param options
-	 *            AnalysisOptions
-	 * @return String PageType settings before modification
 	 */
 	protected String setToDefaultScreenPageType(AnalysisOptions options) {
 		PageType pt = (PageType) options.getOption("PAGE_TYPE");
@@ -358,11 +326,10 @@ public class LoadConfigurationGUI extends javax.swing.JDialog {
 			values = input.getConfigNames();
 			values = reorder((String[]) values);
 		}
+		List errorMsgs = new ArrayList();
 		if (values.length > 0) {
 			for (int i = 0; i < values.length; i++) {
-				try
-
-				{
+				try {
 					Data dat = input.getConfig((String) values[i]);
 					if (dat.configType == Data.TABLE_TYPE) {
 						importIntoTable(dat.criteria);
@@ -370,20 +337,25 @@ public class LoadConfigurationGUI extends javax.swing.JDialog {
 						dest.storePlotConfig((String) values[i], input.getConfig((String) values[i]), false);
 					}
 				} catch (Exception e) {
-					new GUIUserInteractor().notify(this, "Configuration Mismatch", "Configuration " + values[i]
-							+ " not applicable to the current" + " table. " + e.getMessage(), UserInteractor.ERROR);
-					e.printStackTrace();
+					errorMsgs.add("Configuration " + values[i] + " not applicable to the current" + " table. "
+							+ e.getMessage());
 				}
-			}// for(values)
+			}
 		}
+		showErrorMessages(errorMsgs);
 	}
 
-	/**
-	 * imports into the table Criteria
-	 * 
-	 * @param criteria
-	 *            Object can be SortCriteria or FilterCriteria or Hashtable
-	 */
+	private void showErrorMessages(List errorMsgs) {
+		if (errorMsgs.isEmpty())
+			return;
+
+		StringBuffer sb = new StringBuffer();
+		for (int i = 0; i < errorMsgs.size(); i++) {
+			sb.append(errorMsgs.get(i) + "\n");
+		}
+		new GUIUserInteractor().notify(this, "Configuration Mismatch", sb.toString(), UserInteractor.ERROR);
+	}
+
 	protected void importIntoTable(Object criteria) throws Exception {
 
 		OverallTableModel model = input.getModel();
@@ -408,13 +380,6 @@ public class LoadConfigurationGUI extends javax.swing.JDialog {
 		}
 	}
 
-	/**
-	 * Formats the table based on formats
-	 * 
-	 * @param formats
-	 *            a Hashtable of ColumnFormatInfo indexed by ColumnName
-	 * 
-	 */
 	protected void formatTable(Hashtable formats) throws Exception {
 		Set keys = formats.keySet();
 		Iterator iter = keys.iterator();
@@ -476,18 +441,4 @@ public class LoadConfigurationGUI extends javax.swing.JDialog {
 		return;
 	}
 
-	/**
-	 * This static method creates a new instance of this class and shows it inside a new JFrame, (unless it is already a
-	 * JFrame).
-	 * 
-	 * It is a convenience method for showing the GUI
-	 */
-	public static void showGUI() {
-		try {
-			LoadConfigurationGUI inst = new LoadConfigurationGUI(null, null, null, null);
-			inst.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 }

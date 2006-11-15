@@ -57,7 +57,7 @@ public class TableApp extends JFrame {
 
 	private FileImportGUI fileImportGUI;
 
-	static String version = "October 17, 2005";
+	static String version = "November 08, 2006";
 
 	private FileHistory history = null;
 

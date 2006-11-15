@@ -12,7 +12,7 @@ import gov.epa.mims.analysisengine.table.persist.SaveConfigAction;
 import gov.epa.mims.analysisengine.table.persist.SaveConfigModel;
 import gov.epa.mims.analysisengine.table.plot.PlotTypeConverter;
 import gov.epa.mims.analysisengine.table.plot.PlottingInfo;
-import gov.epa.mims.analysisengine.table.plot.PlottingInfoGUI;
+import gov.epa.mims.analysisengine.table.plot.PlottingInfoView;
 import gov.epa.mims.analysisengine.table.sort.SortCriteria;
 import gov.epa.mims.analysisengine.table.stats.HistogramModel;
 import gov.epa.mims.analysisengine.table.stats.PercentileModel;
@@ -145,7 +145,7 @@ public class SUSortFilterTablePanel extends SortFilterTablePanel {
 
 		popupMenu.addSeparator();
 
-		action = new SaveConfigAction(this,configIcon);
+		action = new SaveConfigAction(this, configIcon);
 		popupMenu.add(action);
 		JButton saveConfigButton = toolBar.add(action);
 
@@ -317,9 +317,6 @@ public class SUSortFilterTablePanel extends SortFilterTablePanel {
 		return;
 	}
 
-	/**
-	 * Present the plot GUI.
-	 */
 	public void showPlotGUI() {
 		String plotName = " "; // We've been using plotName field in PlottingGUI
 
@@ -333,9 +330,10 @@ public class SUSortFilterTablePanel extends SortFilterTablePanel {
 			plotInfo.setSelDataColumns(selCols);
 		} // if (plotInfo == null)
 
-		plotInfo.setPlotName("Plot" + (aconfig.getCount() + 1));
+		// deduct 3 for the three default configs
+		plotInfo.setPlotName("Plot" + (aconfig.getCount() + 1 - 3));
 
-		PlottingInfoGUI plotGUI = new PlottingInfoGUI((JFrame) parent, plotInfo, true);
+		PlottingInfoView plotGUI = new PlottingInfoView((JFrame) parent, plotInfo, true);
 
 		plotGUI.show();
 
@@ -370,8 +368,6 @@ public class SUSortFilterTablePanel extends SortFilterTablePanel {
 				dialog.setTitle(title);
 				dialog.show();
 				data = dialog.getResultTree();
-				// }
-				// previousConfig.put(plotInfo.getPlotType(), data.clone());
 				if (plotName != null) {
 					aconfig.storePlotConfig(plotName, data, plotInfo, false);
 				}
@@ -379,10 +375,9 @@ public class SUSortFilterTablePanel extends SortFilterTablePanel {
 			} // try
 			catch (Exception e) {
 				DefaultUserInteractor.get().notify(this, "Error", e.getMessage(), UserInteractor.ERROR);
-				e.printStackTrace();
 			}
 		}
-	}// showPlotGUI()
+	}
 
 	private String[] setSelectedDataColumns(boolean[] showDataColumns) {
 		ArrayList selColumns = new ArrayList();

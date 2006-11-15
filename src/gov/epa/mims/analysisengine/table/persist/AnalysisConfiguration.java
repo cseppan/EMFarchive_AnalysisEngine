@@ -115,7 +115,6 @@ public class AnalysisConfiguration {
 			catch (Exception e) {
 				data.criteria = null;
 				DefaultUserInteractor.get().notify(null, "FilterCriteria", e.getMessage(), UserInteractor.WARNING);
-				e.printStackTrace();
 
 			}// catch
 		}// if(data != null && data.criteria != null)
@@ -129,7 +128,6 @@ public class AnalysisConfiguration {
 			} catch (Exception e) {
 				data.criteria = null;
 				DefaultUserInteractor.get().notify(null, "Sort Criteria", e.getMessage(), UserInteractor.WARNING);
-				e.printStackTrace();
 			}
 
 		}
