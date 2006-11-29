@@ -57,7 +57,7 @@ import javax.swing.table.TableColumnModel;
  * </p>
  * 
  * @author Daniel Gatti
- * @version $Id: SortFilterTablePanel.java,v 1.10 2006/11/01 15:33:37 parthee Exp $
+ * @version $Id: SortFilterTablePanel.java,v 1.11 2006/11/29 21:19:57 parthee Exp $
  */
 public class SortFilterTablePanel extends JPanel implements TableModelListener, ChildHasChangedListener {
 
@@ -596,8 +596,6 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 				if (selectedColumns[c]) {
 					// Don't forget to add one to skip the row header.
 					column = columnModel.getColumn(c + 1);
-					System.out.println("column.name=" + table.getColumnName(c + 1));
-					System.out.println("column class=" + table.getColumnClass(c + 1));
 					if (table.getColumnClass(c + 1).equals(Boolean.class)) {
 						continue;
 					}
