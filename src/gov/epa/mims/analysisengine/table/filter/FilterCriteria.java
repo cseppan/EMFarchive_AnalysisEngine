@@ -117,20 +117,20 @@ public class FilterCriteria implements Serializable, Cloneable {
 	}
 
 	public FilterCriteria checkCompatibility(OverallTableModel newModel) throws Exception {
-		String[] colNames = newModel.getColumnNames();
-		ArrayList allColNames = new ArrayList();
-		for (int i = 0; i < colNames.length; i++) {
-			allColNames.add(colNames[i]);
-		}
 		if (columnNames == null) {
 			String[] tempColumnNames = newModel.getBaseColumnNames();
 			return new FilterCriteria(tempColumnNames, showColumns);
 		}
+
+		
+		String[] allColNames = newModel.getColumnNames();
+		ArrayList allColNamesList = new ArrayList(Arrays.asList(allColNames));
+		
 		boolean[] available = new boolean[this.columnNames.length];
 		int count = 0;
 		String missingColNames = "";
 		for (int i = 0; i < this.columnNames.length; i++) {
-			if (allColNames.contains(columnNames[i])) {
+			if (allColNamesList.contains(columnNames[i])) {
 				available[i] = true;
 				count++;
 			} else {
@@ -161,15 +161,15 @@ public class FilterCriteria implements Serializable, Cloneable {
 					count++;
 				}// if(available[i])
 			}// for(i)
-			return new FilterCriteria(newColNames, newOperations, newValues, colNames, this.compareWithAnd);
+			return new FilterCriteria(newColNames, newOperations, newValues, allColNames, this.compareWithAnd);
 		}// else if(count < columnNames.length)
 		else {
-			return this;
+			return new FilterCriteria(columnNames, operations, values, allColNames, this.compareWithAnd);
 		}
 	}
 
-	public FilterCriteria(String[] columnNames, boolean[] show) {
-		this.allColumnNames = columnNames;
+	public FilterCriteria(String[] allColumnNames, boolean[] show) {
+		this.allColumnNames = allColumnNames;
 		this.showColumns = show;
 	}
 

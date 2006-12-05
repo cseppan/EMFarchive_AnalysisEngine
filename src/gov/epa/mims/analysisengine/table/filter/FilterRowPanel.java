@@ -17,13 +17,6 @@ import java.util.Hashtable;
 
 import javax.swing.JPanel;
 
-/*
- * FilterRowPanel.java
- *
- * Created on April 22, 2005, 12:56 PM
- * @author  Parthee R Partheepan
- * @version $Id: FilterRowPanel.java,v 1.2 2006/11/01 16:18:50 parthee Exp $
- */
 public class FilterRowPanel extends JPanel implements ChildHasChangedListener {
 
 	/** The FilterPanel that handles data display and editing. */

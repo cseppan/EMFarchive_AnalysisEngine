@@ -73,7 +73,6 @@ public class AnalysisConfiguration {
 
 		dat = new Data();
 		dat.configType = Data.TABLE_TYPE;
-
 		dat.criteria = new Hashtable();
 		((Hashtable) dat.criteria).putAll(model.getColumnFormatInfo());
 		configs.put(TABLE_FORMAT, dat);

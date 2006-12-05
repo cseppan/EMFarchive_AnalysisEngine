@@ -16,6 +16,7 @@ import gov.epa.mims.analysisengine.tree.DataSets;
 import gov.epa.mims.analysisengine.tree.PageConstantsIfc;
 import gov.epa.mims.analysisengine.tree.PageType;
 
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,6 +30,7 @@ import java.util.Vector;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -47,7 +49,7 @@ import javax.swing.table.TableColumn;
  * chosen directory.
  * 
  * @author Krithiga Thangavelu, CEP, UNC CHAPEL HILL.
- * @version $Id: LoadConfigurationGUI.java,v 1.4 2006/11/15 20:28:54 parthee Exp $
+ * @version $Id: LoadConfigurationGUI.java,v 1.5 2006/12/05 22:25:40 parthee Exp $
  */
 public class LoadConfigurationGUI extends javax.swing.JDialog {
 
@@ -70,8 +72,7 @@ public class LoadConfigurationGUI extends javax.swing.JDialog {
 	/** The Table containing the model in the sort filter table panel */
 	private JTable table;
 
-	public LoadConfigurationGUI(AnalysisConfiguration input, AnalysisConfiguration dest, JTable table,
-			java.awt.Frame parent) {
+	public LoadConfigurationGUI(AnalysisConfiguration input, AnalysisConfiguration dest, JTable table, JFrame parent) {
 		super(parent);
 		this.input = input;
 		this.dest = dest;
@@ -84,30 +85,28 @@ public class LoadConfigurationGUI extends javax.swing.JDialog {
 		try {
 			JPanel overallPanel = new JPanel();
 			JScrollPane scrollPane = new JScrollPane();
-			// configList = new JList((Object[]) input.getKeys());
 			String[] configNames = input.getConfigNames();
+			configList = new JList(configNames);
+			// select all the values
 			int[] selectIndex = new int[configNames.length];
 			for (int i = 0; i < selectIndex.length; i++) {
 				selectIndex[i] = i;
 			}
-			configList = new JList(configNames);
 			configList.setSelectedIndices(selectIndex);
 
 			JPanel buttonPanel = buttonPanel();
 
 			this.setResizable(true);
 			this.setTitle("Load Configuration Preview");
-			this.setSize(new java.awt.Dimension(375, 230));
+			this.setSize(new Dimension(375, 230));
 			this.getContentPane().add(overallPanel);
 			BoxLayout thisLayout = new BoxLayout(overallPanel, 0);
 
 			overallPanel.setLayout(thisLayout);
-			overallPanel.setBorder(
+			overallPanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory
+					.createEtchedBorder(EtchedBorder.RAISED), BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
-			BorderFactory.createCompoundBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED), BorderFactory
-					.createEmptyBorder(5, 5, 5, 5)));
-
-			scrollPane.setPreferredSize(new java.awt.Dimension(177, 200));
+			scrollPane.setPreferredSize(new Dimension(177, 200));
 			JPanel configPanel = new JPanel();
 
 			configPanel.setLayout(new BoxLayout(configPanel, 1));
@@ -121,7 +120,7 @@ public class LoadConfigurationGUI extends javax.swing.JDialog {
 			scrollPane.setViewportView(configList);
 			overallPanel.add(configPanel);
 
-			buttonPanel.setPreferredSize(new java.awt.Dimension(120, 210));
+			buttonPanel.setPreferredSize(new Dimension(120, 210));
 			overallPanel.add(buttonPanel);
 
 		} catch (Exception e) {
@@ -136,7 +135,7 @@ public class LoadConfigurationGUI extends javax.swing.JDialog {
 		closeButton = new JButton();
 		viewButton.setText("    View    ");
 		viewButton.setToolTipText("View all or the selected plots");
-		viewButton.setPreferredSize(new java.awt.Dimension(100, 30));
+		viewButton.setPreferredSize(new Dimension(100, 30));
 		viewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				doView();
@@ -145,7 +144,7 @@ public class LoadConfigurationGUI extends javax.swing.JDialog {
 
 		importButton.setText("  Import   ");
 		importButton.setToolTipText("Import all or the selected configurations into the table");
-		importButton.setPreferredSize(new java.awt.Dimension(100, 30));
+		importButton.setPreferredSize(new Dimension(100, 30));
 		importButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				doImport();
@@ -154,7 +153,7 @@ public class LoadConfigurationGUI extends javax.swing.JDialog {
 
 		saveButton.setText("Save Plots");
 		saveButton.setToolTipText("Save all or the selected plots to a directory");
-		saveButton.setPreferredSize(new java.awt.Dimension(100, 30));
+		saveButton.setPreferredSize(new Dimension(100, 30));
 		saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				doSave();
@@ -163,7 +162,7 @@ public class LoadConfigurationGUI extends javax.swing.JDialog {
 
 		closeButton.setText("   Close    ");
 		closeButton.setToolTipText("Close this window");
-		closeButton.setPreferredSize(new java.awt.Dimension(100, 30));
+		closeButton.setPreferredSize(new Dimension(100, 30));
 		closeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				dispose();
