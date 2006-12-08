@@ -21,7 +21,6 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.BevelBorder;
@@ -30,7 +29,7 @@ import javax.swing.border.BevelBorder;
  * Select the data sets to use in a plot from the list of available datasets
  * 
  * @author Alison Eyth, CEP UNC
- * @version $Id: DataSetSelector.java,v 1.4 2006/12/07 20:41:53 parthee Exp $
+ * @version $Id: DataSetSelector.java,v 1.5 2006/12/08 22:46:52 parthee Exp $
  */
 public class DataSetSelector extends JDialog {
 
@@ -42,9 +41,6 @@ public class DataSetSelector extends JDialog {
 
 	/** the string array to edit * */
 	private String[] stringArray = null;
-
-	/** the available set of strings for editing the string array * */
-	private String[] availStringChoices = null;
 
 	/** a list to include the selected values * */
 	private JList selectedList = null;
@@ -281,7 +277,6 @@ public class DataSetSelector extends JDialog {
 				public void actionPerformed(ActionEvent ae) {
 					if (overallList.isSelectionEmpty())
 						return;
-					String value = null;
 					try {
 						Object[] selObj = overallList.getSelectedValues();
 						if (selObj == null || selObj.length == 0)
@@ -330,7 +325,6 @@ public class DataSetSelector extends JDialog {
 	 * Add the datasets selected in the "Available Data Sets" window if there are currently no datasets selected.
 	 */
 	private void addSelectedDataSets() {
-		String value = null;
 		try {
 			// insert the items in a sorted fashion
 			Object[] setsToAdd = overallList.getSelectedValues();
@@ -351,7 +345,6 @@ public class DataSetSelector extends JDialog {
 			}
 			selectedList.setListData(selectedDataSetWithKeys);
 		} catch (Exception e) {
-			e.printStackTrace();
 			DefaultUserInteractor.get().notify(this, "Error adding data sets", e.getMessage(), UserInteractor.ERROR);
 			return;
 		}
@@ -376,7 +369,7 @@ public class DataSetSelector extends JDialog {
 		}
 		boolean foundPlace = false;
 		int j = 0;
-		String selectedValStr = ((DataSetWithKey) setToAdd).getName();
+		String selectedValStr = setToAdd.getName();
 		while (!foundPlace && (j < selected.size())) {
 			int result = selectedValStr.compareToIgnoreCase(((DataSetWithKey) selected.elementAt(j)).getName());
 			if (result == 0) {
@@ -393,10 +386,9 @@ public class DataSetSelector extends JDialog {
 		if ((dataSetInfo.getMaxNumber() > 0) && (1 + currentSize > dataSetInfo.getMaxNumber())) {
 			if (dataSetInfo.getMaxNumber() == 1) {
 				throw new Exception("Only one data set of this type can be used on this plot");
-			} else {
-				throw new Exception("Only " + dataSetInfo.getMaxNumber()
-						+ " data sets of this type can be used on this plot");
 			}
+			throw new Exception("Only " + dataSetInfo.getMaxNumber()
+					+ " data sets of this type can be used on this plot");
 		}
 		return true;
 	}
@@ -410,10 +402,9 @@ public class DataSetSelector extends JDialog {
 			 * ds.add(dswk.dataSet, dswk.key); } return ds;
 			 */
 			return new Vector(selectedDataSetWithKeys);
-		} else {
-			// the selection didn't change so just return it
-			return initialSelection;
 		}
+		// the selection didn't change so just return it
+		return initialSelection;
 	}
 
 	public String[] getStringValues() {

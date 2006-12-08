@@ -17,96 +17,96 @@ import java.util.Vector;
  * Elided Code Example:
  * 
  * <pre>
- *     :
- *     :
- *  //====================================================================
- *  //
- *  // initialize tree components
- *  //
- *  //====================================================================
- *  AnalysisOptions optionsGlobal = initAnalysisOptions();
- *  Page page = new Page();
- *  BarPlot barPlot = new BarPlot();
- *  dataSets = initDataSets(barPlot);
- * 
- * 
- *  //====================================================================
- *  //
- *  // build tree
- *  //
- *  //====================================================================
- *  //
- *  //
- *  //                     dataSets
- *  //                         |
- *  //                   optionsGlobal
- *  //                         |
- *  //                       page
- *  //                         |
- *  //                      barPlot
- *  //
- *  dataSets.add(optionsGlobal);
- *  optionsGlobal.add(page);
- *  page.add(barPlot);
- *     :
- *     :
- *     :
- *   **
- *   * initialize DataSets
- *   *
- *   * @param p BarPlot to associate data keys with
- *   *
- *   * @return initialized DataSet
- *   ********************************************************
- *  private DataSets initDataSets(BarPlot p)
- *  {
- *     DataSets dataSets = new DataSets();
- * 
- *     // store data; use data sets unique ID as an unique key name
- *     String key1 = &quot;key1&quot;;
- *     dataSets.add(initData(&quot;My data set 1&quot;,&quot;lds1&quot;, 6), key1);
- * 
- *     p.setDataSetKeys(
- *           new Object[]
- *     {
- *        new String[]
- *        {
- *           key1
- *        }
- *     });
- * 
- *     return dataSets;
- *  }
- *     :
- *     :
- *     :
- *   **
- *   * create and initialize a LabeledDoubleSeries
- *   *
- *   * @param seriesName name of the data set
- *   * @param labelPrefix prefix to use in label generation
- *   * The label name is generated as:
- *   * String labelName = labelPrefix + i;
- *   * @param count number of elements to generate
- *   *
- *   * @return initialized LabeledDoubleSeries
- *   ********************************************************
- *  private LabeledDoubleSeries initData(String seriesName, String labelPrefix,
- *     int count)
- *  {
- *     LabeledDoubleSeries lds = new LabeledDoubleSeries();
- *     lds.setName(seriesName);
- * 
- *     for (int i = 0; i &lt; count; ++i)
- *     {
- *        String labelName = labelPrefix + i;
- *        double value = Math.random() * 10.0;
- *        lds.addData(value, labelName);
- *     }
- * 
- *     return lds;
- *  }
- * 
+ *      :
+ *      :
+ *   //====================================================================
+ *   //
+ *   // initialize tree components
+ *   //
+ *   //====================================================================
+ *   AnalysisOptions optionsGlobal = initAnalysisOptions();
+ *   Page page = new Page();
+ *   BarPlot barPlot = new BarPlot();
+ *   dataSets = initDataSets(barPlot);
+ *  
+ *  
+ *   //====================================================================
+ *   //
+ *   // build tree
+ *   //
+ *   //====================================================================
+ *   //
+ *   //
+ *   //                     dataSets
+ *   //                         |
+ *   //                   optionsGlobal
+ *   //                         |
+ *   //                       page
+ *   //                         |
+ *   //                      barPlot
+ *   //
+ *   dataSets.add(optionsGlobal);
+ *   optionsGlobal.add(page);
+ *   page.add(barPlot);
+ *      :
+ *      :
+ *      :
+ *    **
+ *    * initialize DataSets
+ *    *
+ *    * @param p BarPlot to associate data keys with
+ *    *
+ *    * @return initialized DataSet
+ *    ********************************************************
+ *   private DataSets initDataSets(BarPlot p)
+ *   {
+ *      DataSets dataSets = new DataSets();
+ *  
+ *      // store data; use data sets unique ID as an unique key name
+ *      String key1 = &quot;key1&quot;;
+ *      dataSets.add(initData(&quot;My data set 1&quot;,&quot;lds1&quot;, 6), key1);
+ *  
+ *      p.setDataSetKeys(
+ *            new Object[]
+ *      {
+ *         new String[]
+ *         {
+ *            key1
+ *         }
+ *      });
+ *  
+ *      return dataSets;
+ *   }
+ *      :
+ *      :
+ *      :
+ *    **
+ *    * create and initialize a LabeledDoubleSeries
+ *    *
+ *    * @param seriesName name of the data set
+ *    * @param labelPrefix prefix to use in label generation
+ *    * The label name is generated as:
+ *    * String labelName = labelPrefix + i;
+ *    * @param count number of elements to generate
+ *    *
+ *    * @return initialized LabeledDoubleSeries
+ *    ********************************************************
+ *   private LabeledDoubleSeries initData(String seriesName, String labelPrefix,
+ *      int count)
+ *   {
+ *      LabeledDoubleSeries lds = new LabeledDoubleSeries();
+ *      lds.setName(seriesName);
+ *  
+ *      for (int i = 0; i &lt; count; ++i)
+ *      {
+ *         String labelName = labelPrefix + i;
+ *         double value = Math.random() * 10.0;
+ *         lds.addData(value, labelName);
+ *      }
+ *  
+ *      return lds;
+ *   }
+ *  
  * </pre>
  * 
  * <p>
@@ -118,7 +118,7 @@ import java.util.Vector;
  * 
  * 
  * @author Tommy E. Cathey
- * @version $Id: BarPlot.java,v 1.3 2006/10/30 21:43:50 parthee Exp $
+ * @version $Id: BarPlot.java,v 1.4 2006/12/08 22:46:52 parthee Exp $
  * 
  */
 public class BarPlot extends Plot implements Serializable, Cloneable, AnalysisOptionConstantsIfc {
@@ -187,53 +187,53 @@ public class BarPlot extends Plot implements Serializable, Cloneable, AnalysisOp
 	 *            Elided Code Example:
 	 * 
 	 * <pre>
-	 *     :
-	 *     :
-	 *  private DataSets initDataSets(BarPlot p)
-	 *  {
-	 *     DataSets dataSets = new DataSets();
-	 * 
-	 *      // store data; use data sets unique ID as an unique key name
-	 *      String key1 = &quot;key1&quot;;
-	 *     String key2 = &quot;key2&quot;;
-	 *     String key3 = &quot;key3&quot;;
-	 *     String key4 = &quot;key4&quot;;
-	 *     dataSets.add(initData(&quot;My data set 1&quot;,&quot;lds1&quot;, 3), key1);
-	 *     dataSets.add(initData(&quot;My data set 2&quot;,&quot;lds1&quot;, 3), key2);
-	 *     dataSets.add(initData(&quot;My data set 3&quot;,&quot;lds1&quot;, 3), key3);
-	 * 
-	 *     p.setDataSetKeys(
-	 *           new Object[]
-	 *     {
-	 *        new String[]
-	 *        {
-	 *           key1,
-	 *           key2,
-	 *           key3
-	 *        }
-	 *     });
-	 * 
-	 *     return dataSets;
-	 *  }
-	 *     :
-	 *     :
-	 *  private LabeledDoubleSeries initData(String seriesName, String labelPrefix,
-	 *     int count)
-	 *  {
-	 *     LabeledDoubleSeries lds = new LabeledDoubleSeries();
-	 *     lds.setName(seriesName);
-	 * 
-	 *        for (int i = 0; i &lt; count; ++i)
-	 *        {
-	 *           String labelName = labelPrefix + i;
-	 *           double value = Math.random() * 10.0;
-	 *           lds.addData(value, labelName);
-	 *        }
-	 * 
-	 *        return lds;
-	 *  }
-	 *     :
-	 *     :
+	 *      :
+	 *      :
+	 *   private DataSets initDataSets(BarPlot p)
+	 *   {
+	 *      DataSets dataSets = new DataSets();
+	 *  
+	 *       // store data; use data sets unique ID as an unique key name
+	 *       String key1 = &quot;key1&quot;;
+	 *      String key2 = &quot;key2&quot;;
+	 *      String key3 = &quot;key3&quot;;
+	 *      String key4 = &quot;key4&quot;;
+	 *      dataSets.add(initData(&quot;My data set 1&quot;,&quot;lds1&quot;, 3), key1);
+	 *      dataSets.add(initData(&quot;My data set 2&quot;,&quot;lds1&quot;, 3), key2);
+	 *      dataSets.add(initData(&quot;My data set 3&quot;,&quot;lds1&quot;, 3), key3);
+	 *  
+	 *      p.setDataSetKeys(
+	 *            new Object[]
+	 *      {
+	 *         new String[]
+	 *         {
+	 *            key1,
+	 *            key2,
+	 *            key3
+	 *         }
+	 *      });
+	 *  
+	 *      return dataSets;
+	 *   }
+	 *      :
+	 *      :
+	 *   private LabeledDoubleSeries initData(String seriesName, String labelPrefix,
+	 *      int count)
+	 *   {
+	 *      LabeledDoubleSeries lds = new LabeledDoubleSeries();
+	 *      lds.setName(seriesName);
+	 *  
+	 *         for (int i = 0; i &lt; count; ++i)
+	 *         {
+	 *            String labelName = labelPrefix + i;
+	 *            double value = Math.random() * 10.0;
+	 *            lds.addData(value, labelName);
+	 *         }
+	 *  
+	 *         return lds;
+	 *   }
+	 *      :
+	 *      :
 	 * </pre>
 	 * 
 	 * @exception IllegalArgumentException

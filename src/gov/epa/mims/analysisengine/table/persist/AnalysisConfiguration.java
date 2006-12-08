@@ -206,6 +206,7 @@ public class AnalysisConfiguration {
 				DataSets dset = getDataSets(value.info);
 				Branch tree = (value.tree); // .clone();
 				dset.add(tree.getChild(0));
+				
 				PageType pt = (PageType) (((AnalysisOptions) (tree.getChild(0))).getOption("PAGE_TYPE"));
 				HashMap textvalues = new HashMap();
 				String fullname;
