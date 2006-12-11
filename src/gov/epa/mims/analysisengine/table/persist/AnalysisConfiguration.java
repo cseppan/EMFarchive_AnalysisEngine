@@ -12,22 +12,28 @@ import gov.epa.mims.analysisengine.table.sort.SortCriteria;
 import gov.epa.mims.analysisengine.tree.AnalysisOptions;
 import gov.epa.mims.analysisengine.tree.Branch;
 import gov.epa.mims.analysisengine.tree.DataSets;
+import gov.epa.mims.analysisengine.tree.Node;
 import gov.epa.mims.analysisengine.tree.PageType;
+import gov.epa.mims.analysisengine.tree.Plot;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.Vector;
 
 import javax.swing.event.TableModelEvent;
+
+import com.thoughtworks.xstream.XStream;
 
 public class AnalysisConfiguration {
 
@@ -205,8 +211,9 @@ public class AnalysisConfiguration {
 					continue; // ignore Table Configurations
 				DataSets dset = getDataSets(value.info);
 				Branch tree = (value.tree); // .clone();
+				removeColumnsNotAvailableInNewDatasets(dset, tree);
 				dset.add(tree.getChild(0));
-				
+
 				PageType pt = (PageType) (((AnalysisOptions) (tree.getChild(0))).getOption("PAGE_TYPE"));
 				HashMap textvalues = new HashMap();
 				String fullname;
@@ -221,12 +228,41 @@ public class AnalysisConfiguration {
 				textvalues.put("PAGE_TYPE", fullname);
 				TreeDialog.createPlotWithoutGUI(dset, dset, null, textvalues);
 			} catch (Exception e) {
+				e.printStackTrace();
 				error.append("Error saving " + plotNames[i] + "\n. Exception :" + e.getMessage());
 			}
 		}
 
 		if (error.length() > 1) {
 			throw new Exception(error.toString());
+		}
+	}
+
+	private void removeColumnsNotAvailableInNewDatasets(DataSets newDataset, Branch tree) {
+		Plot[] plots = plotsInConfig(tree);
+		String[] keys = (String[]) newDataset.getKeys().toArray(new String[0]);
+		Object[] retVal = new Object[1];
+		retVal[0] = keys;
+		for (int i = 0; i < plots.length; i++) {
+			plots[i].setDataSetKeys(retVal);
+		}
+	}
+
+	private Plot[] plotsInConfig(Branch tree) {
+		List plots = new ArrayList();
+		getPlotsFromTree(plots, tree);
+		return (Plot[]) plots.toArray(new Plot[0]);
+	}
+
+	private void getPlotsFromTree(List plots, Node tree) {
+		int childCount = tree.getChildCount();
+		for (int i = 0; i < childCount; i++) {
+			Node child = tree.getChild(i);
+			if (child instanceof Plot) {
+				plots.add(child);
+				return;
+			}
+			getPlotsFromTree(plots, child);
 		}
 	}
 
@@ -342,8 +378,13 @@ public class AnalysisConfiguration {
 			String value = (String) selectedValues.get(i);
 			temp.put(value, configs.get(value));
 		}
-		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename));
-		oos.writeObject(temp);
-		oos.close();
+		XStream xstream = new XStream();
+		ObjectOutputStream out = xstream.createObjectOutputStream(new FileWriter(filename));
+		out.writeObject(temp);
+
+		out.close();
+		// ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename));
+		// oos.writeObject(temp);
+		// oos.close();
 	}
 }
