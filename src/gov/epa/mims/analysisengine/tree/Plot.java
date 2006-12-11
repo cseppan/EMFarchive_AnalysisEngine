@@ -3,12 +3,13 @@ package gov.epa.mims.analysisengine.tree;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /***********************************************************************************************************************
  * abstract base class for all plots
  * 
  * @author Tommy E. Cathey
- * @version $Id: Plot.java,v 1.3 2006/10/30 21:43:50 parthee Exp $
+ * @version $Id: Plot.java,v 1.4 2006/12/11 22:16:39 parthee Exp $
  * 
  **********************************************************************************************************************/
 public abstract class Plot extends Leaf implements Serializable, Cloneable {
@@ -87,6 +88,11 @@ public abstract class Plot extends Leaf implements Serializable, Cloneable {
 	// public abstract void createDataSetKeys(DataSets[] dataSets)
 	// throws Exception;
 	public abstract void createDataSetKeys(ArrayList dataSets) throws Exception;
+	
+	
+	public abstract List getDataKeyList();
+	
+	public abstract String[] getKeys(int i);
 
 	/*******************************************************************************************************************
 	 * Compares this object to the specified object.

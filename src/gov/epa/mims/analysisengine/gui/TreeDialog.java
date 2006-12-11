@@ -71,7 +71,7 @@ import javax.swing.JPanel;
  * The GUI will also contain a PagePanel for editing page and plot options
  * 
  * @author Alison Eyth
- * @version $Id: TreeDialog.java,v 1.4 2006/12/08 22:46:52 parthee Exp $
+ * @version $Id: TreeDialog.java,v 1.5 2006/12/11 22:16:39 parthee Exp $
  * 
  * @see gov.epa.mims.analysisengine.tree.Node
  * @see gov.epa.mims.analysisengine.tree.DataSets
@@ -323,8 +323,8 @@ public class TreeDialog extends JDialog implements AnalysisOptionConstantsIfc, P
 		}
 		this.rgenerator = rgenerator;
 		this.dataSetsAdapter = dataSetsAdapter;
-		if (dataSetsAdapter == null) // use the data sets node as the adapter
-		{
+		// use the data sets node as the adapter
+		if (dataSetsAdapter == null) {
 			this.dataSetsAdapter = this.dataSets;
 		}
 

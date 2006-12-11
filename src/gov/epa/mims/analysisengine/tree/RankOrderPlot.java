@@ -18,83 +18,83 @@ import java.util.Vector;
  * Elided Code Example:
  * 
  * <pre>
- *     :
- *     :
- *  //====================================================================
- *  //
- *  // initialize tree components
- *  //
- *  //====================================================================
- *  AnalysisOptions optionsGlobal = initAnalysisOptions();
- *  Page page = new Page();
- *  RankOrderPlot rankOrderPlot = new RankOrderPlot();
- *  dataSets = initDataSets(rankOrderPlot);
- * 
- * 
- * 
- *  //====================================================================
- *  //
- *  // build tree
- *  //
- *  //====================================================================
- *  //
- *  //
- *  //                     dataSets
- *  //                         |
- *  //                   optionsGlobal
- *  //                         |
- *  //                       page
- *  //                         |
- *  //                   rankOrderPlot
- *  //
- *  dataSets.add(optionsGlobal);
- *  optionsGlobal.add(page);
- *  page.add(rankOrderPlot);
- *     :
- *     :
- *  private DataSets initDataSets(RankOrderPlot p)
- *  {
- *     DataSets dataSets = new DataSets();
- * 
- *     // store data; use data sets unique ID as an unique key name
- *     String key1 = &quot;key1&quot;;
- *     String key2 = &quot;key2&quot;;
- *     String key3 = &quot;key3&quot;;
- *     String key4 = &quot;key4&quot;;
- *     dataSets.add(initData(&quot;My data set 1&quot;, 6), key1);
- *     dataSets.add(initData(&quot;My data set 2&quot;, 6), key2);
- *     dataSets.add(initData(&quot;My data set 3&quot;, 6), key3);
- *     dataSets.add(initData(&quot;My data set 4&quot;, 6), key4);
- * 
- *     p.setDataSetKeys(
- *           new Object[]
- *     {
- *        new String[]
- *        {
- *           key1,
- *           key2,
- *           key3,
- *           key4
- *        }
- *     });
- *     return dataSets;
- *  }
- * 
- *  private DoubleSeries initData(String seriesName, int count)
- *  {
- *     DoubleSeries ds = new DoubleSeries();
- *     ds.setName(seriesName);
- * 
- *     for (int i = 0; i &lt; count; ++i)
- *     {
- *        double value = Math.random() * 10.0;
- *        ds.addData(value);
- *     }
- * 
- *     return ds;
- *  }
- * 
- * 
+ *       :
+ *       :
+ *    //====================================================================
+ *    //
+ *    // initialize tree components
+ *    //
+ *    //====================================================================
+ *    AnalysisOptions optionsGlobal = initAnalysisOptions();
+ *    Page page = new Page();
+ *    RankOrderPlot rankOrderPlot = new RankOrderPlot();
+ *    dataSets = initDataSets(rankOrderPlot);
+ *   
+ *   
+ *   
+ *    //====================================================================
+ *    //
+ *    // build tree
+ *    //
+ *    //====================================================================
+ *    //
+ *    //
+ *    //                     dataSets
+ *    //                         |
+ *    //                   optionsGlobal
+ *    //                         |
+ *    //                       page
+ *    //                         |
+ *    //                   rankOrderPlot
+ *    //
+ *    dataSets.add(optionsGlobal);
+ *    optionsGlobal.add(page);
+ *    page.add(rankOrderPlot);
+ *       :
+ *       :
+ *    private DataSets initDataSets(RankOrderPlot p)
+ *    {
+ *       DataSets dataSets = new DataSets();
+ *   
+ *       // store data; use data sets unique ID as an unique key name
+ *       String key1 = &quot;key1&quot;;
+ *       String key2 = &quot;key2&quot;;
+ *       String key3 = &quot;key3&quot;;
+ *       String key4 = &quot;key4&quot;;
+ *       dataSets.add(initData(&quot;My data set 1&quot;, 6), key1);
+ *       dataSets.add(initData(&quot;My data set 2&quot;, 6), key2);
+ *       dataSets.add(initData(&quot;My data set 3&quot;, 6), key3);
+ *       dataSets.add(initData(&quot;My data set 4&quot;, 6), key4);
+ *   
+ *       p.setDataSetKeys(
+ *             new Object[]
+ *       {
+ *          new String[]
+ *          {
+ *             key1,
+ *             key2,
+ *             key3,
+ *             key4
+ *          }
+ *       });
+ *       return dataSets;
+ *    }
+ *   
+ *    private DoubleSeries initData(String seriesName, int count)
+ *    {
+ *       DoubleSeries ds = new DoubleSeries();
+ *       ds.setName(seriesName);
+ *   
+ *       for (int i = 0; i &lt; count; ++i)
+ *       {
+ *          double value = Math.random() * 10.0;
+ *          ds.addData(value);
+ *       }
+ *   
+ *       return ds;
+ *    }
+ *   
+ *   
  * </pre>
  * 
  * <br>
@@ -108,7 +108,7 @@ import java.util.Vector;
  * <A HREF="doc-files/ExampleRankOrder08.html"><B>View Example</B></A>
  * 
  * @author Tommy E. Cathey
- * @version $Id: RankOrderPlot.java,v 1.3 2006/10/30 21:43:50 parthee Exp $
+ * @version $Id: RankOrderPlot.java,v 1.4 2006/12/11 22:16:39 parthee Exp $
  * 
  */
 public class RankOrderPlot extends Plot implements Serializable, Cloneable, AnalysisOptionConstantsIfc {

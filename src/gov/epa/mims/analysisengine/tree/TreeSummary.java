@@ -1,7 +1,7 @@
 package gov.epa.mims.analysisengine.tree;
 
 import gov.epa.mims.analysisengine.AnalysisEngineConstants;
-import gov.epa.mims.analysisengine.gui.TreeDialog;
+
 import java.util.Hashtable;
 
 /**
@@ -19,7 +19,7 @@ import java.util.Hashtable;
  * </p>
  * 
  * @author Daniel Gatti
- * @version $Id: TreeSummary.java,v 1.3 2006/12/07 20:41:53 parthee Exp $
+ * @version $Id: TreeSummary.java,v 1.4 2006/12/11 22:16:39 parthee Exp $
  */
 public class TreeSummary extends Visitor {
 	/** The number of pages in the current tree. */
@@ -153,4 +153,4 @@ public class TreeSummary extends Visitor {
 			((Node) dataSets).getChild(c).accept(this);
 		return null;
 	}
-} // class TreeSummary
+}

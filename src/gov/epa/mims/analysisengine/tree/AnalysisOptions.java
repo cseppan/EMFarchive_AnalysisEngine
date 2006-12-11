@@ -30,7 +30,7 @@ import java.util.Set;
  *  //
  *  //                dataSets
  *  //                    |
- *  //              optionsGlobal
+ *  //              AnalysisOptions(Options Global)
  *  //                    |
  *  //                  page
  *  //                    |
@@ -84,9 +84,9 @@ import java.util.Set;
  * //                         |
  * //        ------------------------------------
  * //        |                |                 |
- * //    optionsLocal1   optionsLocal2     optionsLocal3
+ * //      page1   			page2     	      page3	
  * //        |                |                 |
- * //      page1            page2             page3
+ * //     optionsLocal1    optionsLocal2   optionsLocal3
  * //        |                |                 |
  * //     barPlot1         barPlot2         barPlot3
  * //
@@ -109,7 +109,7 @@ import java.util.Set;
  * 
  * 
  * @author Tommy E. Cathey
- * @version $Id: AnalysisOptions.java,v 1.3 2006/12/08 22:46:52 parthee Exp $
+ * @version $Id: AnalysisOptions.java,v 1.4 2006/12/11 22:16:39 parthee Exp $
  * 
  */
 public class AnalysisOptions extends Branch implements Serializable, Cloneable, AnalysisOptionConstantsIfc {
