@@ -1,5 +1,7 @@
 package gov.epa.mims.analysisengine.table;
 
+import java.io.Serializable;
+
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -14,9 +16,9 @@ import javax.swing.table.AbstractTableModel;
  * </p>
  * 
  * @author Daniel Gatti
- * @version $Id: MultiRowHeaderTableModel.java,v 1.3 2006/10/30 21:43:50 parthee Exp $
+ * @version $Id: MultiRowHeaderTableModel.java,v 1.4 2006/12/13 17:20:08 parthee Exp $
  */
-public abstract class MultiRowHeaderTableModel extends AbstractTableModel implements java.io.Serializable {
+public abstract class MultiRowHeaderTableModel extends AbstractTableModel implements Serializable {
 	/**
 	 * The list of column headers. This is the transpose of the array passed into the constructor. Each String[] is the
 	 * header information for one column.

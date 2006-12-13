@@ -270,7 +270,6 @@ public class ColumnSelectionPanel extends JPanel implements ListSelectionListene
 	}
 
 	public void valueChanged(ListSelectionEvent e) {
-		table.clearSelection();
 		if (!e.getValueIsAdjusting()) {
 			selectionLabel.setText(table.getSelectedRowCount() + " selected");
 		}

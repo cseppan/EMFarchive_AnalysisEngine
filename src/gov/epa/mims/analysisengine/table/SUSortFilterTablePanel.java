@@ -115,7 +115,6 @@ public class SUSortFilterTablePanel extends SortFilterTablePanel {
 		action = new ShowHideColumnsAction(this);
 		popupMenu.add(action);
 		JButton showHideButton = toolBar.add(action);
-
 		showHideButton.setToolTipText("Show/Hide Columns");
 		popupMenu.addSeparator();
 
