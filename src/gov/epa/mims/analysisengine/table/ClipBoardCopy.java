@@ -1,0 +1,82 @@
+package gov.epa.mims.analysisengine.table;
+
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+
+import javax.swing.JComponent;
+import javax.swing.KeyStroke;
+
+public class ClipBoardCopy implements ActionListener {
+
+	private RowHeaderTable rowHeaderTable;
+
+	private Clipboard systemClipboard;
+
+	public ClipBoardCopy(RowHeaderTable rowHeaderTable) {
+		this.rowHeaderTable = rowHeaderTable;
+		systemClipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+	}
+
+	public void registerCopyKeyStroke() {
+		KeyStroke copy = KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.CTRL_MASK, false);
+		rowHeaderTable.registerKeyboardAction(this, "Copy", copy, JComponent.WHEN_FOCUSED);
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		if (e.getActionCommand().compareTo("Copy") == 0) {
+			String delimiter = ",";
+			StringBuffer sb = new StringBuffer();
+			int[] selectedColumns = rowHeaderTable.getSelectedColumns();
+			copyColumnHeaders(sb, selectedColumns, delimiter);
+			copySelectedData(delimiter, sb, selectedColumns);
+
+			// TODO: check with Alison whether to add a check to ensure we have
+			// selected only a contiguous block of cells
+			StringSelection stringSelection = new StringSelection(sb.toString());
+			systemClipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+			systemClipboard.setContents(stringSelection, stringSelection);
+		}
+	}
+
+	private void copySelectedData(String delimiter, StringBuffer sb, int[] selectedColumns) {
+		int[] selectedRows = rowHeaderTable.getSelectedRows();
+		for (int i = 0; i < selectedRows.length; i++) {
+			for (int j = 0; j < selectedColumns.length; j++) {
+				Object valueAt = rowHeaderTable.getValueAt(selectedRows[i], selectedColumns[j]);
+				sb.append(valueAt.toString());
+				System.out.println("value-" + valueAt.toString());
+				if (j != selectedColumns.length - 1)
+					sb.append(delimiter);
+			}
+			if (i != selectedRows.length - 1)
+				sb.append("\n");
+		}
+	}
+
+	private void copyColumnHeaders(StringBuffer columnHeadersString, int[] selectedColumns, String delimiter) {
+		int colummHeaderLength = 0;
+		if (selectedColumns.length == 0)
+			return;
+
+		colummHeaderLength = rowHeaderTable.underlyingModel.getColumnHeaders(0).length;
+
+		String[][] selectedColumnHeaders = new String[selectedColumns.length][colummHeaderLength];
+		for (int i = 0; i < selectedColumns.length; i++) {
+			selectedColumnHeaders[i] = rowHeaderTable.underlyingModel.getColumnHeaders(selectedColumns[i]);
+		}
+
+		for (int j = 0; j < colummHeaderLength; j++) {
+			for (int i = 0; i < selectedColumns.length; i++) {
+				columnHeadersString.append(selectedColumnHeaders[i][j]);
+				if (i != selectedColumns.length - 1)
+					columnHeadersString.append(delimiter);
+			}
+			columnHeadersString.append("\n");
+		}
+	}
+
+}

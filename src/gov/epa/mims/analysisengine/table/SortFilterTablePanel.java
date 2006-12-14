@@ -57,7 +57,7 @@ import javax.swing.table.TableColumnModel;
  * </p>
  * 
  * @author Daniel Gatti
- * @version $Id: SortFilterTablePanel.java,v 1.11 2006/11/29 21:19:57 parthee Exp $
+ * @version $Id: SortFilterTablePanel.java,v 1.12 2006/12/14 22:25:08 parthee Exp $
  */
 public class SortFilterTablePanel extends JPanel implements TableModelListener, ChildHasChangedListener {
 
@@ -322,31 +322,12 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 
 	}
 
-	/**
-	 * Create the table models.
-	 * 
-	 * @param model
-	 *            AbstractTableModel that is the base model for this table.
-	 */
-	private void createTable(MultiRowHeaderTableModel model) {
-		overallModel = new OverallTableModel(model);
+	private void createTable(MultiRowHeaderTableModel baseModel) {
+		overallModel = new OverallTableModel(baseModel);
 		table = new RowHeaderTable(overallModel);
-		// table.getModel().addTableModelListener(new TableModelListener()
-		// {
-		// public void tableChanged(TableModelEvent e)
-		// {
-		// update();
-		// }
-		// });
 		overallModel.addTableModelListener(this);
 		updateStatusLabel();
 
-		// Get all of the column names from the base model and save them.
-		/*
-		 * allColumnFormats = new Format[overallModel.getColumnCount()]; for (int i = 0; i < allColumnFormats.length;
-		 * i++) { overallModel.setColumnFormatInfo(table.getColumnName(i), new
-		 * ColumnFormatInfo(table.getColumnModel().getColumn(i))); allColumnFormats[i] = table.formats[i]; }
-		 */
 	} // createTable()
 
 	/**
