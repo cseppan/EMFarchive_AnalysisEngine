@@ -16,8 +16,11 @@ public class ClipBoardCopy implements ActionListener {
 
 	private Clipboard systemClipboard;
 
+	private String delimiter;
+
 	public ClipBoardCopy(RowHeaderTable rowHeaderTable) {
 		this.rowHeaderTable = rowHeaderTable;
+		delimiter = "\t";
 		systemClipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 	}
 
@@ -28,7 +31,7 @@ public class ClipBoardCopy implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().compareTo("Copy") == 0) {
-			String delimiter = ",";
+
 			StringBuffer sb = new StringBuffer();
 			int[] selectedColumns = rowHeaderTable.getSelectedColumns();
 			copyColumnHeaders(sb, selectedColumns, delimiter);
@@ -48,7 +51,6 @@ public class ClipBoardCopy implements ActionListener {
 			for (int j = 0; j < selectedColumns.length; j++) {
 				Object valueAt = rowHeaderTable.getValueAt(selectedRows[i], selectedColumns[j]);
 				sb.append(valueAt.toString());
-				System.out.println("value-" + valueAt.toString());
 				if (j != selectedColumns.length - 1)
 					sb.append(delimiter);
 			}
