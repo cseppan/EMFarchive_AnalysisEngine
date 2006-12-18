@@ -48,7 +48,7 @@ import javax.swing.table.TableColumnModel;
  * </p>
  * 
  * @author Daniel Gatti
- * @version $Id: FilterPanel.java,v 1.1 2006/11/01 15:33:39 parthee Exp $
+ * @version $Id: FilterPanel.java,v 1.2 2006/12/18 16:38:00 parthee Exp $
  */
 public class FilterPanel extends JPanel implements ChildHasChangedListener, ActionListener {
 	/** The table in which the filter information is entered. */
@@ -376,9 +376,9 @@ public class FilterPanel extends JPanel implements ChildHasChangedListener, Acti
 		}
 
 		for (int r = 0; r < numRows; r++) {
-			if (filterChoiceList.contains(newData[r][NAME_COLUMN])) {
+			//if (filterChoiceList.contains(newData[r][NAME_COLUMN])) {
 				model.addRow(newData[r]);
-			}
+			//}
 		} // for(r)
 
 		model.fireTableDataChanged();

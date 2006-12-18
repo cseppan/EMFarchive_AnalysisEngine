@@ -159,11 +159,6 @@ public class FilterRowPanel extends JPanel implements ChildHasChangedListener {
 				Integer operation = (Integer) FilterCriteria.symbolToConstantHash
 						.get(rowData[1]);
 				if (format != null && !isStringOperation(operation.intValue())) {
-					// System.out.println("duplex.ColumnClass="+duplex.columnClass);
-					// System.out.println("filterCriteria.getValue(i)='"+filterCriteria.getValue(i)+
-					// "'");
-					// System.out.println("filterCriteria.getValue(i).getClass="+filterCriteria.getValue(i).getClass());
-					// System.out.println("format="+format.getClass());
 					rowData[2] = format.format(filterCriteria.getValue(i));
 				} else {
 					rowData[2] = (String) filterCriteria.getValue(i);
@@ -278,8 +273,6 @@ public class FilterRowPanel extends JPanel implements ChildHasChangedListener {
 						values[r] = (Date) formats[r].parseObject(cellValue);
 					} else if (duplex.columnClass == Boolean.class) {
 						Boolean bool = new Boolean(cellValue);
-						// System.out.println("bool=" +
-						// bool.booleanValue());
 						values[r] = new ComparableBoolean(bool);
 					} else {
 						values[r] = cellValue;
@@ -300,7 +293,7 @@ public class FilterRowPanel extends JPanel implements ChildHasChangedListener {
 		filterCriteria.setRowCriteria(names, operations, values,
 		/* formats, */filterPanel.getUseAnd());
 		filterCriteria.setApplyFilters(applyFilters);
-		filterCriteria.setAllColumnClasses(allColumnClasses);
+		//filterCriteria.setAllColumnClasses(allColumnClasses);
 		/*
 		 * } // try catch (ParseException pe) {
 		 * DefaultUserInteractor.get().notifyOfException(this, "Invalid
@@ -356,11 +349,6 @@ public class FilterRowPanel extends JPanel implements ChildHasChangedListener {
 		this.hasChanged = hasChanged;
 		filterPanel.setHasChanged(hasChanged);
 	}
-
-	// public void setApplyFilters(boolean applyFilters)
-	// {
-	// filterPanel.setApplyFilter(applyFilters);
-	// }
 
 	/**
 	 * Class to hold two items about each column in the table.
