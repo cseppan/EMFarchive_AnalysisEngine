@@ -69,7 +69,18 @@ public class ConfigFileHistory extends DefaultTableModel {
 	}
 
 	public void addToHistory(String fullFileName) {
-		addRow(new String[] { fullFileName });
+		if (!exist(fullFileName))
+			addRow(new String[] { fullFileName });
+	}
+
+	private boolean exist(String fullFileName) {
+		Vector data = getDataVector();
+		for (int i = 0; i < data.size(); i++) {
+			Vector info = (Vector) data.get(i);
+			if (info.get(0).equals(fullFileName))
+				return true;
+		}
+		return false;
 	}
 
 	public void saveHistory() throws IOException {
