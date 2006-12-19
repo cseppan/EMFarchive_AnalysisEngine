@@ -352,7 +352,6 @@ public class SaveConfigView extends JDialog {
 
 		for (int i = 0; i < indexs.length; i++) {
 			try {
-
 				String configName = (String) model.getValueAt(indexs[i], 0);
 				if (configName.equalsIgnoreCase(AnalysisConfiguration.TABLE_SORT_CRITERIA)
 						|| configName.equalsIgnoreCase(AnalysisConfiguration.TABLE_FILTER_CRITERIA)

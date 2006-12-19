@@ -2,6 +2,7 @@ package gov.epa.mims.analysisengine.table.persist;
 
 import gov.epa.mims.analysisengine.gui.TreeDialog;
 import gov.epa.mims.analysisengine.tree.AnalysisOptions;
+import gov.epa.mims.analysisengine.tree.Branch;
 import gov.epa.mims.analysisengine.tree.DataSets;
 import gov.epa.mims.analysisengine.tree.PageConstantsIfc;
 import gov.epa.mims.analysisengine.tree.PageType;
@@ -40,7 +41,7 @@ public class SaveConfigModel extends DefaultTableModel {
 	private void createColumnAndData() {
 		Vector toSaveOrNot = new Vector();
 		Vector plotTypes = new Vector();
-		
+
 		for (int i = 0; i < configNames.length; i++) {
 			plotTypes.add(getPlotType(configNames[i]));
 		}
@@ -119,6 +120,8 @@ public class SaveConfigModel extends DefaultTableModel {
 			} else {
 				throw new Exception("Empty Data Set");
 			}
+			removeColumnsNotAvailableInNewDatasets(dset, tempTree);
+
 			TreeDialog.createPlotWithoutGUI(dset, dset, null, null);
 			if (pageType != null) {
 				PageType pt = (PageType) options.getOption("PAGE_TYPE");
@@ -126,6 +129,11 @@ public class SaveConfigModel extends DefaultTableModel {
 				options.addOption("PAGE_TYPE", pt);
 			}
 		}
+	}
+
+	private void removeColumnsNotAvailableInNewDatasets(DataSets newDataset, Branch tree) throws Exception {
+		UpdateDataColumns update = new UpdateDataColumns(newDataset, tree);
+		update.update();
 	}
 
 	/**

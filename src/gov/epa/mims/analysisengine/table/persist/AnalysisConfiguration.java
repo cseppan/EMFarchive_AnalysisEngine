@@ -223,7 +223,7 @@ public class AnalysisConfiguration {
 	 * Plot Name and with default File Type
 	 */
 
-	public void saveConfiguredPlots(String path, int defaultFT, String[] plotNames) throws Exception {
+	public void showOrSaveConfiguredPlots(String path, int fileTypes, String[] plotNames) throws Exception {
 		String extensions[] = { PageType.JPG_EXT, PageType.PS_EXT, PageType.PDF_EXT, PageType.PNG_EXT, PageType.PTX_EXT };
 		StringBuffer error = new StringBuffer();
 		for (int i = 0; i < plotNames.length; i++) {
@@ -240,7 +240,7 @@ public class AnalysisConfiguration {
 				HashMap textvalues = new HashMap();
 				String fullname;
 				if (pt.getForm().equals("SCREEN")) {
-					fullname = path + File.separator + plotNames[i] + "." + extensions[defaultFT];
+					fullname = path + File.separator + plotNames[i] + "." + extensions[fileTypes];
 				} else {
 					String filename = pt.getFilename();
 					filename = filename.substring(filename.lastIndexOf(File.separatorChar));
@@ -260,37 +260,11 @@ public class AnalysisConfiguration {
 		}
 	}
 
-	private void removeColumnsNotAvailableInNewDatasets(DataSets newDataset, Branch tree) {
-		Plot[] plots = plotsInConfig(tree);
-		String[] keys = (String[]) newDataset.getKeys().toArray(new String[0]);
-		Object[] retVal = new Object[1];
-		retVal[0] = keys;
-		for (int i = 0; i < plots.length; i++) {
-			plots[i].setDataSetKeys(retVal);
-		}
+	private void removeColumnsNotAvailableInNewDatasets(DataSets newDataset, Branch tree) throws Exception {
+		UpdateDataColumns update = new UpdateDataColumns(newDataset, tree);
+		update.update();
 	}
 
-	private Plot[] plotsInConfig(Branch tree) {
-		List plots = new ArrayList();
-		getPlotsFromTree(plots, tree);
-		return (Plot[]) plots.toArray(new Plot[0]);
-	}
-
-	private void getPlotsFromTree(List plots, Node tree) {
-		int childCount = tree.getChildCount();
-		for (int i = 0; i < childCount; i++) {
-			Node child = tree.getChild(i);
-			if (child instanceof Plot) {
-				plots.add(child);
-				return;
-			}
-			getPlotsFromTree(plots, child);
-		}
-	}
-
-	/**
-	 * gets the Configuration names
-	 */
 	public String[] getConfigNames() {
 		return (String[]) insertedOrder.toArray(new String[0]);
 	}

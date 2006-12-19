@@ -49,7 +49,7 @@ import javax.swing.table.TableColumn;
  * chosen directory.
  * 
  * @author Krithiga Thangavelu, CEP, UNC CHAPEL HILL.
- * @version $Id: LoadConfigurationGUI.java,v 1.6 2006/12/19 19:41:02 parthee Exp $
+ * @version $Id: LoadConfigurationGUI.java,v 1.7 2006/12/19 22:22:42 parthee Exp $
  */
 public class LoadConfigurationGUI extends javax.swing.JDialog {
 
@@ -191,7 +191,7 @@ public class LoadConfigurationGUI extends javax.swing.JDialog {
 		StringBuffer error = new StringBuffer();
 		for (int i = 0; i < values.length; i++) {
 			try {
-				showPlot((String) values[i]);
+				viewConfig((String) values[i]);
 			} catch (Exception e) {
 				error.append(values[i] + " not applicable to current table\n Error:" + e.getMessage() + "\n");
 				e.printStackTrace();
@@ -227,42 +227,49 @@ public class LoadConfigurationGUI extends javax.swing.JDialog {
 		return (String[]) list.toArray(values);
 	}// reorder()
 
-	/**
-	 * Shows the plot of the configuration "plotname" in the current table context
-	 */
-
-	protected void showPlot(String plotname) throws Exception {
+	protected void viewConfig(String configName) throws Exception {
 		String pageType = null;
-		AnalysisOptions options;
-
-		Data dat = input.getConfig(plotname);
+		Data dat = input.getConfig(configName);
 		if (dat != null && dat.configType == Data.PLOT_TYPE) {
-			DataSets dset = input.getDataSets(dat.info);
-			Branch tempTree = dat.tree; // .clone());
-			if (dset != null) {
-				options = (AnalysisOptions) tempTree.getChild(0);
-				pageType = setToDefaultScreenPageType(options);
-				// dset.add(tempTree.getChild(0));
-			} else {
-				throw new Exception("Empty Data Set");
-			}
-			TreeDialog.createPlotWithoutGUI(tempTree, dset, null, null);
-			if (pageType != null) {
-				PageType pt = (PageType) options.getOption("PAGE_TYPE");
-				pt.setTextString(pageType);
-				options.addOption("PAGE_TYPE", pt);
-			}
+			viewPlot(pageType, dat);
 		}// if (dat != null && dat.configType == Data.PLOT_TYPE)
 		else {
 			if (dat != null && dat.configType == Data.TABLE_TYPE) {
 				if (dat.criteria == null) {
-					new GUIUserInteractor().notify(this, "Table Configuration", plotname + " is empty",
+					new GUIUserInteractor().notify(this, "Table Configuration", configName + " is empty",
 							UserInteractor.NOTE);
 					return;
 				}
 				previewTable(dat);
 			}
 		}// else
+	}
+
+	private void viewPlot(String pageType, Data dat) throws Exception {
+		AnalysisOptions options;
+		DataSets dset = input.getDataSets(dat.info);
+		Branch tempTree = dat.tree; // .clone());
+		if (dset != null) {
+			removeColumnsNotAvailableInNewDatasets(dset,tempTree);
+			options = (AnalysisOptions) tempTree.getChild(0);
+			pageType = setToDefaultScreenPageType(options);
+			// dset.add(tempTree.getChild(0));
+		} else {
+			throw new Exception("Empty Data Set");
+		}
+		
+		
+		TreeDialog.createPlotWithoutGUI(tempTree, dset, null, null);
+		if (pageType != null) {
+			PageType pt = (PageType) options.getOption("PAGE_TYPE");
+			pt.setTextString(pageType);
+			options.addOption("PAGE_TYPE", pt);
+		}
+	}
+	
+	private void removeColumnsNotAvailableInNewDatasets(DataSets newDataset, Branch tree) throws Exception {
+		UpdateDataColumns update = new UpdateDataColumns(newDataset, tree);
+		update.update();
 	}
 
 	protected void previewTable(Data dat) {
@@ -426,7 +433,7 @@ public class LoadConfigurationGUI extends javax.swing.JDialog {
 						importIntoTable(dat.criteria);
 					}
 				}
-				input.saveConfiguredPlots(dialog.getAbsolutePath(), dialog.getFileType(), stringValues);
+				input.showOrSaveConfiguredPlots(dialog.getAbsolutePath(), dialog.getFileType(), stringValues);
 				new GUIUserInteractor().notify(this, "Saving Plots", "Selected Plots " + " were saved successfully!!",
 						UserInteractor.NOTE);
 			}

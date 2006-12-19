@@ -1,6 +1,5 @@
 package gov.epa.mims.analysisengine.table;
 
-
 import gov.epa.mims.analysisengine.gui.GUIUserInteractor;
 import gov.epa.mims.analysisengine.gui.ScreenUtils;
 import gov.epa.mims.analysisengine.gui.UserInteractor;
@@ -20,247 +19,239 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
-
 /**
- * Class SaveToDialog - dialog displaying file type choice
- * and option to choose file using JFileChooser
- * @author  Krithiga Thangavelu, CEP, UNC CHAPEL HILL.
- * @version $Id: SaveToDialog.java,v 1.4 2006/10/30 21:43:50 parthee Exp $
+ * Class SaveToDialog - dialog displaying file type choice and option to choose file using JFileChooser
+ * 
+ * @author Krithiga Thangavelu, CEP, UNC CHAPEL HILL.
+ * @version $Id: SaveToDialog.java,v 1.5 2006/12/19 22:22:42 parthee Exp $
  */
 
-public class SaveToDialog extends javax.swing.JDialog
-{
-   private JLabel jLabel3;
-   private JButton bCancel;
-   private JButton bOK;
-   private JPanel jPanel3;
-   private JButton bBrowse;
-   private JTextField tDirName;
-   private JLabel lDirName;
-   private JPanel jPanel2;
-   private JComboBox cbFileTypes;
-   private JLabel lFileType;
-   private JPanel jPanel1;
-   private String[] filetypes =
-   {
-      "JPEG (*.jpg)", "PostScript (*.ps)",
-      "PDF (*.pdf)", "PNG (*.png)", "Latex Picture Files (*.ptx)"
-   };
+public class SaveToDialog extends javax.swing.JDialog {
+	private JLabel jLabel3;
 
-   public static int JPEG = 0;
-   public static int PS = 1;
-   public static int PDF = 2;
-   public static int PNG = 3;
-   public static int PTX = 4;
+	private JButton bCancel;
 
-   public static int CANCEL = -1;
-   public static int APPROVE = 0;
+	private JButton bOK;
 
-   private int fileType=0;
-   private String path;
-   private int retVal = CANCEL;
+	private JPanel jPanel3;
 
-   public SaveToDialog(Dialog parent)
-   {
-      super(parent);
-      initGUI();
-      setLocation(ScreenUtils.getPointToCenter(this));
-   }
+	private JButton bBrowse;
 
-   /**
-    * Initializes the GUI.
-    */
-   public void initGUI()
-   {
-      try {
+	private JTextField tDirName;
 
-         jPanel1 = new JPanel();
-         lFileType = new JLabel();
-         cbFileTypes = new JComboBox();
-         jPanel2 = new JPanel();
-         lDirName = new JLabel();
-         jLabel3 = new JLabel();
-         tDirName = new JTextField();
-         bBrowse = new JButton();
-         jPanel3 = new JPanel();
-         bOK = new JButton();
-         bCancel = new JButton();
+	private JLabel lDirName;
 
-         BoxLayout thisLayout = new BoxLayout(this.getContentPane(), 1);
+	private JPanel jPanel2;
 
-         this.getContentPane().setLayout(thisLayout);
-         this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-         this.setResizable(false);
-         this.setTitle("Save Plots to");
-//         this.setUndecorated(false);
-         this.setModal(true);
-         this.setSize(new java.awt.Dimension(344, 187));
+	private JComboBox cbFileTypes;
 
-         jPanel1.setPreferredSize(new java.awt.Dimension(337, 46));
-         this.getContentPane().add(jPanel1);
+	private JLabel lFileType;
 
-         lFileType.setText("Select File Type");
-         lFileType.setFont(new java.awt.Font("Dialog", 1, 14));
-         lFileType.setPreferredSize(new java.awt.Dimension(127, 23));
-         jPanel1.add(lFileType);
+	private JPanel jPanel1;
 
-         cbFileTypes.setPreferredSize(new java.awt.Dimension(181, 28));
-         cbFileTypes.setModel(new DefaultComboBoxModel(filetypes));
-         jPanel1.add(cbFileTypes);
+	private String[] filetypes = { "JPEG (*.jpg)", "PostScript (*.ps)", "PDF (*.pdf)", "PNG (*.png)",
+			"Latex Picture Files (*.ptx)" };
 
-         jPanel2.setPreferredSize(new java.awt.Dimension(337, 70));
-         this.getContentPane().add(jPanel2);
+	public static int JPEG = 0;
 
-         lDirName.setText("Directory Name");
-         lDirName.setVisible(true);
-         lDirName.setFont(new java.awt.Font("Dialog", 1, 14));
-         lDirName.setPreferredSize(new java.awt.Dimension(169, 21));
-         jPanel2.add(lDirName);
+	public static int PS = 1;
 
-         jLabel3.setVisible(true);
-         jLabel3.setPreferredSize(new java.awt.Dimension(141, 13));
-         jPanel2.add(jLabel3);
+	public static int PDF = 2;
 
-         //tDirName.setText();
-         tDirName.setPreferredSize(new java.awt.Dimension(235, 27));
-         jPanel2.add(tDirName);
+	public static int PNG = 3;
 
-         bBrowse.setText("Browse");
-         bBrowse.setPreferredSize(new java.awt.Dimension(81, 29));
-         jPanel2.add(bBrowse);
-         bBrowse.addActionListener(new ActionListener()
-         {
-            public void actionPerformed(ActionEvent evt)
-            {
-               bBrowseActionPerformed(evt);
-            }
-         });
+	public static int PTX = 4;
 
-         jPanel3.setPreferredSize(new java.awt.Dimension(336, 36));
-         this.getContentPane().add(jPanel3);
+	public static int CANCEL = -1;
 
-         bOK.setText("OK");
-         bOK.setPreferredSize(new java.awt.Dimension(88, 25));
-         jPanel3.add(bOK);
-         bOK.addActionListener(new ActionListener()
-         {
-            public void actionPerformed(ActionEvent evt)
-            {
-               bOKActionPerformed(evt);
-            }
-         });
+	public static int APPROVE = 0;
 
-         bCancel.setText("Cancel");
-         bCancel.setPreferredSize(new java.awt.Dimension(96, 25));
-         jPanel3.add(bCancel);
-         bCancel.addActionListener(new ActionListener()
-         {
-            public void actionPerformed(ActionEvent evt)
-            {
-               bCancelActionPerformed(evt);
-            }
-         });
+	private int fileType = 0;
 
-      }
-      catch (Exception e)
-      {
-         e.printStackTrace();
-      }
-   }
+	private String path;
 
-   /** getter for result of the Dialog
-    * @return int SaveToDialog.APPROVE or SaveToDialog.CANCEL
-    */
-   public int getRetVal()
-   {
-      return retVal;
-   }
+	private int retVal = CANCEL;
 
-   public static void main(String[] args)
-   {
-      javax.swing.JDialog d = new javax.swing.JDialog();
-      showGUI(d);
-   }
+	public SaveToDialog(Dialog parent) {
+		super(parent);
+		initGUI();
+		setLocation(ScreenUtils.getPointToCenter(this));
+	}
 
-   /**
-    * This static method creates a new instance of this class and shows
-    * it inside a new JFrame, (unless it is already a JFrame).
-    *
-    * It is a convenience method for showing the GUI.
-    */
-   public static void showGUI(Dialog parent)
-   {
-      try
-      {
-         SaveToDialog inst = new SaveToDialog(parent);
-         inst.setVisible(true);
-      }
-      catch (Exception e)
-      {
-         e.printStackTrace();
-      }
-   }
+	/**
+	 * Initializes the GUI.
+	 */
+	public void initGUI() {
+		try {
 
-   /** getter for filename
-    * @return String
-    */
+			jPanel1 = new JPanel();
+			lFileType = new JLabel();
+			cbFileTypes = new JComboBox();
+			jPanel2 = new JPanel();
+			lDirName = new JLabel();
+			jLabel3 = new JLabel();
+			tDirName = new JTextField();
+			bBrowse = new JButton();
+			jPanel3 = new JPanel();
+			bOK = new JButton();
+			bCancel = new JButton();
 
-   public String getAbsolutePath()
-   {
-      return tDirName.getText();
-   }
+			BoxLayout thisLayout = new BoxLayout(this.getContentPane(), 1);
 
-   /** getter for file type
-    * @return int  filetype
-    */
-   public int getFileType()
-   {
-      return fileType;
-   }
+			this.getContentPane().setLayout(thisLayout);
+			this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+			this.setResizable(false);
+			this.setTitle("Save Plots to");
+			// this.setUndecorated(false);
+			this.setModal(true);
+			this.setSize(new java.awt.Dimension(344, 187));
 
-   protected void bBrowseActionPerformed(ActionEvent evt)
-   {
-      File dir = FileImportGUI.getDirFromUser();
-      if(dir != null)
-      {
-         this.path = dir.getAbsolutePath();
-         tDirName.setText(path);
-      }
-   }
+			jPanel1.setPreferredSize(new java.awt.Dimension(337, 46));
+			this.getContentPane().add(jPanel1);
 
-   protected void bOKActionPerformed(ActionEvent evt)
-   {
-      String fileName = tDirName.getText();
-      if(fileName.trim().equals(""))
-      {
-         new GUIUserInteractor().notify(this,"Error","Please enter a directory name",
-               UserInteractor.ERROR);
-         retVal = -1;
-         return;
-      }
+			lFileType.setText("Select File Type");
+			lFileType.setFont(new java.awt.Font("Dialog", 1, 14));
+			lFileType.setPreferredSize(new java.awt.Dimension(127, 23));
+			jPanel1.add(lFileType);
 
-      File file = new File(tDirName.getText());
+			cbFileTypes.setPreferredSize(new java.awt.Dimension(181, 28));
+			cbFileTypes.setModel(new DefaultComboBoxModel(filetypes));
+			jPanel1.add(cbFileTypes);
 
-      if (file.isDirectory() == false)
-      {
-         new GUIUserInteractor().notify(this,"Error",
-               file + " is not a directory",
-               UserInteractor.ERROR);
-         retVal = -1;
-         return;
-      }
-      fileType = cbFileTypes.getSelectedIndex();
-      retVal = 0;
-      this.setVisible(false);
-      return;
-   }
+			jPanel2.setPreferredSize(new java.awt.Dimension(337, 70));
+			this.getContentPane().add(jPanel2);
 
-   protected void bCancelActionPerformed(ActionEvent evt)
-   {
-      tDirName.setText("");
-      fileType = -1;
-      retVal = -1;
-      this.setVisible(false);
-      return;
-   }
+			lDirName.setText("Directory Name");
+			lDirName.setVisible(true);
+			lDirName.setFont(new java.awt.Font("Dialog", 1, 14));
+			lDirName.setPreferredSize(new java.awt.Dimension(169, 21));
+			jPanel2.add(lDirName);
+
+			jLabel3.setVisible(true);
+			jLabel3.setPreferredSize(new java.awt.Dimension(141, 13));
+			jPanel2.add(jLabel3);
+
+			// tDirName.setText();
+			tDirName.setPreferredSize(new java.awt.Dimension(235, 27));
+			jPanel2.add(tDirName);
+
+			bBrowse.setText("Browse");
+			bBrowse.setPreferredSize(new java.awt.Dimension(81, 29));
+			jPanel2.add(bBrowse);
+			bBrowse.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent evt) {
+					bBrowseActionPerformed(evt);
+				}
+			});
+
+			jPanel3.setPreferredSize(new java.awt.Dimension(336, 36));
+			this.getContentPane().add(jPanel3);
+
+			bOK.setText("OK");
+			bOK.setPreferredSize(new java.awt.Dimension(88, 25));
+			jPanel3.add(bOK);
+			bOK.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent evt) {
+					bOKActionPerformed(evt);
+				}
+			});
+
+			bCancel.setText("Cancel");
+			bCancel.setPreferredSize(new java.awt.Dimension(96, 25));
+			jPanel3.add(bCancel);
+			bCancel.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent evt) {
+					bCancelActionPerformed(evt);
+				}
+			});
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * getter for result of the Dialog
+	 * 
+	 * @return int SaveToDialog.APPROVE or SaveToDialog.CANCEL
+	 */
+	public int getRetVal() {
+		return retVal;
+	}
+
+	public static void main(String[] args) {
+		javax.swing.JDialog d = new javax.swing.JDialog();
+		showGUI(d);
+	}
+
+	/**
+	 * This static method creates a new instance of this class and shows it inside a new JFrame, (unless it is already a
+	 * JFrame).
+	 * 
+	 * It is a convenience method for showing the GUI.
+	 */
+	public static void showGUI(Dialog parent) {
+		try {
+			SaveToDialog inst = new SaveToDialog(parent);
+			inst.setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * getter for filename
+	 * 
+	 * @return String
+	 */
+
+	public String getAbsolutePath() {
+		return tDirName.getText();
+	}
+
+	/**
+	 * getter for file type
+	 * 
+	 * @return int filetype
+	 */
+	public int getFileType() {
+		return fileType;
+	}
+
+	protected void bBrowseActionPerformed(ActionEvent evt) {
+		File dir = FileImportGUI.getDirFromUser();
+		if (dir != null) {
+			this.path = dir.getAbsolutePath();
+			tDirName.setText(path);
+		}
+	}
+
+	protected void bOKActionPerformed(ActionEvent evt) {
+		String fileName = tDirName.getText();
+		if (fileName.trim().equals("")) {
+			new GUIUserInteractor().notify(this, "Error", "Please enter a directory name", UserInteractor.ERROR);
+			retVal = -1;
+			return;
+		}
+
+		File file = new File(tDirName.getText());
+
+		if (file.isDirectory() == false) {
+			new GUIUserInteractor().notify(this, "Error", file + " is not a directory", UserInteractor.ERROR);
+			retVal = -1;
+			return;
+		}
+		fileType = cbFileTypes.getSelectedIndex();
+		retVal = 0;
+		this.setVisible(false);
+		return;
+	}
+
+	protected void bCancelActionPerformed(ActionEvent evt) {
+		tDirName.setText("");
+		fileType = -1;
+		retVal = -1;
+		this.setVisible(false);
+		return;
+	}
 }

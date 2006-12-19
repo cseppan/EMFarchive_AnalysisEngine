@@ -18,88 +18,88 @@ import java.util.Vector;
  * Elided Code Example:
  * 
  * <pre>
- *      :
- *      :
- *   //====================================================================
- *   //
- *   // initialize tree components
- *   //
- *   //====================================================================
- *   AnalysisOptions optionsGlobal = initAnalysisOptions();
- *   Page page = new Page();
- *   ScatterPlot scatterPlot = new ScatterPlot();
- *   dataSets = initDataSets(scatterPlot);
- *  
- *  
- *   //====================================================================
- *   //
- *   // build tree
- *   //
- *   //====================================================================
- *   //
- *   //
- *   //                     dataSets
- *   //                         |
- *   //                   optionsGlobal
- *   //                         |
- *   //                       page
- *   //                         |
- *   //                    scatterPlot
- *   //
- *   dataSets.add(optionsGlobal);
- *   optionsGlobal.add(page);
- *   page.add(scatterPlot);
- *      :
- *      :
- *   private DataSets initDataSets(ScatterPlot p)
- *   {
- *      DataSets dataSets = new DataSets();
- *  
- *      // store data; use data sets unique ID as an unique key name
- *      String key1 = &quot;key1&quot;;
- *      String key2 = &quot;key2&quot;;
- *      String key3 = &quot;key3&quot;;
- *      String key4 = &quot;key4&quot;;
- *      dataSets.add(initData(&quot;My data set 1&quot;, 6), key1);
- *      dataSets.add(initData(&quot;My data set 2&quot;, 6), key2);
- *      dataSets.add(initData(&quot;My data set 3&quot;, 6), key3);
- *      dataSets.add(initData(&quot;My data set 4&quot;, 6), key4);
- *  
- *      p.setDataSetKeys(
- *            new Object[]
- *      {
- *         new String[]
- *         {
- *            key1
- *         },
- *  
- *         new String[]
- *         {
- *            key2,
- *            key3
- *         }
- *      });
- *  
- *      return dataSets;
- *   }
- *  
- *  
- *  
- *   private DoubleSeries initData(String seriesName, int count)
- *   {
- *      DoubleSeries ds = new DoubleSeries();
- *      ds.setName(seriesName);
- *  
- *      for (int i = 0; i &lt; count; ++i)
- *      {
- *         double value = Math.random() * 10.0;
- *         ds.addData(value);
- *      }
- *  
- *      return ds;
- *   }
- *  
- *  
+ *       :
+ *       :
+ *    //====================================================================
+ *    //
+ *    // initialize tree components
+ *    //
+ *    //====================================================================
+ *    AnalysisOptions optionsGlobal = initAnalysisOptions();
+ *    Page page = new Page();
+ *    ScatterPlot scatterPlot = new ScatterPlot();
+ *    dataSets = initDataSets(scatterPlot);
+ *   
+ *   
+ *    //====================================================================
+ *    //
+ *    // build tree
+ *    //
+ *    //====================================================================
+ *    //
+ *    //
+ *    //                     dataSets
+ *    //                         |
+ *    //                   optionsGlobal
+ *    //                         |
+ *    //                       page
+ *    //                         |
+ *    //                    scatterPlot
+ *    //
+ *    dataSets.add(optionsGlobal);
+ *    optionsGlobal.add(page);
+ *    page.add(scatterPlot);
+ *       :
+ *       :
+ *    private DataSets initDataSets(ScatterPlot p)
+ *    {
+ *       DataSets dataSets = new DataSets();
+ *   
+ *       // store data; use data sets unique ID as an unique key name
+ *       String key1 = &quot;key1&quot;;
+ *       String key2 = &quot;key2&quot;;
+ *       String key3 = &quot;key3&quot;;
+ *       String key4 = &quot;key4&quot;;
+ *       dataSets.add(initData(&quot;My data set 1&quot;, 6), key1);
+ *       dataSets.add(initData(&quot;My data set 2&quot;, 6), key2);
+ *       dataSets.add(initData(&quot;My data set 3&quot;, 6), key3);
+ *       dataSets.add(initData(&quot;My data set 4&quot;, 6), key4);
+ *   
+ *       p.setDataSetKeys(
+ *             new Object[]
+ *       {
+ *          new String[]
+ *          {
+ *             key1
+ *          },
+ *   
+ *          new String[]
+ *          {
+ *             key2,
+ *             key3
+ *          }
+ *       });
+ *   
+ *       return dataSets;
+ *    }
+ *   
+ *   
+ *   
+ *    private DoubleSeries initData(String seriesName, int count)
+ *    {
+ *       DoubleSeries ds = new DoubleSeries();
+ *       ds.setName(seriesName);
+ *   
+ *       for (int i = 0; i &lt; count; ++i)
+ *       {
+ *          double value = Math.random() * 10.0;
+ *          ds.addData(value);
+ *       }
+ *   
+ *       return ds;
+ *    }
+ *   
+ *   
  * </pre>
  * 
  * <br>
@@ -119,7 +119,7 @@ import java.util.Vector;
  * <A HREF="doc-files/ExampleLineType14.html"><B>View Example</B></A>
  * 
  * @author Tommy E. Cathey
- * @version $Id: ScatterPlot.java,v 1.4 2006/12/11 22:16:39 parthee Exp $
+ * @version $Id: ScatterPlot.java,v 1.5 2006/12/19 22:22:42 parthee Exp $
  * 
  */
 public class ScatterPlot extends Plot implements Serializable, Cloneable, AnalysisOptionConstantsIfc {
@@ -185,19 +185,14 @@ public class ScatterPlot extends Plot implements Serializable, Cloneable, Analys
 
 		for (int i = 0; i < keys.length; ++i) {
 			Object obj = keys[i];
-
 			try {
 				if (obj == null) {
 					dsInfos[i].validateNumber(0);
 				}
-
 				if (obj instanceof String[]) {
 					keys[i] = (String[]) ((String[]) obj).clone();
-
-					// verify that the correct number of each type of data
-					// set was provided
+					// verify that the correct number of each type of data  set was provided
 					dsInfos[i].validateNumber(((String[]) keys[i]).length);
-
 					// throw exception if bad #
 				}
 			} catch (Exception exc) {
@@ -298,12 +293,6 @@ public class ScatterPlot extends Plot implements Serializable, Cloneable, Analys
 	 *             if (xkey.size() != 1)
 	 */
 	public void createDataSetKeys(ArrayList dataSets) throws Exception {
-		/*
-		 * p.setDataSetKeys( new Object[] { new String[] { key1 },
-		 * 
-		 * new String[] { key2, key3 } });
-		 */
-
 		Vector ykeys = (Vector) dataSets.get(1);
 		String[] ykeyList = new String[ykeys.size()];
 		Iterator keyIt = ykeys.iterator();
