@@ -20,7 +20,10 @@ public class FileHistory extends DefaultTableModel {
 
 	private Vector columnNames;
 
-	public FileHistory() {
+	private String fileName;
+
+	public FileHistory(String fileName) {
+		this.fileName = fileName;
 		columnNames = new Vector(Arrays.asList(new String[] { "File Type", "Directory", "File Name", "Delimiter",
 				"Column Header Rows" }));
 		initialize();
@@ -31,11 +34,9 @@ public class FileHistory extends DefaultTableModel {
 	}
 
 	private void initialize() {
-
 		String filename = System.getProperty("RecentFiles");
-
 		if (filename == null)
-			filename = System.getProperty("user.dir") + File.separator + "Files.List";
+			filename = System.getProperty("user.dir") + File.separator + this.fileName;
 		setColumnIdentifiers(columnNames);
 		file = new File(filename);
 		if (!file.exists()) {

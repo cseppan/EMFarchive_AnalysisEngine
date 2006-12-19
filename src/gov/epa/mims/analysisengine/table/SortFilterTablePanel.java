@@ -13,6 +13,7 @@ import gov.epa.mims.analysisengine.table.format.ColumnFormatInfo;
 import gov.epa.mims.analysisengine.table.format.FormattedCellRenderer;
 import gov.epa.mims.analysisengine.table.format.HasFormatter;
 import gov.epa.mims.analysisengine.table.persist.AnalysisConfiguration;
+import gov.epa.mims.analysisengine.table.persist.ConfigFileHistory;
 import gov.epa.mims.analysisengine.table.persist.LoadConfigurationGUI;
 import gov.epa.mims.analysisengine.table.persist.SaveConfigModel;
 import gov.epa.mims.analysisengine.table.persist.SaveConfigView;
@@ -57,7 +58,7 @@ import javax.swing.table.TableColumnModel;
  * </p>
  * 
  * @author Daniel Gatti
- * @version $Id: SortFilterTablePanel.java,v 1.12 2006/12/14 22:25:08 parthee Exp $
+ * @version $Id: SortFilterTablePanel.java,v 1.13 2006/12/19 19:41:02 parthee Exp $
  */
 public class SortFilterTablePanel extends JPanel implements TableModelListener, ChildHasChangedListener {
 
@@ -795,12 +796,13 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 		}
 	}
 
-	public void showLoadConfigGUI(File file) {
+	public void showLoadConfigGUI(File file, boolean binaryFormat, ConfigFileHistory configFileshistory) {
 		try {
 			AnalysisConfiguration config = new AnalysisConfiguration(overallModel);
-			config.loadConfiguration(file, false);
+			config.loadConfiguration(file, false,binaryFormat);
 			LoadConfigurationGUI gui = new LoadConfigurationGUI(config, aconfig, table, (JFrame) this.parent);
 			gui.show();
+			configFileshistory.addToHistory(file.getAbsolutePath());
 		} catch (Exception e) {
 			new GUIUserInteractor().notify(this, "Load Configuration", e.getMessage(), UserInteractor.ERROR);
 		}

@@ -10,15 +10,18 @@ import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -84,6 +87,10 @@ public class SaveConfigView extends JDialog {
 
 	/** Model for the Save Config Model */
 	private SaveConfigModel model;
+	
+	private JRadioButton xmlConfig;
+	
+	private JRadioButton binaryConfig;
 
 	public SaveConfigView(Frame parent, SaveConfigModel model) {
 		super(parent);
@@ -244,6 +251,18 @@ public class SaveConfigView extends JDialog {
 				}
 			});
 
+			JLabel xmlBinaryConfigLabel = new JLabel("File Format: ");
+			binaryConfig = new JRadioButton("Binary",true);
+			xmlConfig = new JRadioButton("XML",false);
+			ButtonGroup group=  new ButtonGroup();
+			group.add(binaryConfig);
+			group.add(xmlConfig);
+			JPanel configFormatPanel = new JPanel();
+			configFormatPanel.add(xmlBinaryConfigLabel);
+			configFormatPanel.add(binaryConfig);
+			configFormatPanel.add(xmlConfig);
+			OverallPanel.add(configFormatPanel);
+			
 			FlowLayout ConfigFilePanelLayout = new FlowLayout();
 
 			ConfigFilePanel.setLayout(ConfigFilePanelLayout);
@@ -270,6 +289,8 @@ public class SaveConfigView extends JDialog {
 				}
 			});
 
+			
+			
 			FlowLayout OKCancelPanelLayout = new FlowLayout();
 
 			okCancelPanel.setLayout(OKCancelPanelLayout);
@@ -305,7 +326,6 @@ public class SaveConfigView extends JDialog {
 	public static void showGUI(Frame parent, SaveConfigModel model) {
 		try {
 			SaveConfigView inst = new SaveConfigView(parent, model);
-
 			inst.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -468,7 +488,7 @@ public class SaveConfigView extends JDialog {
 			return;
 		}
 		try {
-			model.saveConfiguration(new java.io.File(tFileName.getText()));
+			model.saveConfiguration(binaryConfig.isSelected(), new File(tFileName.getText()));
 			dispose();
 		} catch (Exception e) {
 			new GUIUserInteractor().notify(this, "Error Saving Configuration", e.getMessage(), UserInteractor.ERROR);

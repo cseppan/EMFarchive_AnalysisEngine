@@ -18,6 +18,9 @@ import gov.epa.mims.analysisengine.tree.Plot;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -34,6 +37,7 @@ import java.util.Vector;
 import javax.swing.event.TableModelEvent;
 
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
 
 public class AnalysisConfiguration {
 
@@ -86,11 +90,11 @@ public class AnalysisConfiguration {
 
 	/**
 	 * loads configuration from the File into the object
+	 * 
+	 * @param binaryFormat
 	 */
-	public void loadConfiguration(File configFile, boolean applyTableConfig) throws Exception {
-		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(configFile));
-		configs = (TreeMap) ois.readObject();
-		ois.close();
+	public void loadConfiguration(File configFile, boolean applyTableConfig, boolean binaryFormat) throws Exception {
+		deserialize(configFile, binaryFormat);
 
 		Data data = (Data) configs.get(TABLE_FORMAT);
 		if (data != null && data.criteria != null) {
@@ -141,6 +145,24 @@ public class AnalysisConfiguration {
 		insertedOrder.addAll(configs.keySet());
 		if (applyTableConfig) {
 			model.tableChanged(new TableModelEvent(model));
+		}
+	}
+
+	private void deserialize(File configFile, boolean binaryFormat) throws Exception {
+		ObjectInputStream ois = null;
+		try {
+			if (binaryFormat)
+				ois = new ObjectInputStream(new FileInputStream(configFile));
+			else
+				ois = new XStream(new DomDriver()).createObjectInputStream(new FileReader(configFile));
+			configs = (TreeMap) ois.readObject();
+		} catch (FileNotFoundException e) {
+			throw new Exception("Could not find the file '" + configFile.getName() + "'");
+		} catch (Exception e) {
+			throw new Exception("Please check the file format");
+		} finally {
+			if (ois != null)
+				ois.close();
 		}
 	}
 
@@ -368,23 +390,22 @@ public class AnalysisConfiguration {
 		return model;
 	}
 
-	/**
-	 * save selected configurations to File
-	 */
-	public void saveConfiguration(File filename, Vector selectedValues) throws IOException {
+	public void saveConfiguration(boolean binaryFormat, File filename, Vector selectedValues) throws IOException {
 		TreeMap temp = new TreeMap();
 		refreshTableConfig();
 		for (int i = 0; i < selectedValues.size(); i++) {
 			String value = (String) selectedValues.get(i);
 			temp.put(value, configs.get(value));
 		}
-		XStream xstream = new XStream();
-		ObjectOutputStream out = xstream.createObjectOutputStream(new FileWriter(filename));
-		out.writeObject(temp);
+		ObjectOutputStream oos = null;
+		if (binaryFormat)
+			oos = new ObjectOutputStream(new FileOutputStream(filename));
+		else {
+			XStream xstream = new XStream();
+			oos = xstream.createObjectOutputStream(new FileWriter(filename));
+		}
+		oos.writeObject(temp);
+		oos.close();
 
-		out.close();
-		// ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename));
-		// oos.writeObject(temp);
-		// oos.close();
 	}
 }

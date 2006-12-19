@@ -49,13 +49,13 @@ import javax.swing.table.TableColumn;
  * chosen directory.
  * 
  * @author Krithiga Thangavelu, CEP, UNC CHAPEL HILL.
- * @version $Id: LoadConfigurationGUI.java,v 1.5 2006/12/05 22:25:40 parthee Exp $
+ * @version $Id: LoadConfigurationGUI.java,v 1.6 2006/12/19 19:41:02 parthee Exp $
  */
 public class LoadConfigurationGUI extends javax.swing.JDialog {
 
 	private JButton closeButton;
 
-	private JButton saveButton;
+	private JButton savePlotsButton;
 
 	private JButton importButton;
 
@@ -131,7 +131,7 @@ public class LoadConfigurationGUI extends javax.swing.JDialog {
 	private JPanel buttonPanel() {
 		viewButton = new JButton();
 		importButton = new JButton();
-		saveButton = new JButton();
+		savePlotsButton = new JButton();
 		closeButton = new JButton();
 		viewButton.setText("    View    ");
 		viewButton.setToolTipText("View all or the selected plots");
@@ -151,12 +151,12 @@ public class LoadConfigurationGUI extends javax.swing.JDialog {
 			}
 		});
 
-		saveButton.setText("Save Plots");
-		saveButton.setToolTipText("Save all or the selected plots to a directory");
-		saveButton.setPreferredSize(new Dimension(100, 30));
-		saveButton.addActionListener(new ActionListener() {
+		savePlotsButton.setText("Save Plots");
+		savePlotsButton.setToolTipText("Save all or the selected plots to a directory");
+		savePlotsButton.setPreferredSize(new Dimension(100, 30));
+		savePlotsButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				doSave();
+				doSavePlots();
 			}
 		});
 
@@ -176,7 +176,7 @@ public class LoadConfigurationGUI extends javax.swing.JDialog {
 		buttonPanel.setLayout(flowLayout);
 		buttonPanel.add(viewButton);
 		buttonPanel.add(importButton);
-		buttonPanel.add(saveButton);
+		buttonPanel.add(savePlotsButton);
 		buttonPanel.add(closeButton);
 		return buttonPanel;
 	}
@@ -403,7 +403,7 @@ public class LoadConfigurationGUI extends javax.swing.JDialog {
 		table.repaint();
 	}
 
-	protected void doSave() {
+	protected void doSavePlots() {
 		Object[] values = configList.getSelectedValues();
 		if (values.length == 0) {
 			values = input.getConfigNames();

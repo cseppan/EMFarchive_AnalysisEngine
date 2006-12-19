@@ -168,9 +168,9 @@ public class SUSortFilterTablePanel extends SortFilterTablePanel {
 		// table.getColumnModel().getSelectionModel().setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 	} // createPopupMenu()
 
-	public void loadConfigFile(File file, boolean loadTableConfig) {
+	public void loadConfigFile(File file, boolean loadTableConfig,boolean binaryFormat) {
 		try {
-			aconfig.loadConfiguration(file, loadTableConfig);
+			aconfig.loadConfiguration(file, loadTableConfig,binaryFormat);
 			updateFormat();
 		} catch (Exception e) {
 			new GUIUserInteractor().notify(this, "Error Loading Configuration", e.getMessage(), UserInteractor.ERROR);

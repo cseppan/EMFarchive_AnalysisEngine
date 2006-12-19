@@ -14,6 +14,8 @@ import gov.epa.mims.analysisengine.table.io.FileHistory;
 import gov.epa.mims.analysisengine.table.io.FileHistoryDialog;
 import gov.epa.mims.analysisengine.table.io.FileImportGUI;
 import gov.epa.mims.analysisengine.table.persist.AnalysisConfiguration;
+import gov.epa.mims.analysisengine.table.persist.ConfigFileHistory;
+import gov.epa.mims.analysisengine.table.persist.ConfigFileHistoryDialog;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -67,8 +69,6 @@ public class TableApp extends JFrame {
 	 */
 	private static boolean standAlone = false;
 
-	JMenuItem loadConfigMenuItem;
-
 	JMenuItem saveConfiguredPlotsMenuItem;
 
 	JMenuItem exportMenuItem;
@@ -76,6 +76,12 @@ public class TableApp extends JFrame {
 	JMenuItem queryMenuItem;
 
 	JMenuItem closeMenuItem;
+
+	private JMenu loadConfigMenu;
+
+	private ConfigFileHistory configFileshistory;
+
+	private JMenuItem recentConfigfilesMenuItem;
 
 	public TableApp() {
 		initialize();
@@ -123,7 +129,8 @@ public class TableApp extends JFrame {
 		this(rs, tabName);
 		if (configFile != null) {
 			TablePanel newPanel = (TablePanel) mainTabbedPane.getSelectedComponent();
-			newPanel.tablePanel.loadConfigFile(configFile, true);
+			newPanel.tablePanel.loadConfigFile(configFile, true, true);
+			configFileshistory.addToHistory(configFile.getAbsolutePath());
 		}
 	}
 
@@ -315,7 +322,8 @@ public class TableApp extends JFrame {
 		if (closeMenuItem.isEnabled() == false) {
 			closeMenuItem.setEnabled(true);
 			exportMenuItem.setEnabled(true);
-			loadConfigMenuItem.setEnabled(true);
+			loadConfigMenu.setEnabled(true);
+			recentConfigfilesMenuItem.setEnabled(true);
 			saveConfiguredPlotsMenuItem.setEnabled(true);
 		}
 	}// insertIntoTabbedPane()
@@ -338,7 +346,8 @@ public class TableApp extends JFrame {
 						if (filesInTabbedPane.getTabCount() == 0) {
 							closeMenuItem.setEnabled(false);
 							exportMenuItem.setEnabled(false);
-							loadConfigMenuItem.setEnabled(false);
+							loadConfigMenu.setEnabled(false);
+							recentConfigfilesMenuItem.setEnabled(false);
 							saveConfiguredPlotsMenuItem.setEnabled(false);
 						}
 					}
@@ -502,55 +511,15 @@ public class TableApp extends JFrame {
 		importMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, ActionEvent.ALT_MASK));
 		fileMenu.add(importMenuItem);
 
-		JMenuItem recentfilesMenuItem = new JMenuItem("Recent Files");
-		fileMenu.add(recentfilesMenuItem);
-
-		history = new FileHistory();
-		recentfilesMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, ActionEvent.ALT_MASK));
-		recentfilesMenuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (history.getRowCount() > 0)
-					FileHistoryDialog.showGUI(TableApp.this, history);
-				else
-					new GUIUserInteractor().notify(TableApp.this, "Recent Files",
-							"No file history is currently available. ", UserInteractor.WARNING);
-			}
-		});
+		recentImportedFiles(fileMenu);
+		recentImportedConfigFiles(fileMenu);
 
 		queryMenuItem = createQueryMenuItem();
 		queryMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, ActionEvent.ALT_MASK));
 		fileMenu.add(queryMenuItem);
 
-		loadConfigMenuItem = new JMenuItem("Load Configuration");
-		loadConfigMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, ActionEvent.ALT_MASK));
-		fileMenu.add(loadConfigMenuItem);
-		loadConfigMenuItem.setEnabled(false);
-		loadConfigMenuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (mainTabbedPane.getTabCount() == 0) {
-					return;
-				}
-				JFileChooser chooser = new JFileChooser();
-				do {
-					int returnVal = chooser.showOpenDialog(TableApp.this);
-					try {
-						if (returnVal == JFileChooser.CANCEL_OPTION) {
-							return;
-						}
-						if (returnVal == JFileChooser.APPROVE_OPTION) {
-							TablePanel panel = ((TablePanel) mainTabbedPane.getSelectedComponent());
-							(panel.tablePanel).showLoadConfigGUI(chooser.getSelectedFile());
-							return;
-						}
-					} catch (Exception ex) {
-						new GUIUserInteractor().notify(TableApp.this, "Error loading file", ex.getMessage(),
-								UserInteractor.ERROR);
-					}
-				} while (true);
-			}
-		});
+		loadConfigMenu(fileMenu);
 		saveConfiguredPlotsMenuItem = new JMenuItem("Save Configuration");
-		loadConfigMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, ActionEvent.ALT_MASK));
 		fileMenu.add(saveConfiguredPlotsMenuItem);
 		saveConfiguredPlotsMenuItem.setEnabled(false);
 		saveConfiguredPlotsMenuItem.addActionListener(new ActionListener() {
@@ -597,69 +566,33 @@ public class TableApp extends JFrame {
 					dispose();
 				}
 			}
-
 		});
 
 		JMenu editMenu = new JMenu("Edit");
-
 		editMenu.setMnemonic('E');
-
 		menuBar.add(editMenu);
-
 		JMenuItem editTabNameItem = new JMenuItem("Rename Tabs");
-
 		editMenu.add(editTabNameItem);
-
-		editTabNameItem.addActionListener(new ActionListener()
-
-		{
-
-			public void actionPerformed(ActionEvent e)
-
-			{
-
+		editTabNameItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				String[] tabNames = filesInTabbedPane.getAllTabUniqueNames();
-
-				if (tabNames == null || tabNames.length == 0)
-
-				{
-
+				if (tabNames == null || tabNames.length == 0) {
 					new GUIUserInteractor().notify(TableApp.this, "Rename Tabs",
-
-					"No tabs are currently open for renaming", UserInteractor.NOTE);
-
+							"No tabs are currently open for renaming", UserInteractor.NOTE);
 					return;
-
 				}
-
 				TabNameGUI tabNameGUI = new TabNameGUI(TableApp.this, tabNames);
-
-				if (tabNameGUI.getResult() == JOptionPane.CANCEL_OPTION)
-
-				{
-
+				if (tabNameGUI.getResult() == JOptionPane.CANCEL_OPTION) {
 					return;
-
 				}
 
 				// OK_OPTION
-
 				tabNames = tabNameGUI.getAllTabNames();
-
 				filesInTabbedPane.setAllTabUniqueNames(tabNames);
-
-				for (int i = 0; i < tabNames.length; i++)
-
-				{
-
-					// System.out.println("tabNames["+i+"]="+tabNames[i]);
-
+				for (int i = 0; i < tabNames.length; i++) {
 					mainTabbedPane.setTitleAt(i, tabNames[i]);
-
 				}// for(i)
-
 			}
-
 		});
 
 		JMenu helpMenu = new JMenu("Help"); // HelpMenu.createStandardMenu(HelpMenu.TABLE_OF_CONTENTS,
@@ -674,75 +607,120 @@ public class TableApp extends JFrame {
 		menuBar.add(helpMenu);
 
 		JMenuItem aboutMenuItem = new JMenuItem("About");
-
 		helpMenu.add(aboutMenuItem);
-
 		aboutMenuItem.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent e)
-
-			{
-
-				JOptionPane.showMessageDialog(TableApp.this,
-
-				"This version is dated " + version,
-
-				"About the Analysis Engine",
-
-				JOptionPane.INFORMATION_MESSAGE);
-
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(TableApp.this, "This version is dated " + version,
+						"About the Analysis Engine", JOptionPane.INFORMATION_MESSAGE);
 			}
-
 		});
 
 		menuPanel.add(menuBar, BorderLayout.WEST);
-
 		return menuPanel;
 
 	}// createMenuPanel();
+
+	private void recentImportedFiles(JMenu fileMenu) {
+		JMenuItem recentfilesMenuItem = new JMenuItem("Recent Files");
+		fileMenu.add(recentfilesMenuItem);
+
+		history = new FileHistory("Files.List");
+		recentfilesMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, ActionEvent.ALT_MASK));
+		recentfilesMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (history.getRowCount() > 0)
+					FileHistoryDialog.showGUI(TableApp.this, history);
+				else
+					new GUIUserInteractor().notify(TableApp.this, "Recent Files",
+							"No file history is currently available. ", UserInteractor.WARNING);
+			}
+		});
+	}
+
+	private void recentImportedConfigFiles(JMenu fileMenu) {
+		recentConfigfilesMenuItem = new JMenuItem("Recent Config Files");
+		recentConfigfilesMenuItem.setEnabled(false);
+		fileMenu.add(recentConfigfilesMenuItem);
+
+		try {
+			configFileshistory = new ConfigFileHistory("ConfigFiles.List");
+			recentConfigfilesMenuItem.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					if (configFileshistory.getRowCount() > 0)
+						ConfigFileHistoryDialog.showGUI(TableApp.this, configFileshistory);
+					else
+						new GUIUserInteractor().notify(TableApp.this, "Recent Config Files",
+								"No Config file history is currently available. ", UserInteractor.WARNING);
+				}
+			});
+		} catch (Exception e) {
+			new GUIUserInteractor()
+					.notify(TableApp.this, "Recent Config Files", e.getMessage(), UserInteractor.WARNING);
+		}
+	}
+
+	private void loadConfigMenu(JMenu fileMenu) {
+		loadConfigMenu = new JMenu("Load Configuration");
+		loadConfigMenu.setEnabled(false);
+		fileMenu.add(loadConfigMenu);
+		// loadConfigMenu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, ActionEvent.ALT_MASK));
+
+		JMenuItem binaryConfigMenuItem = new JMenuItem("Binary File");
+		loadConfigMenu.add(binaryConfigMenuItem);
+		binaryConfigMenuItem.addActionListener(loadConfigAction(true));
+
+		JMenuItem xmlConfigMenuItem = new JMenuItem("XML File");
+		loadConfigMenu.add(xmlConfigMenuItem);
+		xmlConfigMenuItem.addActionListener(loadConfigAction(false));
+	}
+
+	private ActionListener loadConfigAction(final boolean binaryFormat) {
+		return new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (mainTabbedPane.getTabCount() == 0) {
+					return;
+				}
+				JFileChooser chooser = new JFileChooser();
+				do {
+					int returnVal = chooser.showOpenDialog(TableApp.this);
+					try {
+						if (returnVal == JFileChooser.CANCEL_OPTION) {
+							return;
+						}
+						if (returnVal == JFileChooser.APPROVE_OPTION) {
+							TablePanel panel = ((TablePanel) mainTabbedPane.getSelectedComponent());
+							(panel.tablePanel).showLoadConfigGUI(chooser.getSelectedFile(), binaryFormat,
+									configFileshistory);
+							return;
+						}
+					} catch (Exception ex) {
+						new GUIUserInteractor().notify(TableApp.this, "Error loading file", ex.getMessage(),
+								UserInteractor.ERROR);
+					}
+				} while (true);
+			}
+		};
+	}
 
 	/**
 	 * a helper method to create importMenuItem
 	 * 
 	 */
 
-	private JMenuItem createImportMenuItem()
-
-	{
-
+	private JMenuItem createImportMenuItem() {
 		JMenuItem importMenu = new JMenuItem("Import");
-
-		// create a file chooser
-
-		importMenu.addActionListener(new ActionListener()
-
-		{
-
-			public void actionPerformed(ActionEvent e)
-
-			{
-
+		importMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 				int noOfColumnNameRows = -1;
-
 				showImportGUI(null, null, null, noOfColumnNameRows);
-
 			}// actionPerformed()
-
 		});
-
 		return importMenu;
-
 	}// createImportMenuItem()
-
-	/**
-	 * a helper method to create exportMenuItem
-	 * 
-	 */
 
 	private JMenuItem createExportMenuItem() {
 		JMenuItem exportMenu = new JMenuItem("Export");
 		exportMenu.addActionListener(new ActionListener() {
-
 			public void actionPerformed(ActionEvent e) {
 				int size = mainTabbedPane.getTabCount();
 				// if nothing in the tabbed pane then nothing to import!
@@ -797,14 +775,15 @@ public class TableApp extends JFrame {
 					if (filesInTabbedPane.getTabCount() == 0) {
 						closeMenuItem.setEnabled(false);
 						exportMenuItem.setEnabled(false);
-						loadConfigMenuItem.setEnabled(false);
+						loadConfigMenu.setEnabled(false);
+						recentConfigfilesMenuItem.setEnabled(false);
 						saveConfiguredPlotsMenuItem.setEnabled(false);
 					}
 				}
 			}
 		});
 		return closeMenu;
-	} // createCloseMenuItem()
+	}
 
 	public TablePanelModel getTablePanelModel(String tabName) {
 		TablePanel panel = (TablePanel) mainTabbedPane.getComponentAt(mainTabbedPane.indexOfTab(tabName));
@@ -822,7 +801,7 @@ public class TableApp extends JFrame {
 				return true;
 			}
 			AnalysisConfiguration aconfig = new AnalysisConfiguration(model);
-			aconfig.loadConfiguration(new File(configFile), !ignoreTableConfig);
+			aconfig.loadConfiguration(new File(configFile), !ignoreTableConfig, true);
 			aconfig.saveConfiguredPlots(outputDir, plotFmt, aconfig.getConfigNames());
 		} catch (Exception e) {
 			System.out.println("Error during plot generation\n");
@@ -842,7 +821,8 @@ public class TableApp extends JFrame {
 		insertIntoTabbedPane(rsModel, tabName, tabName, "db");
 		if (configFile != null) {
 			TablePanel newPanel = (TablePanel) mainTabbedPane.getSelectedComponent();
-			newPanel.tablePanel.loadConfigFile(configFile, true);
+			newPanel.tablePanel.loadConfigFile(configFile, true, true);
+			configFileshistory.addToHistory(configFile.getAbsolutePath());
 		}
 	}
 
@@ -871,7 +851,7 @@ public class TableApp extends JFrame {
 					try {
 						TablePanel panel = (TablePanel) frame.mainTabbedPane.getSelectedComponent();
 						(panel.tablePanel).loadConfigFile(new File(fileAdapter.configFile),
-								!fileAdapter.ignoreTableConfig);
+								!fileAdapter.ignoreTableConfig, true);
 						if (fileAdapter.showPlots) {
 							(panel.tablePanel).showPlots();
 						}
@@ -881,19 +861,25 @@ public class TableApp extends JFrame {
 						System.exit(0);
 					}
 				}// if(fileAdapter.configFile!=null && fileAdapter.outputDir == null)
+				if (fileAdapter.configFile != null) // FIXME: refactory the mess here
+					frame.addConfigFileToHistory(fileAdapter.configFile);
 			}// try
 			catch (Exception e) {
 				System.err.println(e.getMessage());
 				FileAdapter.printUsage();
-				// e.printStackTrace();
 				System.exit(1);
 			}// catch
 		}// else
 	}// main()
 
+	private void addConfigFileToHistory(String configFile) {
+		configFileshistory.addToHistory(configFile);
+	}
+
 	public void dispose() {
 		try {
 			history.saveHistory();
+			configFileshistory.saveHistory();
 		} catch (java.io.IOException ie) {
 			new GUIUserInteractor().notify(TableApp.this, "Error", "Error saving the file history. " + ie.getMessage(),
 					UserInteractor.ERROR);
@@ -903,6 +889,7 @@ public class TableApp extends JFrame {
 	protected void finalize() {
 		try {
 			history.saveHistory();
+			configFileshistory.saveHistory();
 		} catch (java.io.IOException ie) {
 			new GUIUserInteractor().notify(TableApp.this, "Error", "Error saving the file history. " + ie.getMessage(),
 					UserInteractor.ERROR);

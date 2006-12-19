@@ -184,9 +184,9 @@ public class SaveConfigModel extends DefaultTableModel {
 		return result;
 	}
 
-	public void saveConfiguration(File file) throws java.io.IOException {
+	public void saveConfiguration(boolean binaryFormat, File file) throws java.io.IOException {
 		file.createNewFile();
-		aconfig.saveConfiguration(file, getSelectedValues());
+		aconfig.saveConfiguration(binaryFormat, file, getSelectedValues());
 	}
 
 	public boolean isCellEditable(int row, int column) {

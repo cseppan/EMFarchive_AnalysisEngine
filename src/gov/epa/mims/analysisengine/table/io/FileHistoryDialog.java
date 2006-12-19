@@ -14,12 +14,13 @@ import java.io.File;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.TableColumn;
 
-public class FileHistoryDialog extends javax.swing.JDialog {
+public class FileHistoryDialog extends JDialog {
 
 	/** Close button for the panel */
 	private JButton bClose;
@@ -238,15 +239,8 @@ public class FileHistoryDialog extends javax.swing.JDialog {
 	}
 
 	public static void showGUI(TableApp app, FileHistory history) {
-
 		FileHistoryDialog hisDialog = new FileHistoryDialog(app, history);
 		hisDialog.setVisible(true);
-
-	}
-
-	public static void main(String[] args) {
-
-		FileHistoryDialog.showGUI(null, new FileHistory());
 
 	}
 
