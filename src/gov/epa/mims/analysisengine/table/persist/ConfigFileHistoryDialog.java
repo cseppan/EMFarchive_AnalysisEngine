@@ -8,23 +8,28 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
 public class ConfigFileHistoryDialog extends JDialog {
 
 	private JTable table;
 
-	public ConfigFileHistoryDialog(JFrame parent, ConfigFileHistory history) {
-		super(parent);
+	private TableApp tableApp;
+
+	public ConfigFileHistoryDialog(TableApp tableApp, ConfigFileHistory history) {
+		super(tableApp);
+		setTitle("Recently Used Config Files");
+		this.tableApp = tableApp;
 		setLayout(history);
 		pack();
 		setLocation(ScreenUtils.getPointToCenter(this));
@@ -32,17 +37,21 @@ public class ConfigFileHistoryDialog extends JDialog {
 
 	private void setLayout(ConfigFileHistory history) {
 		this.table = table(history);
+		table.setRowHeight(16);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+	    TableColumn col = table.getColumnModel().getColumn(0);
+	    col.setPreferredWidth(200);
 		table.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JScrollPane pane = new JScrollPane(table);
-		pane.setPreferredSize(new Dimension(300,300));
+		pane.setPreferredSize(new Dimension(300, 300));
 		JPanel mainPanel = new JPanel(new BorderLayout());
-		mainPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+		mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		mainPanel.add(pane);
 
 		Container contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout());
 		contentPane.add(mainPanel);
-		contentPane.add(buttonPanel(),BorderLayout.SOUTH);
+		contentPane.add(buttonPanel(), BorderLayout.SOUTH);
 	}
 
 	private JPanel buttonPanel() {
@@ -103,13 +112,16 @@ public class ConfigFileHistoryDialog extends JDialog {
 		dispose();
 	}
 
-
-
 	protected void doImport() {
 		int index = table.getSelectedRow();
-		//TODO: import the config
-	}
+		String fileName = (String) table.getValueAt(index, 0);
+		String format = (String) table.getValueAt(index, 1);
+		boolean binaryFormat = true;
+		if (format.equals("xml"))
+			binaryFormat = false;
 
+		tableApp.showLoadConfigGUI(binaryFormat, new File(fileName));
+	}
 
 	public static void showGUI(TableApp app, ConfigFileHistory history) {
 		ConfigFileHistoryDialog hisDialog = new ConfigFileHistoryDialog(app, history);

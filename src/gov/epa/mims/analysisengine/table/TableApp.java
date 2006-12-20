@@ -130,7 +130,7 @@ public class TableApp extends JFrame {
 		if (configFile != null) {
 			TablePanel newPanel = (TablePanel) mainTabbedPane.getSelectedComponent();
 			newPanel.tablePanel.loadConfigFile(configFile, true, true);
-			configFileshistory.addToHistory(configFile.getAbsolutePath());
+			configFileshistory.addToHistory(configFile.getAbsolutePath(),true);
 		}
 	}
 
@@ -688,9 +688,7 @@ public class TableApp extends JFrame {
 							return;
 						}
 						if (returnVal == JFileChooser.APPROVE_OPTION) {
-							TablePanel panel = ((TablePanel) mainTabbedPane.getSelectedComponent());
-							(panel.tablePanel).showLoadConfigGUI(chooser.getSelectedFile(), binaryFormat,
-									configFileshistory);
+							showLoadConfigGUI(binaryFormat,chooser.getSelectedFile());
 							return;
 						}
 					} catch (Exception ex) {
@@ -822,7 +820,7 @@ public class TableApp extends JFrame {
 		if (configFile != null) {
 			TablePanel newPanel = (TablePanel) mainTabbedPane.getSelectedComponent();
 			newPanel.tablePanel.loadConfigFile(configFile, true, true);
-			configFileshistory.addToHistory(configFile.getAbsolutePath());
+			configFileshistory.addToHistory(configFile.getAbsolutePath(),true);
 		}
 	}
 
@@ -862,7 +860,7 @@ public class TableApp extends JFrame {
 					}
 				}// if(fileAdapter.configFile!=null && fileAdapter.outputDir == null)
 				if (fileAdapter.configFile != null) // FIXME: refactory the mess here
-					frame.addConfigFileToHistory(fileAdapter.configFile);
+					frame.addConfigFileToHistory(fileAdapter.configFile,true);
 			}// try
 			catch (Exception e) {
 				System.err.println(e.getMessage());
@@ -872,8 +870,8 @@ public class TableApp extends JFrame {
 		}// else
 	}// main()
 
-	private void addConfigFileToHistory(String configFile) {
-		configFileshistory.addToHistory(configFile);
+	private void addConfigFileToHistory(String configFile, boolean binaryFormat) {
+		configFileshistory.addToHistory(configFile,binaryFormat);
 	}
 
 	public void dispose() {
@@ -894,5 +892,11 @@ public class TableApp extends JFrame {
 			new GUIUserInteractor().notify(TableApp.this, "Error", "Error saving the file history. " + ie.getMessage(),
 					UserInteractor.ERROR);
 		}
+	}
+
+	public void showLoadConfigGUI(final boolean binaryFormat, File file) {
+		TablePanel panel = ((TablePanel) mainTabbedPane.getSelectedComponent());
+		(panel.tablePanel).showLoadConfigGUI(file, binaryFormat,
+				configFileshistory);
 	}
 }

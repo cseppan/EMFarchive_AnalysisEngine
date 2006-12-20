@@ -24,7 +24,7 @@ public class ConfigFileHistory extends DefaultTableModel {
 
 	public ConfigFileHistory(String fileName) throws Exception {
 		this.fileName = fileName(fileName);
-		columnNames = new Vector(Arrays.asList(new String[] { "File Name" }));
+		columnNames = new Vector(Arrays.asList(new String[] { "File Name", "Format" }));
 		initialize();
 	}
 
@@ -58,8 +58,10 @@ public class ConfigFileHistory extends DefaultTableModel {
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(file));
 			while ((line = reader.readLine()) != null) {
+				String[] tokens = line.split(",");
 				Vector row = new Vector();
-				row.add(line);
+				row.add(tokens[0]);
+				row.add(tokens[1]);
 				fileData.add(row);
 			}
 			setDataVector(fileData, columnNames);
@@ -68,9 +70,13 @@ public class ConfigFileHistory extends DefaultTableModel {
 		}
 	}
 
-	public void addToHistory(String fullFileName) {
+	public void addToHistory(String fullFileName, boolean binaryFormat) {
+		String format = "binary";
+		if (!binaryFormat)
+			format = "xml";
+
 		if (!exist(fullFileName))
-			addRow(new String[] { fullFileName });
+			addRow(new String[] { fullFileName, format });
 	}
 
 	private boolean exist(String fullFileName) {
@@ -89,7 +95,8 @@ public class ConfigFileHistory extends DefaultTableModel {
 			Vector data = getDataVector();
 			for (int i = 0; i < data.size(); i++) {
 				Vector info = (Vector) data.get(i);
-				writer.println(info.get(0));
+				writer.print(info.get(0)+", ");
+				writer.println(info.get(1));
 			}
 		} finally {
 			writer.close();

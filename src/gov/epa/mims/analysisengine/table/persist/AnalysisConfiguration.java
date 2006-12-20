@@ -12,9 +12,7 @@ import gov.epa.mims.analysisengine.table.sort.SortCriteria;
 import gov.epa.mims.analysisengine.tree.AnalysisOptions;
 import gov.epa.mims.analysisengine.tree.Branch;
 import gov.epa.mims.analysisengine.tree.DataSets;
-import gov.epa.mims.analysisengine.tree.Node;
 import gov.epa.mims.analysisengine.tree.PageType;
-import gov.epa.mims.analysisengine.tree.Plot;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -25,11 +23,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.Vector;
@@ -313,7 +309,6 @@ public class AnalysisConfiguration {
 	 */
 	public String[] getKeys() {
 		Set result = configs.keySet();
-
 		if (result != null) {
 			String[] a = {};
 			return (String[]) result.toArray(a);
