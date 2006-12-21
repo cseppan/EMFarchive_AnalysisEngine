@@ -78,9 +78,10 @@
 			<include name="**/*" />
 		</jar>
 		<copy todir="${build.dist.dir}">
-			<fileset dir="${basedir}">
-				<include name="**/deploy/User_Prefs.txt" />
-				<include name="**/deploy/AnalysisEngine.bat" />
+			<fileset dir="${basedir}/deploy">
+				<include name="User_Prefs.txt" />
+				<include name="AnalysisEngine.bat" />
+				<include name="ReadMe.txt" />
 			</fileset>
 		</copy>
 	</target>
