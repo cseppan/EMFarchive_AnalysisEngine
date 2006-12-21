@@ -18,8 +18,6 @@ public class UserPreferences extends Properties {
 
 	public static final String FORMAT_OPTION = "format.double.option";
 	
-	public static final String HOME_DIR = "home.dir";
-
 	static {
 		USER_PREFERENCES = new UserPreferences();
 		try {

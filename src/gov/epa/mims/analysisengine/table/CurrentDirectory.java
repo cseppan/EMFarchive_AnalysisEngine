@@ -14,8 +14,9 @@ public class CurrentDirectory {
 		currentDirectory = current(preferences);
 	}
 
+	//FIXME: REMOVE preference 
 	private File current(UserPreferences preferences) {
-		String directory = (String) preferences.get(UserPreferences.HOME_DIR);
+		String directory = System.getProperty("HOME_DIR");
 		if (directory != null) {
 			File dir = new File(directory);
 			if (dir.exists())
