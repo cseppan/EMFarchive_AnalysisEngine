@@ -155,6 +155,7 @@ public class AnalysisConfiguration {
 		} catch (FileNotFoundException e) {
 			throw new Exception("Could not find the file '" + configFile.getName() + "'");
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new Exception("Please check the file format");
 		} finally {
 			if (ois != null)

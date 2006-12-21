@@ -679,6 +679,7 @@ public class TableApp extends JFrame {
 
 		xmlConfigMenuItem = new JMenuItem("XML File");
 		loadConfigMenu.add(xmlConfigMenuItem);
+		xmlConfigMenuItem.setEnabled(false);
 		xmlConfigMenuItem.addActionListener(loadConfigAction());
 	}
 
@@ -909,7 +910,6 @@ public class TableApp extends JFrame {
 	}
 
 	public void showLoadConfigGUI(final boolean binaryFormat, File file) {
-		System.out.println("load binary format-" + binaryFormat);
 		TablePanel panel = ((TablePanel) mainTabbedPane.getSelectedComponent());
 		(panel.tablePanel).showLoadConfigGUI(file, binaryFormat, configFileshistory, currentDirectory);
 	}
