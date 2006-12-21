@@ -13,6 +13,7 @@
 
 	<property name="build.home" value="build/sandbox" />
 	<property name="build.dist.dir" value="${build.home}/dist" />
+	<property name="build.dist.dir.lib" value="${build.home}/dist/lib" />
 	<property name="build.classes.dir" value="${build.dist.dir}/classes" />
 
 	<property name="reports.dir" value="${build.home}/reports" />
@@ -56,16 +57,37 @@
 
 	<target name="compile" depends="clean, init, compile-src" />
 
-	<target name="dist" depends="do-dist" />
+	<target name="dist(jar-only)" depends="do-dist-jar-only" />
 
-	<target name="do-dist" depends="compile">
+	<target name="do-dist-jar-only" depends="compile">
 		<jar jarfile="${build.home}/${app.name}-${app.version}.jar" basedir="${build.classes.dir}" />
 	</target>
 
-	<target name="ci-build" depends="compile, dist" description="Continuous Integration build" />
+	<target name="full-dist" depends="full-dist-sandbox" description="Builds the EMF Client distribution ">
+		<zip destfile="${build.home}/AnalysisEngine.zip" basedir="${build.dist.dir}" includes="lib/**,*.jar,*.bat,*.txt" />
+	</target>
+
+	<target name="full-dist-sandbox" depends="compile" description="Builds the sandbox for AE distribution">
+		<mkdir dir="${build.dist.dir}" />
+		<mkdir dir="${build.dist.dir.lib}" />
+
+		<copy todir="${build.dist.dir.lib}">
+			<fileset dir="${lib.dir}" />
+		</copy>
+		<jar jarfile="${build.dist.dir}/${app.name}.jar" basedir="${build.classes.dir}">
+			<include name="**/*" />
+		</jar>
+		<copy todir="${build.dist.dir}">
+			<fileset dir="${basedir}">
+				<include name="**/User_Prefs.txt" />
+				<include name="**/AnalysisEngine.bat" />
+			</fileset>
+		</copy>
+	</target>
+
 
 	<!-- Test Targets -->
-	
+
 	<target name="compile-tests" depends="clean, init, compile-src">
 		<javac srcdir="${test.unit.dir}" destdir="${build.classes.dir}" classpathref="classpath" debug="on" />
 	</target>
@@ -81,8 +103,8 @@
 			</batchtest>
 		</junit>
 	</target>
-	
-	<target name="tests" depends="compile-tests, do-tests"/>
+
+	<target name="tests" depends="compile-tests, do-tests" />
 
 </project>
 
