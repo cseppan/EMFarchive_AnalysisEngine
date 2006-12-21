@@ -1,10 +1,12 @@
 package gov.epa.mims.analysisengine.table.io;
 
+import gov.epa.mims.analysisengine.UserPreferences;
 import gov.epa.mims.analysisengine.gui.DefaultUserInteractor;
 import gov.epa.mims.analysisengine.gui.GUIUserInteractor;
 import gov.epa.mims.analysisengine.gui.IntegerValuePanel;
 import gov.epa.mims.analysisengine.gui.ScreenUtils;
 import gov.epa.mims.analysisengine.gui.UserInteractor;
+import gov.epa.mims.analysisengine.table.CurrentDirectory;
 import gov.epa.mims.analysisengine.table.SpecialTableModel;
 import gov.epa.mims.analysisengine.table.TableApp;
 import gov.epa.mims.analysisengine.table.TextDialog;
@@ -144,10 +146,17 @@ public class FileImportGUI extends JDialog {
 
 	private JFrame parent;
 
-	/** Creates a new instance of FileImport */
-	public FileImportGUI(JFrame parent) {
+	private CurrentDirectory currentDirectory;
+
+	/**
+	 * Creates a new instance of FileImport
+	 * 
+	 * @param directory
+	 */
+	public FileImportGUI(JFrame parent, CurrentDirectory directory) {
 		super(parent);
 		this.parent = parent;
+		this.currentDirectory = directory;
 		setupTableModel(null);
 		initialize();
 		pack();
@@ -165,10 +174,12 @@ public class FileImportGUI extends JDialog {
 	 *            Selected File Type fileType can be FileImportGUI.TRIM_RESULTS_FILE FileImportGUI.TRIM_SENSITIVITY_FILE
 	 *            FileImportGUI.DAVE_OUTPUT_FILE FileImportGUI.MONTE_CARLO_FILE FileImportGUI.COSU_FILE
 	 *            FileImportGUI.COMMA_DELIMITED_FILE FileImportGUI.SMOKE_REPORT_FILE FileImportGUI.GENERIC_FILE
+	 * @param currentDirectory
 	 */
-	public FileImportGUI(JFrame parent, String[] fileNames, String fileType) {
+	public FileImportGUI(JFrame parent, String[] fileNames, String fileType, CurrentDirectory currentDirectory) {
 		super(parent);
 		selectedFileType = fileType;
+		this.currentDirectory = currentDirectory;
 		setupTableModel(fileNames);
 		initialize();
 		pack();
@@ -560,8 +571,7 @@ public class FileImportGUI extends JDialog {
 		 * 
 		 * previewButton.addActionListener(new ActionListener() {
 		 * 
-		 * public void actionPerformed(ActionEvent e) {
-		 *  }
+		 * public void actionPerformed(ActionEvent e) { }
 		 * 
 		 * });
 		 * 
@@ -578,7 +588,7 @@ public class FileImportGUI extends JDialog {
 				// when the file dialog is open
 				importButton.setEnabled(false);
 				cancelButton.setEnabled(false);
-				File[] selectedFiles = getFilesFromUser(JFileChooser.OPEN_DIALOG);
+				File[] selectedFiles = getFilesFromUser(JFileChooser.OPEN_DIALOG, currentDirectory);
 				addFilesAfterCheck(selectedFiles);
 				importButton.setEnabled(true);
 				cancelButton.setEnabled(true);
@@ -1133,6 +1143,7 @@ public class FileImportGUI extends JDialog {
 	 *            String that is either JFileChooser.OPEN_DIALOG or
 	 * 
 	 * JFileChooser.SAVE_DIALOG
+	 * @param currentDirectory2
 	 * 
 	 * @return file File that the user selected. Will be null if the user
 	 * 
@@ -1140,9 +1151,10 @@ public class FileImportGUI extends JDialog {
 	 * 
 	 */
 
-	public static File[] getFilesFromUser(int fileChooserType) {
+	public static File[] getFilesFromUser(int fileChooserType, CurrentDirectory currentDirectory) {
 		File[] retval = null;
 		fileChooser.setMultiSelectionEnabled(true);
+		fileChooser.setCurrentDirectory(currentDirectory.getCurrentDirectory());
 		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 		switch (fileChooserType) {
 		case JFileChooser.OPEN_DIALOG:
@@ -1161,6 +1173,8 @@ public class FileImportGUI extends JDialog {
 			}
 			break;
 		}
+		if (retval != null && retval.length > 0)
+			currentDirectory.setCurrentDirectory(retval[0].getParentFile());
 		return retval;
 	}
 
@@ -1169,15 +1183,17 @@ public class FileImportGUI extends JDialog {
 	 * 
 	 * @return File directory
 	 */
-	public static File getDirFromUser() {
+	public static File getDirFromUser(CurrentDirectory currentDirectory) {
 		File retval = null;
 		fileChooser.setMultiSelectionEnabled(false);
+		fileChooser.setCurrentDirectory(currentDirectory.getCurrentDirectory());
 		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 			retval = fileChooser.getSelectedFile();
 			if (retval == null) {
 				retval = fileChooser.getCurrentDirectory();
 			}
+			currentDirectory.setCurrentDirectory(retval);
 		}
 		return retval;
 	}
@@ -1225,7 +1241,8 @@ public class FileImportGUI extends JDialog {
 	 *            the command line arguments
 	 */
 	public static void main(String[] args) {
-		FileImportGUI fileImportGui = new FileImportGUI(new JFrame());
+		FileImportGUI fileImportGui = new FileImportGUI(new JFrame(), CurrentDirectory
+				.get(UserPreferences.USER_PREFERENCES));
 		fileImportGui.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}// main()
 

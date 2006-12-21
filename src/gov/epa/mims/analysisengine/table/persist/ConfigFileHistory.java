@@ -71,9 +71,9 @@ public class ConfigFileHistory extends DefaultTableModel {
 	}
 
 	public void addToHistory(String fullFileName, boolean binaryFormat) {
-		String format = "binary";
+		String format = "Binary";
 		if (!binaryFormat)
-			format = "xml";
+			format = "XML";
 
 		if (!exist(fullFileName))
 			addRow(new String[] { fullFileName, format });
@@ -95,7 +95,7 @@ public class ConfigFileHistory extends DefaultTableModel {
 			Vector data = getDataVector();
 			for (int i = 0; i < data.size(); i++) {
 				Vector info = (Vector) data.get(i);
-				writer.print(info.get(0)+", ");
+				writer.print(info.get(0)+",");
 				writer.println(info.get(1));
 			}
 		} finally {

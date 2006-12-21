@@ -1,5 +1,6 @@
 package gov.epa.mims.analysisengine.table;
 
+import gov.epa.mims.analysisengine.UserPreferences;
 import gov.epa.mims.analysisengine.gui.DefaultUserInteractor;
 import gov.epa.mims.analysisengine.gui.GUIUserInteractor;
 import gov.epa.mims.analysisengine.gui.OptionDialog;
@@ -83,6 +84,8 @@ public class TableApp extends JFrame {
 
 	private JMenuItem recentConfigfilesMenuItem;
 
+	private CurrentDirectory currentDirectory;
+
 	public TableApp() {
 		initialize();
 		pack();
@@ -130,7 +133,7 @@ public class TableApp extends JFrame {
 		if (configFile != null) {
 			TablePanel newPanel = (TablePanel) mainTabbedPane.getSelectedComponent();
 			newPanel.tablePanel.loadConfigFile(configFile, true, true);
-			configFileshistory.addToHistory(configFile.getAbsolutePath(),true);
+			configFileshistory.addToHistory(configFile.getAbsolutePath(), true);
 		}
 	}
 
@@ -333,6 +336,7 @@ public class TableApp extends JFrame {
 		// menu panel
 		JPanel menuPanel = createMenuPanel();
 		setTitle(TITLE);
+		currentDirectory = CurrentDirectory.get(UserPreferences.USER_PREFERENCES);
 		// JPanel componentsPanel = createATabPanel(null);//new JPanel();
 		mainTabbedPane = new JTabbedPaneWithCloseIcons();
 		filesInTabbedPane = new FilesInTabbedPane();
@@ -391,7 +395,7 @@ public class TableApp extends JFrame {
 	 */
 	public void showImportGUI(String[] fileNames, String fileType, String delimiter, int noOfColumnNameRows) {
 		if (fileImportGUI == null) {
-			fileImportGUI = new FileImportGUI(this, fileNames, fileType);
+			fileImportGUI = new FileImportGUI(this, fileNames, fileType,currentDirectory);
 		} else {
 			fileImportGUI.removeAllRows();
 			fileImportGUI.setVisible(true);
@@ -681,6 +685,7 @@ public class TableApp extends JFrame {
 					return;
 				}
 				JFileChooser chooser = new JFileChooser();
+				chooser.setCurrentDirectory(currentDirectory.getCurrentDirectory());
 				do {
 					int returnVal = chooser.showOpenDialog(TableApp.this);
 					try {
@@ -688,7 +693,8 @@ public class TableApp extends JFrame {
 							return;
 						}
 						if (returnVal == JFileChooser.APPROVE_OPTION) {
-							showLoadConfigGUI(binaryFormat,chooser.getSelectedFile());
+							currentDirectory.setCurrentDirectory(chooser.getSelectedFile().getParentFile());
+							showLoadConfigGUI(binaryFormat, chooser.getSelectedFile());
 							return;
 						}
 					} catch (Exception ex) {
@@ -726,7 +732,7 @@ public class TableApp extends JFrame {
 					return;
 				}// if(size == 0)
 				new FileExportGUI(TableApp.this, filesInTabbedPane.getAllTabUniqueNames(), mainTabbedPane
-						.getSelectedIndex());
+						.getSelectedIndex(),currentDirectory);
 			}// actionPerformed()
 		});
 		// create a file chooser
@@ -820,7 +826,7 @@ public class TableApp extends JFrame {
 		if (configFile != null) {
 			TablePanel newPanel = (TablePanel) mainTabbedPane.getSelectedComponent();
 			newPanel.tablePanel.loadConfigFile(configFile, true, true);
-			configFileshistory.addToHistory(configFile.getAbsolutePath(),true);
+			configFileshistory.addToHistory(configFile.getAbsolutePath(), true);
 		}
 	}
 
@@ -860,7 +866,7 @@ public class TableApp extends JFrame {
 					}
 				}// if(fileAdapter.configFile!=null && fileAdapter.outputDir == null)
 				if (fileAdapter.configFile != null) // FIXME: refactory the mess here
-					frame.addConfigFileToHistory(fileAdapter.configFile,true);
+					frame.addConfigFileToHistory(fileAdapter.configFile, true);
 			}// try
 			catch (Exception e) {
 				System.err.println(e.getMessage());
@@ -871,7 +877,7 @@ public class TableApp extends JFrame {
 	}// main()
 
 	private void addConfigFileToHistory(String configFile, boolean binaryFormat) {
-		configFileshistory.addToHistory(configFile,binaryFormat);
+		configFileshistory.addToHistory(configFile, binaryFormat);
 	}
 
 	public void dispose() {
@@ -896,7 +902,6 @@ public class TableApp extends JFrame {
 
 	public void showLoadConfigGUI(final boolean binaryFormat, File file) {
 		TablePanel panel = ((TablePanel) mainTabbedPane.getSelectedComponent());
-		(panel.tablePanel).showLoadConfigGUI(file, binaryFormat,
-				configFileshistory);
+		(panel.tablePanel).showLoadConfigGUI(file, binaryFormat, configFileshistory,currentDirectory);
 	}
 }

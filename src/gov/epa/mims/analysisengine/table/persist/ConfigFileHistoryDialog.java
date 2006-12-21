@@ -117,7 +117,7 @@ public class ConfigFileHistoryDialog extends JDialog {
 		String fileName = (String) table.getValueAt(index, 0);
 		String format = (String) table.getValueAt(index, 1);
 		boolean binaryFormat = true;
-		if (format.equals("xml"))
+		if (format.equals("XML"))
 			binaryFormat = false;
 
 		tableApp.showLoadConfigGUI(binaryFormat, new File(fileName));

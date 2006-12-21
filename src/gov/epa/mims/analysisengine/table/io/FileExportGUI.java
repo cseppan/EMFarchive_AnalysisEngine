@@ -1,10 +1,12 @@
 package gov.epa.mims.analysisengine.table.io;
 
+import gov.epa.mims.analysisengine.UserPreferences;
 import gov.epa.mims.analysisengine.gui.DefaultUserInteractor;
 import gov.epa.mims.analysisengine.gui.GUIUserInteractor;
 import gov.epa.mims.analysisengine.gui.ScreenUtils;
 import gov.epa.mims.analysisengine.gui.StringValuePanel;
 import gov.epa.mims.analysisengine.gui.UserInteractor;
+import gov.epa.mims.analysisengine.table.CurrentDirectory;
 import gov.epa.mims.analysisengine.table.TableApp;
 import gov.epa.mims.analysisengine.table.TablePanelModel;
 import gov.epa.mims.analysisengine.table.TextDialog;
@@ -43,7 +45,7 @@ import javax.swing.text.PlainDocument;
  * FileExportGUI.java GUIInterface to the exportGUI Created on April 5, 2004, 2:46 PM
  * 
  * @author Parthee Partheepan, CEP, UNC CHAPEL HILL.
- * @version $Id: FileExportGUI.java,v 1.2 2006/10/30 21:43:51 parthee Exp $
+ * @version $Id: FileExportGUI.java,v 1.3 2006/12/21 16:29:54 parthee Exp $
  */
 public class FileExportGUI extends JDialog {
 	/** storing the data for each tab */
@@ -116,8 +118,14 @@ public class FileExportGUI extends JDialog {
 	 */
 	private TableApp tableApp;
 
-	/** Creates a new instance of FileExportGUI */
-	public FileExportGUI(TableApp parent, String[] tabNames, int selectedTabIndex) {
+	private CurrentDirectory currentDirectory;
+
+	/**
+	 * Creates a new instance of FileExportGUI
+	 * 
+	 * @param currentDirectory
+	 */
+	public FileExportGUI(TableApp parent, String[] tabNames, int selectedTabIndex, CurrentDirectory currentDirectory) {
 		super(parent);
 		tableApp = parent;
 		this.selectedTabIndex = selectedTabIndex;
@@ -127,7 +135,7 @@ public class FileExportGUI extends JDialog {
 			new GUIUserInteractor().notify(this, "File Export", "No Tab is Open to " + "Export", UserInteractor.NOTE);
 			return;
 		}
-
+		this.currentDirectory = currentDirectory;
 		setupTableModel(tabNames);
 		initialize();
 		pack();
@@ -306,7 +314,7 @@ public class FileExportGUI extends JDialog {
 		JButton browseButton = new JButton("Browse");
 		browseButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				File dir = FileImportGUI.getDirFromUser();
+				File dir = FileImportGUI.getDirFromUser(currentDirectory);
 				if (dir != null) {
 					dirTextField.setText(dir.getAbsolutePath());
 				}
@@ -640,7 +648,8 @@ public class FileExportGUI extends JDialog {
 	 */
 	public static void main(String[] args) {
 		String[] names = { "Orange", "Apple", "Grapes" };
-		FileExportGUI fileExportGUI = new FileExportGUI(null, names, 0);
+		FileExportGUI fileExportGUI = new FileExportGUI(null, names, 0, CurrentDirectory
+				.get(UserPreferences.USER_PREFERENCES));
 
 		fileExportGUI.pack();
 		fileExportGUI.setVisible(true);

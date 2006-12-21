@@ -4,6 +4,7 @@ import gov.epa.mims.analysisengine.gui.GUIUserInteractor;
 import gov.epa.mims.analysisengine.gui.ScreenUtils;
 import gov.epa.mims.analysisengine.gui.TreeDialog;
 import gov.epa.mims.analysisengine.gui.UserInteractor;
+import gov.epa.mims.analysisengine.table.CurrentDirectory;
 import gov.epa.mims.analysisengine.table.OverallTableModel;
 import gov.epa.mims.analysisengine.table.SaveToDialog;
 import gov.epa.mims.analysisengine.table.filter.FilterCriteria;
@@ -49,7 +50,7 @@ import javax.swing.table.TableColumn;
  * chosen directory.
  * 
  * @author Krithiga Thangavelu, CEP, UNC CHAPEL HILL.
- * @version $Id: LoadConfigurationGUI.java,v 1.7 2006/12/19 22:22:42 parthee Exp $
+ * @version $Id: LoadConfigurationGUI.java,v 1.8 2006/12/21 16:29:54 parthee Exp $
  */
 public class LoadConfigurationGUI extends javax.swing.JDialog {
 
@@ -72,11 +73,14 @@ public class LoadConfigurationGUI extends javax.swing.JDialog {
 	/** The Table containing the model in the sort filter table panel */
 	private JTable table;
 
-	public LoadConfigurationGUI(AnalysisConfiguration input, AnalysisConfiguration dest, JTable table, JFrame parent) {
+	private CurrentDirectory currentDirectory;
+
+	public LoadConfigurationGUI(AnalysisConfiguration input, AnalysisConfiguration dest, JTable table, JFrame parent, CurrentDirectory currentDirectory) {
 		super(parent);
 		this.input = input;
 		this.dest = dest;
 		this.table = table;
+		this.currentDirectory = currentDirectory;
 		initGUI();
 		setLocation(ScreenUtils.getPointToCenter(this));
 	}
@@ -416,7 +420,7 @@ public class LoadConfigurationGUI extends javax.swing.JDialog {
 			values = input.getConfigNames();
 			values = reorder((String[]) values);
 		}
-		SaveToDialog dialog = new SaveToDialog(this);
+		SaveToDialog dialog = new SaveToDialog(this,currentDirectory);
 		dialog.setVisible(true);
 		int returnVal = dialog.getRetVal();
 		try {

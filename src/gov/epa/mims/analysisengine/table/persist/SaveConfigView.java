@@ -1,9 +1,11 @@
 package gov.epa.mims.analysisengine.table.persist;
 
+import gov.epa.mims.analysisengine.UserPreferences;
 import gov.epa.mims.analysisengine.gui.DefaultUserInteractor;
 import gov.epa.mims.analysisengine.gui.GUIUserInteractor;
 import gov.epa.mims.analysisengine.gui.ScreenUtils;
 import gov.epa.mims.analysisengine.gui.UserInteractor;
+import gov.epa.mims.analysisengine.table.CurrentDirectory;
 
 import java.awt.Component;
 import java.awt.FlowLayout;
@@ -87,9 +89,9 @@ public class SaveConfigView extends JDialog {
 
 	/** Model for the Save Config Model */
 	private SaveConfigModel model;
-	
+
 	private JRadioButton xmlConfig;
-	
+
 	private JRadioButton binaryConfig;
 
 	public SaveConfigView(Frame parent, SaveConfigModel model) {
@@ -252,9 +254,9 @@ public class SaveConfigView extends JDialog {
 			});
 
 			JLabel xmlBinaryConfigLabel = new JLabel("File Format: ");
-			binaryConfig = new JRadioButton("Binary",true);
-			xmlConfig = new JRadioButton("XML",false);
-			ButtonGroup group=  new ButtonGroup();
+			binaryConfig = new JRadioButton("Binary", true);
+			xmlConfig = new JRadioButton("XML", false);
+			ButtonGroup group = new ButtonGroup();
 			group.add(binaryConfig);
 			group.add(xmlConfig);
 			JPanel configFormatPanel = new JPanel();
@@ -262,7 +264,7 @@ public class SaveConfigView extends JDialog {
 			configFormatPanel.add(binaryConfig);
 			configFormatPanel.add(xmlConfig);
 			OverallPanel.add(configFormatPanel);
-			
+
 			FlowLayout ConfigFilePanelLayout = new FlowLayout();
 
 			ConfigFilePanel.setLayout(ConfigFilePanelLayout);
@@ -289,8 +291,6 @@ public class SaveConfigView extends JDialog {
 				}
 			});
 
-			
-			
 			FlowLayout OKCancelPanelLayout = new FlowLayout();
 
 			okCancelPanel.setLayout(OKCancelPanelLayout);
@@ -461,14 +461,15 @@ public class SaveConfigView extends JDialog {
 	}
 
 	protected void browse() {
+		CurrentDirectory currentDirectory = CurrentDirectory.get(UserPreferences.USER_PREFERENCES);
 		JFileChooser chooser = new JFileChooser();
-
+		chooser.setCurrentDirectory(currentDirectory.getCurrentDirectory());
 		chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 		int retVal = chooser.showSaveDialog(this);
 
 		if (retVal == JFileChooser.APPROVE_OPTION) {
-			java.io.File file = chooser.getSelectedFile();
-
+			File file = chooser.getSelectedFile();
+			currentDirectory.setCurrentDirectory(file.getParentFile());
 			tFileName.setText(file.getAbsolutePath());
 		}
 		return;

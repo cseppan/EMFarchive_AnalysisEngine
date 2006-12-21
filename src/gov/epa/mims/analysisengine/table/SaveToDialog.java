@@ -23,7 +23,7 @@ import javax.swing.WindowConstants;
  * Class SaveToDialog - dialog displaying file type choice and option to choose file using JFileChooser
  * 
  * @author Krithiga Thangavelu, CEP, UNC CHAPEL HILL.
- * @version $Id: SaveToDialog.java,v 1.5 2006/12/19 22:22:42 parthee Exp $
+ * @version $Id: SaveToDialog.java,v 1.6 2006/12/21 16:29:54 parthee Exp $
  */
 
 public class SaveToDialog extends javax.swing.JDialog {
@@ -72,8 +72,11 @@ public class SaveToDialog extends javax.swing.JDialog {
 
 	private int retVal = CANCEL;
 
-	public SaveToDialog(Dialog parent) {
+	private CurrentDirectory currentDirectory;
+
+	public SaveToDialog(Dialog parent, CurrentDirectory currentDirectory) {
 		super(parent);
+		this.currentDirectory = currentDirectory;
 		initGUI();
 		setLocation(ScreenUtils.getPointToCenter(this));
 	}
@@ -179,25 +182,6 @@ public class SaveToDialog extends javax.swing.JDialog {
 		return retVal;
 	}
 
-	public static void main(String[] args) {
-		javax.swing.JDialog d = new javax.swing.JDialog();
-		showGUI(d);
-	}
-
-	/**
-	 * This static method creates a new instance of this class and shows it inside a new JFrame, (unless it is already a
-	 * JFrame).
-	 * 
-	 * It is a convenience method for showing the GUI.
-	 */
-	public static void showGUI(Dialog parent) {
-		try {
-			SaveToDialog inst = new SaveToDialog(parent);
-			inst.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	/**
 	 * getter for filename
@@ -219,7 +203,7 @@ public class SaveToDialog extends javax.swing.JDialog {
 	}
 
 	protected void bBrowseActionPerformed(ActionEvent evt) {
-		File dir = FileImportGUI.getDirFromUser();
+		File dir = FileImportGUI.getDirFromUser(currentDirectory);
 		if (dir != null) {
 			this.path = dir.getAbsolutePath();
 			tDirName.setText(path);
