@@ -488,6 +488,7 @@ public class SaveConfigView extends JDialog {
 			return;
 		}
 		try {
+			System.out.println("binaryConfig.isSelected()-"+binaryConfig.isSelected());
 			model.saveConfiguration(binaryConfig.isSelected(), new File(tFileName.getText()));
 			dispose();
 		} catch (Exception e) {

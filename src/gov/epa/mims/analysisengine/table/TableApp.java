@@ -86,6 +86,10 @@ public class TableApp extends JFrame {
 
 	private CurrentDirectory currentDirectory;
 
+	private JMenuItem binaryConfigMenuItem;
+
+	private JMenuItem xmlConfigMenuItem;
+
 	public TableApp() {
 		initialize();
 		pack();
@@ -395,7 +399,7 @@ public class TableApp extends JFrame {
 	 */
 	public void showImportGUI(String[] fileNames, String fileType, String delimiter, int noOfColumnNameRows) {
 		if (fileImportGUI == null) {
-			fileImportGUI = new FileImportGUI(this, fileNames, fileType,currentDirectory);
+			fileImportGUI = new FileImportGUI(this, fileNames, fileType, currentDirectory);
 		} else {
 			fileImportGUI.removeAllRows();
 			fileImportGUI.setVisible(true);
@@ -669,18 +673,22 @@ public class TableApp extends JFrame {
 		fileMenu.add(loadConfigMenu);
 		// loadConfigMenu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, ActionEvent.ALT_MASK));
 
-		JMenuItem binaryConfigMenuItem = new JMenuItem("Binary File");
+		binaryConfigMenuItem = new JMenuItem("Binary File");
 		loadConfigMenu.add(binaryConfigMenuItem);
-		binaryConfigMenuItem.addActionListener(loadConfigAction(true));
+		binaryConfigMenuItem.addActionListener(loadConfigAction());
 
-		JMenuItem xmlConfigMenuItem = new JMenuItem("XML File");
+		xmlConfigMenuItem = new JMenuItem("XML File");
 		loadConfigMenu.add(xmlConfigMenuItem);
-		xmlConfigMenuItem.addActionListener(loadConfigAction(false));
+		xmlConfigMenuItem.addActionListener(loadConfigAction());
 	}
 
-	private ActionListener loadConfigAction(final boolean binaryFormat) {
+	private ActionListener loadConfigAction() {
 		return new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				boolean binaryFormat = true;
+				if (e.getSource().equals(xmlConfigMenuItem))
+					binaryFormat = false;
+
 				if (mainTabbedPane.getTabCount() == 0) {
 					return;
 				}
@@ -732,7 +740,7 @@ public class TableApp extends JFrame {
 					return;
 				}// if(size == 0)
 				new FileExportGUI(TableApp.this, filesInTabbedPane.getAllTabUniqueNames(), mainTabbedPane
-						.getSelectedIndex(),currentDirectory);
+						.getSelectedIndex(), currentDirectory);
 			}// actionPerformed()
 		});
 		// create a file chooser
@@ -901,7 +909,8 @@ public class TableApp extends JFrame {
 	}
 
 	public void showLoadConfigGUI(final boolean binaryFormat, File file) {
+		System.out.println("load binary format-" + binaryFormat);
 		TablePanel panel = ((TablePanel) mainTabbedPane.getSelectedComponent());
-		(panel.tablePanel).showLoadConfigGUI(file, binaryFormat, configFileshistory,currentDirectory);
+		(panel.tablePanel).showLoadConfigGUI(file, binaryFormat, configFileshistory, currentDirectory);
 	}
 }
