@@ -37,4 +37,4 @@ set CLASSPATH=%CLASSPATH%;%HOME_DIR%\lib\xstream-1.2.1.jar
 
 @echo on
 
-%JAVA_HOME%\bin\java -Xmx128M -classpath %CLASSPATH% -DUSER_PREFERENCES="%HOME_DIR%\User_Prefs.txt" -DR_HOME="%R_HOME%\bin" gov.epa.mims.analysisengine.table.TableApp
+"%JAVA_HOME%"\bin\java -Xmx128M -classpath %CLASSPATH% -DUSER_PREFERENCES="%HOME_DIR%\User_Prefs.txt" -DR_HOME="%R_HOME%\bin" gov.epa.mims.analysisengine.table.TableApp
