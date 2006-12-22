@@ -679,7 +679,6 @@ public class TableApp extends JFrame {
 
 		xmlConfigMenuItem = new JMenuItem("XML File");
 		loadConfigMenu.add(xmlConfigMenuItem);
-		xmlConfigMenuItem.setEnabled(false);
 		xmlConfigMenuItem.addActionListener(loadConfigAction());
 	}
 
