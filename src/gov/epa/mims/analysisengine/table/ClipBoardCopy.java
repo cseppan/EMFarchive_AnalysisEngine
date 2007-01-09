@@ -68,7 +68,11 @@ public class ClipBoardCopy implements ActionListener {
 
 		String[][] selectedColumnHeaders = new String[selectedColumns.length][colummHeaderLength];
 		for (int i = 0; i < selectedColumns.length; i++) {
-			selectedColumnHeaders[i] = rowHeaderTable.underlyingModel.getColumnHeaders(selectedColumns[i]);
+			int index = selectedColumns[i] - 1;
+			if (index < 0)// row header column
+				selectedColumnHeaders[i] = rowHeaderArray(colummHeaderLength);
+			else
+				selectedColumnHeaders[i] = rowHeaderTable.underlyingModel.getColumnHeaders(index);
 		}
 
 		for (int j = 0; j < colummHeaderLength; j++) {
@@ -79,6 +83,17 @@ public class ClipBoardCopy implements ActionListener {
 			}
 			columnHeadersString.append("\n");
 		}
+	}
+
+	private String[] rowHeaderArray(int colummHeaderLength) {
+		String[] rowHeader = new String[colummHeaderLength];
+		for (int i = 0; i < colummHeaderLength; i++) {
+			rowHeader[i] = "";
+
+			if (i == 0)
+				rowHeader[i] = "Row";
+		}
+		return rowHeader;
 	}
 
 }
