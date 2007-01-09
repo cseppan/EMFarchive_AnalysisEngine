@@ -1,5 +1,7 @@
 package gov.epa.mims.analysisengine.tree;
 
+import gov.epa.mims.analysisengine.gui.OptionInfo;
+
 import java.io.Serializable;
 
 import java.util.HashMap;
@@ -7,7 +9,7 @@ import java.util.HashMap;
 /**
  * availableOptionsAndDefaults class
  * 
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  * @author Alison Eyth , Tommy E. Cathey
  */
 public class AvailableOptionsAndDefaults implements Serializable {

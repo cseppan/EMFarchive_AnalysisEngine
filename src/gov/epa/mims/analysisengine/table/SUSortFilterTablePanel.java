@@ -168,9 +168,9 @@ public class SUSortFilterTablePanel extends SortFilterTablePanel {
 		// table.getColumnModel().getSelectionModel().setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 	} // createPopupMenu()
 
-	public void loadConfigFile(File file, boolean loadTableConfig,boolean binaryFormat) {
+	public void loadConfigFile(File file, boolean loadTableConfig, boolean binaryFormat) {
 		try {
-			aconfig.loadConfiguration(file, loadTableConfig,binaryFormat);
+			aconfig.loadConfiguration(file, loadTableConfig, binaryFormat);
 			updateFormat();
 		} catch (Exception e) {
 			new GUIUserInteractor().notify(this, "Error Loading Configuration", e.getMessage(), UserInteractor.ERROR);
@@ -363,7 +363,12 @@ public class SUSortFilterTablePanel extends SortFilterTablePanel {
 				String depAxis = TreeDialog.getDependentAxis(this, aePlotType);
 				hashMap.put(depAxis, unit);
 				String title = "Cutomize " + aePlotType;
-				TreeDialog dialog = new TreeDialog((JFrame) parent, aePlotType, dataSets, null, hashMap);
+				boolean setPlotDefaults = true;
+				if (plotInfo.getPlotType().equals(PlotTypeConverter.XY_LINES_PLOT))
+					setPlotDefaults = false;
+
+				TreeDialog dialog = new TreeDialog((JFrame) parent, aePlotType, dataSets, null, hashMap,
+						setPlotDefaults);
 				dialog.setTitle(title);
 				dialog.show();
 				data = dialog.getResultTree();
@@ -397,8 +402,7 @@ public class SUSortFilterTablePanel extends SortFilterTablePanel {
 		LineType lineType = new LineType();
 		if (plotType.equals(PlotTypeConverter.XY_LINES_PLOT)) {
 			lineType.setPlotStyle(LineType.LINES);
-		} else // for all other type it's set to points including XY_Plot
-		{
+		} else { // for all other type it's set to points including XY_Plot
 			lineType.setPlotStyle(LineType.POINTS);
 		}
 		AvailableOptionsAndDefaults.addGlobalDefaultValue(OptionInfo.LINE_TYPE, lineType);

@@ -71,7 +71,7 @@ import javax.swing.JPanel;
  * The GUI will also contain a PagePanel for editing page and plot options
  * 
  * @author Alison Eyth
- * @version $Id: TreeDialog.java,v 1.5 2006/12/11 22:16:39 parthee Exp $
+ * @version $Id: TreeDialog.java,v 1.6 2007/01/09 23:06:15 parthee Exp $
  * 
  * @see gov.epa.mims.analysisengine.tree.Node
  * @see gov.epa.mims.analysisengine.tree.DataSets
@@ -257,7 +257,7 @@ public class TreeDialog extends JDialog implements AnalysisOptionConstantsIfc, P
 	 */
 	public static Branch showTreeDialog(JFrame parent, String plotType, DataSetsAdapter dataSetsAdapter,
 			RGenerator rgenerator, HashMap textValues) throws Exception {
-		TreeDialog dialog = new TreeDialog(parent, plotType, dataSetsAdapter, rgenerator, textValues);
+		TreeDialog dialog = new TreeDialog(parent, plotType, dataSetsAdapter, rgenerator, textValues, true);
 		dialog.setVisible(true);
 		Branch retVal = dialog.getResultTree();
 
@@ -302,22 +302,28 @@ public class TreeDialog extends JDialog implements AnalysisOptionConstantsIfc, P
 	 *            types
 	 * @param dataSetsAdapter
 	 *            DataSetsAdapter the optional provision to bring in datasets -- either actual or null
+	 * @param rgenerator
+	 *            RGenerator to use to execute trees (could be null)
 	 * @param textValues
 	 *            HashMap initial text values to use for plot; keywords should be standard analysis option keywords;
 	 *            current implementation supports single page and plot tree only
-	 * @param rgenerator
-	 *            RGenerator to use to execute trees (could be null)
+	 * @param plotDefaults
+	 *            TODO
+	 * 
 	 * @throws Exception
 	 */
 	public TreeDialog(JFrame parent, String plotType, DataSetsAdapter dataSetsAdapter, RGenerator rgenerator,
-			HashMap textValues) throws Exception {
+			HashMap textValues, boolean plotDefaults) throws Exception {
 		super(parent);
 		this.dataSetsAdapter = dataSetsAdapter;
 		this.originalTree = null;
 		this.plotType = plotType;
 		this.textValues = textValues;
 		PlotInfo plotInfo = TreeDialog.getPlotInfoFor(plotType);
-		OptionInfo.setPlotTypeDefaults(this.plotType);
+
+		if (plotDefaults)
+			OptionInfo.setPlotTypeDefaults(this.plotType);
+
 		if (plotInfo == null) {
 			throw new IllegalArgumentException(plotType + " is not an available plot type");
 		}
@@ -1299,7 +1305,7 @@ public class TreeDialog extends JDialog implements AnalysisOptionConstantsIfc, P
 				DataSets dataSets = example.getTree();
 				TreeDialog dialog = null;
 				try {
-					dialog = new TreeDialog(new JFrame(), plotType, dataSets, null, textValues);
+					dialog = new TreeDialog(new JFrame(), plotType, dataSets, null, textValues, true);
 				} catch (HeadlessException e) {
 					e.printStackTrace();
 				} catch (Exception e) {

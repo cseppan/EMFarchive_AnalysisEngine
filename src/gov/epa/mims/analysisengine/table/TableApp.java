@@ -60,9 +60,10 @@ public class TableApp extends JFrame {
 
 	private FileImportGUI fileImportGUI;
 
-	static String version = "December 21, 2006";
+	static String version = "January 09, 2007";
 
 	private FileHistory history = null;
+	
 
 	/**
 	 * a boolean to flag whether this TableApp is used as stand alone or call from other application In main() in this
@@ -96,6 +97,7 @@ public class TableApp extends JFrame {
 		System.out.println(TITLE + " Version " + TableApp.version + " (C1)");
 		setDefaultCloseOperation();
 		setLocation(ScreenUtils.getPointToCenter(this));
+		JOptionPane.setRootFrame(this);
 		setVisible(true);
 	}// TablePanel()
 
@@ -111,6 +113,7 @@ public class TableApp extends JFrame {
 		pack();
 		setLocation(ScreenUtils.getPointToCenter(this));
 		setDefaultCloseOperation();
+		JOptionPane.setRootFrame(this);
 		setVisible(true);
 	}// TableApp();
 
@@ -123,6 +126,7 @@ public class TableApp extends JFrame {
 		pack();
 		setLocation(ScreenUtils.getPointToCenter(this));
 		setDefaultCloseOperation();
+		JOptionPane.setRootFrame(this);
 		setVisible(true);
 	}// TableApp();
 
