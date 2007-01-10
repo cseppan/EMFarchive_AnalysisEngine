@@ -1,4 +1,3 @@
-
 package gov.epa.mims.analysisengine.gui;
 
 /*
@@ -6,184 +5,157 @@ package gov.epa.mims.analysisengine.gui;
  * A Table column which will be contain objects of type TextBorder and when some
  * clicks on one of the cell in the column TextBorderEditor will pop up
  * @see TextBorder.java
- * @author Parthee Partheepan UNC
- * @version $Id: TextBorderTableColumn.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
  */
-
-import javax.swing.*;
-import javax.swing.table.*;
-import java.util.EventObject;
-import javax.swing.event.ChangeEvent;
-import java.awt.Component;
 
 import gov.epa.mims.analysisengine.tree.TextBorder;
 
-public class TextBorderTableColumn extends SpecialTableColumn
-{
-   private TextBorder defaultValue = new TextBorder();
+import java.awt.Component;
+import java.util.EventObject;
 
-   private TextBorder [] validChoices = {  new TextBorder()};
+import javax.swing.DefaultCellEditor;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.event.ChangeEvent;
+import javax.swing.table.DefaultTableCellRenderer;
 
-   /** Creates a new instance of TextBorderTableColumn */
-   public TextBorderTableColumn(int modelIndex, String name)
-   {
-      super(modelIndex, name);
-      type = TextBorder.class;
-      this.setupRenderer();
-   }
+public class TextBorderTableColumn extends SpecialTableColumn {
+	private TextBorder defaultValue = new TextBorder();
 
-   protected void copySelectedCell(Object obj)
-   {
-   }
+	private TextBorder[] validChoices = { new TextBorder() };
 
-   public Object getDefaultValue()
-   {
-      return defaultValue;
-   }
+	/** Creates a new instance of TextBorderTableColumn */
+	public TextBorderTableColumn(int modelIndex, String name) {
+		super(modelIndex, name);
+		type = TextBorder.class;
+		this.setupRenderer();
+	}
 
-   public Object nextChoice()
-   {
-      TextBorder txtBorder = new TextBorder();
-      initValues(txtBorder);
-      return txtBorder;
-   }
+	protected void copySelectedCell(Object obj) {
+	}
 
-   /** initialize values for the TextBorder with reasonable values */
-   private void initValues(TextBorder txtBorder)
-   {
-        txtBorder.setPosition(TextBorder.REFERENCE_LINE,TextBorder.CENTER,
-            txtBorder.getXJustification(),txtBorder.getYJustification());
-   }
+	public Object getDefaultValue() {
+		return defaultValue;
+	}
 
-   private void setupRenderer()
-   {
-      this.setCellRenderer(new DefaultTableCellRenderer()
-      {
-         JLabel label = new JLabel();
-         // Set the background color to be the value in the cell.
-         // Use a slightly darker color when the cell is selected.
-         public Component getTableCellRendererComponent(JTable table,
-         Object value, boolean isSelected, boolean hasFocus, int row,
-         int column)
-         {
-            Object obj = table.getValueAt(row, column);
+	public Object nextChoice() {
+		TextBorder txtBorder = new TextBorder();
+		initValues(txtBorder);
+		return txtBorder;
+	}
 
-            if ( obj != null)
-            {
-               if (obj instanceof TextBorder)
-               {
-                  label.setText(((TextBorder)obj).getTextString());
-               }
-               else
-               {
-                  DefaultUserInteractor.get().notify(table,"Unexpected object type",
-                  "Expected a TextBorderEditor in TextBorderTableColumn.getTableCellRendererComponent()",
-                  UserInteractor.ERROR);
-               }
-            }
-            else
-            {
-               label.setText("");
-            }
+	/** initialize values for the TextBorder with reasonable values */
+	private void initValues(TextBorder txtBorder) {
+		txtBorder.setPosition(TextBorder.REFERENCE_LINE, TextBorder.CENTER, txtBorder.getXJustification(), txtBorder
+				.getYJustification());
+	}
 
-            return label;
-         }
-      }
-      );
-   } //setUpRenderer()
+	private void setupRenderer() {
+		this.setCellRenderer(new DefaultTableCellRenderer() {
+			JLabel label = new JLabel();
 
+			// Set the background color to be the value in the cell.
+			// Use a slightly darker color when the cell is selected.
+			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+					boolean hasFocus, int row, int column) {
+				Object obj = table.getValueAt(row, column);
 
-   public void setDefaultValue(Object obj)
-   {
-      this.defaultValue = (TextBorder)obj;
-   }
+				if (obj != null) {
+					if (obj instanceof TextBorder) {
+						label.setText(((TextBorder) obj).getTextString());
+					} else {
+						DefaultUserInteractor.get().notify(table, "Unexpected object type",
+								"Expected a TextBorderEditor in TextBorderTableColumn.getTableCellRendererComponent()",
+								UserInteractor.ERROR);
+					}
+				} else {
+					label.setText("");
+				}
 
-   protected void setupCellEditor()
-   {
-      cellEditor = new TextCellEditor();
-   }
+				return label;
+			}
+		});
+	} // setUpRenderer()
 
-   public class TextCellEditor extends DefaultCellEditor
-   {
+	public void setDefaultValue(Object obj) {
+		this.defaultValue = (TextBorder) obj;
+	}
 
-      /** The original color in the cell. */
-      private String originalString = null;
+	protected void setupCellEditor() {
+		cellEditor = new TextCellEditor();
+	}
 
-      /** The color that we will return. This will be the newly chosen value if
-       * editing was successful and the original value if editing was cancelled. */
-      private String returnString = null;
+	public class TextCellEditor extends DefaultCellEditor {
 
-      /** The editing label to place in the cell while the user is choosing a color. */
-      private JLabel label = new JLabel("Editing...", SwingConstants.CENTER);
+		/** The original color in the cell. */
+		private String originalString = null;
 
-      private TextBorderEditor cellTextBorderEditor = null;
+		/**
+		 * The color that we will return. This will be the newly chosen value if editing was successful and the original
+		 * value if editing was cancelled.
+		 */
+		private String returnString = null;
 
+		/** The editing label to place in the cell while the user is choosing a color. */
+		private JLabel label = new JLabel("Editing...", SwingConstants.CENTER);
 
-      public TextCellEditor()
-      {
-         super(new JTextField());
-      }
+		private TextBorderEditor cellTextBorderEditor = null;
 
-      public Object getCellEditorValue()
-      {
-         return cellTextBorderEditor.getDataSource();
-      }
+		public TextCellEditor() {
+			super(new JTextField());
+		}
 
-      public java.awt.Component getTableCellEditorComponent(JTable table,
-         Object value, boolean isSelected, int row, int column)
-      {
+		public Object getCellEditorValue() {
+			return cellTextBorderEditor.getDataSource();
+		}
 
-         Object obj = table.getValueAt(row, column);
+		public java.awt.Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row,
+				int column) {
+			Object obj = table.getValueAt(row, column);
 
-         if (obj instanceof TextBorder)
-         {
-            cellTextBorderEditor = new TextBorderEditor((TextBorder)obj,TextEditor.EDITOR_REFLINE);
-         }
-         else
-            DefaultUserInteractor.get().notify(table,"Unexpected object type",
-            "Expected an TextBorderEditor in TextBorderTableColumn.getTableCellEditorComponent()",
-            UserInteractor.ERROR);
+			if (obj instanceof TextBorder) {
+				cellTextBorderEditor = new TextBorderEditor((TextBorder) obj, TextEditor.EDITOR_REFLINE);
+			} else
+				DefaultUserInteractor.get().notify(table, "Unexpected object type",
+						"Expected an TextBorderEditor in TextBorderTableColumn.getTableCellEditorComponent()",
+						UserInteractor.ERROR);
 
-         return label;
+			return label;
 
-      }
+		}
 
-      /**
-       * Bring up the JColorChooser and let the user select a color.
-       * This has to be done here because this is the last method that Java
-       * calls when editing. It does *NOT* work from getTableCellEditorComponent().
-       *
-       * @author Daniel Gatti
-       * @return boolean that is what the super class would return.
-       */
-      public boolean shouldSelectCell(EventObject e)
-      {
-         JTable table = (JTable)e.getSource();
+		/**
+		 * Bring up the JColorChooser and let the user select a color. This has to be done here because this is the last
+		 * method that Java calls when editing. It does *NOT* work from getTableCellEditorComponent().
+		 * 
+		 * @author Daniel Gatti
+		 * @return boolean that is what the super class would return.
+		 */
+		public boolean shouldSelectCell(EventObject e) {
+			JTable table = (JTable) e.getSource();
 
-         cellTextBorderEditor.setVisible(true);
-         table.editingStopped(new ChangeEvent(table));
-         return super.shouldSelectCell(e);
-      }
+			cellTextBorderEditor.setVisible(true);
+			table.editingStopped(new ChangeEvent(table));
+			return super.shouldSelectCell(e);
+		}
 
-      /**
-       * Always let the editor stop editing. The setting of the returnColor is handled
-       * in shouldSelectCell().
-       *
-       * @return boolean that is always true.
-       */
-      public boolean stopCellEditing()
-      {
-         return true;
-      }
+		/**
+		 * Always let the editor stop editing. The setting of the returnColor is handled in shouldSelectCell().
+		 * 
+		 * @return boolean that is always true.
+		 */
+		public boolean stopCellEditing() {
+			return true;
+		}
 
-      /**
-       * Set the return color back to the original color.
-       */
-      public void cancelCellEditing()
-      {
-         returnString = originalString;
-      }
+		/**
+		 * Set the return color back to the original color.
+		 */
+		public void cancelCellEditing() {
+			returnString = originalString;
+		}
 
-   }
+	}
 
 }

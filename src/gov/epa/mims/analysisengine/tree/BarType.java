@@ -1,9 +1,7 @@
 package gov.epa.mims.analysisengine.tree;
 
 import java.awt.Color;
-
 import java.io.Serializable;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,35 +13,35 @@ import java.util.List;
  * Elided Code Example:
  * 
  * <pre>
- *        :
- *        :
- *     String aBARTYPE = BAR_TYPE;
- *    
- *     AnalysisOptions options = new AnalysisOptions();
- *     options.addOption(aBARTYPE, initBarType());
- *        :
- *        :
- *     private BarType initBarType()
- *     {
- *        BarType barType = new BarType();
- *        barType.setBorderColor(Color.green);
- *        barType.setHorizontal(false);
- *        barType.setStacked(true);
- *        barType.setCategoriesSpanDataSets(false);
- *        barType.setSpaceBetweenBars(1.0);
- *        barType.setSpaceBetweenCategories(1.0);
- *        barType.setWidth(new double[]
- *        {
- *           0.5
- *        });
- *    
- *        return barType;
- *     }
+ *         :
+ *         :
+ *      String aBARTYPE = BAR_TYPE;
+ *     
+ *      AnalysisOptions options = new AnalysisOptions();
+ *      options.addOption(aBARTYPE, initBarType());
+ *         :
+ *         :
+ *      private BarType initBarType()
+ *      {
+ *         BarType barType = new BarType();
+ *         barType.setBorderColor(Color.green);
+ *         barType.setHorizontal(false);
+ *         barType.setStacked(true);
+ *         barType.setCategoriesSpanDataSets(false);
+ *         barType.setSpaceBetweenBars(1.0);
+ *         barType.setSpaceBetweenCategories(1.0);
+ *         barType.setWidth(new double[]
+ *         {
+ *            0.5
+ *         });
+ *     
+ *         return barType;
+ *      }
  * </pre>
  * 
  * @author Tommy E. Cathey
  * @created July 30, 2004
- * @version $Id: BarType.java,v 1.3 2007/01/09 23:06:15 parthee Exp $
+ * @version $Id: BarType.java,v 1.4 2007/01/10 22:31:35 parthee Exp $
  */
 public class BarType extends AnalysisOption implements Serializable, Cloneable, LineTypeConstantsIfc,
 		AnalysisOptionConstantsIfc {
@@ -650,17 +648,32 @@ public class BarType extends AnalysisOption implements Serializable, Cloneable, 
 	 * @return array of bar colors
 	 */
 	private static Color[] getCyclicColors() {
-		// colorList.add(Color.lightGray);
-		// colorList.add(Color.gray);
-		// colorList.add(Color.black);
-		// colorList.add(new Color(255, 150, 0));
-		// colorList.add(new Color(200, 50, 0));
-		// colorList.add(new Color(204, 51, 255));
-		// colorList.add(new Color(2, 176, 176));
-		// colorList.add(new Color(215, 139, 139));
-		// colorList.add(new Color(142, 142, 212));
-		// colorList.add(new Color(153, 0, 153));
-		// colorList.add(new Color(0, 255, 204));
-		return ColorConstantsIfc.DEFAULT_COLORS;
+		ArrayList colorList = new ArrayList();
+		colorList.add(Color.red);
+		colorList.add(Color.yellow);
+ 		colorList.add(Color.blue);
+		colorList.add(Color.green);
+		colorList.add(Color.magenta);
+		colorList.add(Color.orange);
+		colorList.add(Color.pink);
+		colorList.add(Color.lightGray);
+		colorList.add(Color.gray);
+		colorList.add(Color.black);
+		colorList.add(new Color(255, 150, 0));
+		colorList.add(new Color(200, 50, 0));
+		colorList.add(Color.cyan);
+		colorList.add(new Color(204, 51, 255));
+		colorList.add(new Color(50, 150, 50));
+		colorList.add(new Color(2, 176, 176));
+		colorList.add(new Color(215, 139, 139));
+		colorList.add(new Color(142, 142, 212));
+		colorList.add(new Color(153, 0, 153));
+		colorList.add(new Color(0, 255, 204));
+
+		Color[] colors = new Color[colorList.size()];
+		colorList.toArray(colors);
+
+		return colors;
+		// return ColorConstantsIfc.DEFAULT_COLORS;
 	}
 }

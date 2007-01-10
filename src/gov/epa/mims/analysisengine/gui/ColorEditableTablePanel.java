@@ -3,9 +3,19 @@ package gov.epa.mims.analysisengine.gui;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Toolkit;
-import java.awt.datatransfer.*;
+import java.awt.datatransfer.Clipboard;
 import java.util.EventObject;
-import javax.swing.*;
+
+import javax.swing.DefaultCellEditor;
+import javax.swing.JColorChooser;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.ListCellRenderer;
+import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -15,7 +25,7 @@ import javax.swing.table.TableColumn;
  * 
  * @author Daniel Gatti, CEP, UNC
  * @see gov.epa.mims.analysisengine.gui.EditableTablePanel.java
- * @version $Id: ColorEditableTablePanel.java,v 1.3 2007/01/09 23:06:15 parthee Exp $
+ * @version $Id: ColorEditableTablePanel.java,v 1.4 2007/01/10 22:31:34 parthee Exp $
  */
 public class ColorEditableTablePanel extends EditableTablePanel {
 	/**

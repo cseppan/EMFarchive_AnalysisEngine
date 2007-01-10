@@ -30,7 +30,7 @@ import javax.swing.border.BevelBorder;
  * Strings
  * 
  * @author Prashant Pai, CEP UNC
- * @version $Id: ArrayEditorDialog.java,v 1.3 2006/12/07 20:45:34 parthee Exp $
+ * @version $Id: ArrayEditorDialog.java,v 1.4 2007/01/10 22:31:35 parthee Exp $
  */
 
 public class ArrayEditorDialog extends JDialog {
@@ -262,7 +262,7 @@ public class ArrayEditorDialog extends JDialog {
 				public void actionPerformed(ActionEvent ae) {
 					Color value = null;
 					try {
-						value = JColorChooser.showDialog(null, "Choose Color", null);
+						value = JColorChooser.showDialog(ArrayEditorDialog.this, "Choose Color", null);
 						if (value == null)
 							return;
 						objectList.add(value);
