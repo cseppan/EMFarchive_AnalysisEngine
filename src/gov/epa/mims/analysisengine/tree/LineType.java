@@ -61,7 +61,7 @@ import java.util.ArrayList;
  * 
  * 
  * @author Tommy E. Cathey
- * @version $Id: LineType.java,v 1.4 2007/01/10 22:31:35 parthee Exp $
+ * @version $Id: LineType.java,v 1.5 2007/01/11 20:05:39 parthee Exp $
  * 
  */
 public class LineType extends AnalysisOption implements Serializable, Cloneable, LineTypeConstantsIfc,
@@ -82,7 +82,7 @@ public class LineType extends AnalysisOption implements Serializable, Cloneable,
 	private String[] lineStyle = getDefaultLineStyles();
 
 	/** array of line widths */
-	private double[] lineWidth = { 1.0 };
+	private double[] lineWidth = { 2.0 };
 
 	/** array of symbols */
 	private String[] symbol = getDefaultSymbols();
