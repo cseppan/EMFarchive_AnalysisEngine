@@ -18,7 +18,7 @@ import javax.swing.table.TableColumn;
  * Editor for line type
  * 
  * @author Prashant Pai, Parthee Partheepan UNC
- * @version $Id: LineTypeEditor.java,v 1.4 2007/01/09 23:06:15 parthee Exp $
+ * @version $Id: LineTypeEditor.java,v 1.5 2007/01/11 20:05:39 parthee Exp $
  * 
  */
 
@@ -283,38 +283,26 @@ public class LineTypeEditor extends OptionDialog {
 	private void setupEqualLengthProperties() {
 		// ASSUMPTION symbols.length > lineTypes.length && symbols.length > colors.length
 		String[] symbols = LineType.getDefaultSymbols();
-		// String[] lineStyles = LineType.getDefaultLineStyles();
 		Color[] colors = LineType.getCyclicColors();
 		double symbolExpansion = lineType.getSymbolExpansion()[0]; // Assump:length=1
-		double lineWidth = lineType.getSymbolExpansion()[0];// Assump:length=1
+		double lineWidth = lineType.getLineWidth()[0];// Assump:length=1
 		String[] newLineStyles = new String[symbols.length];
 		Color[] newColors = new Color[symbols.length];
 		double[] newSymbolExpansions = new double[symbols.length];
 		double[] newLineWidth = new double[symbols.length];
 		int countColor = 0;
-		// int countLoop = 0;
 		for (int i = 0; i < symbols.length; i++) {
 			newColors[i] = colors[countColor++];
-			if (countColor >= colors.length - 1) {
+			if (countColor >= colors.length ) {
 				countColor = 0;
 			}
 			newSymbolExpansions[i] = symbolExpansion;
 			newLineWidth[i] = lineWidth;
 		}// for(i)
 
-		// for (int i = 0; i < symbols.length;) {
-		// for (int j = 0; countLoop + j < lineStyles.length && i < symbols.length; j++) {
-		// newLineStyles[i++] = lineStyles[countLoop + j];
-		// }// for(j)
-		// for (int k = 0; k < countLoop && i < symbols.length; k++) {
-		// newLineStyles[i++] = lineStyles[k];
-		// }// for(k)
-		// countLoop++;
-		// }// for(i)
-
 		for (int i = 0; i < symbols.length; i++) {
 
-			int index = i / colors.length;
+			int index = (int)Math.floor(i / colors.length);
 			switch (index) {
 			case 0:
 				newLineStyles[i] = LineTypeConstantsIfc.SOLID;

@@ -12,56 +12,56 @@ import java.util.ArrayList;
  * Elided Code Example:
  * 
  * <pre>
- *         :
- *         :
- *      String aLINETYPE = LINE_TYPE;
- *      AnalysisOptions options = new AnalysisOptions();
- *      options.addOption(aLINETYPE, initLineType());
- *         :
- *         :
- *      private LineType initLineType()
- *      {
- *         LineType lineType = new LineType();
- *         lineType.setPlotStyle(LineType.POINTS_N_LINES);
- *         lineType.setColor(
- *               new Color[]
- *         {
- *            Color.blue,
- *            Color.red,
- *            Color.yellow
- *         });
- *         lineType.setLineStyle(
- *               new String[]
- *         {
- *            &quot;SOLID&quot;,
- *            &quot;DASHED&quot;,
- *            &quot;DOTTED&quot;
- *         });
- *         lineType.setLineWidth(new double[]
- *         {
- *            2.5,
- *            3.3
- *         });
- *         lineType.setSymbol(new String[]
- *         {
- *            &quot;TRIANGLE_UP&quot;,
- *            &quot;CIRCLE&quot;
- *         });
- *         lineType.setSymbolExpansion(new double[]
- *         {
- *            1.5,
- *            2.5
- *         });
- *         return lineType;
- *      }
- *         :
- *         :
- *     
+ *          :
+ *          :
+ *       String aLINETYPE = LINE_TYPE;
+ *       AnalysisOptions options = new AnalysisOptions();
+ *       options.addOption(aLINETYPE, initLineType());
+ *          :
+ *          :
+ *       private LineType initLineType()
+ *       {
+ *          LineType lineType = new LineType();
+ *          lineType.setPlotStyle(LineType.POINTS_N_LINES);
+ *          lineType.setColor(
+ *                new Color[]
+ *          {
+ *             Color.blue,
+ *             Color.red,
+ *             Color.yellow
+ *          });
+ *          lineType.setLineStyle(
+ *                new String[]
+ *          {
+ *             &quot;SOLID&quot;,
+ *             &quot;DASHED&quot;,
+ *             &quot;DOTTED&quot;
+ *          });
+ *          lineType.setLineWidth(new double[]
+ *          {
+ *             2.5,
+ *             3.3
+ *          });
+ *          lineType.setSymbol(new String[]
+ *          {
+ *             &quot;TRIANGLE_UP&quot;,
+ *             &quot;CIRCLE&quot;
+ *          });
+ *          lineType.setSymbolExpansion(new double[]
+ *          {
+ *             1.5,
+ *             2.5
+ *          });
+ *          return lineType;
+ *       }
+ *          :
+ *          :
+ *      
  * </pre>
  * 
  * 
  * @author Tommy E. Cathey
- * @version $Id: LineType.java,v 1.5 2007/01/11 20:05:39 parthee Exp $
+ * @version $Id: LineType.java,v 1.6 2007/01/11 20:06:27 parthee Exp $
  * 
  */
 public class LineType extends AnalysisOption implements Serializable, Cloneable, LineTypeConstantsIfc,
