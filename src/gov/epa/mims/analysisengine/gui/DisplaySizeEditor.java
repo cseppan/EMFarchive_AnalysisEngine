@@ -100,7 +100,7 @@ public class DisplaySizeEditor extends OptionDialog
 
    /** image icon for the displaySizeHelp icons */
    private static ImageIcon helpImageIcon = MultipleEditableTablePanel.createImageIcon(
-         "/gov/epa/mims/analysisengine/gui/icons/displaySizeHelp.jpeg");;
+         "/gov/epa/mims/analysisengine/gui/icons/displaySizeHelp.jpeg");
 
    /** to view the image */
    private ImageViewer imageViewer;
