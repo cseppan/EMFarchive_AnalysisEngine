@@ -6,7 +6,6 @@
 	<property file="${user.home}/build.properties" />
 
 	<property name="env" environment="env" value="env" />
-	<property name="J2EE_HOME" value="${env.J2EE_HOME}" />
 	<property name="JAVA_HOME" value="${env.JAVA_HOME}" />
 	<property name="src.dir" value="src" />
 	<property name="lib.dir" value="lib" />
@@ -57,7 +56,7 @@
 
 	<target name="compile" depends="clean, init, compile-src" />
 
-	<target name="dist(jar-only)" depends="do-dist-jar-only" />
+	<target name="do-dist" depends="do-dist-jar-only" />
 
 	<target name="do-dist-jar-only" depends="compile">
 		<jar jarfile="${build.home}/${app.name}-${app.version}.jar" basedir="${build.classes.dir}" />
