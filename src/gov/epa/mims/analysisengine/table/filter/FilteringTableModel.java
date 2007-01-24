@@ -14,7 +14,7 @@ import javax.swing.event.TableModelListener;
  * your underlying data contains integers and your filter says to filter out any value less than 5, the map in this
  * model will only contain the data in the underlying model with values < 5.
  * 
- * @version $Id: FilteringTableModel.java,v 1.3 2006/12/20 20:57:32 parthee Exp $
+ * @version $Id: FilteringTableModel.java,v 1.4 2007/01/24 17:20:19 parthee Exp $
  * @author Daniel Gatti
  */
 public class FilteringTableModel extends MultiRowHeaderTableModel implements TableModelListener {
@@ -269,9 +269,7 @@ public class FilteringTableModel extends MultiRowHeaderTableModel implements Tab
 		// This notifies the table that both the rows and columns may have changed.
 		if (resetColumns) {
 			fireTableStructureChanged();
-		}
-		// This notifies the table that only row data has changed.
-		else {
+		} else {
 			fireTableDataChanged();
 		}
 	} // reset()
@@ -288,14 +286,12 @@ public class FilteringTableModel extends MultiRowHeaderTableModel implements Tab
 		fireTableDataChanged();
 	} // resetRows()
 
-	/**
-	 * This is used to keep messages flowing up from the underlying tables.
-	 * 
-	 * @param e
-	 *            TableModelEvent
-	 */
 	public void tableChanged(TableModelEvent e) {
 		fireTableChanged(e);
 	}
 
-} // class FilteringTableModel
+	public String filtersInString() {
+		return (filterCriteria == null) ? "" : filterCriteria.toString();
+	}
+
+}

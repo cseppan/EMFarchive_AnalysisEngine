@@ -124,17 +124,16 @@ public class SortingTableModel extends MultiRowHeaderTableModel implements Table
 		int lower = start;
 		int upper = middle + 1;
 		int[] tmp = new int[finish - start + 1];
-		if(ascending){
+		if (ascending) {
 			sorting(middle, finish, column, caseSensitive, lower, upper, tmp);
-		}else{
+		} else {
 			decscending(middle, finish, column, caseSensitive, lower, upper, tmp);
 		}
-			
+
 		System.arraycopy(tmp, 0, sortingMap, start, tmp.length);
 	}
 
-	private void sorting(int middle, int finish, int column, boolean caseSensitive, int lower, int upper,
-			int[] tmp) {
+	private void sorting(int middle, int finish, int column, boolean caseSensitive, int lower, int upper, int[] tmp) {
 		int i = 0;
 		for (i = 0; i < tmp.length; i++) {
 			if (lower > middle) {
@@ -146,7 +145,7 @@ public class SortingTableModel extends MultiRowHeaderTableModel implements Table
 				Object comp2 = getValueAt(upper, column);
 				if (comp1 == null || comp2 == null) {
 					if (comp1 == null && comp2 == null) {
-						tmp[i]= sortingMap[lower++];
+						tmp[i] = sortingMap[lower++];
 					} else if (comp1 == null && comp2 != null) {
 						tmp[i] = sortingMap[lower++];
 					} else {// if ( comp1!=null && comp2 ==null)
@@ -178,9 +177,8 @@ public class SortingTableModel extends MultiRowHeaderTableModel implements Table
 			}
 		}
 	}
-	
-	private void decscending(int middle, int finish, int column, boolean caseSensitive, int lower,
-			int upper, int[] tmp) {
+
+	private void decscending(int middle, int finish, int column, boolean caseSensitive, int lower, int upper, int[] tmp) {
 		int i = 0;
 		for (i = 0; i < tmp.length; i++) {
 			if (lower > middle) {
@@ -248,6 +246,10 @@ public class SortingTableModel extends MultiRowHeaderTableModel implements Table
 			sortTable(sortCriteria, getRowCount() - 1);
 		}
 		fireTableChanged(e);
+	}
+
+	public String sortInString() {
+		return (sortCriteria == null) ? "" : sortCriteria.toString();
 	}
 
 }

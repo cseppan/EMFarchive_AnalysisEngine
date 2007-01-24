@@ -7,12 +7,6 @@ import gov.epa.mims.analysisengine.table.OverallTableModel;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-/**
- * The information needed to sort a set of columns.
- * 
- * @author Daniel Gatt
- * @version $Id: SortCriteria.java,v 1.1 2006/11/01 15:33:39 parthee Exp $
- */
 public class SortCriteria implements java.io.Serializable {
 
 	/** serial version UID */
@@ -152,6 +146,23 @@ public class SortCriteria implements java.io.Serializable {
 			return this;
 		}
 
+	}
+
+	public String toString() {
+		if (columnNames == null || columnNames.length == 0) {
+			return "";// NO SORT;
+		}
+		StringBuffer sb = new StringBuffer();
+		int length = columnNames.length;
+		for (int i = 0; i < length - 1; i++) {
+			sb.append(columnNames[i]).append("(").append(asceding(ascending[i])).append(")").append(", ");
+		}
+		sb.append(columnNames[length - 1]).append("(").append(asceding(ascending[length - 1])).append(")");
+		return sb.toString();
+	}
+
+	private String asceding(boolean b) {
+		return (b==true)?"asec": "desc";
 	}
 
 } // class SortCriteria

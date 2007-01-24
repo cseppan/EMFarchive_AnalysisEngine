@@ -58,7 +58,7 @@ import javax.swing.table.TableColumnModel;
  * </p>
  * 
  * @author Daniel Gatti
- * @version $Id: SortFilterTablePanel.java,v 1.15 2006/12/21 16:29:54 parthee Exp $
+ * @version $Id: SortFilterTablePanel.java,v 1.16 2007/01/24 17:20:19 parthee Exp $
  */
 public class SortFilterTablePanel extends JPanel implements TableModelListener, ChildHasChangedListener {
 
@@ -769,7 +769,10 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 	 * status label.
 	 */
 	public void updateStatusLabel() {
-		statusLabel.setText(overallModel.getRowCount() + ROWS_STR + overallModel.getDataColumnCount() + COLUMNS_STR);
+		String info = overallModel.getRowCount() + ROWS_STR + overallModel.getDataColumnCount() + COLUMNS_STR
+						+ "[ " + overallModel.filterSortInfoString() + " ]";
+		statusLabel.setText(info);
+		statusLabel.setToolTipText(info);
 	} // updateStatusLabel()
 
 	/**
@@ -796,13 +799,15 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 		}
 	}
 
-	public void showLoadConfigGUI(File file, boolean binaryFormat, ConfigFileHistory configFileshistory, CurrentDirectory currentDirectory) {
+	public void showLoadConfigGUI(File file, boolean binaryFormat, ConfigFileHistory configFileshistory,
+			CurrentDirectory currentDirectory) {
 		try {
 			AnalysisConfiguration config = new AnalysisConfiguration(overallModel);
-			config.loadConfiguration(file, false,binaryFormat);
-			LoadConfigurationGUI gui = new LoadConfigurationGUI(config, aconfig, table, (JFrame) this.parent,currentDirectory);
+			config.loadConfiguration(file, false, binaryFormat);
+			LoadConfigurationGUI gui = new LoadConfigurationGUI(config, aconfig, table, (JFrame) this.parent,
+					currentDirectory);
 			gui.show();
-			configFileshistory.addToHistory(file.getAbsolutePath(),binaryFormat);
+			configFileshistory.addToHistory(file.getAbsolutePath(), binaryFormat);
 		} catch (Exception e) {
 			new GUIUserInteractor().notify(this, "Load Configuration", e.getMessage(), UserInteractor.ERROR);
 		}

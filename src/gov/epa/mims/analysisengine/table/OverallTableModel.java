@@ -26,7 +26,7 @@ import javax.swing.table.*;
  * </p>
  * 
  * @author Daniel Gatti
- * @version $Id: OverallTableModel.java,v 1.5 2006/11/01 15:33:36 parthee Exp $
+ * @version $Id: OverallTableModel.java,v 1.6 2007/01/24 17:20:19 parthee Exp $
  */
 public class OverallTableModel extends MultiRowHeaderTableModel implements TableModelListener, java.io.Serializable,
 		FormatAndIndexInfoIfc {
@@ -658,4 +658,18 @@ public class OverallTableModel extends MultiRowHeaderTableModel implements Table
 		return filterColNames;
 	}
 
-} // class OverallTableModel
+	public String filterSortInfoString() {
+		StringBuffer sb = new StringBuffer();
+		String filter = filterModel.filtersInString();
+		if (filter.length() == 0)
+			filter = "Empty";
+		sb.append("Filter: " + filter);
+
+		String sort = sortModel.sortInString();
+		if (sort.length() == 0)
+			sort = "Empty";
+
+		sb.append(", Sort: " + sort);
+		return sb.toString();
+	}
+} 
