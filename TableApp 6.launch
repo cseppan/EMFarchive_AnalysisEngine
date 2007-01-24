@@ -6,7 +6,6 @@
 </listAttribute>
 <stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/Java 6"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="AnalysisEngine"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-DR_HOME=&quot;C:\Program Files\R\R-2.4.0\bin&quot;"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="gov.epa.mims.analysisengine.table.TableApp"/>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
 <listEntry value="4"/>
