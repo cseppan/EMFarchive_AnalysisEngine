@@ -15,7 +15,7 @@ import javax.swing.table.TableModel;
  * Created on April 5, 2004, 11:59 AM
  * 
  * @author parthee
- * @version $Id: FileExport.java,v 1.3 2006/11/01 15:33:39 parthee Exp $
+ * @version $Id: FileExport.java,v 1.4 2007/05/11 19:40:27 qunhe Exp $
  */
 public class FileExport {
 
@@ -236,10 +236,9 @@ public class FileExport {
 	 * Line
 	 */
 	private void printAWordPlusEndOfLine(String aWord) {
-		// TODO:Remove this code when empty strings is exported sucessfully
-		if (aWord.trim().length() == 0) {
-			aWord = "0.0";
-		}
+		if (aWord.trim().length() == 0)
+			return;
+		
 		printer.println(aWord);
 	}
 
