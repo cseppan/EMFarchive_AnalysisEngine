@@ -497,11 +497,17 @@ BoxLayout(dependentVariablesPanel,BoxLayout.X_AXIS));
    {
       if(input == null || input.size()==0)
          return " ";
+      
       StringBuffer buff = new StringBuffer();
+      
       for(int i=0; i<input.size()-1; i++)
          buff.append(input.get(i)+", ");
+      
       if(input.size()>1)
-        buff.append(input.get(input.size()-1));
+          buff.append(input.get(input.size()-1));
+      else
+    	  buff.append(input.get(0));
+      
       return buff.toString();
    }
 
