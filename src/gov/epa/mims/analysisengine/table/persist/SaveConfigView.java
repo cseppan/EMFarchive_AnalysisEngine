@@ -128,7 +128,7 @@ public class SaveConfigView extends JDialog {
 			OverallPanel.setLayout(thisLayout);
 			this.setResizable(false);
 			this.setTitle("Analysis Configuration");
-			this.setSize(new java.awt.Dimension(425, 320));
+			this.setSize(new java.awt.Dimension(465, 320));
 			this.getContentPane().add(OverallPanel);
 			OverallPanel.add(chooseConfigSPanel);
 			OverallPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -275,7 +275,7 @@ public class SaveConfigView extends JDialog {
 			OverallPanel.add(ConfigFilePanel);
 
 			lSaveAs.setText("Save As");
-			lSaveAs.setPreferredSize(new java.awt.Dimension(50, 16));
+			//lSaveAs.setPreferredSize(new java.awt.Dimension(50, 16));
 			lSaveAs.setVisible(true);
 			ConfigFilePanel.add(lSaveAs);
 
@@ -283,11 +283,20 @@ public class SaveConfigView extends JDialog {
 			ConfigFilePanel.add(tFileName);
 
 			bBrowse.setText("Browse");
-			bBrowse.setPreferredSize(new java.awt.Dimension(95, 25));
+			//bBrowse.setPreferredSize(new java.awt.Dimension(95, 25));
 			ConfigFilePanel.add(bBrowse);
 			bBrowse.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					browse();
+				}
+			});
+
+			okButton.setText("Save");
+			//okButton.setPreferredSize(new java.awt.Dimension(88, 25));
+			ConfigFilePanel.add(okButton);
+			okButton.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent evt) {
+					doOK();
 				}
 			});
 
@@ -300,16 +309,7 @@ public class SaveConfigView extends JDialog {
 			OKCancelPanelLayout.setVgap(5);
 			OverallPanel.add(okCancelPanel);
 
-			okButton.setText("OK");
-			okButton.setPreferredSize(new java.awt.Dimension(88, 25));
-			okCancelPanel.add(okButton);
-			okButton.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					doOK();
-				}
-			});
-
-			cancelButton.setText("Cancel");
+			cancelButton.setText("Close");
 			cancelButton.setPreferredSize(new java.awt.Dimension(88, 25));
 			okCancelPanel.add(cancelButton);
 			cancelButton.addMouseListener(new MouseAdapter() {
