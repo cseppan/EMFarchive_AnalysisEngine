@@ -15,6 +15,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
@@ -242,13 +246,12 @@ UserInteractor.NOTE);
          }
       });
 
-      bIndepSelectSame = new JButton("Same as Dependent Variables");
+      bIndepSelectSame = new JButton("All but Selected Dependent Variables");
       bIndepSelectSame.addActionListener(new ActionListener()
       {
       	public void actionPerformed(ActionEvent ie)
       	{
-            indepVariables = new Vector();
-            indepVariables.addAll(depVariables);
+            indepVariables = allBut(depVariables);
             IndepVariablesLabel.setText("["+indepVariables.size() + " cols]");
             IndepVariablesField.setText(getStringFromVector(indepVariables));
 	      }
@@ -330,7 +333,21 @@ BoxLayout(IndepVariablesPanel,BoxLayout.X_AXIS));
       return dataPanel;
    }
    
-   private JPanel createDepVarSelectionPanel()
+   private Vector allBut(Vector variables) {
+	   Vector rest = new Vector();
+	   List list = new ArrayList();
+       list.addAll(Arrays.asList(model.getColumnNames()));
+       
+       for(int i = 0; i < variables.size(); i++)
+    	   if (list.contains(variables.get(i)))
+    		   list.remove(variables.get(i));
+       
+       rest.addAll(list);
+       
+       return rest;
+   }
+
+private JPanel createDepVarSelectionPanel()
    {
       JPanel dataColumnPanel = new JPanel();
       dataColumnPanel.setLayout(new BoxLayout(dataColumnPanel,
