@@ -46,7 +46,7 @@ import javax.swing.border.TitledBorder;
  * This Dialog comes up when the user clicks the "Plot" button
  * 
  * @author Prashant Pai, CEP UNC
- * @version $Id: PlottingInfoView.java,v 1.1 2006/11/15 20:28:54 parthee Exp $
+ * @version $Id: PlottingInfoView.java,v 1.2 2007/05/17 16:01:50 qunhe Exp $
  */
 
 public class PlottingInfoView extends OptionDialog {
@@ -343,7 +343,7 @@ public class PlottingInfoView extends OptionDialog {
 		plottingInfo.setPlotType(plotType);
 		plottingInfo.setPlotName(plotNameField.getText());
 		if (plottingInfo.getNumOfDataColumns() == 0) {
-			DefaultUserInteractor.get().notify(this, "Error", "Please select atleast one " + "data column",
+			DefaultUserInteractor.get().notify(this, "Error", "Please select at least one " + "data column",
 					UserInteractor.ERROR);
 			shouldContinueClosing = false;
 			return;

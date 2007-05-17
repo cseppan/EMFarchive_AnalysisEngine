@@ -215,7 +215,7 @@ tabn.indexOf("_NLR"))+"_LR");
   {
     if(depVariables.size()==0 || indepVariables.size()==0)
     {
-         new GUIUserInteractor().notify(this,"Error", "Select atleast one variable "+
+         new GUIUserInteractor().notify(this,"Error", "Select at least one variable "+
             "for dependent and independent variables each",
 UserInteractor.NOTE);
          return null;

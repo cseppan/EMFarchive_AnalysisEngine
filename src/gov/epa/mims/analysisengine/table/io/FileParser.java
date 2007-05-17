@@ -35,7 +35,7 @@ import java_cup.runtime.Symbol;
  * Created on March 31, 2004, 10:11 AM
  *
  * @author  Krithiga Thangavelu, CEP, UNC CHAPEL HILL.
- * @version $Id: FileParser.java,v 1.2 2006/10/30 21:43:50 parthee Exp $
+ * @version $Id: FileParser.java,v 1.3 2007/05/17 16:01:50 qunhe Exp $
  */
 
 public class FileParser {
@@ -376,7 +376,7 @@ public class FileParser {
 		}// while(stillInColumnHeader)
 
 		if (noOfColumnHeaderRows > 0 && line1Tokens == null) {
-			throw new Exception("The file contains atleast one numerical data column.If this is true\n"
+			throw new Exception("The file contains at least one numerical data column.If this is true\n"
 					+ "check the delimiter" + "File Content upto 50 Lines:\n");
 		}
 		// First determine the columnTypes

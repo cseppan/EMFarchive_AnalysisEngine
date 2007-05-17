@@ -27,7 +27,7 @@ import java.util.Vector;
  * </p>
  * 
  * @author Parthee Partheepan
- * @version $Id: FileAdapter.java,v 1.5 2006/11/01 15:13:33 parthee Exp $
+ * @version $Id: FileAdapter.java,v 1.6 2007/05/17 16:01:50 qunhe Exp $
  */
 public class FileAdapter {
 	/**
@@ -229,7 +229,7 @@ public class FileAdapter {
 
 		// check whether user specified at least one file
 		if (tempFileNames.size() == 0) {
-			throw new Exception("You have to specify atleast one file name");
+			throw new Exception("You have to specify at least one file name");
 		}// if
 		// check whether file type is specified
 

@@ -29,7 +29,7 @@ import javax.swing.border.BevelBorder;
  * Select the data sets to use in a plot from the list of available datasets
  * 
  * @author Alison Eyth, CEP UNC
- * @version $Id: DataSetSelector.java,v 1.5 2006/12/08 22:46:52 parthee Exp $
+ * @version $Id: DataSetSelector.java,v 1.6 2007/05/17 16:01:51 qunhe Exp $
  */
 public class DataSetSelector extends JDialog {
 
@@ -347,6 +347,8 @@ public class DataSetSelector extends JDialog {
 		} catch (Exception e) {
 			DefaultUserInteractor.get().notify(this, "Error adding data sets", e.getMessage(), UserInteractor.ERROR);
 			return;
+		} finally {
+			overallList.clearSelection();
 		}
 	}
 
