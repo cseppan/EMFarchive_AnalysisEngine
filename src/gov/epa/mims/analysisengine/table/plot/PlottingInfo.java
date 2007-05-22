@@ -8,6 +8,7 @@ import gov.epa.mims.analysisengine.table.OverallTableModel;
 import gov.epa.mims.analysisengine.table.TableDataSeries;
 import gov.epa.mims.analysisengine.table.TableDateTimeSeries;
 import gov.epa.mims.analysisengine.tree.DataSets;
+import gov.epa.mims.analysisengine.tree.Plot;
 
 import java.text.SimpleDateFormat;
 import java.util.Vector;
@@ -18,7 +19,7 @@ import java.util.Vector;
  * dataseries so they can correctly report back the data elements and the labels without any duplication of data.
  * 
  * @author Prashant Pai, CEP UNC
- * @version $Id: PlottingInfo.java,v 1.2 2006/11/15 20:28:54 parthee Exp $
+ * @version $Id: PlottingInfo.java,v 1.3 2007/05/22 20:57:27 qunhe Exp $
  */
 public class PlottingInfo implements java.io.Serializable {
 	/** serial version UID */
@@ -58,6 +59,16 @@ public class PlottingInfo implements java.io.Serializable {
 	protected String timeFormat = "HH:mm:ss";
 
 	protected String plotName = " ";
+	
+	private Plot plot;
+
+	public Plot getPlot() {
+		return plot;
+	}
+
+	public void setPlot(Plot plot) {
+		this.plot = plot;
+	}
 
 	public PlottingInfo(OverallTableModel model) {
 		this.tableModel = model;

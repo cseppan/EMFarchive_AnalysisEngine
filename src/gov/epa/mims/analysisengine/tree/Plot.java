@@ -9,12 +9,22 @@ import java.util.List;
  * abstract base class for all plots
  * 
  * @author Tommy E. Cathey
- * @version $Id: Plot.java,v 1.4 2006/12/11 22:16:39 parthee Exp $
+ * @version $Id: Plot.java,v 1.5 2007/05/22 20:57:24 qunhe Exp $
  * 
  **********************************************************************************************************************/
 public abstract class Plot extends Leaf implements Serializable, Cloneable {
 	/** serial version UID */
 	static final long serialVersionUID = 1;
+
+	private PlotInfo savedPlotInfo;
+	
+	public PlotInfo getSavedPlotInfo() {
+		return savedPlotInfo;
+	}
+
+	public void setSavedPlotInfo(PlotInfo plotInfo) {
+		this.savedPlotInfo = plotInfo;
+	}
 
 	/*******************************************************************************************************************
 	 * get a data series

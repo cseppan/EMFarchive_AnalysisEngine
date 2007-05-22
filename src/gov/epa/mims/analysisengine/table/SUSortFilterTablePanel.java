@@ -334,7 +334,8 @@ public class SUSortFilterTablePanel extends SortFilterTablePanel {
 
 		PlottingInfoView plotGUI = new PlottingInfoView((JFrame) parent, plotInfo, true);
 
-		plotGUI.show();
+		//plotGUI.show();
+		plotGUI.setVisible(true);
 
 		if (plotGUI.getResult() == OptionDialog.OK_RESULT) {
 			try {
@@ -362,7 +363,7 @@ public class SUSortFilterTablePanel extends SortFilterTablePanel {
 				HashMap hashMap = new HashMap();
 				String depAxis = TreeDialog.getDependentAxis(this, aePlotType);
 				hashMap.put(depAxis, unit);
-				String title = "Cutomize " + aePlotType;
+				String title = "Customize " + aePlotType;
 				boolean setPlotDefaults = true;
 				if (plotInfo.getPlotType().equals(PlotTypeConverter.XY_LINES_PLOT))
 					setPlotDefaults = false;
@@ -370,8 +371,10 @@ public class SUSortFilterTablePanel extends SortFilterTablePanel {
 				TreeDialog dialog = new TreeDialog((JFrame) parent, aePlotType, dataSets, null, hashMap,
 						setPlotDefaults);
 				dialog.setTitle(title);
-				dialog.show();
+				//dialog.show();
+				dialog.setVisible(true);
 				data = dialog.getResultTree();
+				plotInfo.setPlot(dialog.getPlot());
 				if (plotName != null) {
 					aconfig.storePlotConfig(plotName, data, plotInfo, false);
 				}

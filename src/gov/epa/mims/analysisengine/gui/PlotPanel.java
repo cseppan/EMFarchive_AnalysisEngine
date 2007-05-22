@@ -13,7 +13,7 @@ import javax.swing.border.TitledBorder;
  * contains a table for editing page options.
  *
  * @author Alison Eyth
- * @version $Id: PlotPanel.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: PlotPanel.java,v 1.3 2007/05/22 20:57:26 qunhe Exp $
  *
  **/
 
@@ -71,25 +71,30 @@ public class PlotPanel
     * @param plotOptions AnalysisOptions for the plot  (could be null)
     * @param dataSetsAdapter DataSetsAdapter to select data from
     */
-   public PlotPanel(AnalysisOptions plotOptions, Plot plot,
-     DataSetsAdapter dataSetsAdapter)
-   {
+   public PlotPanel(AnalysisOptions plotOptions, Plot passedPlot,
+     DataSetsAdapter dataSetsAdapter) {
       this.plotOptions = plotOptions;
       this.dataSetsAdapter = dataSetsAdapter;
-      if (plot != null)
-      {
-         this.plot = plot;
-         plotInfo = TreeDialog.getPlotInfoFor(plot);
+      if (passedPlot != null) {
+         this.plot = passedPlot;
+         plotInfo = passedPlot.getSavedPlotInfo();
+         
          if (plotInfo == null)
-         {
+        	 plotInfo = TreeDialog.getPlotInfoFor(plot);
+        		 
+         if (plotInfo == null) {
            throw new IllegalArgumentException(
              "No PlotInfo available for plot of type "+
-             plot.getClass().getName());
+             passedPlot.getClass().getName());
          }
-         plotType = plotInfo.getPlotTypeName();
+      } else {
+    	  throw new IllegalArgumentException("Passed Plot " + passedPlot.getClass().getName() +  " value is null.");
       }
+      
+      plotType = plotInfo.getPlotTypeName();
+      
       // add a new OptionsPanel for the plot options
-      plotOptionsPanel = new OptionsPanel(plotOptions, plotInfo, plot.getName());
+      plotOptionsPanel = new OptionsPanel(plotOptions, plotInfo, passedPlot.getName());
       initialize();
       plotOptions = plotOptionsPanel.getOptions();
    }//PlotPanel(plotOptions)
@@ -218,7 +223,9 @@ public class PlotPanel
     */
    protected void setDataSetsForPlot() throws Exception
    {
-     dataSetsTable.setDataSetsForPlot(plot);
+	   plotInfo.setUpdatedDataSetInfos(dataSetsTable.getUpdatedDatasetInfos());
+	   plot.setSavedPlotInfo(plotInfo);
+	   dataSetsTable.setDataSetsForPlot(plot);
    }
 
 
@@ -258,5 +265,6 @@ public class PlotPanel
          dataSetsPanel.add(dataSetsTable, BorderLayout.CENTER);
       }
    }
+   
 }
 

@@ -98,7 +98,7 @@ public class SaveConfigModel extends DefaultTableModel {
 		Data dat = aconfig.getConfig(configname);
 		if (dat.configType == Data.TABLE_TYPE)
 			throw new Exception("You cannot edit a Table Configuration");
-		dat.tree = TreeDialog.showTreeDialog(new JFrame(), dat.tree, aconfig.getDataSets(dat.info), null, null);
+		dat = TreeDialog.showTreeDialog(new JFrame(), dat, aconfig.getDataSets(dat.info), null, null);
 		aconfig.storePlotConfig(configname, dat, true);
 	}
 
@@ -210,6 +210,10 @@ public class SaveConfigModel extends DefaultTableModel {
 			return false;
 		}
 		return true;
+	}
+	
+	public void setConfig(AnalysisConfiguration config) {
+		this.aconfig = config;
 	}
 
 }

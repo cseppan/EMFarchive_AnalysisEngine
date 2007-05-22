@@ -3,6 +3,7 @@ package gov.epa.mims.analysisengine.gui;
 import gov.epa.mims.analysisengine.AnalysisEngineConstants;
 import gov.epa.mims.analysisengine.rcommunicator.RCommunicator;
 import gov.epa.mims.analysisengine.rcommunicator.RGenerator;
+import gov.epa.mims.analysisengine.table.persist.Data;
 import gov.epa.mims.analysisengine.tree.AnalysisOption;
 import gov.epa.mims.analysisengine.tree.AnalysisOptionConstantsIfc;
 import gov.epa.mims.analysisengine.tree.AnalysisOptions;
@@ -40,6 +41,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
@@ -71,7 +73,7 @@ import javax.swing.JPanel;
  * The GUI will also contain a PagePanel for editing page and plot options
  * 
  * @author Alison Eyth
- * @version $Id: TreeDialog.java,v 1.6 2007/01/09 23:06:15 parthee Exp $
+ * @version $Id: TreeDialog.java,v 1.7 2007/05/22 20:57:27 qunhe Exp $
  * 
  * @see gov.epa.mims.analysisengine.tree.Node
  * @see gov.epa.mims.analysisengine.tree.DataSets
@@ -80,7 +82,7 @@ import javax.swing.JPanel;
  */
 
 public class TreeDialog extends JDialog implements AnalysisOptionConstantsIfc, PageConstantsIfc {
-	public static final String SOFTWARE_DATE = "August 23, 2004";
+	public static final String SOFTWARE_DATE = "May 22, 2007";
 
 	/** the tree being edited by the dialog * */
 	protected Branch tree = null;
@@ -238,6 +240,23 @@ public class TreeDialog extends JDialog implements AnalysisOptionConstantsIfc, P
 		return retVal;
 	}
 
+	/*
+	 * To get a Data back with updated Plot infos 5/22/07
+	 */
+	public static Data showTreeDialog(JFrame parent, Data data, DataSetsAdapter dataSetsAdapter,
+			RGenerator rgenerator, HashMap textValues) throws Exception {
+		TreeDialog dialog = new TreeDialog(parent, data, dataSetsAdapter, rgenerator, textValues);
+		// TBD: reconcile using DataSets node and data sets adapter to choose
+		// data sets
+		dialog.setVisible(true);
+		dialog.dispose();
+		data.tree = dialog.getResultTree();
+		data.info.setPlot(dialog.getPlot());
+		
+		return data;
+	}
+	
+
 	/**
 	 * Private constructor for use when creating plots without the GUI.
 	 */
@@ -283,6 +302,21 @@ public class TreeDialog extends JDialog implements AnalysisOptionConstantsIfc, P
 			HashMap textValues) throws Exception {
 		super(parent);
 		setDataValues(tree, dataSetsAdapter, rgenerator, textValues);
+		pagePanel = new PagePanel(pageOptions, plotOptions, currentPlot, dataSetsAdapter, this);
+		initialize();
+		pageOptions = pagePanel.getPageOptions();
+		plotOptions = pagePanel.getPlotOptions();
+		constructTree();
+		setInitialPlotText(plotOptions);
+		setInitialPlotText(pageOptions);
+		pagePanel.setDataModel(pageOptions, plotOptions, currentPlot, dataSetsAdapter);
+	} // TreeDialog(tree, DataSetsAdapter)
+
+	public TreeDialog(JFrame parent, Data dat, DataSetsAdapter dataSetsAdapter, RGenerator rgenerator,
+			HashMap textValues) throws Exception {
+		super(parent);
+		this.currentPlot = dat.info.getPlot();
+		setDataValues(dat.tree, dataSetsAdapter, rgenerator, textValues);
 		pagePanel = new PagePanel(pageOptions, plotOptions, currentPlot, dataSetsAdapter, this);
 		initialize();
 		pageOptions = pagePanel.getPageOptions();
@@ -1345,4 +1379,11 @@ public class TreeDialog extends JDialog implements AnalysisOptionConstantsIfc, P
 		System.exit(0);
 	}
 
+	public Plot getPlot() {
+		if (pagePanel != null)
+			return pagePanel.getPlot();
+
+		return null;
+	}
+	
 }

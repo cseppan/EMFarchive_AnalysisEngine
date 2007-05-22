@@ -288,7 +288,14 @@ public class AnalysisConfiguration {
 			write = new GUIUserInteractor().selectOption(null, "Error", "A plot with the name " + plotName
 					+ " already exists.\nDo you want to overwrite?", UserInteractor.YES_NO, UserInteractor.YES);
 		}
+
 		if (write == UserInteractor.YES) {
+			if (configs.containsKey(plotName))
+				configs.remove(plotName);
+			
+			if (insertedOrder.contains(plotName))
+				insertedOrder.remove(plotName);
+			
 			configs.put(plotName, data);
 			insertedOrder.add(plotName);
 		}

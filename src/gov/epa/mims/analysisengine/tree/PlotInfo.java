@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * class to store plot info -type of plot name -Class of plot type -array of DataSetInfo
  * 
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  * @author Tommy E. Cathey
  */
 public class PlotInfo extends AvailableOptionsAndDefaults implements Serializable {
@@ -20,6 +20,8 @@ public class PlotInfo extends AvailableOptionsAndDefaults implements Serializabl
 
 	/** array of DataSetInfo for this plot type */
 	private final DataSetInfo[] dataSetInfos;
+	
+	private DataSetInfo[] updatedDataSetInfos;
 
 	/*******************************************************************************************************************
 	 * Creates a new PlotInfo object.
@@ -114,5 +116,13 @@ public class PlotInfo extends AvailableOptionsAndDefaults implements Serializabl
 	 ******************************************************************************************************************/
 	public String toString() {
 		return Util.toString(this);
+	}
+
+	public DataSetInfo[] getUpdatedDataSetInfos() {
+		return updatedDataSetInfos;
+	}
+
+	public void setUpdatedDataSetInfos(DataSetInfo[] updatedDataSetInfos) {
+		this.updatedDataSetInfos = updatedDataSetInfos;
 	}
 }

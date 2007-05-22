@@ -404,7 +404,7 @@ public class SaveConfigView extends JDialog {
 		try {
 			model.showTree(configName);
 		} catch (Exception e) {
-			e.printStackTrace();
+			new GUIUserInteractor().notify(this, "Exception", e.getMessage(), UserInteractor.ERROR);
 		}
 	}
 

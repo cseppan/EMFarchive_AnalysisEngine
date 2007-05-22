@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Data Set interface functions
  * 
  * @author Tommy E. Cathey
- * @version $Id: DataSetIfc.java,v 1.3 2006/10/30 21:43:50 parthee Exp $
+ * @version $Id: DataSetIfc.java,v 1.4 2007/05/22 20:57:26 qunhe Exp $
  * 
  **********************************************************************************************************************/
 public interface DataSetIfc extends Serializable {
@@ -69,4 +69,6 @@ public interface DataSetIfc extends Serializable {
 	 *             if open fails
 	 ******************************************************************************************************************/
 	void open() throws Exception;
+	
+	boolean equals(Object other);
 }

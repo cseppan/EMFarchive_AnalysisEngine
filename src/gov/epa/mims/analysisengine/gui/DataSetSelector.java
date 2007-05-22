@@ -29,7 +29,7 @@ import javax.swing.border.BevelBorder;
  * Select the data sets to use in a plot from the list of available datasets
  * 
  * @author Alison Eyth, CEP UNC
- * @version $Id: DataSetSelector.java,v 1.6 2007/05/17 16:01:51 qunhe Exp $
+ * @version $Id: DataSetSelector.java,v 1.7 2007/05/22 20:57:27 qunhe Exp $
  */
 public class DataSetSelector extends JDialog {
 
@@ -110,15 +110,16 @@ public class DataSetSelector extends JDialog {
 			while (selDSIt.hasNext()) {
 				DataSetWithKey dswk = (DataSetWithKey) selDSIt.next();
 				Object key = dswk.key;
-				Object existingDataSet = dataSetsAdapter.getDataSet(key);
+				DataSetIfc existingDataSet = dataSetsAdapter.getDataSet(key);
 				// make sure the data set in the initial selection exists in the adapter
 				if (existingDataSet == null) {
 					throw new IllegalArgumentException("Data set " + dswk.getName()
 							+ " not found in available data sets");
-				} else if (existingDataSet != dswk.dataSet) {
+				} else if (!existingDataSet.equals(dswk.dataSet)) {
 					throw new IllegalArgumentException("Initial data set " + existingDataSet.toString()
 							+ " was not found in data set list");
 				}
+				
 				try {
 					addDataSetToSelection(dswk, selectedDataSetWithKeys);
 				} catch (Exception exc) {

@@ -1,10 +1,12 @@
 package gov.epa.mims.analysisengine.tree;
 
+import java.util.Vector;
+
 /**
  * Helper class to store information about data sets that a plot can accept.
  * 
  * @author Alison Eyth , Tommy E. Cathey
- * @version $Id: DataSetInfo.java,v 1.3 2006/12/08 22:46:52 parthee Exp $
+ * @version $Id: DataSetInfo.java,v 1.4 2007/05/22 20:57:25 qunhe Exp $
  * 
  */
 public class DataSetInfo {
@@ -22,6 +24,9 @@ public class DataSetInfo {
 
 	/** information about this object */
 	private String infoString = null;
+	
+	/** to save the selected data set info */
+	private Vector datasetInfo;
 
 	/*******************************************************************************************************************
 	 * Creates a new DataSetInfo object.
@@ -168,5 +173,13 @@ public class DataSetInfo {
 		} else {
 			infoString = Integer.toString(minNumber) + " to " + Integer.toString(maxNumber) + " needed";
 		}
+	}
+
+	public Vector getDatasetInfo() {
+		return datasetInfo;
+	}
+
+	public void setDatasetInfo(Vector datasetInfo) {
+		this.datasetInfo = datasetInfo;
 	}
 }

@@ -8,7 +8,10 @@ import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 
 public class SaveConfigAction extends AbstractAction {
+	
 	SortFilterTablePanel parent = null;
+	
+	AnalysisConfiguration config;
 
 	public SaveConfigAction(SortFilterTablePanel parent, ImageIcon configIcon) {
 		super("Analysis Configuration", configIcon);
