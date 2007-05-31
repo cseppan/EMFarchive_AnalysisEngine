@@ -50,7 +50,7 @@ import javax.swing.table.TableColumn;
  * chosen directory.
  * 
  * @author Krithiga Thangavelu, CEP, UNC CHAPEL HILL.
- * @version $Id: LoadConfigurationGUI.java,v 1.9 2007/05/31 14:29:31 qunhe Exp $
+ * @version $Id: LoadConfigurationGUI.java,v 1.10 2007/05/31 22:52:05 qunhe Exp $
  */
 public class LoadConfigurationGUI extends javax.swing.JDialog {
 
@@ -263,10 +263,9 @@ public class LoadConfigurationGUI extends javax.swing.JDialog {
 			throw new Exception("Empty Data Set");
 		}
 		
-		if (!dset.equals(tempTree))
-			removeColumnsNotAvailableInNewDatasets(dset, tempTree);
-
+		removeColumnsNotAvailableInNewDatasets(dset, tempTree);
 		TreeDialog.createPlotWithoutGUI(tempTree, dset, null, null);
+		
 		if (pageType != null) {
 			PageType pt = (PageType) options.getOption("PAGE_TYPE");
 			pt.setTextString(pageType);
@@ -344,10 +343,13 @@ public class LoadConfigurationGUI extends javax.swing.JDialog {
 			for (int i = 0; i < values.length; i++) {
 				try {
 					Data dat = input.getConfig((String) values[i]);
+					DataSets dset = input.getDataSets(dat.info);
+					removeColumnsNotAvailableInNewDatasets(dset, dat.tree);
+					
 					if (dat.configType == Data.TABLE_TYPE) {
 						importIntoTable(dat.criteria);
 					} else {
-						dest.storePlotConfig((String) values[i], input.getConfig((String) values[i]), false);
+						dest.storePlotConfig((String) values[i], dat, false);
 					}
 				} catch (Exception e) {
 					errorMsgs.add("Configuration " + values[i] + " not applicable to the current" + " table. "

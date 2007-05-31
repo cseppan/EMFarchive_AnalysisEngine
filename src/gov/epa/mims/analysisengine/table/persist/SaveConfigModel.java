@@ -121,8 +121,7 @@ public class SaveConfigModel extends DefaultTableModel {
 				throw new Exception("Empty Data Set");
 			}
 
-			if (!dset.equals(tempTree))
-				removeColumnsNotAvailableInNewDatasets(dset, tempTree);
+			removeColumnsNotAvailableInNewDatasets(dset, tempTree);
 
 			TreeDialog.createPlotWithoutGUI(dset, dset, null, null);
 
