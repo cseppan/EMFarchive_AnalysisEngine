@@ -1,5 +1,6 @@
 package gov.epa.mims.analysisengine.gui;
 
+import java.io.Serializable;
 import java.util.*;
 
 import gov.epa.mims.analysisengine.tree.FontConstantsIfc;
@@ -43,13 +44,13 @@ import gov.epa.mims.analysisengine.tree.TextBox;
  * ===========================================================================
  *
  * @author Alison Eyth, Dan Gatti, Parthee Partheepan CEP UNC
- * @version $Id: PrettyOptionStringConverter.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: PrettyOptionStringConverter.java,v 1.3 2007/05/31 14:29:32 qunhe Exp $
  * @see
  */
 
-public class PrettyOptionStringConverter
+public class PrettyOptionStringConverter implements Serializable
 {
-   
+	static final long serialVersionUID = 1;
    
    /** This is used to store more descriptional(pretty) options **/
    private Vector prettyOptions;

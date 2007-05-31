@@ -10,6 +10,8 @@ import gov.epa.mims.analysisengine.table.CurrentDirectory;
 import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -203,8 +205,8 @@ public class SaveConfigView extends JDialog {
 			bView.setPreferredSize(new java.awt.Dimension(75, 25));
 			bView.setVisible(true);
 			ConfigTableModifierPanel.add(bView);
-			bView.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
+			bView.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent evt) {
 					bViewMouseClicked();
 				}
 			});
@@ -214,9 +216,9 @@ public class SaveConfigView extends JDialog {
 			bEdit.setPreferredSize(new java.awt.Dimension(75, 25));
 			bEdit.setVisible(true);
 			ConfigTableModifierPanel.add(bEdit);
-			bEdit.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					doEdit();
+			bEdit.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent evt) {
+					editConfiguration();
 				}
 			});
 
@@ -225,9 +227,9 @@ public class SaveConfigView extends JDialog {
 			bDelete.setToolTipText("Delete Selected Configurations");
 			bDelete.setVisible(true);
 			ConfigTableModifierPanel.add(bDelete);
-			bDelete.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					doDelete();
+			bDelete.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent evt) {
+						doDelete();
 				}
 			});
 
@@ -236,8 +238,8 @@ public class SaveConfigView extends JDialog {
 			bSelect.setToolTipText("Check Selected Configurations");
 			bSelect.setVisible(true);
 			ConfigTableModifierPanel.add(bSelect);
-			bSelect.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
+			bSelect.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent evt) {
 					doSelect();
 				}
 			});
@@ -247,8 +249,8 @@ public class SaveConfigView extends JDialog {
 			bClear.setToolTipText("Uncheck Selected Configurations");
 			bClear.setVisible(true);
 			ConfigTableModifierPanel.add(bClear);
-			bClear.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
+			bClear.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent evt) {
 					doClear();
 				}
 			});
@@ -285,8 +287,8 @@ public class SaveConfigView extends JDialog {
 			bBrowse.setText("Browse");
 			//bBrowse.setPreferredSize(new java.awt.Dimension(95, 25));
 			ConfigFilePanel.add(bBrowse);
-			bBrowse.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
+			bBrowse.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent evt) {
 					browse();
 				}
 			});
@@ -294,9 +296,14 @@ public class SaveConfigView extends JDialog {
 			okButton.setText("Save");
 			//okButton.setPreferredSize(new java.awt.Dimension(88, 25));
 			ConfigFilePanel.add(okButton);
-			okButton.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					doOK();
+			okButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent evt) {
+					try {
+						saveConfiguration();
+					} catch (RuntimeException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			});
 
@@ -312,8 +319,8 @@ public class SaveConfigView extends JDialog {
 			cancelButton.setText("Close");
 			cancelButton.setPreferredSize(new java.awt.Dimension(88, 25));
 			okCancelPanel.add(cancelButton);
-			cancelButton.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
+			cancelButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent evt) {
 					doCancel();
 				}
 			});
@@ -378,7 +385,7 @@ public class SaveConfigView extends JDialog {
 		}
 	}
 
-	protected void doEdit() {
+	protected void editConfiguration() {
 		int[] indexs = chooseConfigTable.getSelectedRows();
 		if (indexs.length > 1) {
 			new GUIUserInteractor().notify(this, "Note", "Choose only one configuration " + "at a time to edit",
@@ -480,7 +487,7 @@ public class SaveConfigView extends JDialog {
 		return;
 	}
 
-	protected void doOK() {
+	protected void saveConfiguration() {
 		String fileName = tFileName.getText();
 		if (fileName == null || fileName.length() == 0) {
 			new GUIUserInteractor().notify(this, "Error Saving Configuration", "No Configuration File specified",
@@ -491,6 +498,7 @@ public class SaveConfigView extends JDialog {
 			model.saveConfiguration(binaryConfig.isSelected(), new File(tFileName.getText()));
 			dispose();
 		} catch (Exception e) {
+			e.printStackTrace();
 			new GUIUserInteractor().notify(this, "Error Saving Configuration", e.getMessage(), UserInteractor.ERROR);
 			return;
 		}

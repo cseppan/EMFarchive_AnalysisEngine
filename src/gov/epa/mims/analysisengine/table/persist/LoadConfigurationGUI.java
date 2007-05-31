@@ -50,7 +50,7 @@ import javax.swing.table.TableColumn;
  * chosen directory.
  * 
  * @author Krithiga Thangavelu, CEP, UNC CHAPEL HILL.
- * @version $Id: LoadConfigurationGUI.java,v 1.8 2006/12/21 16:29:54 parthee Exp $
+ * @version $Id: LoadConfigurationGUI.java,v 1.9 2007/05/31 14:29:31 qunhe Exp $
  */
 public class LoadConfigurationGUI extends javax.swing.JDialog {
 
@@ -75,7 +75,8 @@ public class LoadConfigurationGUI extends javax.swing.JDialog {
 
 	private CurrentDirectory currentDirectory;
 
-	public LoadConfigurationGUI(AnalysisConfiguration input, AnalysisConfiguration dest, JTable table, JFrame parent, CurrentDirectory currentDirectory) {
+	public LoadConfigurationGUI(AnalysisConfiguration input, AnalysisConfiguration dest, JTable table, JFrame parent,
+			CurrentDirectory currentDirectory) {
 		super(parent);
 		this.input = input;
 		this.dest = dest;
@@ -142,7 +143,7 @@ public class LoadConfigurationGUI extends javax.swing.JDialog {
 		viewButton.setPreferredSize(new Dimension(100, 30));
 		viewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				doView();
+				viewConfiguation();
 			}
 		});
 
@@ -185,7 +186,7 @@ public class LoadConfigurationGUI extends javax.swing.JDialog {
 		return buttonPanel;
 	}
 
-	protected void doView() {
+	protected void viewConfiguation() {
 		Object[] values = configList.getSelectedValues();
 		if (values.length == 0) {
 			values = input.getConfigNames();
@@ -253,16 +254,18 @@ public class LoadConfigurationGUI extends javax.swing.JDialog {
 		AnalysisOptions options;
 		DataSets dset = input.getDataSets(dat.info);
 		Branch tempTree = dat.tree; // .clone());
+		
 		if (dset != null) {
-			removeColumnsNotAvailableInNewDatasets(dset,tempTree);
 			options = (AnalysisOptions) tempTree.getChild(0);
 			pageType = setToDefaultScreenPageType(options);
-			// dset.add(tempTree.getChild(0));
+			dset.add(tempTree.getChild(0)); //this is to set the page options
 		} else {
 			throw new Exception("Empty Data Set");
 		}
 		
-		
+		if (!dset.equals(tempTree))
+			removeColumnsNotAvailableInNewDatasets(dset, tempTree);
+
 		TreeDialog.createPlotWithoutGUI(tempTree, dset, null, null);
 		if (pageType != null) {
 			PageType pt = (PageType) options.getOption("PAGE_TYPE");
@@ -270,7 +273,7 @@ public class LoadConfigurationGUI extends javax.swing.JDialog {
 			options.addOption("PAGE_TYPE", pt);
 		}
 	}
-	
+
 	private void removeColumnsNotAvailableInNewDatasets(DataSets newDataset, Branch tree) throws Exception {
 		UpdateDataColumns update = new UpdateDataColumns(newDataset, tree);
 		update.update();
@@ -420,7 +423,7 @@ public class LoadConfigurationGUI extends javax.swing.JDialog {
 			values = input.getConfigNames();
 			values = reorder((String[]) values);
 		}
-		SaveToDialog dialog = new SaveToDialog(this,currentDirectory);
+		SaveToDialog dialog = new SaveToDialog(this, currentDirectory);
 		dialog.setVisible(true);
 		int returnVal = dialog.getRetVal();
 		try {

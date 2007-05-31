@@ -1,25 +1,18 @@
 package gov.epa.mims.analysisengine.gui;
 
+import gov.epa.mims.analysisengine.tree.DataSetIfc;
 import gov.epa.mims.analysisengine.tree.DataSetInfo;
+import gov.epa.mims.analysisengine.tree.DataSets;
 import gov.epa.mims.analysisengine.tree.DataSetsAdapter;
 import gov.epa.mims.analysisengine.tree.Plot;
 import gov.epa.mims.analysisengine.tree.PlotInfo;
-
-import java.awt.Component;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.util.ArrayList;
-import java.util.EventObject;
-import java.util.Vector;
-
-import javax.swing.JButton;
-import javax.swing.JTable;
-import javax.swing.event.CellEditorListener;
-import javax.swing.event.ChangeEvent;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableCellRenderer;
+import javax.swing.*;
+import javax.swing.event.*;
+import javax.swing.table.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
+import java.util.List;
 
 /**
  * A table to display, edit and save options, containing name value pairings. There will be columns for the name, value,
@@ -30,7 +23,7 @@ import javax.swing.table.TableCellRenderer;
  * the buttons are located on the OptionsPanel toolbar.
  * 
  * @author Alison Eyth
- * @version $Id: DataSetsTable.java,v 1.4 2007/05/22 20:57:26 qunhe Exp $
+ * @version $Id: DataSetsTable.java,v 1.5 2007/05/31 14:29:33 qunhe Exp $
  * 
  * @see gov.epa.mims.cse.parameter.Table
  */
@@ -51,25 +44,42 @@ public class DataSetsTable extends JTable {
 	/** columns of the table */
 	String[] columns = { "Data Set Name", "Data Set Info", "Set" };
 
-	public DataSetsTable(DataSetsAdapter dataSetsAdapter, PlotInfo plotInfo) {
-		dataSetInfos = plotInfo.getUpdatedDataSetInfos();
-		
-		if (dataSetInfos == null)
-			dataSetInfos = plotInfo.getDataSetInfo();
-		
+	public DataSetsTable(DataSetsAdapter dataSetsAdapter, PlotInfo plotInfo, Plot plot) {
+		dataSetInfos = plotInfo.getDataSetInfo();
 		this.dataSetsAdapter = dataSetsAdapter;
 		DataSetsTableModel model = new DataSetsTableModel();
-		model.setupRows(); // initializes allValues;
+
+		for (int i = 0; i < dataSetInfos.length; i++) {
+			String[] keys = null;
+			
+			if (plot.keysInitialized())
+				keys = plot.getKeys(i);
+
+			if (keys != null && keys.length > 0)
+				model.setupRow(getTableRowVector(dataSetsAdapter, keys));
+			else
+				model.setupRow(new Vector());
+		}
+
 		this.setModel(model);
 		initialize();
 	}// DataSetsTable()
 
-	public DataSetInfo[] getUpdatedDatasetInfos() {
-		return this.dataSetInfos;
+	private Vector getTableRowVector(DataSetsAdapter dataSetsAdapter, String[] keys) {
+		Vector rowVector = new Vector(keys.length);
+
+		for (int i = 0; i < keys.length; i++) {
+			DataSetIfc dataSet = dataSetsAdapter.getDataSet(keys[i]);
+			DataSetWithKey dswk = new DataSetWithKey(keys[i], dataSet);
+			rowVector.add(dswk);
+		}
+
+		return rowVector;
 	}
-	
+
 	private void initialize() {
 		for (int i = 0; i < dataSetInfos.length; i++) {
+			Class editorClass = null;
 			renderers.add(new ButtonTableCellRenderer("Set"));
 			TableCellEditor editor = new DataSetTableCellEditor("Set", i);
 			editors.add(editor);
@@ -108,20 +118,23 @@ public class DataSetsTable extends JTable {
 	}
 
 	public TableCellRenderer getCellRenderer(int row, int column) {
-		if (column < 2)
+		if (column < 2) {
 			return super.getCellRenderer(row, column);
-
-		return (TableCellRenderer) renderers.get(row);
+		} else {
+			return (TableCellRenderer) renderers.get(row);
+		}
 	}
 
 	/**
 	 * return the cell editor
 	 */
 	public TableCellEditor getCellEditor(int row, int column) {
-		if (column == 0)
+		TableCellEditor result = null;
+		if (column == 0) {
 			return super.getCellEditor(row, column);
-
-		return (TableCellEditor) (editors.get(row));
+		} else {
+			return (TableCellEditor) (editors.get(row));
+		}
 	}
 
 	public class DataSetsTableModel extends AbstractTableModel {
@@ -132,9 +145,12 @@ public class DataSetsTable extends JTable {
 
 		public void setupRows() {
 			for (int i = 0; i < dataSetInfos.length; i++) {
-				Vector dsinfo = dataSetInfos[i].getDatasetInfo();
-				dataSets.add(dsinfo == null ? new Vector() : dsinfo);
+				dataSets.add(new Vector());
 			}
+		}
+
+		public void setupRow(Vector v) {
+			dataSets.add(v);
 		}
 
 		public int getColumnCount() {
@@ -292,7 +308,6 @@ public class DataSetsTable extends JTable {
 				dataSets.remove(index);
 				dataSets.add(index, selected);
 				table.setValueAt(dataSets.get(index), row, column);
-				dataSetInfos[index].setDatasetInfo((Vector) dataSets.get(index));
 			}
 		}
 

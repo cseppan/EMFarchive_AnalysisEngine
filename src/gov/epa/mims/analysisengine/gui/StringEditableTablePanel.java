@@ -14,10 +14,11 @@ import javax.swing.table.*;
  *
  * @author Daniel Gatti, CEP, UNC
  * @see gov.epa.mims.analysisengine.gui.EditableTablePanel.java
- * @version $Id: StringEditableTablePanel.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: StringEditableTablePanel.java,v 1.3 2007/05/31 14:29:33 qunhe Exp $
  */
 public class StringEditableTablePanel extends EditableTablePanel
 {
+	static final long serialVersionUID = 1;
    
    /** The list of valid choices for the user to choose from. This will be null if the user
     * can enter any value. */

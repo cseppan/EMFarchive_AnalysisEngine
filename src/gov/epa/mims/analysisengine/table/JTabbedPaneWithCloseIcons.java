@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
+import java.io.Serializable;
 
 import javax.swing.Icon;
 import javax.swing.JTabbedPane;
@@ -17,7 +18,7 @@ import javax.swing.JTabbedPane;
  * To have an extra icon on each tab (e.g. like in JBuilder, showing the file type) use the method addTab(String,
  * Component, Icon). Only clicking the 'X' closes the tab.
  * 
- * @version $Id: JTabbedPaneWithCloseIcons.java,v 1.3 2006/07/21 17:36:36 parthee Exp $
+ * @version $Id: JTabbedPaneWithCloseIcons.java,v 1.4 2007/05/31 14:29:31 qunhe Exp $
  */
 public class JTabbedPaneWithCloseIcons extends JTabbedPane {
 
@@ -107,8 +108,10 @@ public class JTabbedPaneWithCloseIcons extends JTabbedPane {
  * The class which generates the 'X' icon for the tabs. The constructor accepts an icon which is extra to the 'X' icon,
  * so you can have tabs like in JBuilder. This value is null if no extra icon is required.
  */
-class CloseTabIcon implements Icon {
+class CloseTabIcon implements Icon, Serializable {
 
+	static final long serialVersionUID = 1;
+	
 	private int x_pos;
 
 	private int y_pos;

@@ -73,7 +73,7 @@ import javax.swing.JPanel;
  * The GUI will also contain a PagePanel for editing page and plot options
  * 
  * @author Alison Eyth
- * @version $Id: TreeDialog.java,v 1.7 2007/05/22 20:57:27 qunhe Exp $
+ * @version $Id: TreeDialog.java,v 1.8 2007/05/31 14:29:33 qunhe Exp $
  * 
  * @see gov.epa.mims.analysisengine.tree.Node
  * @see gov.epa.mims.analysisengine.tree.DataSets
@@ -82,7 +82,7 @@ import javax.swing.JPanel;
  */
 
 public class TreeDialog extends JDialog implements AnalysisOptionConstantsIfc, PageConstantsIfc {
-	public static final String SOFTWARE_DATE = "May 22, 2007";
+	public static final String SOFTWARE_DATE = "May 31, 2007";
 
 	/** the tree being edited by the dialog * */
 	protected Branch tree = null;
@@ -243,19 +243,17 @@ public class TreeDialog extends JDialog implements AnalysisOptionConstantsIfc, P
 	/*
 	 * To get a Data back with updated Plot infos 5/22/07
 	 */
-	public static Data showTreeDialog(JFrame parent, Data data, DataSetsAdapter dataSetsAdapter,
-			RGenerator rgenerator, HashMap textValues) throws Exception {
+	public static Data showTreeDialog(JFrame parent, Data data, DataSetsAdapter dataSetsAdapter, RGenerator rgenerator,
+			HashMap textValues) throws Exception {
 		TreeDialog dialog = new TreeDialog(parent, data, dataSetsAdapter, rgenerator, textValues);
 		// TBD: reconcile using DataSets node and data sets adapter to choose
 		// data sets
 		dialog.setVisible(true);
 		dialog.dispose();
 		data.tree = dialog.getResultTree();
-		data.info.setPlot(dialog.getPlot());
-		
+
 		return data;
 	}
-	
 
 	/**
 	 * Private constructor for use when creating plots without the GUI.
@@ -315,7 +313,7 @@ public class TreeDialog extends JDialog implements AnalysisOptionConstantsIfc, P
 	public TreeDialog(JFrame parent, Data dat, DataSetsAdapter dataSetsAdapter, RGenerator rgenerator,
 			HashMap textValues) throws Exception {
 		super(parent);
-		this.currentPlot = dat.info.getPlot();
+		
 		setDataValues(dat.tree, dataSetsAdapter, rgenerator, textValues);
 		pagePanel = new PagePanel(pageOptions, plotOptions, currentPlot, dataSetsAdapter, this);
 		initialize();
@@ -1385,5 +1383,5 @@ public class TreeDialog extends JDialog implements AnalysisOptionConstantsIfc, P
 
 		return null;
 	}
-	
+
 }

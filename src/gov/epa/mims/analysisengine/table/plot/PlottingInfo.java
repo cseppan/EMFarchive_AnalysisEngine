@@ -19,7 +19,7 @@ import java.util.Vector;
  * dataseries so they can correctly report back the data elements and the labels without any duplication of data.
  * 
  * @author Prashant Pai, CEP UNC
- * @version $Id: PlottingInfo.java,v 1.3 2007/05/22 20:57:27 qunhe Exp $
+ * @version $Id: PlottingInfo.java,v 1.4 2007/05/31 14:29:33 qunhe Exp $
  */
 public class PlottingInfo implements java.io.Serializable {
 	/** serial version UID */
@@ -60,16 +60,6 @@ public class PlottingInfo implements java.io.Serializable {
 
 	protected String plotName = " ";
 	
-	private Plot plot;
-
-	public Plot getPlot() {
-		return plot;
-	}
-
-	public void setPlot(Plot plot) {
-		this.plot = plot;
-	}
-
 	public PlottingInfo(OverallTableModel model) {
 		this.tableModel = model;
 	}
@@ -81,7 +71,7 @@ public class PlottingInfo implements java.io.Serializable {
 	public String getPlotType() {
 		return this.plotType;
 	}
-
+	
 	public void setUnits(String units) {
 		this.units = units;
 	}

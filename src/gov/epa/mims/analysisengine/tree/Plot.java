@@ -9,22 +9,12 @@ import java.util.List;
  * abstract base class for all plots
  * 
  * @author Tommy E. Cathey
- * @version $Id: Plot.java,v 1.5 2007/05/22 20:57:24 qunhe Exp $
+ * @version $Id: Plot.java,v 1.6 2007/05/31 14:29:31 qunhe Exp $
  * 
  **********************************************************************************************************************/
 public abstract class Plot extends Leaf implements Serializable, Cloneable {
 	/** serial version UID */
 	static final long serialVersionUID = 1;
-
-	private PlotInfo savedPlotInfo;
-	
-	public PlotInfo getSavedPlotInfo() {
-		return savedPlotInfo;
-	}
-
-	public void setSavedPlotInfo(PlotInfo plotInfo) {
-		this.savedPlotInfo = plotInfo;
-	}
 
 	/*******************************************************************************************************************
 	 * get a data series
@@ -103,6 +93,28 @@ public abstract class Plot extends Leaf implements Serializable, Cloneable {
 	public abstract List getDataKeyList();
 	
 	public abstract String[] getKeys(int i);
+	
+	/****************************************************
+	 * Added to check whether the plot is newly created
+	 * @Date 5/30/2007
+	 * @author Qun He
+	 * @return a boolean value
+	 ****************************************************/
+	
+	public boolean keysInitialized() {
+		List keysList =  null;
+		
+		try {
+			keysList = getDataKeyList();
+		} catch (Exception e) {
+			return false;
+		}
+		
+		if (keysList == null || keysList.size() == 0)
+			return false;
+		
+		return true;
+	}
 
 	/*******************************************************************************************************************
 	 * Compares this object to the specified object.

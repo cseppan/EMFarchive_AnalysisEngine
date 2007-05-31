@@ -3,6 +3,7 @@ package gov.epa.mims.analysisengine.gui;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -19,7 +20,7 @@ import gov.epa.mims.analysisengine.tree.PageType;
  * to PageTypeEditor.  PageTypeEditor should be updated to use this panel.
  *
  * @author Alison Eyth, Prashant Pai
- * @version $Id: PageOptionsPanel.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: PageOptionsPanel.java,v 1.3 2007/05/31 14:29:32 qunhe Exp $
  *
  **/
 public class PageOptionsPanel
@@ -336,8 +337,10 @@ gov.epa.mims.analysisengine.tree.PageConstantsIfc
    /**
     * A file filter that shows only certain files for use in the file chooser.
     */
-   class ImageFileFilter extends FileFilter
+   class ImageFileFilter extends FileFilter implements Serializable
    {
+	   static final long serialVersionUID = 1;
+	   
       /** The extension that this class will accept. */
       private String extension = null;
 

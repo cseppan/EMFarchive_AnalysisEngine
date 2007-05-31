@@ -4,10 +4,11 @@ package gov.epa.mims.analysisengine.table.sort;
  * <p>Description: A simple sorting table model lifted from the Sun site.</p>
  * <p>Company: UNC - CEP</p>
  * @author Daniel Gatti
- * @version $Id: TableSorter.java,v 1.1 2006/11/01 15:33:40 parthee Exp $
+ * @version $Id: TableSorter.java,v 1.2 2007/05/31 14:29:33 qunhe Exp $
  */
 import java.awt.*;
 import java.awt.event.*;
+import java.io.Serializable;
 import java.util.*;
 import java.util.List;
 
@@ -293,7 +294,8 @@ public class TableSorter extends AbstractTableModel {
 
     // Helper classes
 
-    private class Row implements Comparable {
+    private class Row implements Comparable, Serializable {
+    	static final long serialVersionUID = 1;
         private int modelIndex;
 
         public Row(int index) {
@@ -329,7 +331,9 @@ public class TableSorter extends AbstractTableModel {
         }
     }
 
-    private class TableModelHandler implements TableModelListener {
+    private class TableModelHandler implements TableModelListener, Serializable {
+    	static final long serialVersionUID = 1;
+    	
         public void tableChanged(TableModelEvent e) {
             // If we're not sorting by anything, just pass the event along.
             if (!isSorting()) {
@@ -384,7 +388,9 @@ public class TableSorter extends AbstractTableModel {
         }
     }
 
-    private class MouseHandler extends MouseAdapter {
+    private class MouseHandler extends MouseAdapter implements Serializable {
+    	static final long serialVersionUID = 1;
+    	
         public void mouseClicked(MouseEvent e) {
             JTableHeader h = (JTableHeader) e.getSource();
             TableColumnModel columnModel = h.getColumnModel();
@@ -404,7 +410,8 @@ public class TableSorter extends AbstractTableModel {
         }
     }
 
-    private static class Arrow implements Icon {
+    private static class Arrow implements Icon, Serializable {
+    	static final long serialVersionUID = 1;
         private boolean descending;
         private int size;
         private int priority;
@@ -457,8 +464,10 @@ public class TableSorter extends AbstractTableModel {
         }
     }
 
-    private class SortableHeaderRenderer implements TableCellRenderer {
-        private TableCellRenderer tableCellRenderer;
+    private class SortableHeaderRenderer implements TableCellRenderer, Serializable {
+    	static final long serialVersionUID = 1;
+    	
+    	private TableCellRenderer tableCellRenderer;
 
         public SortableHeaderRenderer(TableCellRenderer tableCellRenderer) {
             this.tableCellRenderer = tableCellRenderer;
@@ -482,7 +491,8 @@ public class TableSorter extends AbstractTableModel {
         }
     }
 
-    private static class Directive {
+    private static class Directive implements Serializable {
+    	static final long serialVersionUID = 1;
         private int column;
         private int direction;
 

@@ -120,9 +120,12 @@ public class SaveConfigModel extends DefaultTableModel {
 			} else {
 				throw new Exception("Empty Data Set");
 			}
-			removeColumnsNotAvailableInNewDatasets(dset, tempTree);
+
+			if (!dset.equals(tempTree))
+				removeColumnsNotAvailableInNewDatasets(dset, tempTree);
 
 			TreeDialog.createPlotWithoutGUI(dset, dset, null, null);
+
 			if (pageType != null) {
 				PageType pt = (PageType) options.getOption("PAGE_TYPE");
 				pt.setTextString(pageType);
@@ -211,7 +214,7 @@ public class SaveConfigModel extends DefaultTableModel {
 		}
 		return true;
 	}
-	
+
 	public void setConfig(AnalysisConfiguration config) {
 		this.aconfig = config;
 	}

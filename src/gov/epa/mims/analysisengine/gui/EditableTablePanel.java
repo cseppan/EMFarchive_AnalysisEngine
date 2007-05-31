@@ -1,14 +1,34 @@
 package gov.epa.mims.analysisengine.gui;
 
-import java.awt.*;
-import java.awt.datatransfer.*;
-import java.awt.event.*;
-import java.util.Arrays;
-import java.util.Comparator;
-import javax.swing.*;
-import javax.swing.table.*;
-import javax.swing.event.TableModelListener;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Transferable;
+import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JToolBar;
+import javax.swing.UIManager;
 import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableModel;
 
 
 
@@ -21,12 +41,14 @@ import javax.swing.event.TableModelEvent;
  * will be a JComboBox.
  *
  * @author Daniel Gatti, CEP UNC
- * @version $Id: EditableTablePanel.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: EditableTablePanel.java,v 1.3 2007/05/31 14:29:32 qunhe Exp $
  */
 public  abstract class EditableTablePanel
    extends JPanel implements ChildHasChangedListener
 {
    
+	static final long serialVersionUID = 123;
+	
    public static final String DOUBLE_CLICK_TO_SELECT = "Double click to select";
    
    public static final String DOUBLE_CLICK_TO_ENTER = "Double click to enter";

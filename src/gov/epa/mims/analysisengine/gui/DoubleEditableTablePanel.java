@@ -14,10 +14,12 @@ import javax.swing.table.*;
  *
  * @author Daniel Gatti, CEP, UNC
  * @see gov.epa.mims.analysisengine.gui.EditableTablePanel.javas
- * @version $Id: DoubleEditableTablePanel.java,v 1.2 2005/09/19 14:50:03 rhavaldar Exp $
+ * @version $Id: DoubleEditableTablePanel.java,v 1.3 2007/05/31 14:29:33 qunhe Exp $
  */
 public class DoubleEditableTablePanel extends EditableTablePanel
 {
+	static final long serialVersionUID = 1;
+	
    /** The upper bound for validating integer entries. */
    protected double upBound = 0.0;
 

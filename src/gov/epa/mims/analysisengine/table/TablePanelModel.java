@@ -1,5 +1,6 @@
 package gov.epa.mims.analysisengine.table;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -17,9 +18,11 @@ import java.util.ArrayList;
  * </p>
  * 
  * @author Parthee Partheepan
- * @version $Id: TablePanelModel.java,v 1.3 2006/10/30 21:43:50 parthee Exp $
+ * @version $Id: TablePanelModel.java,v 1.4 2007/05/31 14:29:30 qunhe Exp $
  */
-public class TablePanelModel {
+public class TablePanelModel implements Serializable {
+	static final long serialVersionUID = 1;
+	
 	/** A String to store the table header information */
 	private String tableDataHeader;
 

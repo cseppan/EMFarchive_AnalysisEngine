@@ -25,7 +25,7 @@ import javax.swing.table.TableColumn;
  * 
  * @author Daniel Gatti, CEP, UNC
  * @see gov.epa.mims.analysisengine.gui.EditableTablePanel.java
- * @version $Id: ColorEditableTablePanel.java,v 1.4 2007/01/10 22:31:34 parthee Exp $
+ * @version $Id: ColorEditableTablePanel.java,v 1.5 2007/05/31 14:29:33 qunhe Exp $
  */
 public class ColorEditableTablePanel extends EditableTablePanel {
 	/**
@@ -33,6 +33,8 @@ public class ColorEditableTablePanel extends EditableTablePanel {
 	 */
 	protected Color[] validChoices = null;
 
+	static final long serialVersionUID = 1;
+	
 	/** The default value that will be place in newly added rows. */
 	protected Color defaultValue = Color.white;
 

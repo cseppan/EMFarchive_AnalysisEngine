@@ -23,6 +23,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -35,8 +36,10 @@ import javax.swing.event.TableModelEvent;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 
-public class AnalysisConfiguration {
+public class AnalysisConfiguration implements Serializable {
 
+	static final long serialVersionUID = 1;
+	
 	/** a sorted mapping between plot name and the <tree, plottinginfo> */
 	private TreeMap configs;
 
@@ -192,6 +195,7 @@ public class AnalysisConfiguration {
 			}
 		}// while
 
+		//NOTE: need to investigate if this is the place where multiple message boxes poping up ?
 		if (count == 0) {
 			DefaultUserInteractor.get().notify(null, "Error",
 					"The table does not have " + "any column names exist on the configuration file",
@@ -206,7 +210,7 @@ public class AnalysisConfiguration {
 							null,
 							"Warning",
 							"The table does not have " + missingColNames
-									+ " column names that exist on the configuration file", UserInteractor.WARNING);
+									+ " column names that exist in the configuration file", UserInteractor.WARNING);
 			return newFormats;
 		} else // count == configColNames.size()-1
 		{

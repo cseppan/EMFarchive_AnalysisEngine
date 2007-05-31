@@ -334,7 +334,7 @@ public class SUSortFilterTablePanel extends SortFilterTablePanel {
 
 		PlottingInfoView plotGUI = new PlottingInfoView((JFrame) parent, plotInfo, true);
 
-		//plotGUI.show();
+		// plotGUI.show();
 		plotGUI.setVisible(true);
 
 		if (plotGUI.getResult() == OptionDialog.OK_RESULT) {
@@ -371,10 +371,8 @@ public class SUSortFilterTablePanel extends SortFilterTablePanel {
 				TreeDialog dialog = new TreeDialog((JFrame) parent, aePlotType, dataSets, null, hashMap,
 						setPlotDefaults);
 				dialog.setTitle(title);
-				//dialog.show();
 				dialog.setVisible(true);
 				data = dialog.getResultTree();
-				plotInfo.setPlot(dialog.getPlot());
 				if (plotName != null) {
 					aconfig.storePlotConfig(plotName, data, plotInfo, false);
 				}

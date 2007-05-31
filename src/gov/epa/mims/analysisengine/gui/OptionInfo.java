@@ -5,6 +5,7 @@ import gov.epa.mims.analysisengine.tree.*;
 import gov.epa.mims.analysisengine.AnalysisException;
 
 import java.awt.Color;
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
@@ -13,10 +14,10 @@ import java.util.HashMap;
  * OptionInfo could be used in multiple types of plots.
  * 
  * @author Prashant Pai, MCNC , Tommy E. Cathey
- * @version $Id: OptionInfo.java,v 1.3 2007/01/09 23:06:15 parthee Exp $
+ * @version $Id: OptionInfo.java,v 1.4 2007/05/31 14:29:33 qunhe Exp $
  * 
  */
-public class OptionInfo implements gov.epa.mims.analysisengine.tree.AnalysisOptionConstantsIfc {
+public class OptionInfo implements gov.epa.mims.analysisengine.tree.AnalysisOptionConstantsIfc, Serializable {
 	/** serial version UID */
 	static final long serialVersionUID = 1;
 
