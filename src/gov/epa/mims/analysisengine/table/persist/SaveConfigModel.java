@@ -69,7 +69,17 @@ public class SaveConfigModel extends DefaultTableModel {
 	}
 
 	public void remove(int rowIndex) {
-		aconfig.removeKey(configNames[rowIndex]);
+		aconfig.removeKey(getConfigNames()[rowIndex]);
+	}
+
+	/*****************************************
+	 * Added to remove configuration directly
+	 * from config name in case the row index
+	 * is a wrong one. Qun He 6/1/2007
+	 * @param configName
+	 *****************************************/
+	public void remove(String configName) {
+		aconfig.removeKey(configName);
 	}
 
 	public void renameConfig(int row, String newName) throws Exception {
@@ -178,7 +188,6 @@ public class SaveConfigModel extends DefaultTableModel {
 	}
 
 	public String getConfigName(int row) {
-		aconfig.getConfigNames();
 		String[] names = aconfig.getConfigNames();
 		if (row >= 0 && row < names.length) {
 			return names[row];

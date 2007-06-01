@@ -50,7 +50,7 @@ import javax.swing.table.TableColumn;
  * chosen directory.
  * 
  * @author Krithiga Thangavelu, CEP, UNC CHAPEL HILL.
- * @version $Id: LoadConfigurationGUI.java,v 1.10 2007/05/31 22:52:05 qunhe Exp $
+ * @version $Id: LoadConfigurationGUI.java,v 1.11 2007/06/01 17:26:03 qunhe Exp $
  */
 public class LoadConfigurationGUI extends javax.swing.JDialog {
 
@@ -361,8 +361,11 @@ public class LoadConfigurationGUI extends javax.swing.JDialog {
 	}
 
 	private void showErrorMessages(List errorMsgs) {
-		if (errorMsgs.isEmpty())
+		if (errorMsgs.isEmpty()) {
+			dispose();
+			new GUIUserInteractor().notify(this, "Import Completion", "Import process completed.", UserInteractor.NOTE);
 			return;
+		}
 
 		StringBuffer sb = new StringBuffer();
 		for (int i = 0; i < errorMsgs.size(); i++) {

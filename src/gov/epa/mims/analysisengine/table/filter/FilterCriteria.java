@@ -122,7 +122,7 @@ public class FilterCriteria implements Serializable, Cloneable {
 			return new FilterCriteria(tempColumnNames, showColumns);
 		}
 
-		
+		boolean showError = true;
 		String[] allColNames = newModel.getColumnNames();
 		ArrayList allColNamesList = new ArrayList(Arrays.asList(allColNames));
 		
@@ -138,10 +138,11 @@ public class FilterCriteria implements Serializable, Cloneable {
 			}
 		}
 
-		if (count == 0) {
+		if (count == 0 && showError) {
+			showError = false;
 			throw new Exception("The table does not contain any column names "
 					+ "specified for filter criteria in the configuration file");
-		} else if (count < columnNames.length) {
+		} else if (count < columnNames.length && showError) {
 			missingColNames = missingColNames.substring(0, missingColNames.length() - 2);
 			DefaultUserInteractor.get().notify(
 					null,
@@ -161,6 +162,8 @@ public class FilterCriteria implements Serializable, Cloneable {
 					count++;
 				}// if(available[i])
 			}// for(i)
+			
+			showError = false;
 			return new FilterCriteria(newColNames, newOperations, newValues, allColNames, this.compareWithAnd);
 		}// else if(count < columnNames.length)
 		else {

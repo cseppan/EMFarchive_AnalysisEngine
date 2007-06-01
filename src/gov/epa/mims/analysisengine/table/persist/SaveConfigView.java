@@ -12,8 +12,6 @@ import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.File;
 
 import javax.swing.BorderFactory;
@@ -102,6 +100,7 @@ public class SaveConfigView extends JDialog {
 		initGUI();
 		setLocation(ScreenUtils.getPointToCenter(this));
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		setResizable(true);
 	}
 
 	public void initGUI() {
@@ -229,7 +228,7 @@ public class SaveConfigView extends JDialog {
 			ConfigTableModifierPanel.add(bDelete);
 			bDelete.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
-						doDelete();
+						deleteConfigurations();
 				}
 			});
 
@@ -370,17 +369,19 @@ public class SaveConfigView extends JDialog {
 				model.showPlot(indexs[i]);
 			} catch (Exception e) {
 				GUIUserInteractor gui = new GUIUserInteractor();
+				gui.notify(this, "There is an error with " + model.getValueAt(indexs[i], 0), e.getMessage(), UserInteractor.ERROR);
 
-				gui.notify(this, "Error with " + model.getValueAt(indexs[i], 0), e.getMessage(), UserInteractor.ERROR);
-				int result = gui.selectOption(this, "Delete Faulty Configuration?", "Delete FaultyConfiguration?",
-						GUIUserInteractor.YES_NO, GUIUserInteractor.NO);
+				//Don't need to delete the faulty config here because one can delete them through
+				//delete button. Qun He 6/1/2007
+//				int result = gui.selectOption(this, "Delete Faulty Configuration?", "Delete FaultyConfiguration?",
+//						GUIUserInteractor.YES_NO, GUIUserInteractor.NO);
 
-				if (result == GUIUserInteractor.YES) {
-					model.remove(indexs[i]);
-					model.removeRow(indexs[i]);
-				} else {
-					return;
-				}
+//				if (result == GUIUserInteractor.YES) {
+//					model.remove(indexs[i]);
+//					model.removeRow(indexs[i]);
+//				} else {
+//					return;
+//				}
 			}
 		}
 	}
@@ -411,11 +412,12 @@ public class SaveConfigView extends JDialog {
 		try {
 			model.showTree(configName);
 		} catch (Exception e) {
-			new GUIUserInteractor().notify(this, "Exception", e.getMessage(), UserInteractor.ERROR);
+			e.printStackTrace();
+			new GUIUserInteractor().notify(this, "Exception Occurred", e.getMessage(), UserInteractor.ERROR);
 		}
 	}
 
-	protected void doDelete() {
+	protected void deleteConfigurations() {
 		SaveConfigModel model = (SaveConfigModel) chooseConfigTable.getModel();
 		int[] indexs = chooseConfigTable.getSelectedRows();
 
@@ -436,7 +438,8 @@ public class SaveConfigView extends JDialog {
 				if (res == UserInteractor.NO)
 					continue;
 			}
-			model.remove(indexs[k]);
+			//model.remove(indexs[k]);
+			model.remove(configName);
 			model.removeRow(indexs[k]);
 		}
 	}

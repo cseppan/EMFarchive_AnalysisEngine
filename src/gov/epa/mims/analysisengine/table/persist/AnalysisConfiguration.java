@@ -170,6 +170,7 @@ public class AnalysisConfiguration implements Serializable {
 	 * checks the availability of column names in the TableModel in the loaded configuration
 	 */
 	private Hashtable checkCompatibility(Hashtable formats) {
+		boolean showError = true;
 		String[] colNames = model.getColumnNames();
 		Vector allColNames = new Vector();
 		for (int i = 0; i < colNames.length; i++) {
@@ -196,13 +197,14 @@ public class AnalysisConfiguration implements Serializable {
 		}// while
 
 		//NOTE: need to investigate if this is the place where multiple message boxes poping up ?
-		if (count == 0) {
+		if (count == 0 && showError) {
 			DefaultUserInteractor.get().notify(null, "Error",
 					"The table does not have " + "any column names exist on the configuration file",
 					UserInteractor.ERROR);
+			showError = false;
 			newFormats = null;
 			return null;
-		} else if (count < configColNames.size() - 1) // deducting 1 for the first col
+		} else if (count < configColNames.size() - 1 && showError) // deducting 1 for the first col
 		{
 			missingColNames = missingColNames.substring(0, missingColNames.length() - 2);
 			DefaultUserInteractor.get()
@@ -211,6 +213,7 @@ public class AnalysisConfiguration implements Serializable {
 							"Warning",
 							"The table does not have " + missingColNames
 									+ " column names that exist in the configuration file", UserInteractor.WARNING);
+			showError = false;
 			return newFormats;
 		} else // count == configColNames.size()-1
 		{
