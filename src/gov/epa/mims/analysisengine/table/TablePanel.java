@@ -28,7 +28,7 @@ import javax.swing.JTextField;
  * </p>
  * 
  * @author Parthee Partheepan
- * @version $Id: TablePanel.java,v 1.5 2006/10/30 21:43:50 parthee Exp $
+ * @version $Id: TablePanel.java,v 1.6 2007/06/01 19:02:42 qunhe Exp $
  */
 public class TablePanel extends JPanel {
 
@@ -50,7 +50,8 @@ public class TablePanel extends JPanel {
 
 	private JTabbedPane maintTabbedPane;
 
-	public TablePanel(Component parent, SpecialTableModel model, String fileName, String tabName, String fileType, JTabbedPane mainTabbedPane) {
+	public TablePanel(Component parent, SpecialTableModel model, String fileName, String tabName, String fileType,
+			JTabbedPane mainTabbedPane) {
 		this.fileName = fileName;
 		this.tabName = tabName;
 		this.maintTabbedPane = mainTabbedPane;
@@ -91,16 +92,24 @@ public class TablePanel extends JPanel {
 		mainPanel.setBorder(BorderFactory.createLoweredBevelBorder());
 
 		// footer panel
-		footerPanel = new DescriptionPanel(model.getTableDataFooter(), "Footer ", name);
-		footerPanel.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
+		String footMsg = model.getTableDataFooter();
+		String ret = System.getProperty("line.separator");
+		int retIndex = footMsg.indexOf(ret);
+		if (retIndex >= 0)
+			footMsg = ret.substring(0, retIndex) + ret.substring(retIndex + ret.length());
 
-		tablePanel = new SUSortFilterTablePanel(parent, fileName, tabName,maintTabbedPane, model);
+		if (footMsg != null && !footMsg.trim().equals("")) {
+			footerPanel = new DescriptionPanel(footMsg, "Footer ", name);
+			footerPanel.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
+		}
+
+		tablePanel = new SUSortFilterTablePanel(parent, fileName, tabName, maintTabbedPane, model);
 		fileNameTextField.setText(fileName);
 		mainPanel.add(tablePanel, BorderLayout.CENTER);
 
 		add(mainPanel, BorderLayout.CENTER);
-		add(footerPanel, BorderLayout.SOUTH);
-
+		if (footerPanel != null)
+			add(footerPanel, BorderLayout.SOUTH);
 	}
 
 	/** get the data in a tabbed pane */
@@ -136,7 +145,8 @@ public class TablePanel extends JPanel {
 		// have to transpose it since in table model column header is arraged in column fashion
 		tablePanelModel.setColumnHeaders(transposeArray(tempColumnHeaders));
 		tablePanelModel.setTableData(tableData);
-		tablePanelModel.setTableDataFooter(footerPanel.getDescription());
+		if (footerPanel != null)
+			tablePanelModel.setTableDataFooter(footerPanel.getDescription());
 		tablePanelModel.setColumnTypes(columntypes);
 		return tablePanelModel;
 	}
