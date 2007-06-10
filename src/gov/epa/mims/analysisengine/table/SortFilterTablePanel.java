@@ -58,7 +58,7 @@ import javax.swing.table.TableColumnModel;
  * </p>
  * 
  * @author Daniel Gatti
- * @version $Id: SortFilterTablePanel.java,v 1.18 2007/05/31 14:29:30 qunhe Exp $
+ * @version $Id: SortFilterTablePanel.java,v 1.19 2007/06/10 21:38:43 eyth Exp $
  */
 public class SortFilterTablePanel extends JPanel implements TableModelListener, ChildHasChangedListener {
 
@@ -769,8 +769,12 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 	 * status label.
 	 */
 	public void updateStatusLabel() {
-		String info = overallModel.getRowCount() + ROWS_STR + overallModel.getDataColumnCount() + COLUMNS_STR
-						+ "[ " + overallModel.filterSortInfoString() + " ]";
+// Parthee's version:
+//		String info = overallModel.getRowCount() + ROWS_STR + overallModel.getDataColumnCount() + COLUMNS_STR
+//						+ "[ " + overallModel.filterSortInfoString() + " ]";
+	    // Alison's version:
+		String info = " " + overallModel.getRowCount() + ROWS_STR + overallModel.getDataColumnCount() +
+                        COLUMNS_STR + " [" + overallModel.filterSortInfoString() + "]";
 		statusLabel.setText(info);
 		statusLabel.setToolTipText(info);
 	} // updateStatusLabel()
