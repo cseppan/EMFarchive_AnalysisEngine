@@ -4,6 +4,7 @@ import gov.epa.mims.analysisengine.gui.DefaultUserInteractor;
 import gov.epa.mims.analysisengine.gui.UserInteractor;
 import gov.epa.mims.analysisengine.table.OverallTableModel;
 
+import java.awt.Component;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -100,7 +101,7 @@ public class SortCriteria implements java.io.Serializable {
 	 *            OverallTableModel
 	 * @return boolean true if compatible else false
 	 */
-	public SortCriteria checkCompatibility(OverallTableModel model) throws Exception {
+	public SortCriteria checkCompatibility(OverallTableModel model, Component parent) throws Exception {
 		String[] colNames = model.getColumnNames();
 		ArrayList allColNames = new ArrayList();
 		for (int i = 0; i < colNames.length; i++) {
@@ -123,8 +124,7 @@ public class SortCriteria implements java.io.Serializable {
 					+ "specified for sort criteria in the configuration file");
 		} else if (count < columnNames.length) {
 			missingColNames = missingColNames.substring(0, missingColNames.length() - 2);
-			DefaultUserInteractor.get().notify(
-					null,
+			DefaultUserInteractor.get().notify(parent,
 					"Sort Criteria",
 					"The table does not " + "contain " + missingColNames + " specified for sort criteria in the"
 							+ " configuration file", UserInteractor.WARNING);
@@ -162,7 +162,7 @@ public class SortCriteria implements java.io.Serializable {
 	}
 
 	private String asceding(boolean b) {
-		return (b==true)?"asec": "desc";
+		return (b==true)?"+": "-";
 	}
 
 } // class SortCriteria
