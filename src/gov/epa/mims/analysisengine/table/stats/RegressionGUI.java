@@ -216,7 +216,7 @@ tabn.indexOf("_NLR"))+"_LR");
     if(depVariables.size()==0 || indepVariables.size()==0)
     {
          new GUIUserInteractor().notify(this,"Error", "Select at least one variable "+
-            "for dependent and independent variables each",
+            "for both the dependent and independent variables",
 UserInteractor.NOTE);
          return null;
     }
@@ -503,8 +503,8 @@ BoxLayout(dependentVariablesPanel,BoxLayout.X_AXIS));
 
       if(!atLeastOneColumnSelected)
       {
-         DefaultUserInteractor.get().notify(this,"Warning", "You should select atleast "+
-            " column.", UserInteractor.WARNING);
+         DefaultUserInteractor.get().notify(this,"Warning", 
+             "You should select at least one column.", UserInteractor.WARNING);
       }
 
       return;
