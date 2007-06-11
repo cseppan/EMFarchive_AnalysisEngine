@@ -28,7 +28,7 @@ import javax.swing.JTextField;
  * </p>
  * 
  * @author Parthee Partheepan
- * @version $Id: TablePanel.java,v 1.6 2007/06/01 19:02:42 qunhe Exp $
+ * @version $Id: TablePanel.java,v 1.7 2007/06/11 03:25:45 eyth Exp $
  */
 public class TablePanel extends JPanel {
 
@@ -93,10 +93,13 @@ public class TablePanel extends JPanel {
 
 		// footer panel
 		String footMsg = model.getTableDataFooter();
-		String ret = System.getProperty("line.separator");
-		int retIndex = footMsg.indexOf(ret);
-		if (retIndex >= 0)
-			footMsg = ret.substring(0, retIndex) + ret.substring(retIndex + ret.length());
+		if (footMsg != null)
+		{
+			String ret = System.getProperty("line.separator");
+			int retIndex = footMsg.indexOf(ret);
+			if (retIndex >= 0)
+				footMsg = ret.substring(0, retIndex) + ret.substring(retIndex + ret.length());
+		}
 
 		if (footMsg != null && !footMsg.trim().equals("")) {
 			footerPanel = new DescriptionPanel(footMsg, "Footer ", name);
