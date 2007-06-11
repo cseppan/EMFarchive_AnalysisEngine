@@ -10,6 +10,7 @@ import java.text.Format;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Hashtable;
+import java.awt.Component;
 
 public class FilterCriteria implements Serializable, Cloneable {
 
@@ -116,7 +117,7 @@ public class FilterCriteria implements Serializable, Cloneable {
 		this.model = model;
 	}
 
-	public FilterCriteria checkCompatibility(OverallTableModel newModel) throws Exception {
+	public FilterCriteria checkCompatibility(OverallTableModel newModel, Component parent) throws Exception {
 		if (columnNames == null) {
 			String[] tempColumnNames = newModel.getBaseColumnNames();
 			return new FilterCriteria(tempColumnNames, showColumns);
@@ -142,13 +143,20 @@ public class FilterCriteria implements Serializable, Cloneable {
 			showError = false;
 			throw new Exception("The table does not contain any column names "
 					+ "specified for filter criteria in the configuration file");
-		} else if (count < columnNames.length && showError) {
+		} else if (count < columnNames.length) {
 			missingColNames = missingColNames.substring(0, missingColNames.length() - 2);
-			DefaultUserInteractor.get().notify(
-					null,
-					"Filter Criteria",
-					"The table does not " + "contain " + missingColNames + " specified for filter criteria in the"
-							+ " configuration file", UserInteractor.WARNING);
+			String errorString = 
+				"The table does not contain these columns specified for filter criteria in the configuration file: \n" 
+				+ missingColNames;
+			if (showError)
+			{
+			    DefaultUserInteractor.get().notify(parent,"Problem Loading Filter Criteria",
+					errorString, UserInteractor.WARNING);
+			}
+			else
+			{
+				System.out.println("WARNING: "+errorString);
+			}
 			String[] newColNames = new String[count];
 			int[] newOperations = new int[count];
 			Comparable[] newValues = new Comparable[count];
