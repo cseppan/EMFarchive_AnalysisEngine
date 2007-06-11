@@ -10,6 +10,7 @@ import gov.epa.mims.analysisengine.table.TableDateTimeSeries;
 import gov.epa.mims.analysisengine.tree.DataSets;
 import gov.epa.mims.analysisengine.tree.Plot;
 
+import java.awt.Component;
 import java.text.SimpleDateFormat;
 import java.util.Vector;
 
@@ -19,7 +20,7 @@ import java.util.Vector;
  * dataseries so they can correctly report back the data elements and the labels without any duplication of data.
  * 
  * @author Prashant Pai, CEP UNC
- * @version $Id: PlottingInfo.java,v 1.4 2007/05/31 14:29:33 qunhe Exp $
+ * @version $Id: PlottingInfo.java,v 1.5 2007/06/11 03:34:34 eyth Exp $
  */
 public class PlottingInfo implements java.io.Serializable {
 	/** serial version UID */
@@ -50,6 +51,8 @@ public class PlottingInfo implements java.io.Serializable {
 	protected String[] selDataColNames;
 
 	public static final String NOT_SELECTED = "Not Selected";
+	
+	private static long lastMessageTime = 0;
 
 	/** store the selected label column Names */
 	protected String[] selLabelColNames = { NOT_SELECTED, NOT_SELECTED, NOT_SELECTED };
@@ -138,8 +141,9 @@ public class PlottingInfo implements java.io.Serializable {
 		selDataColNames = dataColumns;
 	}
 
-	public void setOverallTableModel(OverallTableModel tableModel) throws Exception {
+	public void setOverallTableModel(OverallTableModel tableModel, Component parent) throws Exception {
 		String[] arrayColumnNames = tableModel.getColumnNames();
+		
 		Vector columnNames = new Vector();
 		for (int i = 0; i < arrayColumnNames.length; i++) {
 			columnNames.add(arrayColumnNames[i]);
@@ -188,45 +192,48 @@ public class PlottingInfo implements java.io.Serializable {
 		}// if(dateCols != null)
 
 		if (newDataColNames.size() == 0) {
-			throw new Exception("The present table does not have any column names that"
-					+ " matches the data column names in the configuration file.");
+			throw new Exception("The current table does not have any column names that"
+					+ " are used as data column names in the configuration file.");
 		}// if(newLabelColNames.size() == 0)
 		else if (missDataColNames.size() > 0) {
-			DefaultUserInteractor.get().notify(
-					null,
-					"Warning",
-					"The present table does "
-							+ "not have all the column names that matches the data column names in the "
-							+ "configuration file", UserInteractor.WARNING);
+			String colString = "";
+			for (int i=0; (i < missDataColNames.size()) && (i < 8); i++)
+			{
+			   colString += missDataColNames.elementAt(i);
+			   colString += ", ";
+			}
+			String errorString = "The current table does not have all the data column names "+
+			   " specified in the configuration file for plot "+this.getPlotName()+", such as: "+ colString + "...";
+			showPlotError(errorString, parent);
 		}// else if (missDataColNames.size()>0)
 
 		String aePlotType = PlotTypeConverter.getAEPlotType(plotType);
 		if (TreeDialog.isLabelRequired(null, aePlotType)) {
 			if (aePlotType.equals(AnalysisEngineConstants.TIME_SERIES_PLOT)) {
 				if (newDateColNames.size() == 0) {
-					throw new Exception("This plot '" + plotType + "'requires a date label."
-							+ "\nThe present table does not have any column names that"
-							+ " matches the date label column names in the configuration file.");
+					throw new Exception("This plot '" + getPlotName() + "'requires a date label."
+							+ "\nThe current table does not have the column that"
+							+ " is listed as the date label column in the configuration file.");
 				} else if (missDateColNames.size() > 0) {
-					DefaultUserInteractor.get().notify(
-							null,
-							"Warning",
-							"The present table does "
-									+ "not have all the column names that matches the date label column names in the "
-									+ "configuration file", UserInteractor.WARNING);
+					String dateString = "The current table does "
+						+ "not have the column specified for the date label in the "
+						+ "configuration file for plot "+getPlotName()+": "+missDateColNames.elementAt(0);
+					showPlotError(dateString, parent);
 				}
 			} else if (newLabelColNames.size() == 0) {
-				throw new Exception("This plot '" + plotType + "'requires a label."
-						+ "\nThe present table does not have column names that"
-						+ " matches the label column names in the configuration file.");
+				String colString = expandVectorIntoString(newLabelColNames);
+				String labelString = "The plot " + getPlotName()+"[type="+plotType + "], requires a label."
+				+ "\nThe current table does not have the columns that"
+				+ " are used as label columns in the specified configuration file: "+colString;
+				throw new Exception(labelString);
 			}// if(newLabelColNames.size() == 0)
 			else if (missLabelColNames.size() > 0) {
-				DefaultUserInteractor.get().notify(
-						null,
-						"Warning",
-						"The present table does "
-								+ "not have all the column names that matches the label column names in the "
-								+ "configuration file", UserInteractor.WARNING);
+				String colString = expandVectorIntoString(missLabelColNames);
+				String labelString = "The current table does "
+			  	   + "not have the columns used as label columns in the "
+				   + "configuration file: "+colString; 
+				
+				showPlotError(labelString, parent);
 			}// else if
 		}// if(isLabelRequired)
 
@@ -243,6 +250,33 @@ public class PlottingInfo implements java.io.Serializable {
 		this.selLabelDateColNames = (String[]) newDateColNames.toArray(newDate);
 		this.tableModel = tableModel;
 	}// setTableModel
+
+	private String expandVectorIntoString(Vector newLabelColNames) {
+		String nameString = "";
+		for (int i=0; i < newLabelColNames.size(); i++)
+		{
+			nameString += newLabelColNames.elementAt(i);
+			if (i < newLabelColNames.size()-1)
+			   nameString += ", ";
+		}
+		return nameString;
+	}
+
+	private void showPlotError(String messageString, Component parent) {
+		// don't show any messages within 2 minutes of the last message
+		if (System.currentTimeMillis() > (lastMessageTime + 60000))
+		{
+			DefaultUserInteractor.get().notify(
+					parent,
+					"Warning",
+					messageString+"\n\nSee the output log for additional warnings about other plots.", 
+					UserInteractor.WARNING);
+			
+			lastMessageTime = System.currentTimeMillis();
+		}
+		System.out.println("WARNING: "+messageString);
+		
+	}
 
 	public int[] convertSelection(boolean[] selected) {
 		int[] selections = new int[selected.length];
@@ -382,7 +416,8 @@ public class PlottingInfo implements java.io.Serializable {
 			index = tableModel.getColumnNameIndex(selDataColNames[i]);
 			if (!firstLabel.equalsIgnoreCase(colHeaders[index])) {
 				// System.out.println("colHeaders["+i+"]="+ colHeaders[dataColumns[i]]);
-				DefaultUserInteractor.get().notify(null, "WARNING", "The selected columns" + " do not have same units",
+				DefaultUserInteractor.get().notify(null, "WARNING", "The selected columns" + 
+						" do not have the same units",
 						UserInteractor.WARNING);
 				units = "";
 				return;
