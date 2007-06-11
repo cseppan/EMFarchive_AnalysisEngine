@@ -5,6 +5,7 @@ import gov.epa.mims.analysisengine.table.TableApp;
 import gov.epa.mims.analysisengine.table.sort.TableSorter;
 
 import java.awt.BorderLayout;
+import java.awt.Cursor;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -101,7 +102,7 @@ public class FileHistoryDialog extends JDialog {
 
 		this.setResizable(true);
 		this.setSize(new java.awt.Dimension(445, 340));
-		this.setTitle("Import Recent Files");
+		this.setTitle("Import Recently Used Files");
 
 		BorderLayout thisLayout = new BorderLayout();
 		this.getContentPane().setLayout(thisLayout);
@@ -209,6 +210,7 @@ public class FileHistoryDialog extends JDialog {
 	}
 
 	protected void doImport() {
+		setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 		int[] indexs = FilesTable.getSelectedRows();
 		String[] filename = new String[indexs.length];
 		String[] delimiter = new String[indexs.length];
@@ -226,6 +228,9 @@ public class FileHistoryDialog extends JDialog {
 			app.importDifferentFiles(filename, fileType, delimiter, numColHdrRows, 1, 40);
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+		finally {
+			setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		}
 	}
 
