@@ -130,6 +130,7 @@ public class SaveConfigView extends JDialog {
 			this.setResizable(false);
 			this.setTitle("Analysis Configuration");
 			this.setSize(new java.awt.Dimension(465, 320));
+			this.setMinimumSize(new java.awt.Dimension(465, 320));
 			this.getContentPane().add(OverallPanel);
 			OverallPanel.add(chooseConfigSPanel);
 			OverallPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -192,7 +193,7 @@ public class SaveConfigView extends JDialog {
 			JPanel panel = new JPanel();
 			panel.setLayout(new FlowLayout(FlowLayout.LEFT, 1, 2));
 			lHelp.setPreferredSize(new java.awt.Dimension(380, 25));
-			lHelp.setText("Tip: Double click the plot name to rename");
+			lHelp.setText("Hint: Double click on a plot name to begin renaming it");
 			lHelp.setHorizontalTextPosition(SwingConstants.LEFT);
 			lHelp.setVisible(true);
 			panel.add(lHelp);
@@ -366,7 +367,7 @@ public class SaveConfigView extends JDialog {
 							+ " reflects the current state of the table", UserInteractor.NOTE);
 					continue;
 				}
-				model.showPlot(indexs[i]);
+				model.showPlot(indexs[i], this);
 			} catch (Exception e) {
 				GUIUserInteractor gui = new GUIUserInteractor();
 				gui.notify(this, "There is an error with " + model.getValueAt(indexs[i], 0), e.getMessage(), UserInteractor.ERROR);
