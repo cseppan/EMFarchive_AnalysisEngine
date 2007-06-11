@@ -50,7 +50,7 @@ import javax.swing.table.TableColumn;
  * chosen directory.
  * 
  * @author Krithiga Thangavelu, CEP, UNC CHAPEL HILL.
- * @version $Id: LoadConfigurationGUI.java,v 1.11 2007/06/01 17:26:03 qunhe Exp $
+ * @version $Id: LoadConfigurationGUI.java,v 1.12 2007/06/11 03:31:19 eyth Exp $
  */
 public class LoadConfigurationGUI extends javax.swing.JDialog {
 
@@ -236,6 +236,7 @@ public class LoadConfigurationGUI extends javax.swing.JDialog {
 		String pageType = null;
 		Data dat = input.getConfig(configName);
 		if (dat != null && dat.configType == Data.PLOT_TYPE) {
+		    dat.info.setPlotName(configName);
 			viewPlot(pageType, dat);
 		}// if (dat != null && dat.configType == Data.PLOT_TYPE)
 		else {
@@ -252,7 +253,7 @@ public class LoadConfigurationGUI extends javax.swing.JDialog {
 
 	private void viewPlot(String pageType, Data dat) throws Exception {
 		AnalysisOptions options;
-		DataSets dset = input.getDataSets(dat.info);
+		DataSets dset = input.getDataSets(dat.info, this);
 		Branch tempTree = dat.tree; // .clone());
 		
 		if (dset != null) {
@@ -343,7 +344,8 @@ public class LoadConfigurationGUI extends javax.swing.JDialog {
 			for (int i = 0; i < values.length; i++) {
 				try {
 					Data dat = input.getConfig((String) values[i]);
-					DataSets dset = input.getDataSets(dat.info);
+					dat.info.setPlotName((String)values[i]);
+					DataSets dset = input.getDataSets(dat.info, this);
 					removeColumnsNotAvailableInNewDatasets(dset, dat.tree);
 					
 					if (dat.configType == Data.TABLE_TYPE) {
@@ -445,7 +447,7 @@ public class LoadConfigurationGUI extends javax.swing.JDialog {
 						importIntoTable(dat.criteria);
 					}
 				}
-				input.showOrSaveConfiguredPlots(dialog.getAbsolutePath(), dialog.getFileType(), stringValues);
+				input.showOrSaveConfiguredPlots(dialog.getAbsolutePath(), dialog.getFileType(), stringValues, this);
 				new GUIUserInteractor().notify(this, "Saving Plots", "Selected Plots " + " were saved successfully!!",
 						UserInteractor.NOTE);
 			}

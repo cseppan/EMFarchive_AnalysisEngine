@@ -7,6 +7,7 @@ import gov.epa.mims.analysisengine.tree.DataSets;
 import gov.epa.mims.analysisengine.tree.PageConstantsIfc;
 import gov.epa.mims.analysisengine.tree.PageType;
 
+import java.awt.Component;
 import java.io.File;
 import java.util.Arrays;
 import java.util.Vector;
@@ -108,11 +109,12 @@ public class SaveConfigModel extends DefaultTableModel {
 		Data dat = aconfig.getConfig(configname);
 		if (dat.configType == Data.TABLE_TYPE)
 			throw new Exception("You cannot edit a Table Configuration");
-		dat = TreeDialog.showTreeDialog(new JFrame(), dat, aconfig.getDataSets(dat.info), null, null);
+		JFrame newFrame = new JFrame();
+		dat = TreeDialog.showTreeDialog(newFrame, dat, aconfig.getDataSets(dat.info, newFrame), null, null);
 		aconfig.storePlotConfig(configname, dat, true);
 	}
 
-	public void showPlot(int row) throws Exception {
+	public void showPlot(int row, Component parent) throws Exception {
 		String pageType = null;
 		AnalysisOptions options;
 		Data dat = aconfig.getConfig((String) getValueAt(row, 0));
@@ -120,7 +122,7 @@ public class SaveConfigModel extends DefaultTableModel {
 		if (dat != null) {
 			if (dat.configType == Data.TABLE_TYPE)
 				return;
-			DataSets dset = aconfig.getDataSets(dat.info);
+			DataSets dset = aconfig.getDataSets(dat.info, parent);
 			DataSets tempTree = (DataSets) (dat.tree);
 
 			if (dset != null) {

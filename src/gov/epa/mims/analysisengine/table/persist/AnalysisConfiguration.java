@@ -14,6 +14,7 @@ import gov.epa.mims.analysisengine.tree.Branch;
 import gov.epa.mims.analysisengine.tree.DataSets;
 import gov.epa.mims.analysisengine.tree.PageType;
 
+import java.awt.Component;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -92,7 +93,8 @@ public class AnalysisConfiguration implements Serializable {
 	 * 
 	 * @param binaryFormat
 	 */
-	public void loadConfiguration(File configFile, boolean applyTableConfig, boolean binaryFormat) throws Exception {
+	public void loadConfiguration(File configFile, boolean applyTableConfig, boolean binaryFormat,
+			 Component parent) throws Exception {
 		deserialize(configFile, binaryFormat);
 
 		Data data = (Data) configs.get(TABLE_FORMAT);
@@ -113,7 +115,7 @@ public class AnalysisConfiguration implements Serializable {
 		data = (Data) configs.get(TABLE_FILTER_CRITERIA);
 		if (data != null && data.criteria != null) {
 			try {
-				data.criteria = ((FilterCriteria) data.criteria).checkCompatibility(model);
+				data.criteria = ((FilterCriteria) data.criteria).checkCompatibility(model, parent);
 				if (applyTableConfig) {
 					((FilterCriteria) data.criteria).setTableModel(model);
 					model.filterRows((FilterCriteria) data.criteria);
@@ -129,7 +131,7 @@ public class AnalysisConfiguration implements Serializable {
 		data = (Data) configs.get(TABLE_SORT_CRITERIA);
 		if (data != null && data.criteria != null) {
 			try {
-				data.criteria = ((SortCriteria) data.criteria).checkCompatibility(model);
+				data.criteria = ((SortCriteria) data.criteria).checkCompatibility(model, parent);
 				if (applyTableConfig) {
 					model.sort((SortCriteria) data.criteria);
 				}
@@ -227,7 +229,7 @@ public class AnalysisConfiguration implements Serializable {
 	 * Plot Name and with default File Type
 	 */
 
-	public void showOrSaveConfiguredPlots(String path, int fileTypes, String[] plotNames) throws Exception {
+	public void showOrSaveConfiguredPlots(String path, int fileTypes, String[] plotNames, Component parent) throws Exception {
 		String extensions[] = { PageType.JPG_EXT, PageType.PS_EXT, PageType.PDF_EXT, PageType.PNG_EXT, PageType.PTX_EXT };
 		StringBuffer error = new StringBuffer();
 		for (int i = 0; i < plotNames.length; i++) {
@@ -235,7 +237,7 @@ public class AnalysisConfiguration implements Serializable {
 				Data value = (Data) configs.get(plotNames[i]);
 				if (value.configType == Data.TABLE_TYPE)
 					continue; // ignore Table Configurations
-				DataSets dset = getDataSets(value.info);
+				DataSets dset = getDataSets(value.info, parent);
 				Branch tree = (value.tree); // .clone();
 				removeColumnsNotAvailableInNewDatasets(dset, tree);
 				dset.add(tree.getChild(0));
@@ -358,11 +360,11 @@ public class AnalysisConfiguration implements Serializable {
 	 * getter method for DataSets based on plottingInfo and Table
 	 */
 
-	public DataSets getDataSets(PlottingInfo info) throws Exception {
+	public DataSets getDataSets(PlottingInfo info, Component parent) throws Exception {
 		if (info == null) {
 			return null;
 		}
-		info.setOverallTableModel(model);
+		info.setOverallTableModel(model, parent);
 		return info.createDataSets();
 	}
 
