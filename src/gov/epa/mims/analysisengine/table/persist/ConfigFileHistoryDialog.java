@@ -5,9 +5,12 @@ import gov.epa.mims.analysisengine.table.TableApp;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 
 import javax.swing.BorderFactory;
@@ -28,7 +31,7 @@ public class ConfigFileHistoryDialog extends JDialog {
 
 	public ConfigFileHistoryDialog(TableApp tableApp, ConfigFileHistory history) {
 		super(tableApp);
-		setTitle("Recently Used Config Files");
+		setTitle("Recently Used Configuration Files");
 		this.tableApp = tableApp;
 		setLayout(history);
 		pack();
@@ -43,7 +46,7 @@ public class ConfigFileHistoryDialog extends JDialog {
 	    col.setPreferredWidth(200);
 		table.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JScrollPane pane = new JScrollPane(table);
-		pane.setPreferredSize(new Dimension(300, 300));
+		pane.setPreferredSize(new Dimension(500, 300));
 		JPanel mainPanel = new JPanel(new BorderLayout());
 		mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		mainPanel.add(pane);
@@ -57,6 +60,7 @@ public class ConfigFileHistoryDialog extends JDialog {
 	private JPanel buttonPanel() {
 		JButton importButton = new JButton("Import");
 		importButton.addActionListener(importListener());
+        //getRootPane().setDefaultButton(importButton);
 
 		JButton removeButton = new JButton("Remove");
 		removeButton.addActionListener(removeListener());
@@ -68,6 +72,14 @@ public class ConfigFileHistoryDialog extends JDialog {
 		buttonPanel.add(importButton);
 		buttonPanel.add(removeButton);
 		buttonPanel.add(closeButton);
+
+        table.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() > 1) {
+                    doImport();
+                }
+            }
+        });
 
 		return buttonPanel;
 	}
@@ -113,12 +125,14 @@ public class ConfigFileHistoryDialog extends JDialog {
 	}
 
 	protected void doImport() {
+        setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));                  
 		int index = table.getSelectedRow();
 		String fileName = (String) table.getValueAt(index, 0);
 		String format = (String) table.getValueAt(index, 1);
 		boolean binaryFormat = true;
 		if (format.equals("XML"))
 			binaryFormat = false;
+        setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));                  
 
 		tableApp.showLoadConfigGUI(binaryFormat, new File(fileName));
 	}
