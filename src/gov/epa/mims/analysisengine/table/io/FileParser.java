@@ -35,7 +35,7 @@ import java_cup.runtime.Symbol;
  * Created on March 31, 2004, 10:11 AM
  *
  * @author  Krithiga Thangavelu, CEP, UNC CHAPEL HILL.
- * @version $Id: FileParser.java,v 1.3 2007/05/17 16:01:50 qunhe Exp $
+ * @version $Id: FileParser.java,v 1.4 2007/06/11 03:29:15 eyth Exp $
  */
 
 public class FileParser {
@@ -92,7 +92,7 @@ public class FileParser {
 			throws Exception {
 		this.fileName = fileName;
 		if (delimiter.length() > 1) {
-			throw new Exception("Only Single Character Delimiters are supported!");
+			throw new Exception("Only single character delimiters are supported!");
 		}
 		this.delimiter = delimiter;
 		// this.noOfColumnHeaderRows = noOfColumnHeaderRows;
@@ -114,7 +114,7 @@ public class FileParser {
 	public FileParser(java.io.Reader reader, String delimiter, int noOfColumnHeaderRows, boolean multipleOccurences)
 			throws Exception {
 		if (delimiter.length() > 1) {
-			throw new Exception("Only Single Character Delimiters are supported!");
+			throw new Exception("Only single character delimiters are supported!");
 		}
 		this.delimiter = delimiter;
 		// this.noOfColumnHeaderRows = noOfColumnHeaderRows;
@@ -144,7 +144,7 @@ public class FileParser {
 		line1 = scanner.getLine();
 		// If there is no first line then file is empty
 		if (line1Tokens == null) {
-			throw new Exception(" Empty File\n");
+			throw new Exception("Empty File\n");
 		}
 
 		// this variable to account for ONLY empty lines between first line and
@@ -376,8 +376,12 @@ public class FileParser {
 		}// while(stillInColumnHeader)
 
 		if (noOfColumnHeaderRows > 0 && line1Tokens == null) {
-			throw new Exception("The file contains at least one numerical data column.If this is true\n"
-					+ "check the delimiter" + "File Content upto 50 Lines:\n");
+			throw new Exception(
+					"The file contains at least one data column based on the header, but no delimiters were found" +
+					" on the first line.\n"+
+					"Please verify that you selected the proper delimiter during import.\n"+
+					"The first 50 lines of the file are:\n");
+			
 		}
 		// First determine the columnTypes
 		// This is done to get convert NullTokens into appropriate types
@@ -549,7 +553,7 @@ public class FileParser {
 				if (linetoken[l].sym != TokenConstants.NULL_LITERAL) {
 					if (!(columnTypes[l].equals(linetoken[l].value.getClass())) && !requiredToBeDouble[l]) {
 						throw new Exception(
-								"Possibly wrong input of #ColumnHeaderDataRows: Type mismatch in column data. Column no:"
+								"Possibly specified the wrong input format: Type mismatch in column data. Column no:"
 										+ (l + 1) + " Row: " + linetokens.size() + " \nExpected type " + columnTypes[l]
 										+ " but found " + linetoken[l].value.getClass() + "\n");
 					}
@@ -567,7 +571,7 @@ public class FileParser {
 			}
 
 			if (fileData == null || fileData.size() == 0) {
-				log.append("Possibly wrong delimiter input: Found no data");
+				log.append("Possibly wrong delimiter specified: No data was found");
 			}
 			logger = log.toString();
 			return; // either only footer or only data
@@ -576,7 +580,7 @@ public class FileParser {
 		// Time to read footer and log extraneous lines encountered during file
 		// processing
 		if (tempBuffer.length() > 0) {
-			log.append("Non Data Line(s) between header and data Line. \n" + tempBuffer.toString());
+			log.append("There are lines without data line between the header and data. \n" + tempBuffer.toString());
 			tempBuffer.setLength(0); // whatever stored in FileFooter so far
 			// were improper data found between
 			// Column Header and Data
@@ -642,7 +646,7 @@ public class FileParser {
 							try {
 								rowValues.add(new Double((String) tokens[j].value));
 							} catch (Exception e) {
-								throw new Exception("Type Mismatch of data found in Column :" + (j + 1) + " Row "
+								throw new Exception("Type mismatch of data found in column :" + (j + 1) + " row "
 										+ (dataLines - numDataLines + 1) + " Expected Double but found "
 										+ TokenConstants.printType(tokens[j].sym) + " Value: " + tokens[j].value);
 							}
@@ -703,7 +707,7 @@ public class FileParser {
 		if (type.equals(Integer.class)) {
 			return new Integer(Integer.MIN_VALUE);
 		}
-		throw new Exception("Missing Data with no equivalent Null Object of " + type + " type");
+		throw new Exception("Missing data, but there is no equivalent Null Object of " + type + " type");
 	}
 
 	/**
