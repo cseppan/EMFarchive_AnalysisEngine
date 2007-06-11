@@ -58,7 +58,7 @@ import javax.swing.table.TableColumnModel;
  * </p>
  * 
  * @author Daniel Gatti
- * @version $Id: SortFilterTablePanel.java,v 1.19 2007/06/10 21:38:43 eyth Exp $
+ * @version $Id: SortFilterTablePanel.java,v 1.20 2007/06/11 03:26:26 eyth Exp $
  */
 public class SortFilterTablePanel extends JPanel implements TableModelListener, ChildHasChangedListener {
 
@@ -811,7 +811,7 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 			CurrentDirectory currentDirectory) {
 		try {
 			AnalysisConfiguration config = new AnalysisConfiguration(overallModel);
-			config.loadConfiguration(file, false, binaryFormat);
+			config.loadConfiguration(file, false, binaryFormat, parent);
 			LoadConfigurationGUI gui = new LoadConfigurationGUI(config, aconfig, table, (JFrame) this.parent,
 					currentDirectory);
 			gui.setVisible(true);

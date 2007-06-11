@@ -170,7 +170,7 @@ public class SUSortFilterTablePanel extends SortFilterTablePanel {
 
 	public void loadConfigFile(File file, boolean loadTableConfig, boolean binaryFormat) {
 		try {
-			aconfig.loadConfiguration(file, loadTableConfig, binaryFormat);
+			aconfig.loadConfiguration(file, loadTableConfig, binaryFormat, parent);
 			updateFormat();
 		} catch (Exception e) {
 			new GUIUserInteractor().notify(this, "Error Loading Configuration", e.getMessage(), UserInteractor.ERROR);
@@ -307,7 +307,7 @@ public class SUSortFilterTablePanel extends SortFilterTablePanel {
 			SaveConfigModel sc = new SaveConfigModel(aconfig);
 			String[] configNames = sc.getConfigNames();
 			for (int i = 0; i < configNames.length; i++) {
-				sc.showPlot(i);
+				sc.showPlot(i, this);
 			}
 		} catch (Exception e) {
 			new GUIUserInteractor().notify(this, "Show Plots", "Error showing plots " + e.getMessage(),

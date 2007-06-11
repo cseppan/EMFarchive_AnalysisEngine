@@ -817,8 +817,9 @@ public class TableApp extends JFrame {
 				return true;
 			}
 			AnalysisConfiguration aconfig = new AnalysisConfiguration(model);
-			aconfig.loadConfiguration(new File(configFile), !ignoreTableConfig, true);
-			aconfig.showOrSaveConfiguredPlots(outputDir, plotFmt, aconfig.getConfigNames());
+			
+			aconfig.loadConfiguration(new File(configFile), !ignoreTableConfig, true, null); // in this case, the parent is null
+			aconfig.showOrSaveConfiguredPlots(outputDir, plotFmt, aconfig.getConfigNames(), null);
 		} catch (Exception e) {
 			System.out.println("Error during plot generation\n");
 			System.out.println(e.getMessage() + "\nBringing up the GUI\n");
