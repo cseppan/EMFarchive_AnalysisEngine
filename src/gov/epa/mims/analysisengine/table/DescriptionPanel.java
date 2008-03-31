@@ -93,7 +93,7 @@ public class DescriptionPanel extends JPanel
       JScrollPane scrollPane = new JScrollPane(textArea,
          JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
          JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-      scrollPane.setPreferredSize(new Dimension(300, 200));
+      scrollPane.setPreferredSize(new Dimension(500, 200));
       JPanel mainPanel = new JPanel();
       mainPanel.setBorder(BorderFactory.createEmptyBorder(4,4,4,4));
       mainPanel.setLayout(new BorderLayout());
