@@ -36,6 +36,7 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -58,7 +59,7 @@ import javax.swing.table.TableColumnModel;
  * </p>
  * 
  * @author Daniel Gatti
- * @version $Id: SortFilterTablePanel.java,v 1.20 2007/06/11 03:26:26 eyth Exp $
+ * @version $Id: SortFilterTablePanel.java,v 1.21 2008/04/03 19:16:54 dyang02 Exp $
  */
 public class SortFilterTablePanel extends JPanel implements TableModelListener, ChildHasChangedListener {
 
@@ -325,7 +326,22 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 
 	private void createTable(MultiRowHeaderTableModel baseModel) {
 		overallModel = new OverallTableModel(baseModel);
-		table = new RowHeaderTable(overallModel);
+		table = new RowHeaderTable(overallModel){
+		
+		 // This table displays a tool tip text based on the string
+	    // representation of the name column
+	        public Component prepareRenderer(TableCellRenderer renderer,
+	                                         int rowIndex, int vColIndex) {
+	            Component c = super.prepareRenderer(renderer, rowIndex, vColIndex);
+	           
+	            if (c instanceof JComponent && vColIndex>2) {
+	                JComponent jc = (JComponent)c;
+	                jc.setToolTipText((String)getValueAt(rowIndex, 2));
+	            }
+	            return c;
+	        }
+	    };
+
 		overallModel.addTableModelListener(this);
 		updateStatusLabel();
 
@@ -738,6 +754,13 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 	 * 
 	 * @param e
 	 */
+	
+	public void filter(FilterCriteria filterCriteria) {
+		if ( filterCriteria != null){
+			overallModel.filterRows(filterCriteria);
+			overallModel.filterColumns(filterCriteria);
+		}
+	} // filter()
 
 	public void tableChanged(TableModelEvent e) {
 		updateStatusLabel();
