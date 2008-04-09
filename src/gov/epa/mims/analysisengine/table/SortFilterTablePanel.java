@@ -59,7 +59,7 @@ import javax.swing.table.TableColumnModel;
  * </p>
  * 
  * @author Daniel Gatti
- * @version $Id: SortFilterTablePanel.java,v 1.21 2008/04/03 19:16:54 dyang02 Exp $
+ * @version $Id: SortFilterTablePanel.java,v 1.22 2008/04/09 19:58:39 dyang02 Exp $
  */
 public class SortFilterTablePanel extends JPanel implements TableModelListener, ChildHasChangedListener {
 
@@ -327,16 +327,15 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 	private void createTable(MultiRowHeaderTableModel baseModel) {
 		overallModel = new OverallTableModel(baseModel);
 		table = new RowHeaderTable(overallModel){
-		
+			String headerName =overallModel.getColumnName(2).trim().toLowerCase();
 		 // This table displays a tool tip text based on the string
-	    // representation of the name column
+	    // representation of the corresponding name column
 	        public Component prepareRenderer(TableCellRenderer renderer,
 	                                         int rowIndex, int vColIndex) {
 	            Component c = super.prepareRenderer(renderer, rowIndex, vColIndex);
-	           
-	            if (c instanceof JComponent && vColIndex>2) {
+	            if (c instanceof JComponent && vColIndex>2 && headerName.equals("name") ) {
 	                JComponent jc = (JComponent)c;
-	                jc.setToolTipText((String)getValueAt(rowIndex, 2));
+	                jc.setToolTipText(getValueAt(rowIndex, 2).toString());
 	            }
 	            return c;
 	        }
@@ -423,6 +422,7 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 			overallModel.setColumnFormatInfo(table.getColumnName(i), new ColumnFormatInfo(column));
 		}
 		table.setRowHeight(defaultRowHeight);
+		table.getColumnModel().getColumn(0).setPreferredWidth(FIRST_COLUMN_ROW_HEADER_WIDTH);
 	} // reset()
 
 	/**
@@ -746,7 +746,10 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 	 *            SortCriteria to use to sort the data.
 	 */
 	public void sort(SortCriteria sortCriteria) {
-		overallModel.sort(sortCriteria);
+		if (sortCriteria!=null){
+			
+			overallModel.sort(sortCriteria);
+		}
 	} // sort()
 
 	/**
@@ -758,7 +761,8 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 	public void filter(FilterCriteria filterCriteria) {
 		if ( filterCriteria != null){
 			overallModel.filterRows(filterCriteria);
-			overallModel.filterColumns(filterCriteria);
+//			overallModel.filterColumns(filterCriteria);
+//			updateFormat();
 		}
 	} // filter()
 
@@ -784,6 +788,9 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 				tcol.setCellRenderer(renderer);
 			}
 		}
+		
+		table.setRowHeight(defaultRowHeight);
+		table.getColumnModel().getColumn(0).setPreferredWidth(FIRST_COLUMN_ROW_HEADER_WIDTH);
 		table.repaint();
 	}
 
