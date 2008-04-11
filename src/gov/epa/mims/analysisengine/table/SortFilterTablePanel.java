@@ -59,7 +59,7 @@ import javax.swing.table.TableColumnModel;
  * </p>
  * 
  * @author Daniel Gatti
- * @version $Id: SortFilterTablePanel.java,v 1.22 2008/04/09 19:58:39 dyang02 Exp $
+ * @version $Id: SortFilterTablePanel.java,v 1.23 2008/04/11 20:11:00 dyang02 Exp $
  */
 public class SortFilterTablePanel extends JPanel implements TableModelListener, ChildHasChangedListener {
 
@@ -326,8 +326,9 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 
 	private void createTable(MultiRowHeaderTableModel baseModel) {
 		overallModel = new OverallTableModel(baseModel);
+		final String headerName =overallModel.getColumnName(2).trim().toLowerCase();
 		table = new RowHeaderTable(overallModel){
-			String headerName =overallModel.getColumnName(2).trim().toLowerCase();
+			//String headerName =overallModel.getColumnName(2).trim().toLowerCase();
 		 // This table displays a tool tip text based on the string
 	    // representation of the corresponding name column
 	        public Component prepareRenderer(TableCellRenderer renderer,
