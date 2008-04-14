@@ -59,7 +59,7 @@ import javax.swing.table.TableColumnModel;
  * </p>
  * 
  * @author Daniel Gatti
- * @version $Id: SortFilterTablePanel.java,v 1.23 2008/04/11 20:11:00 dyang02 Exp $
+ * @version $Id: SortFilterTablePanel.java,v 1.24 2008/04/14 18:19:34 dyang02 Exp $
  */
 public class SortFilterTablePanel extends JPanel implements TableModelListener, ChildHasChangedListener {
 
@@ -326,15 +326,15 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 
 	private void createTable(MultiRowHeaderTableModel baseModel) {
 		overallModel = new OverallTableModel(baseModel);
-		final String headerName =overallModel.getColumnName(2).trim().toLowerCase();
+		//final String headerName =overallModel.getColumnName(2).trim().toLowerCase();
 		table = new RowHeaderTable(overallModel){
-			//String headerName =overallModel.getColumnName(2).trim().toLowerCase();
+	    //final int columns =overallModel.getColumnCount();
 		 // This table displays a tool tip text based on the string
 	    // representation of the corresponding name column
 	        public Component prepareRenderer(TableCellRenderer renderer,
 	                                         int rowIndex, int vColIndex) {
 	            Component c = super.prepareRenderer(renderer, rowIndex, vColIndex);
-	            if (c instanceof JComponent && vColIndex>2 && headerName.equals("name") ) {
+	            if (c instanceof JComponent && vColIndex>2 ) {
 	                JComponent jc = (JComponent)c;
 	                jc.setToolTipText(getValueAt(rowIndex, 2).toString());
 	            }
