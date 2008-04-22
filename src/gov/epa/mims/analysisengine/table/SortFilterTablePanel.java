@@ -59,7 +59,7 @@ import javax.swing.table.TableColumnModel;
  * </p>
  * 
  * @author Daniel Gatti
- * @version $Id: SortFilterTablePanel.java,v 1.24 2008/04/14 18:19:34 dyang02 Exp $
+ * @version $Id: SortFilterTablePanel.java,v 1.25 2008/04/22 15:46:28 dyang02 Exp $
  */
 public class SortFilterTablePanel extends JPanel implements TableModelListener, ChildHasChangedListener {
 
@@ -328,17 +328,24 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 		overallModel = new OverallTableModel(baseModel);
 		//final String headerName =overallModel.getColumnName(2).trim().toLowerCase();
 		table = new RowHeaderTable(overallModel){
-	    //final int columns =overallModel.getColumnCount();
+	    final String column1 =overallModel.getColumnName(1);
 		 // This table displays a tool tip text based on the string
 	    // representation of the corresponding name column
 	        public Component prepareRenderer(TableCellRenderer renderer,
 	                                         int rowIndex, int vColIndex) {
 	            Component c = super.prepareRenderer(renderer, rowIndex, vColIndex);
-	            if (c instanceof JComponent && vColIndex>2 ) {
-	                JComponent jc = (JComponent)c;
-	                jc.setToolTipText(getValueAt(rowIndex, 2).toString());
+	            if ( column1.trim().equalsIgnoreCase("select")){
+	            	if (c instanceof JComponent && vColIndex>2 ) {
+	            		JComponent jc = (JComponent)c;
+	            		jc.setToolTipText(getValueAt(rowIndex, 2).toString());
+	            	}
+	            	return c;
 	            }
-	            return c;
+				if (c instanceof JComponent && vColIndex>1 ) {
+					JComponent jc = (JComponent)c;
+					jc.setToolTipText(getValueAt(rowIndex, 1).toString());
+				}
+				return c;
 	        }
 	    };
 
