@@ -28,7 +28,7 @@ import javax.swing.JTextField;
  * </p>
  * 
  * @author Parthee Partheepan
- * @version $Id: TablePanel.java,v 1.7 2007/06/11 03:25:45 eyth Exp $
+ * @version $Id: TablePanel.java,v 1.8 2008/05/02 19:49:39 eyth Exp $
  */
 public class TablePanel extends JPanel {
 
@@ -97,8 +97,10 @@ public class TablePanel extends JPanel {
 		{
 			String ret = System.getProperty("line.separator");
 			int retIndex = footMsg.indexOf(ret);
-			if (retIndex >= 0)
-				footMsg = ret.substring(0, retIndex) + ret.substring(retIndex + ret.length());
+			// String index out of range exceptions were generated here - doesn't seem necessary 
+			// to remove the line separators...
+//			if (retIndex >= 0)
+//				footMsg = ret.substring(0, retIndex) + ret.substring(retIndex + ret.length());
 		}
 
 		if (footMsg != null && !footMsg.trim().equals("")) {
