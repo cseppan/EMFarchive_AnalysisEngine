@@ -35,7 +35,7 @@ import java_cup.runtime.Symbol;
  * Created on March 31, 2004, 10:11 AM
  *
  * @author  Krithiga Thangavelu, CEP, UNC CHAPEL HILL.
- * @version $Id: FileParser.java,v 1.4 2007/06/11 03:29:15 eyth Exp $
+ * @version $Id: FileParser.java,v 1.5 2008/05/02 19:50:00 eyth Exp $
  */
 
 public class FileParser {
@@ -180,8 +180,8 @@ public class FileParser {
 		// line2Tokens != null
 		// Header lines without delimiter in them will be returned as single
 		// token per line
-		// Find two consequtive lines with matching number(>1) of tokens
-		// (Assumption: a file should consist atleast two colunns)
+		// Find two consecutive lines with matching number(>1) of tokens
+		// (Assumption: a file should consist at least two columns)
 		// until then, add all encountered lines to header
 		while (line1Tokens.length != line2Tokens.length || line1Tokens.length == 1) {
 			// at this point noOfColumnHeaderRows = 0, => we should take out the
@@ -256,7 +256,7 @@ public class FileParser {
 					// Unexpected end of file encountered while
 					// processing Header
 					log.append("WARNING: Possibly wrong delimiter " + delim + " specified: Only file header found");
-					log.append("File Content upto 50 Lines:\n" + get50Lines(tempBuffer));
+					log.append("File Content up to 50 Lines:\n" + get50Lines(tempBuffer));
 					logger = log.toString();
 					fileFooter = null;
 					return;
@@ -549,17 +549,46 @@ public class FileParser {
 		// line for performance
 		if (linetokens.size() >= 1) { // if there is data
 			Symbol[] linetoken = (Symbol[]) linetokens.get(linetokens.size() - 1);
-			for (int l = 0; l < valuesPerLine; l++) {
-				if (linetoken[l].sym != TokenConstants.NULL_LITERAL) {
-					if (!(columnTypes[l].equals(linetoken[l].value.getClass())) && !requiredToBeDouble[l]) {
-						throw new Exception(
-								"Possibly specified the wrong input format: Type mismatch in column data. Column no:"
-										+ (l + 1) + " Row: " + linetokens.size() + " \nExpected type " + columnTypes[l]
-										+ " but found " + linetoken[l].value.getClass() + "\n");
+			for (int idx = 0; idx < valuesPerLine; idx++) {
+				if (linetoken[idx].sym != TokenConstants.NULL_LITERAL) {
+					// check to see what happens if an integer is left empty
+					if (!(columnTypes[idx].equals(linetoken[idx].value.getClass()))) {
+//					if (!(columnTypes[idx].equals(linetoken[idx].value.getClass())) && !requiredToBeDouble[idx]) {
+						if (requiredToBeDouble[idx] && linetoken[idx].value.getClass()==Integer.class)
+						{
+							// do nothing, this is not a problem and is handled later
+						}
+						else if (columnTypes[idx].toString().contains("tring"))
+						{
+							// if it's looking for a string but it's an integer (for example), 
+							// then just convert the value to a string
+							linetoken[idx].value = linetoken[idx].value.toString();
+							requiredToBeDouble[idx]=false; // should already be false, but just to be sure
+						}
+						else
+						{
+							//convert the column to a String column
+							System.out.println("Converting column "+idx+" to String from "+columnTypes[idx]+" due to value "+linetoken[idx].value);
+							columnTypes[idx]=String.class;
+							linetoken[idx].value = linetoken[idx].value.toString();
+							requiredToBeDouble[idx] = false;
+//						   throw new Exception(
+//								"Possibly specified the wrong input format: Type mismatch in column data. Column no:"
+//										+ (l + 1) + " Row: " + linetokens.size() + " \nExpected type " + columnTypes[l]
+//										+ " but found " + linetoken[l].value.getClass() + "\n");
+						}
 					}
 				}
 			}
-			storeFileData(linetokens, requiredToBeDouble);
+			if (!storeFileData(linetokens, requiredToBeDouble))
+			{
+				// a column was converted
+				for (int i = 0; i < requiredToBeDouble.length; i++)
+				{
+					// reset which ones are still required to be double
+					requiredToBeDouble[i] = (columnTypes[i]==Double.class);
+				}
+			}
 		}// if (linetokens.size() > 1)
 
 		// if end of file, time to return
@@ -624,8 +653,9 @@ public class FileParser {
 	 * @param ArrayList -
 	 *            list of single element array of tokens per line
 	 */
-	void storeFileData(ArrayList linetokens, boolean[] doubleTypeColumns) throws Exception {
+	boolean storeFileData(ArrayList linetokens, boolean[] doubleTypeColumns) throws Exception {
 		ArrayList rowValues;
+		boolean retVal = true;
 		int numDataLines = linetokens.size();
 		int dataLines = linetokens.size();
 		if (numDataLines > 0) {
@@ -643,12 +673,27 @@ public class FileParser {
 						rowValues.add(new Double("NaN"));
 					} else if (tokens[j].sym != TokenConstants.DOUBLE_LITERAL) {
 						if (tokens[j].sym == TokenConstants.STRING_LITERAL) {
-							try {
-								rowValues.add(new Double((String) tokens[j].value));
-							} catch (Exception e) {
-								throw new Exception("Type mismatch of data found in column :" + (j + 1) + " row "
-										+ (dataLines - numDataLines + 1) + " Expected Double but found "
-										+ TokenConstants.printType(tokens[j].sym) + " Value: " + tokens[j].value);
+							if (columnTypes[j]==String.class) // let it be a string since it's not a mismatch
+							{
+								rowValues.add(tokens[j].value);
+							}
+							else if (tokens[j].value.toString().trim().length()==0)
+							{
+								rowValues.add(new Double("NaN"));
+							}
+							else 
+							{
+								try {
+									rowValues.add(new Double((String) tokens[j].value));
+								} catch (Exception e) {
+									rowValues.add(tokens[j].value);
+									retVal = false;
+									System.out.println("Converting column "+j+" to String from "+columnTypes[j]+" due to value "+tokens[j].value);
+									this.columnTypes[j]=String.class;
+	//								throw new Exception("Type mismatch of data found in column :" + (j + 1) + " row "
+	//										+ (dataLines - numDataLines + 1) + " Expected Double but found "
+	//										+ TokenConstants.printType(tokens[j].sym) + " Value: " + tokens[j].value);
+								}
 							}
 						}
 					}
@@ -666,7 +711,7 @@ public class FileParser {
 			}
 			fileData.add(rowValues);
 		}
-		return;
+		return retVal;
 	}
 
 	/**
