@@ -392,6 +392,7 @@ public class TableApp extends JFrame {
 		container.add(mainPanel);
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
+				setVisible(false);
 				dispose();
 			}
 		});
@@ -846,11 +847,12 @@ public class TableApp extends JFrame {
 	public static void main(String[] arg) {
 		final String[] args = arg;
 		TableApp frame = null;
-		TableApp.standAlone = true;
 		if (args.length == 0) {
+			TableApp.standAlone = false;
 			frame = new TableApp();
 		} else {
 			try {
+				standAlone = true;
 				FileAdapter fileAdapter = new FileAdapter(args);
 				String[] fileNames = fileAdapter.fileNames;
 				// creates plots from the command line
@@ -859,7 +861,8 @@ public class TableApp extends JFrame {
 							fileAdapter.noOfColumnHeader, fileAdapter.startPos, fileAdapter.endPos,
 							fileAdapter.configFile, fileAdapter.outputDir, fileAdapter.plotFmt,
 							fileAdapter.ignoreTableConfig)) {
-						System.exit(0);
+						if (standAlone)
+						   System.exit(0);
 					}
 				}// if(fileAdapter.configFile!=null && fileAdapter.outputDir!=null
 				frame = new TableApp(fileNames, fileAdapter.fileType, fileAdapter.delimiter,
@@ -875,7 +878,8 @@ public class TableApp extends JFrame {
 					}// try
 					catch (Exception e) {
 						System.out.println("Error while loading TableApp" + e.getMessage());
-						System.exit(0);
+						if (standAlone)
+  						   System.exit(0);
 					}
 				}// if(fileAdapter.configFile!=null && fileAdapter.outputDir == null)
 				if (fileAdapter.configFile != null) // FIXME: refactory the mess here
@@ -884,7 +888,8 @@ public class TableApp extends JFrame {
 			catch (Exception e) {
 				System.err.println(e.getMessage());
 				FileAdapter.printUsage();
-				System.exit(1);
+				if (standAlone)
+ 				   System.exit(1);
 			}// catch
 		}// else
 	}// main()
