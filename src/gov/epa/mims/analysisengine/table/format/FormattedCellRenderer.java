@@ -78,7 +78,15 @@ public class FormattedCellRenderer extends JLabel implements TableCellRenderer, 
 			setBorder(getNoFocusBorder());
 		}
 
-		setValue(value, format);
+		try
+		{
+			setValue(value, format);
+		}
+		catch (Throwable t)
+		{
+		  setText("");
+		  System.out.println("Could not set value for row,col="+row+","+column+", value="+value);
+		}
 
 		return this;
 
