@@ -84,8 +84,8 @@ public class FormattedCellRenderer extends JLabel implements TableCellRenderer, 
 		}
 		catch (Throwable t)
 		{
-		  setText("");
-		  System.out.println("Could not set value for row,col="+row+","+column+", value="+value);
+		  setText((value == null) ? "" : value.toString());
+		  System.out.println("Problem setting value for row,col="+row+","+column+", value="+value);
 		}
 
 		return this;
