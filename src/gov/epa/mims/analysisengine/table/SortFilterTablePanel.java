@@ -59,7 +59,7 @@ import javax.swing.table.TableColumnModel;
  * </p>
  * 
  * @author Daniel Gatti
- * @version $Id: SortFilterTablePanel.java,v 1.25 2008/04/22 15:46:28 dyang02 Exp $
+ * @version $Id: SortFilterTablePanel.java,v 1.26 2008/09/29 19:06:58 dyang02 Exp $
  */
 public class SortFilterTablePanel extends JPanel implements TableModelListener, ChildHasChangedListener {
 
@@ -337,14 +337,14 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 	            if ( column1.trim().equalsIgnoreCase("select")){
 	            	if (c instanceof JComponent && vColIndex>2 ) {
 	            		JComponent jc = (JComponent)c;
-	            		jc.setToolTipText(getValueAt(rowIndex, 2).toString());
+	            		jc.setToolTipText(getValueAt(rowIndex, 2) != null? getValueAt(rowIndex, 2).toString():"");
 	            	}
 	            	return c;
 	            }
-				if (c instanceof JComponent && vColIndex>1 ) {
-					JComponent jc = (JComponent)c;
-					jc.setToolTipText(getValueAt(rowIndex, 1).toString());
-				}
+//				if (c instanceof JComponent && vColIndex>1 ) {
+//					JComponent jc = (JComponent)c;
+//					jc.setToolTipText(getValueAt(rowIndex, 1).toString());
+//				}
 				return c;
 	        }
 	    };
