@@ -27,7 +27,7 @@ public class FormattedCellRenderer extends JLabel implements TableCellRenderer, 
 	/** The Font to use when displaying values. */
 	protected Font font = null;
 
-	/** The horizontal alignmentto use when displaying values. */
+	/** The horizontal alignment to use when displaying values. */
 	protected int horizontalAlignment = SwingConstants.RIGHT;
 
 	/** The color for the background when the cell is selceted. */
@@ -43,6 +43,8 @@ public class FormattedCellRenderer extends JLabel implements TableCellRenderer, 
 
 	private static final Border SAFE_NO_FOCUS_BORDER = new EmptyBorder(1, 1, 1, 1);
 
+	private static boolean printedMessage = false;
+	
 	public FormattedCellRenderer(Format format, int horizontalAlignment) {
 		if (format == null) {
 			format = nullFormatter;
@@ -85,7 +87,11 @@ public class FormattedCellRenderer extends JLabel implements TableCellRenderer, 
 		catch (Throwable t)
 		{
 		  setText((value == null) ? "" : value.toString());
-		  //System.out.println("Problem setting value for row,col="+row+","+column+", value="+value);
+		  if (!printedMessage)
+		  {
+			  System.out.println("Problem setting value for row,col="+row+","+column+", value="+value);
+			  printedMessage = true;
+		  }
 		}
 
 		return this;
