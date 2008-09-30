@@ -50,7 +50,8 @@ public class ClipBoardCopy implements ActionListener {
 		for (int i = 0; i < selectedRows.length; i++) {
 			for (int j = 0; j < selectedColumns.length; j++) {
 				Object valueAt = rowHeaderTable.getValueAt(selectedRows[i], selectedColumns[j]);
-				sb.append(valueAt.toString());
+				if (valueAt != null)
+				    sb.append(valueAt.toString());
 				if (j != selectedColumns.length - 1)
 					sb.append(delimiter);
 			}
