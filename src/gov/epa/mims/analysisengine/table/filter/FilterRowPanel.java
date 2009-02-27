@@ -137,8 +137,11 @@ public class FilterRowPanel extends JPanel implements ChildHasChangedListener {
 	 */
 	public void initGUIFromModel() {
 		// Set the column names and the available operations no matter what.
+		int nameOption =0;
+		if ( allColumnNames.length>1 && allColumnNames[0].equalsIgnoreCase("select"))
+			nameOption =1; 
 		filterPanel.setFilteringChoices(allColumnNames,
-				FilterCriteria.OPERATION_STRINGS, 0, 0);
+				FilterCriteria.OPERATION_STRINGS, nameOption, FilterCriteria.CONTAINS);
 		// Only populate the filter criteria if we have one.
 		if (filterCriteria != null) {
 			filterPanel.setUseAnd(filterCriteria.compareWithAnd);
