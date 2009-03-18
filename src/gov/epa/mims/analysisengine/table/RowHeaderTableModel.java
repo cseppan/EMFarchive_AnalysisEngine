@@ -8,7 +8,7 @@ import javax.swing.event.TableModelListener;
  * class also supports optional units.
  * 
  * @author Daniel Gatti
- * @version $Id: RowHeaderTableModel.java,v 1.3 2006/10/30 21:43:50 parthee Exp $
+ * @version $Id: RowHeaderTableModel.java,v 1.4 2009/03/18 15:00:44 dyang02 Exp $
  */
 public class RowHeaderTableModel extends MultiRowHeaderTableModel implements TableModelListener {
 	private MultiRowHeaderTableModel underlyingModel;
@@ -22,6 +22,17 @@ public class RowHeaderTableModel extends MultiRowHeaderTableModel implements Tab
 
 		underlyingModel = model;
 		underlyingModel.addTableModelListener(this);
+	} // RowHeaderTableModel()
+	
+	public void setModel(MultiRowHeaderTableModel model) {
+		this.columnHeaders = model.getColumnHeaders();
+		this.columnRowHeaders = model.getColumnRowHeaders();
+		if (model == null)
+			throw new IllegalArgumentException("The underlying data model cannot be null in SortingTableModel().");
+
+		underlyingModel = model;
+		underlyingModel.addTableModelListener(this);
+		fireTableDataChanged();
 	} // RowHeaderTableModel()
 
 	public Class getColumnClass(int col) {

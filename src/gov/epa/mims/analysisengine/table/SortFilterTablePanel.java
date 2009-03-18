@@ -59,7 +59,7 @@ import javax.swing.table.TableColumnModel;
  * </p>
  * 
  * @author Daniel Gatti
- * @version $Id: SortFilterTablePanel.java,v 1.27 2008/09/30 06:00:55 eyth Exp $
+ * @version $Id: SortFilterTablePanel.java,v 1.28 2009/03/18 15:00:43 dyang02 Exp $
  */
 public class SortFilterTablePanel extends JPanel implements TableModelListener, ChildHasChangedListener {
 
@@ -323,8 +323,17 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 		// table.getColumnModel().getSelectionModel().setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
 	}
+	
+	protected void setTableModel(MultiRowHeaderTableModel baseModel){
+		overallModel.setBaseModel(baseModel);
+		table.setModel(overallModel);
+		table.setFormat(overallModel);	
+		defaultRowHeight = table.getRowHeight();
+		table.getColumnModel().getColumn(0).setPreferredWidth(FIRST_COLUMN_ROW_HEADER_WIDTH);
+	    table.repaint();
+	}
 
-	private void createTable(MultiRowHeaderTableModel baseModel) {
+	protected void createTable(MultiRowHeaderTableModel baseModel) {
 		overallModel = new OverallTableModel(baseModel);
 		//final String headerName =overallModel.getColumnName(2).trim().toLowerCase();
 		table = new RowHeaderTable(overallModel){

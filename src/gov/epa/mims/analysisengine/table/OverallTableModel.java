@@ -26,7 +26,7 @@ import javax.swing.table.*;
  * </p>
  * 
  * @author Daniel Gatti
- * @version $Id: OverallTableModel.java,v 1.7 2007/06/10 21:33:00 eyth Exp $
+ * @version $Id: OverallTableModel.java,v 1.8 2009/03/18 15:00:44 dyang02 Exp $
  */
 public class OverallTableModel extends MultiRowHeaderTableModel implements TableModelListener, java.io.Serializable,
 		FormatAndIndexInfoIfc {
@@ -63,13 +63,23 @@ public class OverallTableModel extends MultiRowHeaderTableModel implements Table
 		headerModel.addTableModelListener(this);
 	} // OverallTableModel()
 
+	public void setBaseModel(MultiRowHeaderTableModel model){
+		this.baseModel = model;
+		filterModel.setModel(baseModel);
+		sortModel.setModel(filterModel);
+		aggModel.setModel(sortModel);
+		headerModel.setModel(aggModel);
+		headerModel.addTableModelListener(this);
+		fireTableDataChanged();
+	}
+
 	/**
 	 * Don't need to implement this method unless your table is editable.
 	 */
 	public boolean isCellEditable(int row, int col) {
 		return baseModel.isCellEditable(row, col - 1);
 	}
-
+	
 	/**
 	 * Aggregate the columns and add new columns.
 	 */

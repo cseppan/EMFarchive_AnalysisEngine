@@ -29,6 +29,18 @@ public class AggregatingTableModel extends MultiRowHeaderTableModel implements T
 		underlyingModel.addTableModelListener(this);
 	} // AggregatingTableModel()
 
+	public void setModel(MultiRowHeaderTableModel model) {
+		this.columnHeaders = model.getColumnHeaders();
+		this.columnRowHeaders = model.getColumnRowHeaders();
+
+		if (model == null)
+			throw new IllegalArgumentException("The underlying data model cannot be null in SortingTableModel().");
+
+		underlyingModel = model;
+		underlyingModel.addTableModelListener(this);
+		fireTableDataChanged();
+	} // AggregatingTableModel()
+	
 	public void aggregateAll() {
 		aggregateRows(true);
 		aggregateColumns();

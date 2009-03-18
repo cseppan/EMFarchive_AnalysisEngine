@@ -26,6 +26,22 @@ public class SortingTableModel extends MultiRowHeaderTableModel implements Table
 		for (int i = 0; i < getRowCount(); i++)
 			sortingMap[i] = i;
 	}
+	
+	public void setModel(MultiRowHeaderTableModel model) {
+		this.columnHeaders = model.getColumnHeaders();
+		this.columnRowHeaders = model.getColumnRowHeaders();
+		if (model == null)
+			throw new IllegalArgumentException("The underlying data model cannot be null in SortingTableModel().");
+
+		underlyingModel = model;
+		underlyingModel.addTableModelListener(this);
+
+		int size = getRowCount();
+		sortingMap = new int[size];
+		for (int i = 0; i < getRowCount(); i++)
+			sortingMap[i] = i;
+		sortTable(sortCriteria, getRowCount() - 1);
+	}
 
 	public Class getColumnClass(int column) {
 		return underlyingModel.getColumnClass(column);

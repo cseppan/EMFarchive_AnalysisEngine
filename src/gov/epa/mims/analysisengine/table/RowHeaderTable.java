@@ -32,6 +32,16 @@ public class RowHeaderTable extends JTable {
 		setCellSelectionEnabled(true);
 		new ClipBoardCopy(this).registerCopyKeyStroke();
 	} // RowHeaderTable()
+	
+	public void setFormat(MultiRowHeaderTableModel model){
+		underlyingModel = model;
+		setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		setUpDataRenderers();
+		setColumnWidths();
+
+		setCellSelectionEnabled(true);
+		new ClipBoardCopy(this).registerCopyKeyStroke();	
+	}
 
 	/**
 	 * We needed to override this for the case when we change the number of columns in the table. It vaporizes the
@@ -163,7 +173,7 @@ public class RowHeaderTable extends JTable {
 			column = columnModel.getColumn(c);
 			Class columnClass = getColumnClass(c);
 			if (columnClass.equals(Boolean.class)) {
-				// Empty
+				//
 			} else {
 				column.setCellRenderer(FormattedCellRenderer.getDefaultFormattedCellRenderer(columnClass));
 			}
@@ -192,4 +202,5 @@ public class RowHeaderTable extends JTable {
 			col.setHeaderRenderer(new MultiRowHeaderRenderer(model.getColumnHeaders(i - 1)));
 		}
 	}
+	
 }

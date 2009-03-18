@@ -16,7 +16,7 @@ import javax.swing.table.AbstractTableModel;
  * </p>
  * 
  * @author Daniel Gatti
- * @version $Id: MultiRowHeaderTableModel.java,v 1.4 2006/12/13 17:20:08 parthee Exp $
+ * @version $Id: MultiRowHeaderTableModel.java,v 1.5 2009/03/18 15:00:44 dyang02 Exp $
  */
 public abstract class MultiRowHeaderTableModel extends AbstractTableModel implements Serializable {
 	/**
@@ -71,11 +71,12 @@ public abstract class MultiRowHeaderTableModel extends AbstractTableModel implem
 	 * @return Class of objects in the requested column.
 	 */
 	public Class getColumnClass(int col) {
-		Class retval = String.class;
+		Class retval = Boolean.class;
 		if (getRowCount() > 0) {
 			Object value = getValueAt(0, col);
-			if (value != null)
+			if (value != null ) {
 				retval = value.getClass();
+			}
 		}
 		return retval;
 	} // getColumnClass()
