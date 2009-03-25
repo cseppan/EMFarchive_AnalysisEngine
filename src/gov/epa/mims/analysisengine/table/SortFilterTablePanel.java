@@ -59,7 +59,7 @@ import javax.swing.table.TableColumnModel;
  * </p>
  * 
  * @author Daniel Gatti
- * @version $Id: SortFilterTablePanel.java,v 1.28 2009/03/18 15:00:43 dyang02 Exp $
+ * @version $Id: SortFilterTablePanel.java,v 1.29 2009/03/25 12:07:25 dyang02 Exp $
  */
 public class SortFilterTablePanel extends JPanel implements TableModelListener, ChildHasChangedListener {
 
@@ -320,7 +320,6 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 		PopupMouseAdapter popupMouseAdapter = new PopupMouseAdapter(scrollPane);
 		table.getTableHeader().addMouseListener(tableMouseAdapter);
 		table.addMouseListener(popupMouseAdapter);
-		// table.getColumnModel().getSelectionModel().setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
 	}
 	
@@ -330,7 +329,8 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 		table.setFormat(overallModel);	
 		defaultRowHeight = table.getRowHeight();
 		table.getColumnModel().getColumn(0).setPreferredWidth(FIRST_COLUMN_ROW_HEADER_WIDTH);
-	    table.repaint();
+	    table.revalidate();
+		table.repaint();
 	}
 
 	protected void createTable(MultiRowHeaderTableModel baseModel) {
@@ -445,6 +445,8 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 		}
 		table.setRowHeight(defaultRowHeight);
 		table.getColumnModel().getColumn(0).setPreferredWidth(FIRST_COLUMN_ROW_HEADER_WIDTH);
+	    table.revalidate();
+	    table.repaint();	    
 	} // reset()
 
 	/**
@@ -516,6 +518,7 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 				if (table.getRowHeight() != largestRowHeight) {
 					table.setRowHeight(largestRowHeight);
 				}
+				table.revalidate();
 				table.repaint();
 			} // try
 			catch (Exception e) {
@@ -554,6 +557,8 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 			fCriteria.setTableModel(overallModel);
 			overallModel.filterRows(fCriteria);
 		}
+		table.revalidate();
+		table.repaint();
 	} // showFilterGUI()
 
 	/**
@@ -669,6 +674,7 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 				table.setRowHeight(largestRowHeight);
 			}
 			formatGUI.dispose();
+			table.revalidate();
 			table.repaint();
 		} // try
 		catch (Exception e) {
@@ -736,6 +742,8 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 			 * null)
 			 */
 			overallModel.sort(sortCriteria);
+			table.revalidate();
+			table.repaint();
 		} // if (sortGUI.getResult() == OptionDialog.OK_RESULT)
 
 	} // showSortGUI()
@@ -758,6 +766,8 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 			}
 			SortCriteria sortCriteria = new SortCriteria(columnNames, new boolean[] { ascending }, caseSensitive);
 			sort(sortCriteria);
+			table.revalidate();
+			table.repaint();
 		}
 	} // sortAtCurrentX()
 
@@ -794,25 +804,27 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 	} // tableChanged()
 
 	protected void updateFormat() {
-		TableColumnModel model = table.getColumnModel();
-		int count = model.getColumnCount();
-		for (int i = 1; i < count; i++) {
-			TableColumn tcol = model.getColumn(i);
-			String colName = table.getColumnName(i);
-			Class colClass = table.getColumnClass(i);
-			ColumnFormatInfo info = overallModel.getColumnFormatInfo(colName);
-			if (info != null && !colClass.equals(Boolean.class)) {
-				FormattedCellRenderer renderer = new FormattedCellRenderer(info.getFormat(), info.alignment);
-				tcol.setPreferredWidth(info.width);
-				renderer.setFont(info.font);
-				renderer.setForeground(info.foreground);
-				renderer.setBackground(info.background);
-				tcol.setCellRenderer(renderer);
-			}
-		}
-		
+//		TableColumnModel model = table.getColumnModel();
+//		int count = model.getColumnCount();
+//		for (int i = 1; i < count; i++) {
+//			TableColumn tcol = model.getColumn(i);
+//			String colName = table.getColumnName(i);
+//			Class colClass = table.getColumnClass(i);
+//			ColumnFormatInfo info = overallModel.getColumnFormatInfo(colName);
+//			if (info != null && !colClass.equals(Boolean.class)) {
+//				FormattedCellRenderer renderer = new FormattedCellRenderer(info.getFormat(), info.alignment);
+//				tcol.setPreferredWidth(info.width);
+//				renderer.setFont(info.font);
+//				renderer.setForeground(info.foreground);
+//				renderer.setBackground(info.background);
+//				tcol.setCellRenderer(renderer);
+//			}
+//		}
+		table.setModel(overallModel);
+		table.setFormat(overallModel);
 		table.setRowHeight(defaultRowHeight);
 		table.getColumnModel().getColumn(0).setPreferredWidth(FIRST_COLUMN_ROW_HEADER_WIDTH);
+		table.revalidate();
 		table.repaint();
 	}
 

@@ -14,7 +14,7 @@ import javax.swing.event.TableModelListener;
  * your underlying data contains integers and your filter says to filter out any value less than 5, the map in this
  * model will only contain the data in the underlying model with values < 5.
  * 
- * @version $Id: FilteringTableModel.java,v 1.5 2009/03/18 15:00:44 dyang02 Exp $
+ * @version $Id: FilteringTableModel.java,v 1.6 2009/03/25 12:07:27 dyang02 Exp $
  * @author Daniel Gatti
  */
 public class FilteringTableModel extends MultiRowHeaderTableModel implements TableModelListener {
@@ -67,6 +67,7 @@ public class FilteringTableModel extends MultiRowHeaderTableModel implements Tab
 		underlyingModel = model;
 		underlyingModel.addTableModelListener(this);
 		filterRows(filterCriteria);
+		
 	} 
 	public void filterColumns(FilterCriteria criteria) {
 		filterCriteria = criteria;
