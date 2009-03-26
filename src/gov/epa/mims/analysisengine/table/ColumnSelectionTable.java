@@ -32,6 +32,8 @@ public class ColumnSelectionTable extends JTable {
 
 	/** The base table model with unsorted data. */
 	protected ColumnSelectionTableModel model = null;
+	
+	private int selectRow = -1; 
 
 	/** Constant for the column names in <b>this<b/> table. */
 	public static final String[] LOCAL_COLUMN_NAMES = { "Column Name", "Selected?" };
@@ -70,7 +72,8 @@ public class ColumnSelectionTable extends JTable {
 			for (int c = 0; c < localColumns.length - 1; c++) {
 				data[r][c] = columnHeaders[r][c];
 			}
-
+            if (columnHeaders[r][0].equalsIgnoreCase("select"))
+            	selectRow = r; 
 			data[r][localColumns.length - 1] = new Boolean(selected[r]);
 		} // for(r)
 
@@ -154,7 +157,7 @@ public class ColumnSelectionTable extends JTable {
 	 * @return true for the last column and false for all other columns.
 	 */
 	public boolean isCellEditable(int row, int col) {
-		return (col == (getColumnCount() - 1));
+		return (col == (getColumnCount() - 1) && row != selectRow);
 	} // isCellEditable()
 
 	/**
