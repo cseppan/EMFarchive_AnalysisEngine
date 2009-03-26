@@ -59,7 +59,7 @@ import javax.swing.table.TableColumnModel;
  * </p>
  * 
  * @author Daniel Gatti
- * @version $Id: SortFilterTablePanel.java,v 1.29 2009/03/25 12:07:25 dyang02 Exp $
+ * @version $Id: SortFilterTablePanel.java,v 1.30 2009/03/26 14:22:23 dyang02 Exp $
  */
 public class SortFilterTablePanel extends JPanel implements TableModelListener, ChildHasChangedListener {
 
@@ -330,7 +330,6 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 		defaultRowHeight = table.getRowHeight();
 		table.getColumnModel().getColumn(0).setPreferredWidth(FIRST_COLUMN_ROW_HEADER_WIDTH);
 	    table.revalidate();
-		table.repaint();
 	}
 
 	protected void createTable(MultiRowHeaderTableModel baseModel) {
@@ -445,8 +444,7 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 		}
 		table.setRowHeight(defaultRowHeight);
 		table.getColumnModel().getColumn(0).setPreferredWidth(FIRST_COLUMN_ROW_HEADER_WIDTH);
-	    table.revalidate();
-	    table.repaint();	    
+	    table.revalidate();	    
 	} // reset()
 
 	/**
@@ -519,7 +517,6 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 					table.setRowHeight(largestRowHeight);
 				}
 				table.revalidate();
-				table.repaint();
 			} // try
 			catch (Exception e) {
 				DefaultUserInteractor.get().notifyOfException(this, "Unable to get formatting information", e,
@@ -558,7 +555,6 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 			overallModel.filterRows(fCriteria);
 		}
 		table.revalidate();
-		table.repaint();
 	} // showFilterGUI()
 
 	/**
@@ -675,7 +671,6 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 			}
 			formatGUI.dispose();
 			table.revalidate();
-			table.repaint();
 		} // try
 		catch (Exception e) {
 			DefaultUserInteractor.get().notifyOfException(this, "Unable to get formatting information", e,
@@ -743,7 +738,6 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 			 */
 			overallModel.sort(sortCriteria);
 			table.revalidate();
-			table.repaint();
 		} // if (sortGUI.getResult() == OptionDialog.OK_RESULT)
 
 	} // showSortGUI()
@@ -767,7 +761,6 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 			SortCriteria sortCriteria = new SortCriteria(columnNames, new boolean[] { ascending }, caseSensitive);
 			sort(sortCriteria);
 			table.revalidate();
-			table.repaint();
 		}
 	} // sortAtCurrentX()
 
@@ -825,7 +818,6 @@ public class SortFilterTablePanel extends JPanel implements TableModelListener, 
 		table.setRowHeight(defaultRowHeight);
 		table.getColumnModel().getColumn(0).setPreferredWidth(FIRST_COLUMN_ROW_HEADER_WIDTH);
 		table.revalidate();
-		table.repaint();
 	}
 
 	/**

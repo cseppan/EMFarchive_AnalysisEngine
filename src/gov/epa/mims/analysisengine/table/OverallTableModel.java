@@ -26,7 +26,7 @@ import javax.swing.table.*;
  * </p>
  * 
  * @author Daniel Gatti
- * @version $Id: OverallTableModel.java,v 1.8 2009/03/18 15:00:44 dyang02 Exp $
+ * @version $Id: OverallTableModel.java,v 1.9 2009/03/26 14:22:23 dyang02 Exp $
  */
 public class OverallTableModel extends MultiRowHeaderTableModel implements TableModelListener, java.io.Serializable,
 		FormatAndIndexInfoIfc {
@@ -64,13 +64,15 @@ public class OverallTableModel extends MultiRowHeaderTableModel implements Table
 	} // OverallTableModel()
 
 	public void setBaseModel(MultiRowHeaderTableModel model){
+		if ( headerModel != null )
+			headerModel.removeTableModelListener(this);
 		this.baseModel = model;
 		filterModel.setModel(baseModel);
 		sortModel.setModel(filterModel);
 		aggModel.setModel(sortModel);
 		headerModel.setModel(aggModel);
 		headerModel.addTableModelListener(this);
-		fireTableDataChanged();
+		//fireTableDataChanged();
 	}
 
 	/**

@@ -35,12 +35,13 @@ public class RowHeaderTable extends JTable {
 	
 	public void setFormat(MultiRowHeaderTableModel model){
 		underlyingModel = model;
+		
 		setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		setUpDataRenderers();
 		setColumnWidths();
 
 		setCellSelectionEnabled(true);
-		new ClipBoardCopy(this).registerCopyKeyStroke();	
+		//new ClipBoardCopy(this).registerCopyKeyStroke();	
 	}
 
 	/**
@@ -185,7 +186,7 @@ public class RowHeaderTable extends JTable {
 		// It gets a special renderer.
 		TableColumnModel columnModel = getColumnModel();
 		TableColumn column = columnModel.getColumn(0);
-
+       
 		MultiRowHeaderTableModel model = (MultiRowHeaderTableModel) getModel();
 		MultiRowHeaderRenderer headerRenderer = new MultiRowHeaderRenderer(model.getColumnRowHeaders());
 		column.setHeaderRenderer(headerRenderer);
