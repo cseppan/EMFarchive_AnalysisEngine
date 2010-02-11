@@ -17,7 +17,12 @@ public class UserPreferences extends Properties {
 	public static final String FORMAT_DOUBLE_DECIMAL_PLACES = "format.double.decimal_places";
 
 	public static final String FORMAT_OPTION = "format.double.option";
-	
+
+	/*
+	 * pref for determining whether to group digits in large numbers
+	 */
+	public static final String FORMAT_GROUPING = "format.grouping";
+
 	static {
 		USER_PREFERENCES = new UserPreferences();
 		try {

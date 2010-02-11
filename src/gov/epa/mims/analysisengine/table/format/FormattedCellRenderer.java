@@ -1,6 +1,8 @@
 package gov.epa.mims.analysisengine.table.format;
 
 
+import gov.epa.mims.analysisengine.UserPreferences;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
@@ -138,7 +140,7 @@ public class FormattedCellRenderer extends JLabel implements TableCellRenderer, 
 
 	public static Format getDefaultFormat(Class columnClass) {
 		if (columnClass.equals(Integer.class)) {
-			return new DecimalFormat("0");
+			return new DecimalFormat(createIntegerPattern());
 		} else if (columnClass.equals(Double.class) || columnClass.equals(Float.class)) {
 			SignificantDigitsFormat sigFormat = new SignificantDigitsFormat();
 			sigFormat.applyPattern(sigFormat.toPattern());
@@ -148,6 +150,41 @@ public class FormattedCellRenderer extends JLabel implements TableCellRenderer, 
 		} else {
 			return null;
 		}
+	}
+
+	/**
+	 * Creates the formatting pattern to use for integers.
+	 * @return If "grouping", "#,##0". Otherwise, "0"
+	 */
+	private static String createIntegerPattern() {
+		
+		String pattern = "#,##0";
+		if (!shouldGroup()) {
+			pattern = "0";
+		}
+
+		return pattern;
+	}
+	
+	private static boolean shouldGroup() {
+
+		UserPreferences pref = UserPreferences.USER_PREFERENCES;
+		String prefGrouping = pref.getProperty(UserPreferences.FORMAT_GROUPING);
+		/*
+		 * grouping==true is the default
+		 */
+		boolean grouping = true;
+		try {
+			if (prefGrouping != null && prefGrouping.trim().length() > 0) {
+				grouping = Boolean.parseBoolean(prefGrouping);
+			}
+		} catch (Exception e) {
+			/*
+			 * no-op
+			 */
+		}
+
+		return grouping;
 	}
 
 }

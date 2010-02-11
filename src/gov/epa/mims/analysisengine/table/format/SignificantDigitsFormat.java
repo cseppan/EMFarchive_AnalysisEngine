@@ -10,7 +10,7 @@ import java.text.NumberFormat;
  * This class extends the decimal format and attempts add the significant digits feature
  * 
  * @author Prashant Pai, CEP UNC
- * @version $Id: SignificantDigitsFormat.java,v 1.1 2006/11/01 15:33:38 parthee Exp $
+ * @version $Id: SignificantDigitsFormat.java,v 1.2 2010/02/11 18:30:25 rross67 Exp $
  */
 
 public class SignificantDigitsFormat extends DecimalFormat {
@@ -81,6 +81,7 @@ public class SignificantDigitsFormat extends DecimalFormat {
 		String prefOption = pref.getProperty(UserPreferences.FORMAT_OPTION);
 		String prefNumSigDigits = pref.getProperty(UserPreferences.FORMAT_DOUBLE_SIGNIFICANT_DIGITS);
 		String prefNumDecimalPlaces = pref.getProperty(UserPreferences.FORMAT_DOUBLE_DECIMAL_PLACES);
+		String prefGrouping = pref.getProperty(UserPreferences.FORMAT_GROUPING);
 		if (prefOption == null) {
 			prefOption = "";
 		}
@@ -119,6 +120,21 @@ public class SignificantDigitsFormat extends DecimalFormat {
 		// setNumberOfSignificantDigits(4);
 		// setNumberOfDecimalPlaces(1);
 
+		/*
+		 * grouping==true is the default
+		 */
+		boolean grouping = true;
+		try {
+			if (prefGrouping != null && prefGrouping.trim().length() > 0) {
+				grouping = Boolean.parseBoolean(prefGrouping);
+			}
+		} catch (Exception e) {
+			/*
+			 * no-op
+			 */
+		}
+
+		this.setGroupingUsed(grouping);
 	}
 
 	// Overrides
@@ -206,8 +222,7 @@ public class SignificantDigitsFormat extends DecimalFormat {
 	/**
 	 * sets the number of decimal places
 	 * 
-	 * @param int
-	 *            the number of decimal places required
+	 * @param int the number of decimal places required
 	 * @throws IllegalArgumentException
 	 */
 	public void setNumberOfDecimalPlaces(int numDecimalPlaces) throws IllegalArgumentException {
@@ -263,9 +278,16 @@ public class SignificantDigitsFormat extends DecimalFormat {
 			sb.append('$');
 		}
 
-		// Always put a zero at the front. This is needed if the user chooses
-		// 0 decimal places and no special options.
-		sb.append('0');
+		/*
+		 * Always put a zero in front of the decimal point. This is 
+         * needed if the user chooses 0 decimal places and no special options.
+		 * Also if grouping==true add delimiters, for readability.
+		 */
+		if (this.isGroupingUsed()) {
+			sb.append("#,##0");
+		} else {
+			sb.append("0");
+		}
 
 		// Set the number of decimal places.
 		if (numDecimalPlaces > 0) {
