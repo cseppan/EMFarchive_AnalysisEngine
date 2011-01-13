@@ -106,10 +106,19 @@ public class FormattedCellRenderer extends JLabel implements TableCellRenderer, 
 		}
 		return noFocusBorder;
 	}
-
-	protected void setValue(Object value, Format format) {
+	
+	protected void setValue(Object value) {
 		if (format == null)
 			setText((value == null) ? "" : value.toString());
+		else
+			setText(format.format(value));
+	}	
+
+	protected void setValue(Object value, Format format) {
+		if (format == null) {
+			setText((value == null) ? "" : value.toString());
+			//setValue(value);
+		}
 		else
 			setText(format.format(value));
 	}
