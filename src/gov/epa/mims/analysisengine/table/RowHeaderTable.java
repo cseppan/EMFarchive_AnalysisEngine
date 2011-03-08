@@ -174,7 +174,8 @@ public class RowHeaderTable extends JTable {
 			column = columnModel.getColumn(c);
 			Class columnClass = getColumnClass(c);
 			if (columnClass.equals(Boolean.class)) {
-				//
+				// TODO: 2011-02-14
+				//column.
 			} else {
 				column.setCellRenderer(FormattedCellRenderer.getDefaultFormattedCellRenderer(columnClass));
 			}
