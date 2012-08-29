@@ -88,12 +88,12 @@ public class SortingTableModel extends MultiRowHeaderTableModel implements Table
 				if (intObj != null)
 					columns[i] = intObj.intValue();
 			} // for(i)
-
+             
 			boolean[] ascending = criteria.getAscending();
 			boolean[] caseSensitive = criteria.getCaseSensitive();
 			// Sort the last column first to that the first column is sorted when we get done.
 			for (int i = columns.length - 1; i >= 0; --i) {
-				if (columns[i] >0){
+				if (columns[i] >= 0){
 					mergeSort(0, lastRow, columns[i], ascending[i], caseSensitive[i]);
 					if (getColumnClass(columns[i]) == Double.class) {
 						moveNaNsDown(0, lastRow, columns[i]);
