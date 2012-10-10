@@ -119,8 +119,10 @@ public class FormattedCellRenderer extends JLabel implements TableCellRenderer, 
 			setText((value == null) ? "" : value.toString());
 			//setValue(value);
 		}
-		else
+		else{
+			if (value == null )  value = "";			
 			setText(format.format(value));
+		}
 	}
 
 	public void setBackground(Color c) {
